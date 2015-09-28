@@ -19,6 +19,24 @@ public class Equipos {
 	private int cantMemExt;
 	private String os;
 	private String versionOS;
+	
+	public Equipos(String modelo, String manufactor, int ram, String procesador, byte tamPantalla, int resPantallaX,
+			int resPantallaY, int densPantalla, int cantMemInt, int cantMemExt, String os, String versionOS) {
+		super();
+		this.modelo = modelo;
+		this.manufactor = manufactor;
+		this.ram = ram;
+		this.procesador = procesador;
+		this.tamPantalla = tamPantalla;
+		this.resPantallaX = resPantallaX;
+		this.resPantallaY = resPantallaY;
+		this.densPantalla = densPantalla;
+		this.cantMemInt = cantMemInt;
+		this.cantMemExt = cantMemExt;
+		this.os = os;
+		this.versionOS = versionOS;
+	}
+	
 	/**
 	 * @return the modelo
 	 */
@@ -177,20 +195,4 @@ public class Equipos {
 	 * @param os
 	 * @param versionOS
 	 */
-	public Equipos(String modelo, String manufactor, int ram, String procesador, byte tamPantalla, int resPantallaX,
-			int resPantallaY, int densPantalla, int cantMemInt, int cantMemExt, String os, String versionOS) {
-		super();
-		this.modelo = modelo;
-		this.manufactor = manufactor;
-		this.ram = ram;
-		this.procesador = procesador;
-		this.tamPantalla = tamPantalla;
-		this.resPantallaX = resPantallaX;
-		this.resPantallaY = resPantallaY;
-		this.densPantalla = densPantalla;
-		this.cantMemInt = cantMemInt;
-		this.cantMemExt = cantMemExt;
-		this.os = os;
-		this.versionOS = versionOS;
-	}
 }
