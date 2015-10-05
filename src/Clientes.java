@@ -1,8 +1,4 @@
-import java.io.File;
-
-/**
- * 
- */
+import java.util.ArrayList;
 
 /**
  * @author FValerio, DMayorga, MSilva, LMondaca
@@ -19,6 +15,7 @@ public class Clientes {
 	private String email;
 	private String direccion1;
 	private String direccion2;
+	public ArrayList<Contratos> contratos = new ArrayList<Contratos>();
 	
 	/**
 	 * @param nombre1
@@ -47,6 +44,7 @@ public class Clientes {
 		this.direccion2 = direccion2;
 		
 	}
+	
 
 	/**
 	 * @return the nombre1
@@ -187,7 +185,5 @@ public class Clientes {
 	public void setDireccion2(String direccion2) {
 		this.direccion2 = direccion2;
 	}
-	
-	
 	
 }
