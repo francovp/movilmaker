@@ -6,7 +6,7 @@
  * @author FValerio, DMayorga, MSilva, LMondaca
  *
  */
-public class Planes {
+public class Plan {
 	private int precio;
 	private String tipoPlan; //S,M,L
 	private int min; // minutos para hablar
@@ -17,7 +17,7 @@ public class Planes {
 	 * @param min
 	 * @param net
 	 */
-	public Planes(int precio, String tipoPlan, int min, int net) {
+	public Plan(int precio, String tipoPlan, int min, int net) {
 		super();
 		this.precio = precio;
 		this.tipoPlan = tipoPlan;

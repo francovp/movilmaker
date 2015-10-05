@@ -6,12 +6,12 @@
  * @author FValerio, DMayorga, MSilva, LMondaca
  *
  */
-public class Contratos {
+public class Contrato {
 	private int idContrato;
 	private String fechaInicio; // FECHA DE PAGO SERA LA FECHA DE INICIO DEL CONTRATO
 	private String fechaTermino;
-	private Equipos movilCliente;
-	private Planes tipoDePlan;
+	private Equipo movilCliente;
+	private Plan tipoDePlan;
 	
 	
 
@@ -22,8 +22,8 @@ public class Contratos {
 	 * @param movilCliente
 	 * @param tipoDePlan
 	 */
-	public Contratos(int id,String fechaInicio, String fechaTermino, Equipos movilCliente,
-			Planes tipoDePlan) {
+	public Contrato(int id,String fechaInicio, String fechaTermino, Equipo movilCliente,
+			Plan tipoDePlan) {
 		super();
 		idContrato=id;
 		this.fechaInicio = fechaInicio;
@@ -44,16 +44,16 @@ public class Contratos {
 		this.fechaTermino = fechaTermino;
 	}
 
-	public Equipos getMovilCliente() {
+	public Equipo getMovilCliente() {
 		return movilCliente;
 	}
-	public void setMovilCliente(Equipos movilCliente) {
+	public void setMovilCliente(Equipo movilCliente) {
 		this.movilCliente = movilCliente;
 	}
-	public Planes getTipoDePlan() {
+	public Plan getTipoDePlan() {
 		return tipoDePlan;
 	}
-	public void setTipoDePlan(Planes tipoDePlan) {
+	public void setTipoDePlan(Plan tipoDePlan) {
 		this.tipoDePlan = tipoDePlan;
 	}
 	public int getIdContrato() {

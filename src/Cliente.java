@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * @author FValerio, DMayorga, MSilva, LMondaca
  *
  */
-public class Clientes {
+public class Cliente {
 	private String nombre1;
 	private String nombre2;
 	private String apellido1;
@@ -15,7 +15,7 @@ public class Clientes {
 	private String email;
 	private String direccion1;
 	private String direccion2;
-	public ArrayList<Contratos> contratos = new ArrayList<Contratos>();
+	public ArrayList<Contrato> contratos = new ArrayList<Contrato>();
 	
 	/**
 	 * @param nombre1
@@ -29,7 +29,7 @@ public class Clientes {
 	 * @param direccion1
 	 * @param direccion2
 	 */
-	public Clientes(String nombre1, String nombre2, String apellido1, String apellido2, String rut, int fonoCel,
+	public Cliente(String nombre1, String nombre2, String apellido1, String apellido2, String rut, int fonoCel,
 			int fonoFijo, String email, String direccion1, String direccion2) {
 		super();
 		this.nombre1 = nombre1;

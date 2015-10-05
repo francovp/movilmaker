@@ -18,9 +18,9 @@ public class Compania{
 
 	private String nombre;
 	private String rut;
-	public ArrayList<Clientes> listaClientes = new ArrayList<Clientes>();
-	public ArrayList<Equipos> moviles = new ArrayList<Equipos>();
-	public Planes[] plan = new Planes[3]; // plan S,M,L
+	public ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
+	public ArrayList<Equipo> moviles = new ArrayList<Equipo>();
+	public Plan[] plan = new Plan[3]; // plan S,M,L
 	
 	public Compania(String nombre, String rut) {
 		super();
@@ -44,7 +44,7 @@ public class Compania{
 			System.out.println((i+1)+"- "+listaClientes.get(i).getNombre1()+" "+listaClientes.get(i).getApellido1()+".");
 	}
 	
-	public Clientes buscarCliente(String rut) // BUSCA A UN CLIENTE Y SI LO ENCUENTRA LO RETORNA.
+	public Cliente buscarCliente(String rut) // BUSCA A UN CLIENTE Y SI LO ENCUENTRA LO RETORNA.
 	{
 		for (int i = 0 ; i< listaClientes.size();i++)
 			if(listaClientes.get(i).getRut().equals(rut)) // si el rut ingresado se encuenta 
@@ -65,7 +65,6 @@ public class Compania{
 		 String email;
 		 String direccion1;
 		 String direccion2;
-		 Clientes c;
 		 
 		 // peticion de datos del cliente
 		 System.out.println("Datos necesarios del cliente");
@@ -96,14 +95,14 @@ public class Compania{
 		 {
 			 // se crea el obj cliente y se guarda en el arraylist
 			 
-			 c = new Clientes(nombre1,nombre2,apellido1,apellido2,rut,fonoCel,fonoFijo,email,direccion1,direccion2);
+			 Cliente c = new Cliente(nombre1,nombre2,apellido1,apellido2,rut,fonoCel,fonoFijo,email,direccion1,direccion2);
 			 c.contratos.add(crearContrato()); // creo el contrato del cliente ingresado y lo agrego al ArrayList del Cliente
 			 listaClientes.add(c);
 		 }
 	}
 
 	public boolean eliminarCliente(String rut)
-	{	Clientes c;
+	{	Cliente c;
 		if(buscarCliente(rut)!= null)
 		{
 			c=buscarCliente(rut);
@@ -114,10 +113,10 @@ public class Compania{
 		
 	}
 	
-	public Contratos crearContrato() throws IOException{
+	public Contrato crearContrato() throws IOException{
 		Random rnd= new Random();
 		int idRandom;
-		Contratos contrato;
+		Contrato contrato;
 		
 		// datos para usar fecha real
 		Calendar fechaF = new GregorianCalendar();
@@ -134,7 +133,7 @@ public class Compania{
 		System.out.println("El cliente debera estar 5 meses como minimo con el plan contratado.");
 		System.out.println("Fecha de termino: "+ff+". Despues de esta fecha el cliente seguira con el plan por el tiempo que el estime conveniente.");
 		idRandom=rnd.nextInt(); // genera un numero random entre 2^-32 y 2 ^32 que sera el id con contrato
-		contrato = new Contratos(idRandom,fi,ff,elegirMovil(),elegirPlan());// se crea el obj contrato y  se retorna
+		contrato = new Contrato(idRandom,fi,ff,elegirMovil(),elegirPlan());// se crea el obj contrato y  se retorna
 		return contrato;
 	}
 	
@@ -144,7 +143,7 @@ public class Compania{
 		String rut=bf.readLine();
 		if(buscarCliente(rut)!= null) // si el cliente existe
 		{ int pos;
-			Clientes c = buscarCliente(rut);
+			Cliente c = buscarCliente(rut);
 			c.contratos.add(crearContrato()); // se le agrega el contrato
 			pos=listaClientes.indexOf(c); // obtengo su posicion en el Arraylist
 			listaClientes.add(pos,c); // lo agrego en su misma posicion (sobrescribir)
@@ -156,7 +155,7 @@ public class Compania{
 	public boolean eliminarContrato(String rut)throws IOException 
 	{
 		if(buscarCliente(rut)!=null)
-		{	Clientes c=buscarCliente(rut);
+		{	Cliente c=buscarCliente(rut);
 			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 			int resp,pos;
 			listarContratos(c); // listo todos los contratos del cliente
@@ -172,7 +171,7 @@ public class Compania{
 		return false;
 	}
 	
-	public Contratos buscarContrato(Clientes c,int id) // BUSCA UN CONTRATO DE UN CLIENTE MEDIANTE EL ID INGRESADO
+	public Contrato buscarContrato(Cliente c,int id) // BUSCA UN CONTRATO DE UN CLIENTE MEDIANTE EL ID INGRESADO
 	{	
 		for(int i=0;i<c.contratos.size();i++)
 			if(c.contratos.get(i).getIdContrato()== id)
@@ -181,7 +180,7 @@ public class Compania{
 		
 	}
 	
-	public void listarContratos(Clientes c) // MUESTRA TODOS LOS CONTRATOS DE 1 CLIENTE
+	public void listarContratos(Cliente c) // MUESTRA TODOS LOS CONTRATOS DE 1 CLIENTE
 	{
 		System.out.println("Contratos de "+c.getNombre1()+" "+c.getApellido1()+".");
 		for(int i =0; i< c.contratos.size() ; i++)
@@ -200,7 +199,7 @@ public class Compania{
 		}
 	}
 	
-	public Equipos elegirMovil() throws IOException // seleciona un movil, de los que tiene la compania disponible
+	public Equipo elegirMovil() throws IOException // seleciona un movil, de los que tiene la compania disponible
 	{	BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		int i;
 		System.out.println("Moviles Disponibles");
@@ -212,10 +211,10 @@ public class Compania{
 		return moviles.get(i);
 	}
 	
-	public Planes elegirPlan() throws IOException  // Se seleciona el Plan que desea asignar al contrato
+	public Plan elegirPlan() throws IOException  // Se seleciona el Plan que desea asignar al contrato
 	{	int i;
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Nuestros Planes para ud son:");
+		System.out.println("Nuestros Plan para ud son:");
 		for( i=0;i< plan.length; i++)
 			System.out.println((i+1)+"- Plan "+ plan[i].getTipoPlan()+", coste: "+plan[i].getPrecio());
 		

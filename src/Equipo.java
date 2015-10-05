@@ -6,7 +6,7 @@
  * @author FValerio, DMayorga, MSilva, LMondaca
  *
  */
-public class Equipos {
+public class Equipo {
 	private String modelo;
 	private String manufactor;
 	private int ram;
@@ -20,7 +20,7 @@ public class Equipos {
 	private String os;
 	private String versionOS;
 	
-	public Equipos(String modelo, String manufactor, int ram, String procesador, byte tamPantalla, int resPantallaX,
+	public Equipo(String modelo, String manufactor, int ram, String procesador, byte tamPantalla, int resPantallaX,
 			int resPantallaY, int densPantalla, int cantMemInt, int cantMemExt, String os, String versionOS) {
 		super();
 		this.modelo = modelo;
