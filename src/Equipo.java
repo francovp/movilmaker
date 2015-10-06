@@ -9,6 +9,7 @@
 public class Equipo {
 
 	private int idEquipo;
+	private String nombreEquipo; 
 	private String modelo;
 	private String manufactor;
 	private int ram;
@@ -21,14 +22,58 @@ public class Equipo {
 	private int cantMemExt;
 	private String os;
 	private String versionOS;
-	private int precio;
+	private int valorConPlan;
+	private int valorSinPlan;
 	private String capacidad;
-	private int id_compania; // ID de la compania a la que pertenece el Equipo
+	private int idCompania; // ID de la compania a la que pertenece el Equipo
 
-	// Contructor catalogo Complejo (Sin uso)
-	public Equipo(String modelo, String manufactor, int ram, String procesador, byte tamPantalla, int resPantallaX,
-			int resPantallaY, int densPantalla, int cantMemInt, int cantMemExt, String os, String versionOS) {
+	// Constructor Simple
+	/**
+	 * @param idEquipo
+	 * @param nombreEquipo
+	 * @param valorConPlan
+	 * @param valorSinPlan
+	 * @param capacidad
+	 * @param idCompania
+	 */
+	public Equipo(int idEquipo, String nombreEquipo, int valorConPlan, int valorSinPlan, String capacidad,
+			int idCompania) {
 		super();
+		this.idEquipo = idEquipo;
+		this.nombreEquipo = nombreEquipo;
+		this.valorConPlan = valorConPlan;
+		this.valorSinPlan = valorSinPlan;
+		this.capacidad = capacidad;
+		this.idCompania = idCompania;
+	}
+
+	// Constructor Completo (Sin uso)
+	/**
+	 * @param idEquipo
+	 * @param nombreEquipo
+	 * @param modelo
+	 * @param manufactor
+	 * @param ram
+	 * @param procesador
+	 * @param tamPantalla
+	 * @param resPantallaX
+	 * @param resPantallaY
+	 * @param densPantalla
+	 * @param cantMemInt
+	 * @param cantMemExt
+	 * @param os
+	 * @param versionOS
+	 * @param valorConPlan
+	 * @param valorSinPlan
+	 * @param capacidad
+	 * @param idCompania
+	 */
+	public Equipo(int idEquipo, String nombreEquipo, String modelo, String manufactor, int ram, String procesador,
+			byte tamPantalla, int resPantallaX, int resPantallaY, int densPantalla, int cantMemInt, int cantMemExt,
+			String os, String versionOS, int valorConPlan, int valorSinPlan, String capacidad, int idCompania) {
+		super();
+		this.idEquipo = idEquipo;
+		this.nombreEquipo = nombreEquipo;
 		this.modelo = modelo;
 		this.manufactor = manufactor;
 		this.ram = ram;
@@ -41,31 +86,26 @@ public class Equipo {
 		this.cantMemExt = cantMemExt;
 		this.os = os;
 		this.versionOS = versionOS;
-	}
-
-	// Constructor catalogo Simple
-	public Equipo(String modelo, String capacidad, int precio) {
-		super();
-		this.modelo = modelo;
+		this.valorConPlan = valorConPlan;
+		this.valorSinPlan = valorSinPlan;
 		this.capacidad = capacidad;
-		this.precio = precio;
-
+		this.idCompania = idCompania;
 	}
 
 	public int getIdEquipo() {
 		return idEquipo;
 	}
-
+	
 	public void setIdEquipo(int idEquipo) {
 		this.idEquipo = idEquipo;
 	}
 
 	public String getModelo() {
-		return modelo;
+		return nombreEquipo;
 	}
 
 	public void setModelo(String modelo) {
-		this.modelo = modelo;
+		this.nombreEquipo = modelo;
 	}
 
 	public String getManufactor() {
@@ -157,11 +197,11 @@ public class Equipo {
 	}
 
 	public int getPrecio() {
-		return precio;
+		return valorConPlan;
 	}
 
 	public void setPrecio(int precio) {
-		this.precio = precio;
+		this.valorConPlan = precio;
 	}
 
 	public String getCapacidad() {
@@ -173,11 +213,11 @@ public class Equipo {
 	}
 
 	public int getId_compania() {
-		return id_compania;
+		return idCompania;
 	}
 
-	public void setId_compania(int id_compania) {
-		this.id_compania = id_compania;
+	public void setId_compania(int idCompania) {
+		this.idCompania = idCompania;
 	}
 
 	

@@ -138,10 +138,13 @@ public class Principal {
 		rs = stmt.executeQuery("SELECT * FROM equipos;");
 		while (rs.next()) {
 			// Se obtienen datos de la equipos
-			String nomEquipo = rs.getString("nombreequipo");
-			String capacidad = rs.getString("capacidad");
-			int valor = rs.getInt("valor_con_plan");
-			Equipo e = new Equipo(nomEquipo, capacidad, valor);
+			int idEquipo = rs.getInt("id_equipo");
+			String nombreEquipo = rs.getString("nombreEquipo");
+			String capacidadEquipo = rs.getString("capacidad");
+			int valorPlanEquipo = rs.getInt("valor_con_plan");
+			int valorSinPlanEquipo = rs.getInt("valor_sin_plan");
+			int idCompaniaEquipo = rs.getInt("id_compania");
+			Equipo e = new Equipo(idEquipo, nombreEquipo, valorPlanEquipo, valorSinPlanEquipo, capacidadEquipo, idCompaniaEquipo);
 			comp.moviles.add(e);
 		}
 		rs.close();
