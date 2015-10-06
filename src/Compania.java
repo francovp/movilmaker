@@ -20,7 +20,7 @@ public class Compania{
 	private String rut;
 	public ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 	public ArrayList<Equipo> moviles = new ArrayList<Equipo>();
-	public Plan[] plan = new Plan[3]; // plan S,M,L
+	public ArrayList<Plan> planes = new ArrayList<Plan>(); 
 	
 	public Compania(String nombre, String rut) {
 		super();
@@ -191,11 +191,11 @@ public class Compania{
 	
 	public void mostrarPlanes()
 	{
-		for(int i=0;i<plan.length;i++)
+		for(int i=0;i<planes.size();i++)
 		{
-			System.out.println("Plan "+plan[i].getTipoPlan());
-			System.out.println("	A solo $"+plan[i].getPrecio()+".");
-			System.out.println("	Con "+plan[i].getNet()+"GB de navegacion y "+plan[i].getMin()+" minutos a todo destino!!\n");
+			System.out.println("Plan "+planes.get(i).getTipoPlan());
+			System.out.println("	A solo $"+planes.get(i).getPrecio()+".");
+			System.out.println("	Con "+planes.get(i).getNet()+"GB de navegacion y "+planes.get(i).getMin()+" minutos a todo destino!!\n");
 		}
 	}
 	
@@ -215,12 +215,12 @@ public class Compania{
 	{	int i;
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Nuestros Plan para ud son:");
-		for( i=0;i< plan.length; i++)
+		for( i=0;i< planes.size(); i++)
 			System.out.println((i+1)+"- Plan "+ plan[i].getTipoPlan()+", coste: "+plan[i].getPrecio());
 		
 		System.out.println("Igrese el numero de la opcion:");
 		i=Integer.parseInt(bf.readLine());
-		return plan[i];
+		return planes.get(i);
 	}
 	
 ////////////////////////////**TXT**////////////////////////////////////////////////////////////////	
