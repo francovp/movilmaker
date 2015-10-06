@@ -12,8 +12,8 @@ public class Contrato {
 	private String fechaTermino;
 	private Equipo movilCliente;
 	private Plan tipoDePlan;
-	
-	
+
+
 
 	/**
 	 * @param fechaInicio
@@ -62,7 +62,7 @@ public class Contrato {
 	public void setIdContrato(int idContrato) {
 		this.idContrato = idContrato;
 	}
-	
-	
+
+
 }
 

@@ -222,35 +222,35 @@ public class Compania{
 		i=Integer.parseInt(bf.readLine());
 		return plan[i];
 	}
+	
 ////////////////////////////**TXT**////////////////////////////////////////////////////////////////	
 	
 	public void escribirEnTxt(String archivo,String cadena) // ESCRIBRE EN TXT LA INFORMACION ENVIADA EN "CADENA"
 	{
 		File f;
 		f= new File(archivo);
-			try
-			{
-				FileWriter w = new FileWriter(f);
-				BufferedWriter bw = new BufferedWriter(w);
-				PrintWriter wr = new PrintWriter(bw); 
-				wr.write(cadena);
-				wr.close();
-				bw.close();
-			}catch(IOException e){};
+		try
+		{
+			FileWriter w = new FileWriter(f);
+			BufferedWriter bw = new BufferedWriter(w);
+			PrintWriter wr = new PrintWriter(bw); 
+			wr.write(cadena);
+			wr.close();
+			bw.close();
+		}catch(IOException e){};
 	}
 
 
 	public String leerDeTxt(String archivo)throws FileNotFoundException, IOException //lee desde un txt y lo traspasa a un String
 	{	String cadena,aux="";
-	      FileReader f = new FileReader(archivo);
-	      BufferedReader b = new BufferedReader(f);
-	      while((cadena = b.readLine())!=null) {
-	    	  aux=aux+"\n"+cadena;
-	      }
-	      b.close();
-	      aux=aux+"\n";
-	      return aux;
+	FileReader f = new FileReader(archivo);
+	BufferedReader b = new BufferedReader(f);
+	while((cadena = b.readLine())!=null) {
+		aux=aux+"\n"+cadena;
 	}
-
+	b.close();
+	aux=aux+"\n";
+	return aux;
+	}
 }
 

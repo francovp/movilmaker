@@ -16,7 +16,7 @@ public class Cliente {
 	private String direccion1;
 	private String direccion2;
 	public ArrayList<Contrato> contratos = new ArrayList<Contrato>();
-	
+
 	/**
 	 * @param nombre1
 	 * @param nombre2
@@ -42,9 +42,9 @@ public class Cliente {
 		this.email = email;
 		this.direccion1 = direccion1;
 		this.direccion2 = direccion2;
-		
+
 	}
-	
+
 
 	/**
 	 * @return the nombre1
@@ -185,5 +185,5 @@ public class Cliente {
 	public void setDireccion2(String direccion2) {
 		this.direccion2 = direccion2;
 	}
-	
+
 }

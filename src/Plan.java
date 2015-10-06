@@ -48,5 +48,5 @@ public class Plan {
 	public void setNet(int net) {
 		this.net = net;
 	}
-	
+
 }

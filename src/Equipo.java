@@ -19,7 +19,7 @@ public class Equipo {
 	private int cantMemExt;
 	private String os;
 	private String versionOS;
-	
+
 	public Equipo(String modelo, String manufactor, int ram, String procesador, byte tamPantalla, int resPantallaX,
 			int resPantallaY, int densPantalla, int cantMemInt, int cantMemExt, String os, String versionOS) {
 		super();
@@ -36,7 +36,7 @@ public class Equipo {
 		this.os = os;
 		this.versionOS = versionOS;
 	}
-	
+
 	/**
 	 * @return the modelo
 	 */
