@@ -216,7 +216,7 @@ public class Compania{
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Nuestros Plan para ud son:");
 		for( i=0;i< planes.size(); i++)
-			System.out.println((i+1)+"- Plan "+ plan[i].getTipoPlan()+", coste: "+plan[i].getPrecio());
+			System.out.println((i+1)+"- Plan "+ planes.get(i).getTipoPlan()+", coste: "+planes.get(i).getPrecio());
 		
 		System.out.println("Igrese el numero de la opcion:");
 		i=Integer.parseInt(bf.readLine());

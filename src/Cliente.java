@@ -15,6 +15,7 @@ public class Cliente {
 	private String email;
 	private String direccion1;
 	private String direccion2;
+	private String sexo;
 	public ArrayList<Contrato> contratos = new ArrayList<Contrato>();
 
 	/**
@@ -42,6 +43,17 @@ public class Cliente {
 		this.email = email;
 		this.direccion1 = direccion1;
 		this.direccion2 = direccion2;
+
+	}
+	
+	//========= Sobrecarga para probar creacion de cliente desde "PanelCliente" de interfaz grafica ==========
+	public Cliente(String nombre1, String nombre2, String apellido1, String apellido2, String rut, String sexo) {
+		this.nombre1 = nombre1;
+		this.nombre2 = nombre2;
+		this.apellido1 = apellido1;
+		this.apellido2 = apellido2;
+		this.rut = rut;
+		this.sexo=sexo;
 
 	}
 
