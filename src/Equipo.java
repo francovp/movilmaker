@@ -19,6 +19,8 @@ public class Equipo {
 	private int cantMemExt;
 	private String os;
 	private String versionOS;
+	private int precio;
+	private String cap;
 
 	public Equipo(String modelo, String manufactor, int ram, String procesador, byte tamPantalla, int resPantallaX,
 			int resPantallaY, int densPantalla, int cantMemInt, int cantMemExt, String os, String versionOS) {
@@ -36,7 +38,33 @@ public class Equipo {
 		this.os = os;
 		this.versionOS = versionOS;
 	}
+	
+	public Equipo(String modelo, String capacidad,int valor) {
+		super();
+		this.modelo = modelo;
+		cap = capacidad;
+		precio=valor;
 
+	}
+	
+	
+	
+	public String getCap() {
+		return cap;
+	}
+
+	public void setCap(String cap) {
+		this.cap = cap;
+	}
+
+	public int getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(int precio) {
+		this.precio = precio;
+	}
+	
 	/**
 	 * @return the modelo
 	 */

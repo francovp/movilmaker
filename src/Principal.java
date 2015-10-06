@@ -39,9 +39,10 @@ public class Principal {
 	}
 
 	public static void menuPrincipal(Compania empresa) throws IOException {
-		int res;
+		int res,resFinal=1;
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-
+		while(resFinal==1)
+		{
 		System.out.println("¡ BIENVENIDO A "+empresa.getNombre()+"!");
 		System.out.println("Eliga el numero de opcion que desee.");
 		System.out.println("1- Ingresar un nuevo cliente y su contrato.");
@@ -71,12 +72,15 @@ public class Principal {
 			empresa.mostrarPlanes();
 		if(res==6)
 			empresa.mostrarClientes();
+		System.out.println("\nqeri otra wea\n");
+		resFinal=Integer.parseInt(bf.readLine());
+		}
 	}
 	
 ////////////////////////////** BASE DE DATOS **////////////////////////////////////////////////////////////////	
 	
-	private static Compania leerDatosBD() throws SQLException //
-	{
+	//
+	private static Compania leerDatosBD() throws SQLException {
 		Compania empresa = null;
 		Connection c = null;
 		Statement stmt = null;
@@ -86,6 +90,7 @@ public class Principal {
 			c.setAutoCommit(false);
 			//Se crea la empresa
 			empresa = leerDatosDBEmpresa(stmt,c);
+			leerDatosDefault(stmt,c,empresa);
 		} catch ( Exception e ) {
 			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
 			c.close();
@@ -96,8 +101,7 @@ public class Principal {
 		return empresa;
 	}
 	
-	private static Compania leerDatosDBEmpresa(Statement stmt, Connection c) throws SQLException
-	{
+	private static Compania leerDatosDBEmpresa(Statement stmt, Connection c) throws SQLException{
 		Compania empresa = null;
 		//Se crea un objeto de tipo sentencia
 		stmt = c.createStatement();
@@ -114,5 +118,36 @@ public class Principal {
 		stmt.close();
 		return empresa;
 	}
-
+	
+	private static void leerDatosDefault(Statement stmt, Connection c, Compania comp) throws SQLException{
+		//Se crea un objeto de tipo sentencia
+		stmt = c.createStatement();
+		//Se ejecuta la sentencia SQL
+		ResultSet rs = stmt.executeQuery( "SELECT * FROM planes;" );
+		while ( rs.next() ) {
+			//Se obtienen datos de la plan
+			int precio=rs.getInt("precio");
+			String  tipoPlan = rs.getString("nombrePlan");
+			int  min = rs.getInt("minutos");
+			int  net = rs.getInt("gigas");
+			
+			Plan p= new Plan(precio,tipoPlan,min,net);
+			comp.planes.add(p);
+		}
+		rs.close();
+		
+		//Se ejecuta la sentencia SQL
+		rs = stmt.executeQuery( "SELECT * FROM equipos;" );
+		while ( rs.next() ) {
+			//Se obtienen datos de la equipos
+			String nomEquipo=rs.getString("nombreequipo");
+			String  capacidad = rs.getString("capacidad");
+			//int  valor = rs.getInt("valor"); 
+			int valor=0;
+			Equipo e = new Equipo(nomEquipo,capacidad,valor);
+			comp.moviles.add(e);
+		}
+		rs.close();
+		stmt.close();
+	}
 }
