@@ -25,6 +25,10 @@ public class Principal {
 		// TODO Auto-generated method stub
 
 		Compania datosEmpresa = null; // Aquí se guardarán los datos de la clase empresa
+	
+		//Interfaz
+//		Interfaz i = new Interfaz();
+//		i.setVisible(true);
 		
 		//Conexión a la base de datos de Postgres
 		datosEmpresa = leerDatosBD();
@@ -37,7 +41,6 @@ public class Principal {
 			menuPrincipal(datosEmpresa);
 		//Llama al menú principal 
 	}
-
 	public static void menuPrincipal(Compania empresa) throws IOException {
 		int res;
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
