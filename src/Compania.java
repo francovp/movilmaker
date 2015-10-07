@@ -23,7 +23,8 @@ public class Compania {
 	public ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 	public ArrayList<Equipo> moviles = new ArrayList<Equipo>();
 	public ArrayList<Plan> planes = new ArrayList<Plan>();
-
+	
+	// CONSTRUCTOR
 	/**
 	 * @param nombre
 	 * @param rut
@@ -31,13 +32,14 @@ public class Compania {
 	 * @param moviles
 	 * @param planes
 	 */
-
 	public Compania(String nombre, String rut) {
 		super();
 		this.nombre = nombre;
 		this.rut = rut;
 	}
 
+	///////////////////////////* GETTERS & SETTERS *////////////////////////////////////
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -52,6 +54,30 @@ public class Compania {
 
 	public void setRut(String rut) {
 		this.rut = rut;
+	}
+	
+	public ArrayList<Cliente> getListaClientes() {
+		return listaClientes;
+	}
+
+	public void setListaClientes(ArrayList<Cliente> listaClientes) {
+		this.listaClientes = listaClientes;
+	}
+
+	public ArrayList<Equipo> getMoviles() {
+		return moviles;
+	}
+
+	public void setMoviles(ArrayList<Equipo> moviles) {
+		this.moviles = moviles;
+	}
+
+	public ArrayList<Plan> getPlanes() {
+		return planes;
+	}
+
+	public void setPlanes(ArrayList<Plan> planes) {
+		this.planes = planes;
 	}
 
 	///////////////////// METODOS DE CLIENTES Y
@@ -115,7 +141,7 @@ public class Compania {
 	}
 
 	// CREA UN NUEVO CLIENTE Y SU CONTRATO RESPECTIVO
-	public void crearClienteNuevo() throws IOException {
+	public Cliente crearClienteNuevo(String idCompania) throws IOException {
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		String nombre1;
 		String nombre2;
@@ -138,32 +164,30 @@ public class Compania {
 		apellido1 = bf.readLine();
 		System.out.print("Apellido Materno:");
 		apellido2 = bf.readLine();
-		System.out.print("Rut(123456789):");
+		System.out.print("RUT (123456780):");
 		rut = bf.readLine();
-		System.out.print("Celular:");
+		System.out.print("Nº Celular:");
 		fonoCel = Integer.parseInt(bf.readLine());
-		System.out.print("Telefono fijo:");
+		System.out.print("Nº Telefono fijo:");
 		fonoFijo = Integer.parseInt(bf.readLine());
-		System.out.print("E-mail:");
+		System.out.print("Email:");
 		email = bf.readLine();
-		System.out.print("Direccion:");
+		System.out.print("Direccion (Calle y nº):");
 		direccion1 = bf.readLine();
-		System.out.print("Direccion 2:");
+		System.out.print("Ciudad:");
 		direccion2 = bf.readLine();
 
-		if (buscarCliente(rut) != null) // Si el rut existe, le informo que ya
-										// existe.
-			System.out.println("Cliente ya existe");
-		else // si no existe
-		{
-			// se crea el obj cliente y se guarda en el arraylist
-
-			Cliente c = new Cliente(nombre1, nombre2, apellido1, apellido2, rut, fonoCel, fonoFijo, email, direccion1,
-					direccion2);
-			c.contratos.add(crearContrato()); // creo el contrato del cliente
-												// ingresado y lo agrego al
-												// ArrayList del Cliente
-			listaClientes.add(c);
+		if (buscarCliente(rut) != null) {
+			// Si el rut existe, le informo que ya existe.
+			return null;
+		}else {
+			// Si no existe se crea el obj cliente y se guarda en el arraylist
+			Cliente clienteNuevo = new Cliente(nombre1, nombre2, apellido1, apellido2, rut, fonoCel, fonoFijo, email, direccion1,
+					direccion2, idCompania);
+			clienteNuevo.contratos.add(crearContrato()); // creo el contrato del cliente ingresado
+														// y lo agrego al ArrayList de contratos del Cliente
+			listaClientes.add(clienteNuevo);
+			return clienteNuevo;
 		}
 	}
 
@@ -183,7 +207,7 @@ public class Compania {
 		int idRandom;
 		Contrato contrato;
 
-		// datos para usar fecha real
+		// Datos para usar fecha real
 		Calendar fechaF = new GregorianCalendar();
 		Calendar fechaI = new GregorianCalendar();
 		DateFormat dfi = DateFormat.getDateInstance();
@@ -199,9 +223,8 @@ public class Compania {
 		System.out.println("El cliente debera estar 5 meses como minimo con el plan contratado.");
 		System.out.println("Fecha de termino: " + ff
 				+ ". Despues de esta fecha el cliente seguira con el plan por el tiempo que el estime conveniente.");
-		idRandom = rnd.nextInt(); // genera un numero random entre 2^-32 y 2 ^32
-									// que sera el id con contrato
-		contrato = new Contrato(idRandom, fi, ff, elegirMovil(), elegirPlan()); // se crea el obj contrato y se retorna 
+		idRandom = rnd.nextInt(); // Genera un numero random entre 2^-32 y 2 ^32 que sera el id con contrato
+		contrato = new Contrato(idRandom, fi, ff, elegirMovil(), elegirPlan()); // Se crea el obj contrato y se retorna 
 		
 		return contrato;
 	}
@@ -210,13 +233,13 @@ public class Compania {
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Ingrese el rut del cliente:");
 		String rut = bf.readLine();
-		if (buscarCliente(rut) != null) // si el cliente existe
+		if (buscarCliente(rut) != null) // Si el cliente existe
 		{
 			int pos;
 			Cliente c = buscarCliente(rut);
-			c.contratos.add(crearContrato()); // se le agrega el contrato
-			pos = listaClientes.indexOf(c); // obtengo su posicion en el Arraylist
-			listaClientes.add(pos, c); // lo agrego en su misma posicion (sobrescribir)
+			c.contratos.add(crearContrato()); // Se le agrega el contrato
+			pos = listaClientes.indexOf(c); // Obtengo su posicion en el Arraylist
+			listaClientes.add(pos, c); // Lo agrego en su misma posicion (sobrescribir)
 		} else
 			System.out.println("Cliente no existe.");
 	}
@@ -296,6 +319,7 @@ public class Compania {
 		i--;
 		return planes.get(i);
 	}
+	
 	//////////////////////////// **TXT**////////////////////////////////////////////////////////////////
 
 	// ESCRIBRE EN TXT LA INFORMACION ENVIADA EN "CADENA"
