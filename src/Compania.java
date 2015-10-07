@@ -20,9 +20,9 @@ public class Compania {
 
 	private String nombre;
 	private String rut;
-	public ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
-	public ArrayList<Equipo> moviles = new ArrayList<Equipo>();
-	public ArrayList<Plan> planes = new ArrayList<Plan>();
+	private ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
+	private ArrayList<Equipo> moviles = new ArrayList<Equipo>();
+	private ArrayList<Plan> planes = new ArrayList<Plan>();
 	
 	// CONSTRUCTOR
 	/**
