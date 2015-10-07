@@ -13,7 +13,7 @@ public class Plan {
 	private int precio;
 	private int minutos; // minutos para hablar
 	private int gigas; // GB de navegacion
-	private int idCompania; // ID de la compania a la que pertenece el plan;
+	private String idCompania; // ID de la compania a la que pertenece el plan;
 	
 	/**
 	 * @param idPlan
@@ -23,7 +23,7 @@ public class Plan {
 	 * @param gigas
 	 * @param idCompania
 	 */
-	public Plan(int idPlan, String nombrePlan, int precio, int minutos, int gigas, int idCompania) {
+	public Plan(int idPlan, String nombrePlan, int precio, int minutos, int gigas, String idCompania) {
 		super();
 		this.idPlan = idPlan;
 		this.nombrePlan = nombrePlan;
@@ -63,10 +63,10 @@ public class Plan {
 	public void setGigas(int gigas) {
 		this.gigas = gigas;
 	}
-	public int getIdCompania() {
+	public String getIdCompania() {
 		return idCompania;
 	}
-	public void setIdCompania(int idCompania) {
+	public void setIdCompania(String idCompania) {
 		this.idCompania = idCompania;
 	}
 
