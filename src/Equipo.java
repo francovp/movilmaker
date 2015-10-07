@@ -25,7 +25,7 @@ public class Equipo {
 	private int valorConPlan;
 	private int valorSinPlan;
 	private String capacidad;
-	private int idCompania; // ID de la compania a la que pertenece el Equipo
+	private String idCompania; // ID de la compania a la que pertenece el Equipo
 
 	// Constructor Simple
 	/**
@@ -37,7 +37,7 @@ public class Equipo {
 	 * @param idCompania
 	 */
 	public Equipo(int idEquipo, String nombreEquipo, int valorConPlan, int valorSinPlan, String capacidad,
-			int idCompania) {
+			String idCompania) {
 		super();
 		this.idEquipo = idEquipo;
 		this.nombreEquipo = nombreEquipo;
@@ -70,7 +70,7 @@ public class Equipo {
 	 */
 	public Equipo(int idEquipo, String nombreEquipo, String modelo, String manufactor, int ram, String procesador,
 			byte tamPantalla, int resPantallaX, int resPantallaY, int densPantalla, int cantMemInt, int cantMemExt,
-			String os, String versionOS, int valorConPlan, int valorSinPlan, String capacidad, int idCompania) {
+			String os, String versionOS, int valorConPlan, int valorSinPlan, String capacidad, String idCompania) {
 		super();
 		this.idEquipo = idEquipo;
 		this.nombreEquipo = nombreEquipo;
@@ -212,13 +212,12 @@ public class Equipo {
 		this.capacidad = capacidad;
 	}
 
-	public int getId_compania() {
+	public String getId_compania() {
 		return idCompania;
 	}
 
-	public void setId_compania(int idCompania) {
+	public void setId_compania(String idCompania) {
 		this.idCompania = idCompania;
 	}
 
-	
 }
