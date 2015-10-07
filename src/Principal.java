@@ -28,16 +28,21 @@ public class Principal {
 
 		// Conexión a la base de datos de Postgres
 		datosEmpresa = leerDatosBD();
-		if (datosEmpresa == null) {
-			System.out.println("ERROR FATAL: No conectó a base de datos");
-			System.exit(0);
-		} else
+		if (datosEmpresa != null)
+			// Si se crearon los datos de la empresa
 			System.out.println("Datos leidos desde la base de datos");
-		menuPrincipal(datosEmpresa);
+		else {
+			// Si hubo cualquier especie de error al conectar a la BD o al crear los datos. 
+			System.out.println("ERROR FATAL: No se obtubieron datos desde la base de datos. "
+					+ "No se pudo establecer la conexión al servidor");
+			System.exit(0);
+		}
+		
 		// Llama al menú principal
+		menuPrincipal(datosEmpresa);
 	}
 
-	public static void menuPrincipal(Compania empresa) throws IOException {
+	public static void menuPrincipal(Compania empresa) throws IOException, SQLException {
 		int res, resFinal = 1;
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		while (resFinal == 1) {
@@ -50,8 +55,20 @@ public class Principal {
 			System.out.println("5- Ver nuestros planes.");
 			System.out.println("6- Ver Clientes actuales.");
 			res = Integer.parseInt(bf.readLine());
-			if (res == 1)
-				empresa.crearClienteNuevo();
+			if (res == 1){
+				// Se creará un cliente nuevo y se asignará a un objeto de tipo Cliente
+				Cliente datosCliente = empresa.crearClienteNuevo(empresa.getRut()); 
+				if(datosCliente != null)
+					// Si se creó el cliente nuevo se escribirá en la BD
+					//if(escribirDatosBDCliente(datosCliente))
+						System.out.println("Cliente creado...");
+					//else 
+					//	System.out.println("Cliente creado... pero no se pudo escribir en la Base de Datos. "
+					//			+ "No se pudo establecer la conexión al servidor");
+				else 
+					//Sino, se informa que el cliente ya existe y se vuelve al menú
+					System.out.println("Cliente ya existe...");
+			}
 			if (res == 2)
 				empresa.agregarOtroContrato();
 			if (res == 3) {
@@ -68,40 +85,62 @@ public class Principal {
 				empresa.mostrarPlanes();
 			if (res == 6)
 				empresa.mostrarClientes();
-			System.out.println("\nqeri otra wea\n");
+			System.out.println("\nIngrese 1 para volver al menú principal"
+					+ "Ingrese 0 para salir del programa: \n");
 			resFinal = Integer.parseInt(bf.readLine());
+			if (resFinal == 0) System.exit(0);
 		}
 	}
 
 	//////////////////////////// ** BASE DE DATOS //////////////////////////// 
 
-	//
-	private static Compania leerDatosBD() throws SQLException {
-		Compania empresa = null;
+	// Crea una conexión a la BD 
+	private static Connection conectarBD() throws SQLException {
 		Connection c = null;
-		Statement stmt = null;
 		try {
 			Class.forName("org.postgresql.Driver");
 			c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/vomistar", "postgres", "12345");
 			c.setAutoCommit(false);
-			// Se crea la empresa
-			empresa = leerDatosDBEmpresa(stmt, c);
-			leerDatosDefault(stmt, c, empresa);
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			c.close();
 			return null;
 		}
-		c.close();
-
-		return empresa;
+		return c;
+	}
+	
+	// Establece todos los métodos de lecturas desde la Base de datos
+	private static Compania leerDatosBD() throws SQLException {
+		// Se crea un objeto de tipo conexión SQL con los datos de conección a la DB
+		Connection c = conectarBD();
+		if (c != null){
+			// Si se creó la conexión a la BD exitosamente se continúa
+			
+			// Se crea un objeto de tipo sentencia SQL
+			Statement stmt = c.createStatement();
+			// Se leen datos de la empresa desde la BD
+			Compania empresa = leerDatosDBEmpresa(stmt, c);
+			// Se leen datos de Planes desde la BD
+			leerDatosDBPlanes(stmt, c, empresa);
+			// Se leen datos de Equipos desde la BD
+			leerDatosDBEquipos(stmt, c, empresa);
+			
+			// Se cierra conexión a la BD
+			c.close();
+			
+			// Se retorna toda la colección empresa
+			return empresa;
+		}else 
+			// Si no se pudo establecer la conexión a la BD se retorna null;
+			return null;
 	}
 
-	private static Compania leerDatosDBEmpresa(Statement stmt, Connection c) throws SQLException {
+	// Metodo para leer datos de la empresa desde la Base de datos
+	private static Compania leerDatosDBEmpresa (Statement stmt, Connection c) throws SQLException {
 		Compania empresa = null;
 		// Se crea un objeto de tipo sentencia
 		stmt = c.createStatement();
-		// Se ejecuta la sentencia SQL
+		// Se crea un objeto de tipo resultado Query SQL y ejecuta la sentencia SQL
 		ResultSet rs = stmt.executeQuery("SELECT * FROM compania;");
 		while (rs.next()) {
 			// Se obtienen datos de las tablas
@@ -115,10 +154,9 @@ public class Principal {
 		return empresa;
 	}
 
-	private static void leerDatosDefault(Statement stmt, Connection c, Compania comp) throws SQLException {
-		// Se crea un objeto de tipo sentencia
-		stmt = c.createStatement();
-		// Se ejecuta la sentencia SQL
+	// Metodo para leer datos de los Planes desde la Base de datos
+	private static void leerDatosDBPlanes (Statement stmt, Connection c, Compania empresa) throws SQLException {
+		// // Se crea un objeto de tipo resultado Query SQL y ejecuta la sentencia SQL
 		ResultSet rs = stmt.executeQuery("SELECT * FROM planes;");
 		while (rs.next()) {
 			// Se obtienen datos de la plan
@@ -127,15 +165,21 @@ public class Principal {
 			int minutosPlan = rs.getInt("minutos");
 			int gigasPlan = rs.getInt("gigas");
 			int precioPlan = rs.getInt("precio");
-			int idCompaniaPlan = rs.getInt("id_compania");
+			String idCompaniaPlan = rs.getString("id_compania");
 
 			Plan p = new Plan(idPlan, nombrePlan, precioPlan, minutosPlan, gigasPlan, idCompaniaPlan);
-			comp.planes.add(p);
+			empresa.planes.add(p);
 		}
 		rs.close();
-
+		stmt.close();
+	}
+	
+	// Metodo para leer datos de los Equipos desde la Base de datos
+	private static void leerDatosDBEquipos (Statement stmt, Connection c, Compania empresa) throws SQLException {
+		// Se crea un objeto de tipo sentencia
+		stmt = c.createStatement();
 		// Se ejecuta la sentencia SQL
-		rs = stmt.executeQuery("SELECT * FROM equipos;");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM equipos;");
 		while (rs.next()) {
 			// Se obtienen datos de la equipos
 			int idEquipo = rs.getInt("id_equipo");
@@ -143,9 +187,9 @@ public class Principal {
 			String capacidadEquipo = rs.getString("capacidad");
 			int valorPlanEquipo = rs.getInt("valor_con_plan");
 			int valorSinPlanEquipo = rs.getInt("valor_sin_plan");
-			int idCompaniaEquipo = rs.getInt("id_compania");
+			String idCompaniaEquipo = rs.getString("id_compania");
 			Equipo e = new Equipo(idEquipo, nombreEquipo, valorPlanEquipo, valorSinPlanEquipo, capacidadEquipo, idCompaniaEquipo);
-			comp.moviles.add(e);
+			empresa.moviles.add(e);
 		}
 		rs.close();
 		stmt.close();
