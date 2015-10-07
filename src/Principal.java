@@ -168,7 +168,7 @@ public class Principal {
 			String idCompaniaPlan = rs.getString("id_compania");
 
 			Plan p = new Plan(idPlan, nombrePlan, precioPlan, minutosPlan, gigasPlan, idCompaniaPlan);
-			empresa.planes.add(p);
+			empresa.getPlanes().add(p);
 		}
 		rs.close();
 		stmt.close();
@@ -189,7 +189,7 @@ public class Principal {
 			int valorSinPlanEquipo = rs.getInt("valor_sin_plan");
 			String idCompaniaEquipo = rs.getString("id_compania");
 			Equipo e = new Equipo(idEquipo, nombreEquipo, valorPlanEquipo, valorSinPlanEquipo, capacidadEquipo, idCompaniaEquipo);
-			empresa.moviles.add(e);
+			empresa.getMoviles().add(e);
 		}
 		rs.close();
 		stmt.close();
