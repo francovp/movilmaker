@@ -39,12 +39,14 @@ public class Principal {
 		}
 		
 		// Llama al men� principal
-		menuPrincipal(datosEmpresa);
+		//menuPrincipal(datosEmpresa);
 	}
 
 	public static void menuPrincipal(Compania empresa) throws IOException, SQLException {
 		int res, resFinal = 1;
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		
+		Cliente datosCliente = null;
 		while (resFinal == 1) {
 			System.out.println("BIENVENIDO A " + empresa.getNombre() + "!");
 			System.out.println("Eliga el numero de opcion que desee.");
@@ -58,21 +60,32 @@ public class Principal {
 			res = Integer.parseInt(bf.readLine());
 			if (res == 1){
 				// Se crear� un cliente nuevo y se asignar� a un objeto de tipo Cliente
-				Cliente datosCliente = empresa.crearClienteNuevo(empresa.getRut()); 
+				datosCliente = empresa.crearClienteNuevo(empresa.getRut()); 
 				
-				if(datosCliente != null)
+				if(datosCliente != null){
 					// Si se cre� el cliente nuevo se escribir� en la BD
 					if(ingresarDatosBD(datosCliente))
 						System.out.println("Cliente creado...");
+	
 					else 
 					System.out.println("Cliente creado... pero no se pudo escribir en la Base de Datos. ");
 					//			+ "No se pudo establecer la conexi�n al servidor");
+				}
 				else 
 					//Sino, se informa que el cliente ya existe y se vuelve al men�
 					System.out.println("Cliente ya existe...");
 			}
-			if (res == 2)
-				empresa.agregarOtroContrato();
+			if (res == 2){
+				// Se creara un contrato nuevo y se asignara a un objeto de tipo Cliente
+				datosCliente = empresa.agregarOtroContrato();
+				// Si se crea el contrato nuevo se escribira en la BD
+				if(ingresarContratosBD(datosCliente.contratos.get(datosCliente.contratos.size()-1),datosCliente.getRut()))
+					System.out.println("Contrato creado...");
+
+				else 
+				System.out.println("Contrato creado... pero no se pudo escribir en la Base de Datos. ");
+				//			+ "No se pudo establecer la conexi�n al servidor");
+			}
 			if (res == 3) {
 				System.out.println("Ingrese rut del cliente.");
 				String rut = bf.readLine();
@@ -108,6 +121,7 @@ public class Principal {
 
 	//////////////////////////// ** BASE DE DATOS //////////////////////////// 
 
+	
 	// Crea una conexi�n a la BD 
 	private static Connection conectarBD() throws SQLException {
 		Connection c = null;
@@ -122,7 +136,28 @@ public class Principal {
 		}
 		return c;
 	}
-	
+	private static boolean ingresarContratosBD(Contrato contratoCliente,String rut) throws SQLException{
+		// Se crea un objeto de tipo sentencia SQL
+		Statement stmt = null;
+		// Se crea un objeto de tipo conexi�n SQL con los datos de conecci�n a la DB
+				Connection c = conectarBD();
+		if(c !=null )
+		{
+			// Si se cre� la conexi�n a la BD exitosamente se contin�a				
+			// Se crea una nueva sentencia SQL
+			stmt = c.createStatement();
+			String sql = "INSERT INTO contratos(id_contrato,id_ciente,id_equipo,id_plan,fecha_inicio,fecha_termino,rut_cliente)"
+					+"VALUES("+contratoCliente.getIdContrato()+",0,"
+					+ contratoCliente.getEquipoContratado().getIdEquipo()
+					+","+contratoCliente.getPlanContratado().getIdPlan()
+					+",'"+contratoCliente.getFechaInicio()+"','"+contratoCliente.getFechaTermino()+"','"+rut+"'); commit";
+			stmt.executeUpdate(sql);
+			stmt.close();
+			c.close();
+			return true;
+		}
+		return false;
+	}
 	private static boolean ingresarDatosBD(Cliente datosCliente) throws SQLException
 	{
 		// Se crea un objeto de tipo sentencia SQL
@@ -143,10 +178,8 @@ public class Principal {
 					+ "','"+datosCliente.getDireccion1()+"','"+datosCliente.getDireccion2()+"','"+datosCliente.getApellido2()
 					+  "','"+datosCliente.getRut()+"'); commit";
 			stmt.executeUpdate(sql);
-
 			stmt.close();
-			// Se cierra conexión a la BD
-			//c.commit();
+			ingresarContratosBD(datosCliente.contratos.get(datosCliente.contratos.size()-1),datosCliente.getRut());
 			c.close();
 			return true;
 		}else
@@ -155,6 +188,7 @@ public class Principal {
 			// Si no se pudo establecer la conexión a la BD se retorna null;
 			
 		}
+		
 		
 	}
 	// Establece todos los m�todos de lecturas desde la Base de datos
