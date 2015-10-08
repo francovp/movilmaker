@@ -85,7 +85,10 @@ public class Compania {
 
 	// MUESTRA LOS CLIENTES
 	public void mostrarClientes() {
-		for (int i = 0; i < listaClientes.size(); i++)
+		if(listaClientes.size()==0)
+			System.out.println("No hay clientes.");
+		else
+			for (int i = 0; i < listaClientes.size(); i++)
 			System.out.println(
 					i + 1 + "- " + listaClientes.get(i).getNombre1() + " " + listaClientes.get(i).getApellido1() + ".");
 	}
@@ -106,11 +109,15 @@ public class Compania {
 		if (buscarCliente(rut) != null) {
 			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 			Cliente c = buscarCliente(rut);
-			System.out.println("Ingrese el numero de lo que desee modificar");
+			System.out.println("Informacion de: "+c.getNombre1()+" "+c.getApellido1()+"\nEmail: "+c.getEmail()
+								+"\nCelular: "+c.getFonoCel()+"\nTelefono: "+c.getFonoFijo()+"\nDireccion: "
+								+c.getDireccion1());
+			System.out.println("Informacion modificable: ");
 			System.out.println("1- Celular");
 			System.out.println("2- Telefono fijo");
 			System.out.println("3- Direccion");
 			System.out.println("4- E-mail");
+			System.out.println("Ingrese el numero de lo que desee modificar:");
 			int res = Integer.parseInt(bf.readLine()); // RESPUESTA DE OPCION
 
 			System.out.println("Ingrese la nueva informacion");
@@ -118,21 +125,25 @@ public class Compania {
 			if (res == 1) // CAMBIA EL CELULAR
 			{
 				c.setFonoCel(Integer.parseInt(info));
+				System.out.println("Informacion actualizada");
 				return true;
 			}
 			if (res == 2) // CAMBIA EL TFNO FIJO
 			{
 				c.setFonoFijo(Integer.parseInt(info));
+				System.out.println("Informacion actualizada");
 				return true;
 			}
 			if (res == 3) // CAMBIA LA DIRECCION
 			{
 				c.setDireccion2(info);
+				System.out.println("Informacion actualizada");
 				return true;
 			}
 			if (res == 4) // CAMBIA EL E.MAIL
 			{
 				c.setEmail(info);
+				System.out.println("Informacion actualizada");
 				return true;
 			}
 
@@ -218,14 +229,16 @@ public class Compania {
 		String fi = dfi.format(di);
 		String ff = dff.format(d);
 
-		System.out.println(
-				"Fecha de inicio del contrato: " + fi + ". El dia de esta fecha se estipulara como fecha de pago. ");
-		System.out.println("El cliente debera estar 5 meses como minimo con el plan contratado.");
-		System.out.println("Fecha de termino: " + ff
-				+ ". Despues de esta fecha el cliente seguira con el plan por el tiempo que el estime conveniente.");
-		idRandom = rnd.nextInt(); // Genera un numero random entre 2^-32 y 2 ^32 que sera el id con contrato
+		idRandom = rnd.nextInt(100000); // Genera un numero random entre 0 y 100000 que sera el id con contrato
 		contrato = new Contrato(idRandom, fi, ff, elegirMovil(), elegirPlan()); // Se crea el obj contrato y se retorna 
 		
+		System.out.println("INFORMACION DEL CONTRATO\n"+
+				"Fecha de inicio del contrato: " + fi + ". El dia de esta fecha se estipulara como fecha de pago. ");
+		System.out.println("El cliente debera estar 5 meses como minimo con el plan contratado de lo contrario"
+				+ " debera cancelar los meses restantes.");
+		System.out.println("Fecha de termino: " + ff
+				+ ". Despues de esta fecha el cliente seguira con el plan por el tiempo que el estime conveniente.");
+
 		return contrato;
 	}
 
@@ -235,11 +248,8 @@ public class Compania {
 		String rut = bf.readLine();
 		if (buscarCliente(rut) != null) // Si el cliente existe
 		{
-			int pos;
 			Cliente c = buscarCliente(rut);
-			c.contratos.add(crearContrato()); // Se le agrega el contrato
-			pos = listaClientes.indexOf(c); // Obtengo su posicion en el Arraylist
-			listaClientes.add(pos, c); // Lo agrego en su misma posicion (sobrescribir)
+			c.contratos.add(crearContrato()); // Se le agrega el contrato del cliente
 		} else
 			System.out.println("Cliente no existe.");
 	}
@@ -254,9 +264,12 @@ public class Compania {
 			resp = Integer.parseInt(bf.readLine());// solicito el contrato a eliminar
 
 			c.contratos.remove(buscarContrato(c, resp)); // elimino el contrato
-			pos = listaClientes.indexOf(c); // obtengo su posicion en el Arraylist
-			listaClientes.add(pos, c); // lo agrego en su misma posicion (sobrescribir)
-
+			//si quedo sin contratos , se ofrece eliminar
+			if(c.contratos.size()==0){
+					System.out.println("Cliente se encuentra sin contratos, se procede a eliminar su registro");
+					eliminarCliente(c.getRut());
+				
+			}
 			return true;
 		}
 		return false;
@@ -276,7 +289,8 @@ public class Compania {
 		System.out.println("Contratos de " + c.getNombre1() + " " + c.getApellido1() + ".");
 		for (int i = 0; i < c.contratos.size(); i++)
 			System.out.println(i + 1 + "- ID Contrato: " + c.contratos.get(i).getIdContrato() + ". Movil: "
-					+ c.contratos.get(i).getEquipoContratado() + ". Plan: " + c.contratos.get(i).getPlanContratado());
+								+ c.contratos.get(i).getEquipoContratado().getModelo() + ". Plan: " 
+								+ c.contratos.get(i).getPlanContratado().getNombrePlan()+".");
 
 	}
 
@@ -284,7 +298,7 @@ public class Compania {
 
 	public void mostrarPlanes() {
 		for (int i = 0; i < planes.size(); i++) {
-			System.out.println("Plan " + planes.get(i).getNombrePlan());
+			System.out.println(planes.get(i).getNombrePlan());
 			System.out.println("	A solo $" + planes.get(i).getPrecio() + ".");
 			System.out.println("	Con " + planes.get(i).getGigas() + "GB de navegacion y "
 					+ planes.get(i).getMinutos() + " minutos a todo destino!!\n");
@@ -312,7 +326,7 @@ public class Compania {
 		System.out.println("Nuestros Plan para ud son:");
 		for (i = 0; i < planes.size(); i++)
 			System.out.println(
-					i + 1 + "- Plan " + planes.get(i).getNombrePlan() + ", coste: " + planes.get(i).getPrecio());
+					i + 1 + "- " + planes.get(i).getNombrePlan() + ", coste: " + planes.get(i).getPrecio());
 
 		System.out.println("Igrese el numero de la opcion:");
 		i = Integer.parseInt(bf.readLine());
@@ -337,5 +351,39 @@ public class Compania {
 		}
 		;
 	}
+	
+/////////////////// FUNCIONES EXTRAS ///////////////////////
+	
+	public void buscarClientesConMasPlanes()
+	{
+		int cont=0,j=1;
+		Cliente c=null;
+		for(int i=0;i<listaClientes.size();i++)
+		{
+			//CALCULA AL FIN DEL CICLO QUE CLIENTE TIENE MAS PLANES
+			if((listaClientes.get(i).contratos.size()-1)>cont)
+			{
+				cont=listaClientes.get(i).contratos.size()-1;
+				c = listaClientes.get(i);
+			}
+			//SE MUESTRAN LOS CLIENTES CON MAS DE 3 CONTRATOS
+			if((listaClientes.get(i).contratos.size()-1)>3){
+				
+				while(j==1){//ciclo solo para imprimir 1 sola vez
+					System.out.println("Clientes con mas de 3 planes:");
+					j=0;
+				}
+				
+				System.out.println(" Rut: "+c.getRut()+" "+ c.getNombre1()+" "+c.getApellido1());
+			}
+				
+		}
+		//CLIENTE ESTRELLA CON MAS CONTRATOS
+		if(c!=null)
+			System.out.println("Cliente estrella, con un total de: "+cont+" planes contratados.\n*** "+ c.getNombre1()+" "+c.getApellido1()+". Rut: "+c.getRut()+" ***");
+	}
+	
+	
 
 }
+
