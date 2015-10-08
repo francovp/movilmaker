@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 
 /**
@@ -7,22 +7,43 @@
  *
  */
 public class Plan {
+
+	private int idPlan;
+	private String nombrePlan;
 	private int precio;
-	private String tipoPlan; //S,M,L
-	private int min; // minutos para hablar
-	private int net; //GB de navegacion
+	private int minutos; // minutos para hablar
+	private int gigas; // GB de navegacion
+	private String idCompania; // ID de la compania a la que pertenece el plan;
+	
 	/**
+	 * @param idPlan
+	 * @param nombrePlan
 	 * @param precio
-	 * @param tipoPlan
-	 * @param min
-	 * @param net
+	 * @param minutos
+	 * @param gigas
+	 * @param idCompania
 	 */
-	public Plan(int precio, String tipoPlan, int min, int net) {
+	public Plan(int idPlan, String nombrePlan, int precio, int minutos, int gigas, String idCompania) {
 		super();
+		this.idPlan = idPlan;
+		this.nombrePlan = nombrePlan;
 		this.precio = precio;
-		this.tipoPlan = tipoPlan;
-		this.min = min;
-		this.net = net;
+		this.minutos = minutos;
+		this.gigas = gigas;
+		this.idCompania = idCompania;
+	}
+	
+	public int getIdPlan() {
+		return idPlan;
+	}
+	public void setIdPlan(int idPlan) {
+		this.idPlan = idPlan;
+	}
+	public String getNombrePlan() {
+		return nombrePlan;
+	}
+	public void setNombrePlan(String nombrePlan) {
+		this.nombrePlan = nombrePlan;
 	}
 	public int getPrecio() {
 		return precio;
@@ -30,23 +51,23 @@ public class Plan {
 	public void setPrecio(int precio) {
 		this.precio = precio;
 	}
-	public String getTipoPlan() {
-		return tipoPlan;
+	public int getMinutos() {
+		return minutos;
 	}
-	public void setTipoPlan(String tipoPlan) {
-		this.tipoPlan = tipoPlan;
+	public void setMinutos(int minutos) {
+		this.minutos = minutos;
 	}
-	public int getMin() {
-		return min;
+	public int getGigas() {
+		return gigas;
 	}
-	public void setMin(int min) {
-		this.min = min;
+	public void setGigas(int gigas) {
+		this.gigas = gigas;
 	}
-	public int getNet() {
-		return net;
+	public String getIdCompania() {
+		return idCompania;
 	}
-	public void setNet(int net) {
-		this.net = net;
+	public void setIdCompania(String idCompania) {
+		this.idCompania = idCompania;
 	}
 
 }

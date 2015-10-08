@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * 
+ *
  */
 
 /**
@@ -19,100 +19,211 @@ public class Principal {
 
 	/**
 	 * @param args
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public static void main(String[] args) throws IOException, SQLException {
 		// TODO Auto-generated method stub
 
-		Compania datosEmpresa = null; // Aquí se guardarán los datos de la clase empresa
-		
-		//Conexión a la base de datos de Postgres
+		Compania datosEmpresa = null; // Aquï¿½ se guardarï¿½n los datos de la clase empresa
+
+		// Conexiï¿½n a la base de datos de Postgres
 		datosEmpresa = leerDatosBD();
-		if(datosEmpresa == null){
-			System.out.println("ERROR FATAL: No conectó a base de datos");
+		if (datosEmpresa != null)
+			// Si se crearon los datos de la empresa
+			System.out.println("Datos leidos desde la base de datos");
+		else {
+			// Si hubo cualquier especie de error al conectar a la BD o al crear los datos. 
+			System.out.println("ERROR FATAL: No se obtubieron datos desde la base de datos. "
+					+ "No se pudo establecer la conexiï¿½n al servidor");
 			System.exit(0);
 		}
-		else 
-			System.out.println("Datos leidos desde la base de datos");
-			menuPrincipal(datosEmpresa);
-		//Llama al menú principal 
+		
+		// Llama al menï¿½ principal
+		menuPrincipal(datosEmpresa);
 	}
 
-	public static void menuPrincipal(Compania empresa) throws IOException {
-		int res;
+	public static void menuPrincipal(Compania empresa) throws IOException, SQLException {
+		int res, resFinal = 1;
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-
-		System.out.println("¡ BIENVENIDO A "+empresa.getNombre()+"!");
-		System.out.println("Eliga el numero de opcion que desee.");
-		System.out.println("1- Ingresar un nuevo cliente y su contrato.");
-		System.out.println("2- Ingresar un nuevo contrato a un cliente existente.");
-		System.out.println("3- Terminar un contrato.");
-		System.out.println("4- Eliminar un cliente de nuestra empresa.");
-		System.out.println("5- Ver nuestros planes.");
-		System.out.println("6- Ver Clientes actuales.");
-		res=Integer.parseInt(bf.readLine());
-		if(res==1)
-			empresa.crearClienteNuevo();
-		if(res==2)
-			empresa.agregarOtroContrato();
-		if(res==3)
-		{
-			System.out.println("Ingrese rut del cliente.");
-			String rut=bf.readLine();
-			empresa.eliminarContrato(rut);
+		while (resFinal == 1) {
+			System.out.println("BIENVENIDO A " + empresa.getNombre() + "!");
+			System.out.println("Eliga el numero de opcion que desee.");
+			System.out.println("1- Ingresar un nuevo cliente y su contrato.");
+			System.out.println("2- Ingresar un nuevo contrato a un cliente existente.");
+			System.out.println("3- Terminar un contrato.");
+			System.out.println("4- Eliminar un cliente de nuestra empresa.");
+			System.out.println("5- Ver nuestros planes.");
+			System.out.println("6- Ver Clientes actuales.");
+			System.out.println("7- Modificar Datos de un cliente.");
+			res = Integer.parseInt(bf.readLine());
+			if (res == 1){
+				// Se crearï¿½ un cliente nuevo y se asignarï¿½ a un objeto de tipo Cliente
+				Cliente datosCliente = empresa.crearClienteNuevo(empresa.getRut()); 
+				
+				if(datosCliente != null)
+					// Si se creï¿½ el cliente nuevo se escribirï¿½ en la BD
+					if(ingresarDatosBD(datosCliente))
+						System.out.println("Cliente creado...");
+					else 
+					System.out.println("Cliente creado... pero no se pudo escribir en la Base de Datos. ");
+					//			+ "No se pudo establecer la conexiï¿½n al servidor");
+				else 
+					//Sino, se informa que el cliente ya existe y se vuelve al menï¿½
+					System.out.println("Cliente ya existe...");
+			}
+			if (res == 2)
+				empresa.agregarOtroContrato();
+			if (res == 3) {
+				System.out.println("Ingrese rut del cliente.");
+				String rut = bf.readLine();
+				if(empresa.eliminarContrato(rut))
+					System.out.println("Contrato Finalizado");
+			}
+			if (res == 4) {
+				System.out.println("Ingrese rut del cliente.");
+				String rut = bf.readLine();
+				if(empresa.eliminarCliente(rut))
+					System.out.println("Cliente Eliminado correctamente");
+				else
+					System.out.println("Rut no econtrado");
+			}
+			if (res == 5)
+				empresa.mostrarPlanes();
+			if (res == 6){
+				empresa.mostrarClientes();
+				empresa.buscarClientesConMasPlanes();
+			}
+		
+			if(res == 7 ) {
+				System.out.println("Ingrese rut del cliente.");
+				String rut = bf.readLine();
+				empresa.modificarCliente(rut);
+			}
+			System.out.println("\nIngrese 1 para volver al menu principal. \n"
+					+ "Ingrese 0 para salir del programa: \n");
+			resFinal = Integer.parseInt(bf.readLine());
+			if (resFinal == 0) System.exit(0);
 		}
-		if(res==4)
-		{
-			System.out.println("Ingrese rut del cliente.");
-			String rut=bf.readLine();
-			empresa.eliminarCliente(rut);
-		}
-		if(res==5)
-			empresa.mostrarPlanes();
-		if(res==6)
-			empresa.mostrarClientes();
 	}
-	
-////////////////////////////** BASE DE DATOS **////////////////////////////////////////////////////////////////	
-	
-	private static Compania leerDatosBD() throws SQLException //
-	{
-		Compania empresa = null;
+
+	//////////////////////////// ** BASE DE DATOS //////////////////////////// 
+
+	// Crea una conexiï¿½n a la BD 
+	private static Connection conectarBD() throws SQLException {
 		Connection c = null;
-		Statement stmt = null;
 		try {
 			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/vomistar","postgres", "12345");
+			c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/vomistar", "postgres", "12345");
 			c.setAutoCommit(false);
-			//Se crea la empresa
-			empresa = leerDatosDBEmpresa(stmt,c);
-		} catch ( Exception e ) {
-			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			c.close();
 			return null;
 		}
-		c.close();
-
-		return empresa;
+		return c;
 	}
 	
-	private static Compania leerDatosDBEmpresa(Statement stmt, Connection c) throws SQLException
+	private static boolean ingresarDatosBD(Cliente datosCliente) throws SQLException
 	{
-		Compania empresa = null;
-		//Se crea un objeto de tipo sentencia
-		stmt = c.createStatement();
-		//Se ejecuta la sentencia SQL
-		ResultSet rs = stmt.executeQuery( "SELECT * FROM compania;" );
-		while ( rs.next() ) {
-			//Se obtienen datos de las tablas
-			String  rutCompania = rs.getString("id_compania");
-			String  nombreCompania = rs.getString("nombre");
-			//Se creará un objeto compañia con los datos obtenidos de la DB
-			empresa = new Compania (nombreCompania,rutCompania);
-		}
-		rs.close();
-		stmt.close();
-		return empresa;
-	}
+		// Se crea un objeto de tipo sentencia SQL
+		Statement stmt = null;
+		// Se crea un objeto de tipo conexiï¿½n SQL con los datos de conecciï¿½n a la DB
+		Connection c = conectarBD();
+		if(c !=null )
+		{
+			// Si se creï¿½ la conexiï¿½n a la BD exitosamente se continï¿½a
+			
+			// Se crea una nueva sentencia SQL
+			stmt = c.createStatement();
+			String sql = "INSERT INTO clientes (nombre1,apellido1,id_compania,"
+					+ "nombre2,fono_celular,fono_fijo,email,direccion1,direccion2,apellido2,rut) "
+					+ "VALUES ('"+datosCliente.getNombre1()+"','"+datosCliente.getApellido1()
+					+ "','"+datosCliente.getIdCompania()+"','"+datosCliente.getNombre2()
+					+ "',"+datosCliente.getFonoCel()+","+datosCliente.getFonoFijo()+",'"+datosCliente.getEmail()
+					+ "','"+datosCliente.getDireccion1()+"','"+datosCliente.getDireccion2()+"','"+datosCliente.getApellido2()
+					+  "','"+datosCliente.getRut()+"'); commit";
+			stmt.executeUpdate(sql);
 
+			stmt.close();
+			// Se cierra conexiÃ³n a la BD
+			//c.commit();
+			c.close();
+			return true;
+		}else
+		{
+			return false;
+			// Si no se pudo establecer la conexiÃ³n a la BD se retorna null;
+			
+		}
+		
+	}
+	// Establece todos los mï¿½todos de lecturas desde la Base de datos
+	private static Compania leerDatosBD() throws SQLException {
+		// Se crea un objeto de tipo empresa donde se guardarï¿½n los datos leidos desde la BD
+		Compania empresa = null;
+		// Se crea un objeto de tipo sentencia SQL
+		Statement stmt = null;
+		// Se crea un objeto de tipo resultado Query SQL
+		ResultSet rs = null;
+		// Se crea un objeto de tipo conexiï¿½n SQL con los datos de conecciï¿½n a la DB
+		Connection c = conectarBD();
+		if (c != null){
+			// Si se creï¿½ la conexiï¿½n a la BD exitosamente se continï¿½a
+			
+			// Se crea una nueva sentencia SQL
+			stmt = c.createStatement();
+			// Se ejecuta la sentencia SQL y se guarda
+			rs = stmt.executeQuery("SELECT * FROM compania;");
+			while (rs.next()) {
+				// Se obtienen datos de las tablas
+				// Se crearï¿½ un objeto compaï¿½ia con los datos obtenidos de la DB
+				empresa = new Compania(rs.getString("nombre"), rs.getString("id_compania"));
+			}
+			
+			// Se leen datos de Planes desde la BD
+			// Se ejecuta la sentencia SQL y se guarda
+			rs = stmt.executeQuery("SELECT * FROM planes;");
+			while (rs.next()) {
+				// Se obtienen datos de la plan
+				Plan p = new Plan(rs.getInt("id_plan"), rs.getString("nombrePlan"), rs.getInt("precio")
+								, rs.getInt("minutos"), rs.getInt("gigas"), rs.getString("id_compania"));
+				
+				empresa.getPlanes().add(p);
+			}
+			
+			// Se leen datos de Equipos desde la BD
+			// Se crea una nueva sentencia SQL
+			stmt = c.createStatement();
+			// Se ejecuta la sentencia SQL y se guarda
+			rs = stmt.executeQuery("SELECT * FROM equipos;");
+			while (rs.next()) {
+				// Se obtienen datos de la equipos
+				Equipo e = new Equipo(rs.getInt("id_equipo"), rs.getString("nombreEquipo")
+									, rs.getInt("valor_con_plan"), rs.getInt("valor_sin_plan")
+									, rs.getString("capacidad"), rs.getString("id_compania"));
+				
+				empresa.getMoviles().add(e);
+			}
+			
+			rs = stmt.executeQuery("SELECT * FROM clientes;");
+			while (rs.next()) {
+				// Se obtienen datos de cliente y se asignan
+				Cliente cli = new Cliente(rs.getString("nombre1"),rs.getString("nombre2"),rs.getString("apellido1"),rs.getString("apellido2")
+										,rs.getString("rut"),rs.getInt("fono_celular"),rs.getInt("fono_fijo"),rs.getString("direccion1")
+										,rs.getString("direccion2"),rs.getString("rut"),rs.getString("id_compania"));
+				empresa.getListaClientes().add(cli);
+			}
+			
+			rs.close();
+			stmt.close();
+			
+			// Se cierra conexiï¿½n a la BD
+			c.close();
+			
+			// Se retorna toda la colecciï¿½n empresa
+			return empresa;
+		}else 
+			// Si no se pudo establecer la conexiï¿½n a la BD se retorna null;
+			return null;
+	}
 }
