@@ -177,13 +177,13 @@ public class Compania {
 		apellido2 = bf.readLine();
 		System.out.print("RUT (123456780):");
 		rut = bf.readLine();
-		System.out.print("Nº Celular:");
+		System.out.print("Nï¿½ Celular:");
 		fonoCel = Integer.parseInt(bf.readLine());
-		System.out.print("Nº Telefono fijo:");
+		System.out.print("Nï¿½ Telefono fijo:");
 		fonoFijo = Integer.parseInt(bf.readLine());
 		System.out.print("Email:");
 		email = bf.readLine();
-		System.out.print("Direccion (Calle y nº):");
+		System.out.print("Direccion (Calle y nï¿½):");
 		direccion1 = bf.readLine();
 		System.out.print("Ciudad:");
 		direccion2 = bf.readLine();
@@ -215,8 +215,10 @@ public class Compania {
 
 	public Contrato crearContrato() throws IOException {
 		Random rnd = new Random();
-		int idRandom;
+		int idRandom,cuotas;
 		Contrato contrato;
+		
+		BufferedReader res = new BufferedReader(new InputStreamReader(System.in));
 
 		// Datos para usar fecha real
 		Calendar fechaF = new GregorianCalendar();
@@ -228,9 +230,10 @@ public class Compania {
 		Date d = fechaF.getTime();
 		String fi = dfi.format(di);
 		String ff = dff.format(d);
-
+		System.out.println("Ingrese la cantidad de cuotas, estas pueden ser entre 1-12");
+		cuotas= Integer.parseInt(res.readLine());
 		idRandom = rnd.nextInt(100000); // Genera un numero random entre 0 y 100000 que sera el id con contrato
-		contrato = new Contrato(idRandom, fi, ff, elegirMovil(), elegirPlan()); // Se crea el obj contrato y se retorna 
+		contrato = new Contrato(idRandom, fi, ff, elegirMovil(), elegirPlan(), cuotas); // Se crea el obj contrato y se retorna 
 		
 		System.out.println("INFORMACION DEL CONTRATO\n"+
 				"Fecha de inicio del contrato: " + fi + ". El dia de esta fecha se estipulara como fecha de pago. ");
@@ -242,7 +245,7 @@ public class Compania {
 		return contrato;
 	}
 
-	public void agregarOtroContrato() throws IOException {
+	public Cliente agregarOtroContrato() throws IOException {
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Ingrese el rut del cliente:");
 		String rut = bf.readLine();
@@ -250,8 +253,10 @@ public class Compania {
 		{
 			Cliente c = buscarCliente(rut);
 			c.contratos.add(crearContrato()); // Se le agrega el contrato del cliente
+			return c;
 		} else
 			System.out.println("Cliente no existe.");
+			return null;
 	}
 
 	public boolean eliminarContrato(String rut) throws IOException {
