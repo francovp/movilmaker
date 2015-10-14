@@ -24,9 +24,9 @@ public class Principal {
 	public static void main(String[] args) throws IOException, SQLException {
 		// TODO Auto-generated method stub
 
-		Compania datosEmpresa = null; // Aqu� se guardar�n los datos de la clase empresa
+		Compania datosEmpresa = null; // Aqui se guardar�n los datos de la clase empresa
 
-		// Conexi�n a la base de datos de Postgres
+		// Conexion a la base de datos de Postgres
 		datosEmpresa = leerDatosBD();
 		if (datosEmpresa != null)
 			// Si se crearon los datos de la empresa
@@ -34,21 +34,21 @@ public class Principal {
 		else {
 			// Si hubo cualquier especie de error al conectar a la BD o al crear los datos. 
 			System.out.println("ERROR FATAL: No se obtubieron datos desde la base de datos. "
-					+ "No se pudo establecer la conexi�n al servidor");
+					+ "No se pudo establecer la conexion al servidor");
 			System.exit(0);
 		}
 		
-		// Llama al men� principal
-		//menuPrincipal(datosEmpresa);
+		// Llama al menu principal
+		menuPrincipal(datosEmpresa);
 	}
 
-	public static void menuPrincipal(Compania empresa) throws IOException, SQLException {
+	public static void menuPrincipal(Compania datosEmpresa) throws IOException, SQLException {
 		int res, resFinal = 1;
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		
 		Cliente datosCliente = null;
 		while (resFinal == 1) {
-			System.out.println("BIENVENIDO A " + empresa.getNombre() + "!");
+			System.out.println("BIENVENIDO A " + datosEmpresa.getNombre() + "!");
 			System.out.println("Eliga el numero de opcion que desee.");
 			System.out.println("1- Ingresar un nuevo cliente y su contrato.");
 			System.out.println("2- Ingresar un nuevo contrato a un cliente existente.");
@@ -59,11 +59,11 @@ public class Principal {
 			System.out.println("7- Modificar Datos de un cliente.");
 			res = Integer.parseInt(bf.readLine());
 			if (res == 1){
-				// Se crear� un cliente nuevo y se asignar� a un objeto de tipo Cliente
-				datosCliente = empresa.crearClienteNuevo(empresa.getRut()); 
+				// Se creara un cliente nuevo y se asignara a un objeto de tipo Cliente
+				datosCliente = datosEmpresa.crearClienteNuevo(datosEmpresa.getRut()); 
 				
 				if(datosCliente != null){
-					// Si se cre� el cliente nuevo se escribir� en la BD
+					// Si se crea el cliente nuevo se escribira en la BD
 					if(ingresarDatosBD(datosCliente))
 						System.out.println("Cliente creado...");
 	
@@ -77,7 +77,7 @@ public class Principal {
 			}
 			if (res == 2){
 				// Se creara un contrato nuevo y se asignara a un objeto de tipo Cliente
-				datosCliente = empresa.agregarOtroContrato();
+				datosCliente = datosEmpresa.agregarOtroContrato();
 				// Si se crea el contrato nuevo se escribira en la BD
 				if(ingresarContratosBD(datosCliente.contratos.get(datosCliente.contratos.size()-1),datosCliente.getRut()))
 					System.out.println("Contrato creado...");
@@ -89,28 +89,28 @@ public class Principal {
 			if (res == 3) {
 				System.out.println("Ingrese rut del cliente.");
 				String rut = bf.readLine();
-				if(empresa.eliminarContrato(rut))
+				if(datosEmpresa.eliminarContrato(rut))
 					System.out.println("Contrato Finalizado");
 			}
 			if (res == 4) {
 				System.out.println("Ingrese rut del cliente.");
 				String rut = bf.readLine();
-				if(empresa.eliminarCliente(rut))
+				if(datosEmpresa.eliminarCliente(rut))
 					System.out.println("Cliente Eliminado correctamente");
 				else
 					System.out.println("Rut no econtrado");
 			}
 			if (res == 5)
-				empresa.mostrarPlanes();
+				datosEmpresa.mostrarPlanes();
 			if (res == 6){
-				empresa.mostrarClientes();
-				empresa.buscarClientesConMasPlanes();
+				datosEmpresa.mostrarClientes();
+				datosEmpresa.buscarClientesConMasPlanes();
 			}
 		
 			if(res == 7 ) {
 				System.out.println("Ingrese rut del cliente.");
 				String rut = bf.readLine();
-				empresa.modificarCliente(rut);
+				datosEmpresa.modificarCliente(rut);
 			}
 			System.out.println("\nIngrese 1 para volver al menu principal. \n"
 					+ "Ingrese 0 para salir del programa: \n");
@@ -122,7 +122,7 @@ public class Principal {
 	//////////////////////////// ** BASE DE DATOS //////////////////////////// 
 
 	
-	// Crea una conexi�n a la BD 
+	// Crea una conexion a la BD 
 	private static Connection conectarBD() throws SQLException {
 		Connection c = null;
 		try {
@@ -162,11 +162,11 @@ public class Principal {
 	{
 		// Se crea un objeto de tipo sentencia SQL
 		Statement stmt = null;
-		// Se crea un objeto de tipo conexi�n SQL con los datos de conecci�n a la DB
+		// Se crea un objeto de tipo conexion SQL con los datos de coneccion a la DB
 		Connection c = conectarBD();
 		if(c !=null )
 		{
-			// Si se cre� la conexi�n a la BD exitosamente se contin�a
+			// Si se crea la conexion la BD exitosamente y se continua
 			
 			// Se crea una nueva sentencia SQL
 			stmt = c.createStatement();
@@ -191,18 +191,18 @@ public class Principal {
 		
 		
 	}
-	// Establece todos los m�todos de lecturas desde la Base de datos
+	// Establece todos los metodos de lecturas desde la Base de datos
 	private static Compania leerDatosBD() throws SQLException {
-		// Se crea un objeto de tipo empresa donde se guardar�n los datos leidos desde la BD
-		Compania empresa = null;
+		// Se crea un objeto de tipo empresa donde se guardaran los datos leidos desde la BD
+		Compania DatosEmpresa = null;
 		// Se crea un objeto de tipo sentencia SQL
 		Statement stmt = null;
 		// Se crea un objeto de tipo resultado Query SQL
 		ResultSet rs = null;
-		// Se crea un objeto de tipo conexi�n SQL con los datos de conecci�n a la DB
+		// Se crea un objeto de tipo conexion SQL con los datos de coneccion a la DB
 		Connection c = conectarBD();
 		if (c != null){
-			// Si se cre� la conexi�n a la BD exitosamente se contin�a
+			// Si se creo la conexion a la BD exitosamente y se continua
 			
 			// Se crea una nueva sentencia SQL
 			stmt = c.createStatement();
@@ -210,8 +210,8 @@ public class Principal {
 			rs = stmt.executeQuery("SELECT * FROM compania;");
 			while (rs.next()) {
 				// Se obtienen datos de las tablas
-				// Se crear� un objeto compa�ia con los datos obtenidos de la DB
-				empresa = new Compania(rs.getString("nombre"), rs.getString("id_compania"));
+				// Se crea un objeto compania con los datos obtenidos de la DB
+				DatosEmpresa = new Compania(rs.getString("nombre"), rs.getString("id_compania"));
 			}
 			
 			// Se leen datos de Planes desde la BD
@@ -222,12 +222,10 @@ public class Principal {
 				Plan p = new Plan(rs.getInt("id_plan"), rs.getString("nombrePlan"), rs.getInt("precio")
 								, rs.getInt("minutos"), rs.getInt("gigas"), rs.getString("id_compania"));
 				
-				empresa.getPlanes().add(p);
+				DatosEmpresa.getPlanes().add(p);
 			}
 			
 			// Se leen datos de Equipos desde la BD
-			// Se crea una nueva sentencia SQL
-			stmt = c.createStatement();
 			// Se ejecuta la sentencia SQL y se guarda
 			rs = stmt.executeQuery("SELECT * FROM equipos;");
 			while (rs.next()) {
@@ -236,7 +234,7 @@ public class Principal {
 									, rs.getInt("valor_con_plan"), rs.getInt("valor_sin_plan")
 									, rs.getString("capacidad"), rs.getString("id_compania"));
 				
-				empresa.getMoviles().add(e);
+				DatosEmpresa.getMoviles().add(e);
 			}
 			
 			rs = stmt.executeQuery("SELECT * FROM clientes;");
@@ -245,19 +243,19 @@ public class Principal {
 				Cliente cli = new Cliente(rs.getString("nombre1"),rs.getString("nombre2"),rs.getString("apellido1"),rs.getString("apellido2")
 										,rs.getString("rut"),rs.getInt("fono_celular"),rs.getInt("fono_fijo"),rs.getString("direccion1")
 										,rs.getString("direccion2"),rs.getString("rut"),rs.getString("id_compania"));
-				empresa.getListaClientes().add(cli);
+				DatosEmpresa.getListaClientes().add(cli);
 			}
 			
 			rs.close();
 			stmt.close();
 			
-			// Se cierra conexi�n a la BD
+			// Se cierra conexion a la BD
 			c.close();
 			
-			// Se retorna toda la colecci�n empresa
-			return empresa;
+			// Se retorna toda la coleccion empresa
+			return DatosEmpresa;
 		}else 
-			// Si no se pudo establecer la conexi�n a la BD se retorna null;
+			// Si no se pudo establecer la conexion a la BD se retorna null;
 			return null;
 	}
 }
