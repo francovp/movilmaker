@@ -174,9 +174,9 @@ public class FrameAgregarCliente extends JFrame {
 				Database bd = null;
 				try {
 					bd = new Database();
-				} catch (SQLException e3) {
+				} catch (SQLException e2) {
 					// TODO Auto-generated catch block
-					e3.printStackTrace();
+					e2.printStackTrace();
 				}
 				
 				// Comprobaciones de Datos

@@ -102,6 +102,7 @@ public class FrameInterfaz extends JFrame {
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
+				System.exit(0);
 			}
 		});
 

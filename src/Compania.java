@@ -418,7 +418,6 @@ public class Compania {
 			if (buscarCliente(rut) != null) {
 				c = buscarCliente(rut);
 				listaClientes.remove(c);
-				System.out.println("Cliente Eliminado");
 				return true;
 			}
 			return false;
@@ -428,7 +427,7 @@ public class Compania {
 		public Contrato interfazCrearContrato(int numPlan, int numEquipo, int numCuotas)  {
 			Random rnd = new Random();
 			int idRandom;
-			Contrato contrato;
+			Contrato contrato = null;
 
 			// Datos para usar fecha real
 			Calendar fechaF = new GregorianCalendar();

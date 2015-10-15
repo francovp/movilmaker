@@ -23,7 +23,7 @@ public class Database {
 		try {
 			Class.forName("org.postgresql.Driver");
 			c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/vomistar", "postgres", "12345");
-			c.setAutoCommit(false);
+			c.setAutoCommit(true);
 		} catch (Exception e) {
 			System.err.println("No se pudo establecer la conexión con la base de datos!\n"
 					+ "Verifique que el servicio del servidor PostgreSQL esté iniciado.\n"
@@ -45,12 +45,37 @@ public class Database {
 					+ "','"+datosCliente.getIdCompania()+"','"+datosCliente.getNombre2()
 					+ "',"+datosCliente.getFonoCel()+","+datosCliente.getFonoFijo()+",'"+datosCliente.getEmail()
 					+ "','"+datosCliente.getDireccion1()+"','"+datosCliente.getDireccion2()+"','"+datosCliente.getApellido2()
-					+  "','"+datosCliente.getRut()+"'); commit";
+					+  "','"+datosCliente.getRut()+"');";
 			stmt.executeUpdate(sql);
-
 			stmt.close();
 			// Se cierra conexión a la BD
-			//c.commit();
+			c.close();
+			return true;
+		} else
+			return false;
+			// Si no se pudo establecer la conexión a la BD se retorna null;
+
+	}
+	
+	// Para eliminar un cliente de la BD y todos sus contratos
+	public boolean eliminarClienteBD(String rut) throws SQLException {
+		String sql;
+		if(c !=null )
+		{
+			// Si se creó la conexión a la BD exitosamente se continóa
+			// Se crea una nueva sentencia SQL
+			stmt = c.createStatement();
+			sql = "DELETE FROM clientes WHERE (rut = '"+rut+"');";
+			stmt.executeUpdate(sql);
+			stmt.close();
+			
+			// Se crea una nueva sentencia SQL
+			stmt = c.createStatement();
+			sql = "DELETE FROM contratos WHERE (rut_cliente = '"+rut+"');";
+			stmt.executeUpdate(sql);
+			stmt.close();
+			
+			// Se cierra conexión a la BD
 			c.close();
 			return true;
 		} else
@@ -83,8 +108,6 @@ public class Database {
 		if (c != null){
 			// Si se creó la conexión a la BD exitosamente se continóa
 
-			// Se crea una nueva sentencia SQL
-			stmt = c.createStatement();
 			// Se ejecuta la sentencia SQL y se guarda
 			rs = stmt.executeQuery("SELECT * FROM compania;");
 			while (rs.next())
@@ -104,8 +127,6 @@ public class Database {
 			}
 
 			// Se leen datos de Equipos desde la BD
-			// Se crea una nueva sentencia SQL
-			stmt = c.createStatement();
 			// Se ejecuta la sentencia SQL y se guarda
 			rs = stmt.executeQuery("SELECT * FROM equipos;");
 			while (rs.next()) {
@@ -117,6 +138,8 @@ public class Database {
 				empresa.getMoviles().add(e);
 			}
 
+			// Se leen datos de Clientes desde la BD
+			// Se ejecuta la sentencia SQL y se guarda
 			rs = stmt.executeQuery("SELECT * FROM clientes;");
 			while (rs.next()) {
 				// Se obtienen datos de cliente y se asignan
@@ -124,6 +147,19 @@ public class Database {
 						,rs.getString("rut"),rs.getInt("fono_celular"),rs.getInt("fono_fijo"),rs.getString("direccion1")
 						,rs.getString("direccion2"),rs.getString("rut"),rs.getString("id_compania"));
 				empresa.getListaClientes().add(cli);
+			}
+			
+			// Se leen datos de Contratos desde la BD
+			// Se ejecuta la sentencia SQL y se guarda
+			rs = stmt.executeQuery("SELECT * FROM contratos;");
+			while (rs.next()) {
+				// Se obtienen datos de la equipos
+				Contrato c = new Contrato(rs.getInt("id_contrato"), rs.getInt("id_cliente")
+						, rs.getInt("id_equipo"), rs.getInt("id_plan")
+						, rs.getString("fecha_inicio"), rs.getString("fecha_termino"), rs.getString("rut_cliente")
+						, rs.getInt("monto"), rs.getInt("cuotas"));
+
+				empresa.getContratos().add(c);
 			}
 
 			rs.close();

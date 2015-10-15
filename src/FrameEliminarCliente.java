@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -14,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 
+@SuppressWarnings("serial")
 public class FrameEliminarCliente extends JFrame {
 
 	private JPanel contentPane;
@@ -41,43 +43,61 @@ public class FrameEliminarCliente extends JFrame {
 	public FrameEliminarCliente(Compania datosEmpresa) {
 		setTitle("Eliminar cliente");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 410, 300);
+		setBounds(100, 100, 382, 331);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "Eliminaci\u00F3n de cliente", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 21, 376, 75);
+		panel.setBounds(10, 21, 284, 75);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
-		JLabel lblIngreseRutDel = new JLabel("Ingrese rut del cliente a eliminar");
-		lblIngreseRutDel.setBounds(10, 11, 175, 14);
-		panel.add(lblIngreseRutDel);
+		JLabel lblIngreseRut = new JLabel("Ingrese rut del cliente a eliminar");
+		lblIngreseRut.setBounds(21, 11, 175, 14);
+		panel.add(lblIngreseRut);
 
 		textRut = new JTextField();
-		textRut.setBounds(10, 36, 175, 20);
+		textRut.setBounds(21, 36, 151, 20);
 		panel.add(textRut);
 		textRut.setColumns(10);
 
-		JButton btnNewButton_1 = new JButton("Eliminar");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String rut;
 				rut=textRut.getText();
-
+				// Creación de conección a base de datos
+				Database bd = null;
+				try {
+					bd = new Database();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				//Llama a metodo en clase Compañia para eliminar Cliente
-				datosEmpresa.interfazEliminarCliente(rut);
+				if (datosEmpresa.interfazEliminarCliente(rut) == true){
+					System.out.println("Cliente eliminado...");
+					// Si el cliente se elimino exitosamente se eliminará cliente en la BD
+					try {
+						bd.eliminarClienteBD(rut);
+						System.out.println("Cliente eliminado de la base de datos...");						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						System.err.println("Cliente no se pudo eliminar de la Base de Datos.\n"
+								+ "\nDetalles de la excepción:");
+						System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
+					}
+				}
+				else
+					//Sino, se informa que el cliente no existe
+					System.err.println("Cliente no existe...");
 			}
 		});
 
-		btnNewButton_1.setBounds(248, 21, 118, 37);
-		panel.add(btnNewButton_1);
-
-		JLabel lblEliminarDeCompaia = new JLabel("Eliminar de compa\u00F1ia");
-		lblEliminarDeCompaia.setBounds(248, 0, 118, 14);
-		panel.add(lblEliminarDeCompaia);
+		btnEliminar.setBounds(182, 36, 98, 20);
+		panel.add(btnEliminar);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(20, 107, 224, 143);
@@ -87,8 +107,8 @@ public class FrameEliminarCliente extends JFrame {
 		scrollPane.setViewportView(list);
 		list.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 
-		JButton btnNewButton = new JButton("Ver Clientes");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnMostrar = new JButton("Mostrar");
+		btnMostrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel listmodel = new DefaultListModel();
 				for(int i=0; i<datosEmpresa.getListaClientes().size();i++){
@@ -97,23 +117,23 @@ public class FrameEliminarCliente extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(258, 132, 126, 23);
-		contentPane.add(btnNewButton);
+		btnMostrar.setBounds(260, 126, 97, 23);
+		contentPane.add(btnMostrar);
 
-		JLabel lblClientesIngresadosEn = new JLabel("LIsta clientes");
-		lblClientesIngresadosEn.setBounds(260, 107, 136, 14);
-		contentPane.add(lblClientesIngresadosEn);
+		JLabel lblListaClientes = new JLabel("Lista clientes");
+		lblListaClientes.setBounds(260, 107, 136, 14);
+		contentPane.add(lblListaClientes);
 
-		JButton btnNewButton_2 = new JButton("Volver");
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FrameInterfaz fInterfaz = new FrameInterfaz (datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}
 		});
-		btnNewButton_2.setBounds(258, 227, 128, 23);
-		contentPane.add(btnNewButton_2);
+		btnVolver.setBounds(258, 258, 97, 23);
+		contentPane.add(btnVolver);
 
 	}
 }

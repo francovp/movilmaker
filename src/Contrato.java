@@ -8,13 +8,45 @@
  */
 public class Contrato {
 	private int idContrato;
-	private int monto;
+	private int idCliente;
+	private int idEquipo;
+	private int idPlan;
+	private int monto; // Cantidad de dinero que el cliente va a pagar el cliente mensualmente
 	private int cuotas;
 	private String fechaInicio; // FECHA DE PAGO SERA LA FECHA DE INICIO DEL CONTRATO
 	private String fechaTermino;
 	private Equipo equipoContratado; // Referencia al Equipo contratado
 	private Plan planContratado; // Referencia al Plan contratado
+	
+	// Constructor para cuando se obtienen los contratos desde la BD
+	/**
+	 * @param idContrato
+	 * @param idCliente
+	 * @param idEquipo
+	 * @param idPlan
+	 * @param monto
+	 * @param cuotas
+	 * @param fechaInicio
+	 * @param fechaTermino
+	 * @param equipoContratado
+	 * @param planContratado
+	 */
+	public Contrato(int idContrato, int idCliente, int idEquipo, int idPlan, int monto, int cuotas, String fechaInicio,
+			String fechaTermino, Equipo equipoContratado, Plan planContratado) {
+		super();
+		this.idContrato = idContrato;
+		this.idCliente = idCliente;
+		this.idEquipo = idEquipo;
+		this.idPlan = idPlan;
+		this.monto = monto;
+		this.cuotas = cuotas;
+		this.fechaInicio = fechaInicio;
+		this.fechaTermino = fechaTermino;
+		this.equipoContratado = equipoContratado;
+		this.planContratado = planContratado;
+	}
 
+	// Constructor para contratos creados desde el programa
 	/**
 	 * @param idContrato
 	 * @param fechaInicio
@@ -23,7 +55,7 @@ public class Contrato {
 	 * @param planContratado
 	 */
 	public Contrato(int idContrato, String fechaInicio, String fechaTermino, Equipo equipoContratado,
-			Plan planContratado,int cuotas) {
+			Plan planContratado, int cuotas) {
 		super();
 		this.idContrato = idContrato;
 		this.fechaInicio = fechaInicio;
@@ -35,33 +67,14 @@ public class Contrato {
 	}
 
 
-	//SOBRECARGA PRUEBA DE INTERFAZ SIN PLAN NI EQUIPO
-	//SOBRECARGA PRUEBA DE INTERFAZ SIN PLAN NI EQUIPO
-	//SOBRECARGA PRUEBA DE INTERFAZ SIN PLAN NI EQUIPO
-	//SOBRECARGA PRUEBA DE INTERFAZ SIN PLAN NI EQUIPO
-	//SOBRECARGA PRUEBA DE INTERFAZ SIN PLAN NI EQUIPO
-	public Contrato(int idContrato, String fechaInicio, String fechaTermino,int cuotas) {
-		super();
-		this.idContrato = idContrato;
-		this.fechaInicio = fechaInicio;
-		this.fechaTermino = fechaTermino;
-		monto=equipoContratado.getPrecio() + planContratado.getPrecio();
-		this.cuotas=cuotas;
-	}
-
-
 	public int getCuotas() {
 		return cuotas;
 	}
 
-
-
 	public void setCuotas(int cuotas) {
 		this.cuotas = cuotas;
 	}
-
-
-
+	
 	public int getMonto() {
 		return monto;
 	}
