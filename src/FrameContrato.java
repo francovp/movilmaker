@@ -3,6 +3,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -37,7 +38,8 @@ public class FrameContrato extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrameContrato(Compania datosEmpresa, Cliente cliente) {	// RECIBE DATOS DE LA EMPRESA Y DATOS DE CLIENTE (cliente para obtencion de nombre mostrado en el panel y rut para su busqueda)
+	// RECIBE DATOS DE LA EMPRESA Y DATOS DE CLIENTE (cliente para obtencion de nombre mostrado en el panel y rut para su busqueda)
+	public FrameContrato(Compania datosEmpresa, Cliente cliente) {	
 		setTitle("Contrato");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 332);
@@ -106,24 +108,51 @@ public class FrameContrato extends JFrame {
 		contentPane.add(lblAviso2);
 
 
-		//	DATOS INGRESADOS SE ENVIAN A CLASE Compañia, metodo: interfazCrearContrato
+		//	DATOS INGRESADOS SE ENVIAN A CLASE CompaÃ±ia, metodo: interfazCrearContrato
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int numPlan, numEquipo, numCuotas;
-
+				Cliente clienteBuscado = null;
+				Cliente clienteActual = null;
+				Contrato contratoNuevo = null;
+				Database bd = null;
+				try {
+					bd = new Database();
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				
 				for (int i=0;i < datosEmpresa.getPlanes().size();i++)
-				 for (int j=0;j<datosEmpresa.getMoviles().size();j++)
-					 // Si estan Seleccionados en LA LISTA, "Plan", "Equipo" y "meses" (entre 1-12 cuotas) , se adjudica el contrato
-						if(listPlanes.isSelectedIndex(i) && listEquipos.isSelectedIndex(j) && comprobarMesInt() == true && Integer.parseInt(textCuotas.getText())>=1 && Integer.parseInt(textCuotas.getText())<=12){
+					for (int j=0;j<datosEmpresa.getMoviles().size();j++)
+						// Si estan Seleccionados en LA LISTA, "Plan", "Equipo" y "meses" (entre 1-12 cuotas) , se adjudica el contrato
+						if(listPlanes.isSelectedIndex(i) && listEquipos.isSelectedIndex(j) && 
+								comprobarMesInt() == true && Integer.parseInt(textCuotas.getText())>=1 && 
+								Integer.parseInt(textCuotas.getText())<=12){
 							//SE OTORGAN VALORES A VARIABLES PARA PLAN, EQUIPO Y CUOTAS
 							numPlan=listPlanes.getSelectedIndex();
 							numEquipo=listEquipos.getSelectedIndex();
 							numCuotas=Integer.parseInt(textCuotas.getText());
 
 							for(int k=0;k<datosEmpresa.getListaClientes().size();k++)
-								if (cliente.getRut().equals(datosEmpresa.getListaClientes().get(k).getRut()))
-									datosEmpresa.getListaClientes().get(k).getContratos().add(datosEmpresa.interfazCrearContrato(numPlan, numEquipo, numCuotas));	// SE LE OTORGA NUEVO CONTRATO A CLIENTE DE LA COMPAÑIA
+								clienteBuscado = datosEmpresa.getListaClientes().get(k);
+								if (cliente.getRut().equals(clienteBuscado.getRut()))
+									clienteActual = clienteBuscado; // Solo para entendimiento
+									// Se crea un nuevo contrato
+								    contratoNuevo = datosEmpresa.interfazCrearContrato(numPlan, numEquipo, numCuotas);
+								    // SE LE OTORGA NUEVO CONTRATO A CLIENTE DE LA COMPAÃ‘IA
+									clienteActual.getContratos().add(datosEmpresa.interfazCrearContrato(numPlan, numEquipo, numCuotas));	
+									// Se escribira contrato en la BD
+									try {
+										bd.ingresarContratoBD(contratoNuevo, clienteActual.getRut());
+										System.out.println("Contrato agregado a la base de datos...");						
+									} catch (SQLException e2) {
+										// TODO Auto-generated catch block
+										System.err.println("Contrato no se pudo escribir en la Base de Datos.\n"
+												+ "\nDetalles de la excepciÃ³n:");
+										System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
+									}
 							lblAviso2.setForeground(Color.BLUE);
 							lblAviso2.setText("Datos Ingresados correctamente");
 						}
@@ -161,20 +190,16 @@ public class FrameContrato extends JFrame {
 		contentPane.add(labelCliente);
 	}
 
-
-
-
-
 	//============================== METODOS ==============================
 
 	//Comprueba si el ingreso en casilla Cuotas es un numero INT
 	public boolean comprobarMesInt(){
 		try {
-		     Integer.parseInt(textCuotas.getText());	//Si es INT devuelve true
-		     return true;
+			Integer.parseInt(textCuotas.getText());	//Si es INT devuelve true
+			return true;
 		}
 		catch (Exception a) {
-		     //Not an integer
+			//Not an integer
 		}
 		return false;
 	}

@@ -32,8 +32,7 @@ public class Principal {
 			System.out.println("Datos leidos desde la base de datos");
 		else {
 			// Si hubo cualquier especie de error al conectar a la BD o al crear los datos.
-			System.out.println("ERROR FATAL: No se obtubieron datos desde la base de datos. "
-					+ "No se pudo establecer la conexión al servidor");
+			System.err.println("ERROR FATAL: No se obtubieron datos desde la base de datos. ");
 			System.exit(0);
 		}
 

@@ -399,7 +399,7 @@ public class Compania {
 	// CREA UN NUEVO CLIENTE Y SU CONTRATO RESPECTIVO
 		public Cliente interfazCrearClienteNuevo(Cliente clienteNuevo) {
 
-			if (buscarCliente(rut) != null)
+			if (buscarCliente(clienteNuevo.getRut()) != null)
 				// Si el rut existe, le informo que ya existe.
 				return null;
 			else {
