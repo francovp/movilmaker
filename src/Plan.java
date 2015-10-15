@@ -14,7 +14,7 @@ public class Plan {
 	private int minutos; // minutos para hablar
 	private int gigas; // GB de navegacion
 	private String idCompania; // ID de la compania a la que pertenece el plan;
-	
+
 	/**
 	 * @param idPlan
 	 * @param nombrePlan
@@ -32,7 +32,7 @@ public class Plan {
 		this.gigas = gigas;
 		this.idCompania = idCompania;
 	}
-	
+
 	public int getIdPlan() {
 		return idPlan;
 	}

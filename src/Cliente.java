@@ -5,7 +5,7 @@ import java.util.ArrayList;
  *
  */
 public class Cliente {
-	private int idCliente; 
+	private int idCliente;
 	private String nombre1;
 	private String nombre2;
 	private String apellido1;
@@ -18,7 +18,7 @@ public class Cliente {
 	private String direccion2;
 	private String idCompania;
 	public ArrayList<Contrato> contratos = new ArrayList<Contrato>();
-	
+
 	// Constructor para cuando se leen datos desde la Base de datos
 	// Contiene id_cliente
 	/**
@@ -52,7 +52,7 @@ public class Cliente {
 		this.direccion2 = direccion2;
 		this.idCompania = idCompania;
 	}
-	
+
 	// Constructor para cuando se crea un cliente nuevo para escribirlo posteriormente en la Base de Datos
 	// No contiene id_cliente
 	/**
@@ -86,8 +86,9 @@ public class Cliente {
 		this.idCompania = idCompania;
 	}
 
+
 	///////////////////////////* GETTERS & SETTERS *////////////////////////////////////
-	
+
 	public int getIdCliente() {
 		return idCliente;
 	}
@@ -191,5 +192,5 @@ public class Cliente {
 	public void setContratos(ArrayList<Contrato> contratos) {
 		this.contratos = contratos;
 	}
-	
+
 }

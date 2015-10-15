@@ -23,7 +23,7 @@ public class Compania {
 	private ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 	private ArrayList<Equipo> moviles = new ArrayList<Equipo>();
 	private ArrayList<Plan> planes = new ArrayList<Plan>();
-	
+
 	// CONSTRUCTOR
 	/**
 	 * @param nombre
@@ -39,7 +39,7 @@ public class Compania {
 	}
 
 	///////////////////////////* GETTERS & SETTERS *////////////////////////////////////
-	
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -55,7 +55,7 @@ public class Compania {
 	public void setRut(String rut) {
 		this.rut = rut;
 	}
-	
+
 	public ArrayList<Cliente> getListaClientes() {
 		return listaClientes;
 	}
@@ -188,10 +188,10 @@ public class Compania {
 		System.out.print("Ciudad:");
 		direccion2 = bf.readLine();
 
-		if (buscarCliente(rut) != null) {
+		if (buscarCliente(rut) != null)
 			// Si el rut existe, le informo que ya existe.
 			return null;
-		}else {
+		else {
 			// Si no existe se crea el obj cliente y se guarda en el arraylist
 			Cliente clienteNuevo = new Cliente(nombre1, nombre2, apellido1, apellido2, rut, fonoCel, fonoFijo, email, direccion1,
 					direccion2, idCompania);
@@ -217,7 +217,7 @@ public class Compania {
 		Random rnd = new Random();
 		int idRandom,cuotas;
 		Contrato contrato;
-		
+
 		BufferedReader res = new BufferedReader(new InputStreamReader(System.in));
 
 		// Datos para usar fecha real
@@ -233,8 +233,8 @@ public class Compania {
 		System.out.println("Ingrese la cantidad de cuotas, estas pueden ser entre 1-12");
 		cuotas= Integer.parseInt(res.readLine());
 		idRandom = rnd.nextInt(100000); // Genera un numero random entre 0 y 100000 que sera el id con contrato
-		contrato = new Contrato(idRandom, fi, ff, elegirMovil(), elegirPlan(), cuotas); // Se crea el obj contrato y se retorna 
-		
+		contrato = new Contrato(idRandom, fi, ff, elegirMovil(), elegirPlan(), cuotas); // Se crea el obj contrato y se retorna
+
 		System.out.println("INFORMACION DEL CONTRATO\n"+
 				"Fecha de inicio del contrato: " + fi + ". El dia de esta fecha se estipulara como fecha de pago. ");
 		System.out.println("El cliente debera estar 5 meses como minimo con el plan contratado de lo contrario"
@@ -273,7 +273,7 @@ public class Compania {
 			if(c.contratos.size()==0){
 					System.out.println("Cliente se encuentra sin contratos, se procede a eliminar su registro");
 					eliminarCliente(c.getRut());
-				
+
 			}
 			return true;
 		}
@@ -294,12 +294,12 @@ public class Compania {
 		System.out.println("Contratos de " + c.getNombre1() + " " + c.getApellido1() + ".");
 		for (int i = 0; i < c.contratos.size(); i++)
 			System.out.println(i + 1 + "- ID Contrato: " + c.contratos.get(i).getIdContrato() + ". Movil: "
-								+ c.contratos.get(i).getEquipoContratado().getModelo() + ". Plan: " 
+								+ c.contratos.get(i).getEquipoContratado().getModelo() + ". Plan: "
 								+ c.contratos.get(i).getPlanContratado().getNombrePlan()+".");
 
 	}
 
-	///////////////////////// METODOS DE PLAN Y EQUIPOS ///////////////////////// 
+	///////////////////////// METODOS DE PLAN Y EQUIPOS /////////////////////////
 
 	public void mostrarPlanes() {
 		for (int i = 0; i < planes.size(); i++) {
@@ -338,7 +338,7 @@ public class Compania {
 		i--;
 		return planes.get(i);
 	}
-	
+
 	//////////////////////////// **TXT**////////////////////////////////////////////////////////////////
 
 	// ESCRIBRE EN TXT LA INFORMACION ENVIADA EN "CADENA"
@@ -356,9 +356,9 @@ public class Compania {
 		}
 		;
 	}
-	
+
 /////////////////// FUNCIONES EXTRAS ///////////////////////
-	
+
 	public void buscarClientesConMasPlanes()
 	{
 		int cont=0,j=1;
@@ -366,29 +366,118 @@ public class Compania {
 		for(int i=0;i<listaClientes.size();i++)
 		{
 			//CALCULA AL FIN DEL CICLO QUE CLIENTE TIENE MAS PLANES
-			if((listaClientes.get(i).contratos.size()-1)>cont)
+			if(listaClientes.get(i).contratos.size()-1>cont)
 			{
 				cont=listaClientes.get(i).contratos.size()-1;
 				c = listaClientes.get(i);
 			}
 			//SE MUESTRAN LOS CLIENTES CON MAS DE 3 CONTRATOS
-			if((listaClientes.get(i).contratos.size()-1)>3){
-				
+			if(listaClientes.get(i).contratos.size()-1>3){
+
 				while(j==1){//ciclo solo para imprimir 1 sola vez
 					System.out.println("Clientes con mas de 3 planes:");
 					j=0;
 				}
-				
+
 				System.out.println(" Rut: "+c.getRut()+" "+ c.getNombre1()+" "+c.getApellido1());
 			}
-				
+
 		}
 		//CLIENTE ESTRELLA CON MAS CONTRATOS
 		if(c!=null)
 			System.out.println("Cliente estrella, con un total de: "+cont+" planes contratados.\n*** "+ c.getNombre1()+" "+c.getApellido1()+". Rut: "+c.getRut()+" ***");
 	}
-	
-	
+
+
+
+	//=============================== METODOS DE LA INTERFAZ =================================
+	//=============================== METODOS DE LA INTERFAZ =================================
+	//=============================== METODOS DE LA INTERFAZ =================================
+	//=============================== METODOS DE LA INTERFAZ =================================
+	//=============================== METODOS DE LA INTERFAZ =================================
+
+	// CREA UN NUEVO CLIENTE Y SU CONTRATO RESPECTIVO
+		public Cliente interfazCrearClienteNuevo(Cliente clienteNuevo) {
+
+			if (buscarCliente(rut) != null)
+				// Si el rut existe, le informo que ya existe.
+				return null;
+			else {
+				// Si no existe se crea el obj cliente y se guarda en el arraylist
+				//clienteNuevo.contratos.add(interfazCrearContrato()); // creo el contrato del cliente ingresado
+				// y lo agrego al ArrayList de contratos del Cliente
+				listaClientes.add(clienteNuevo);
+				System.out.println("Cliente agregado");
+				return clienteNuevo;
+			}
+		}
+
+	// ELIMINA CLIENTE DESDE LA INTERFAZ FrameEliminarCliente
+		public boolean interfazEliminarCliente(String rut) {
+			Cliente c;
+			if (buscarCliente(rut) != null) {
+				c = buscarCliente(rut);
+				listaClientes.remove(c);
+				System.out.println("Cliente Eliminado");
+				return true;
+			}
+			return false;
+		}
+
+	// CREA NUEVO CONTRATO DESDE LA INTERFAZ FrameContrato
+		public Contrato interfazCrearContrato(int numPlan, int numEquipo, int numCuotas)  {
+			Random rnd = new Random();
+			int idRandom;
+			Contrato contrato;
+
+			// Datos para usar fecha real
+			Calendar fechaF = new GregorianCalendar();
+			Calendar fechaI = new GregorianCalendar();
+			DateFormat dfi = DateFormat.getDateInstance();
+			DateFormat dff = DateFormat.getDateInstance();
+			Date di = fechaI.getTime();
+			fechaF.add(Calendar.MONTH, 5); // 5 meses como minimo con el plan
+			Date d = fechaF.getTime();
+			String fi = dfi.format(di);
+			String ff = dff.format(d);
+			idRandom = rnd.nextInt(100000); // Genera un numero random entre 0 y 100000 que sera el id con contrato
+			contrato = new Contrato(idRandom, fi, ff, interfazElegirMovil(numEquipo), interfazElegirPlan(numPlan), numCuotas); // Se crea el obj contrato y se retorna
+
+			System.out.println("INFORMACION DEL CONTRATO\n"+
+					"Fecha de inicio del contrato: " + fi + ". El dia de esta fecha se estipulara como fecha de pago. ");
+			System.out.println("El cliente debera estar 5 meses como minimo con el plan contratado de lo contrario"
+					+ " debera cancelar los meses restantes.");
+			System.out.println("Fecha de termino: " + ff
+					+ ". Despues de esta fecha el cliente seguira con el plan por el tiempo que el estime conveniente.");
+			return contrato;
+		}
+
+		public Cliente interfazAgregarOtroContrato(Cliente cliente) {
+			String rut = cliente.getRut();
+			if (buscarCliente(rut) != null) // Si el cliente existe
+			{
+				Cliente c = buscarCliente(rut);
+				//c.contratos.add(crearContrato()); // Se le agrega el contrato del cliente
+				return c;
+			} else
+				System.out.println("Cliente no existe.");
+				return null;
+		}
+
+
+		// seleciona un movil, escogido desde FrameContrato
+		public Equipo interfazElegirMovil(int movil) {
+			int i;
+			i = movil;
+			return moviles.get(i);
+		}
+
+		// Se seleciona el Plan, escogido desde FrameContrato
+		public Plan interfazElegirPlan(int plan) {
+			int i;
+			i= plan;
+			return planes.get(i);
+		}
 
 }
 

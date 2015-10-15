@@ -35,6 +35,20 @@ public class Contrato {
 	}
 
 
+	//SOBRECARGA PRUEBA DE INTERFAZ SIN PLAN NI EQUIPO
+	//SOBRECARGA PRUEBA DE INTERFAZ SIN PLAN NI EQUIPO
+	//SOBRECARGA PRUEBA DE INTERFAZ SIN PLAN NI EQUIPO
+	//SOBRECARGA PRUEBA DE INTERFAZ SIN PLAN NI EQUIPO
+	//SOBRECARGA PRUEBA DE INTERFAZ SIN PLAN NI EQUIPO
+	public Contrato(int idContrato, String fechaInicio, String fechaTermino,int cuotas) {
+		super();
+		this.idContrato = idContrato;
+		this.fechaInicio = fechaInicio;
+		this.fechaTermino = fechaTermino;
+		monto=equipoContratado.getPrecio() + planContratado.getPrecio();
+		this.cuotas=cuotas;
+	}
+
 
 	public int getCuotas() {
 		return cuotas;
@@ -59,7 +73,7 @@ public class Contrato {
 	public int getIdContrato() {
 		return idContrato;
 	}
-	
+
 	public void setIdContrato(int idContrato) {
 		this.idContrato = idContrato;
 	}
@@ -97,9 +111,9 @@ public class Contrato {
 	}
 
 	/// METODO PAGAR CUOTA
-	
+
 	public void pagar(int numeroCuota)
-	{	
+	{
 		cuotas=cuotas-numeroCuota;
 		if(cuotas<=0)
 		{
@@ -112,5 +126,5 @@ public class Contrato {
 		else
 			System.out.println(numeroCuota+". Cuotas restantes "+cuotas+".");
 	}
-	
+
 }

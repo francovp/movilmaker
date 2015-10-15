@@ -9,7 +9,7 @@
 public class Equipo {
 
 	private int idEquipo;
-	private String nombreEquipo; 
+	private String nombreEquipo;
 	private String modelo;
 	private String manufactor;
 	private int ram;
@@ -95,7 +95,7 @@ public class Equipo {
 	public int getIdEquipo() {
 		return idEquipo;
 	}
-	
+
 	public void setIdEquipo(int idEquipo) {
 		this.idEquipo = idEquipo;
 	}
@@ -105,7 +105,7 @@ public class Equipo {
 	}
 
 	public void setModelo(String modelo) {
-		this.nombreEquipo = modelo;
+		nombreEquipo = modelo;
 	}
 
 	public String getManufactor() {
@@ -201,7 +201,7 @@ public class Equipo {
 	}
 
 	public void setPrecio(int precio) {
-		this.valorConPlan = precio;
+		valorConPlan = precio;
 	}
 
 	public String getCapacidad() {
