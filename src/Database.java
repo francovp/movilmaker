@@ -107,7 +107,8 @@ public class Database {
 	public Compania leerDatosBD() throws SQLException {
 		if (c != null){
 			// Si se creó la conexión a la BD exitosamente se continóa
-
+			// Se crea una nueva sentencia SQL
+			stmt = c.createStatement();
 			// Se ejecuta la sentencia SQL y se guarda
 			rs = stmt.executeQuery("SELECT * FROM compania;");
 			while (rs.next())
