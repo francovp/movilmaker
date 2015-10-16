@@ -7,8 +7,8 @@
  *
  */
 public class Contrato {
+	private String rutCliente;
 	private int idContrato;
-	private int idCliente;
 	private int idEquipo;
 	private int idPlan;
 	private int monto; // Cantidad de dinero que el cliente va a pagar el cliente mensualmente
@@ -31,19 +31,17 @@ public class Contrato {
 	 * @param equipoContratado
 	 * @param planContratado
 	 */
-	public Contrato(int idContrato, int idCliente, int idEquipo, int idPlan, int monto, int cuotas, String fechaInicio,
-			String fechaTermino, Equipo equipoContratado, Plan planContratado) {
+	public Contrato(String rutCliente, int idContrato, int idEquipo, int idPlan, String fechaInicio,
+			String fechaTermino, int monto, int cuotas) {
 		super();
+		this.rutCliente = rutCliente;
 		this.idContrato = idContrato;
-		this.idCliente = idCliente;
 		this.idEquipo = idEquipo;
 		this.idPlan = idPlan;
 		this.monto = monto;
 		this.cuotas = cuotas;
 		this.fechaInicio = fechaInicio;
 		this.fechaTermino = fechaTermino;
-		this.equipoContratado = equipoContratado;
-		this.planContratado = planContratado;
 	}
 
 	// Constructor para contratos creados desde el programa
@@ -55,7 +53,7 @@ public class Contrato {
 	 * @param planContratado
 	 */
 	public Contrato(int idContrato, String fechaInicio, String fechaTermino, Equipo equipoContratado,
-			Plan planContratado, int cuotas) {
+			Plan planContratado, int cuotas, String rutCliente) {
 		super();
 		this.idContrato = idContrato;
 		this.fechaInicio = fechaInicio;
@@ -64,23 +62,15 @@ public class Contrato {
 		this.planContratado = planContratado;
 		monto=equipoContratado.getPrecio() + planContratado.getPrecio();
 		this.cuotas=cuotas;
+		this.rutCliente = rutCliente;
 	}
 
-
-	public int getCuotas() {
-		return cuotas;
+	public String getRutCliente() {
+		return rutCliente;
 	}
 
-	public void setCuotas(int cuotas) {
-		this.cuotas = cuotas;
-	}
-	
-	public int getMonto() {
-		return monto;
-	}
-
-	public void setMonto(int monto) {
-		this.monto = monto;
+	public void setRutCliente(String rutCliente) {
+		this.rutCliente = rutCliente;
 	}
 
 	public int getIdContrato() {
@@ -89,6 +79,38 @@ public class Contrato {
 
 	public void setIdContrato(int idContrato) {
 		this.idContrato = idContrato;
+	}
+
+	public int getIdEquipo() {
+		return idEquipo;
+	}
+
+	public void setIdEquipo(int idEquipo) {
+		this.idEquipo = idEquipo;
+	}
+
+	public int getIdPlan() {
+		return idPlan;
+	}
+
+	public void setIdPlan(int idPlan) {
+		this.idPlan = idPlan;
+	}
+
+	public int getMonto() {
+		return monto;
+	}
+
+	public void setMonto(int monto) {
+		this.monto = monto;
+	}
+
+	public int getCuotas() {
+		return cuotas;
+	}
+
+	public void setCuotas(int cuotas) {
+		this.cuotas = cuotas;
 	}
 
 	public String getFechaInicio() {
@@ -123,8 +145,8 @@ public class Contrato {
 		this.planContratado = planContratado;
 	}
 
-	/// METODO PAGAR CUOTA
 
+	/// METODO PAGAR CUOTA
 	public void pagar(int numeroCuota)
 	{
 		cuotas=cuotas-numeroCuota;
