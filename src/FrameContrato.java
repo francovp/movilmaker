@@ -140,12 +140,13 @@ public class FrameContrato extends JFrame {
 								if (cliente.getRut().equals(clienteBuscado.getRut()))
 									clienteActual = clienteBuscado; // Solo para entendimiento
 									// Se crea un nuevo contrato
-								    contratoNuevo = datosEmpresa.interfazCrearContrato(numPlan, numEquipo, numCuotas);
+								    contratoNuevo = datosEmpresa.interfazCrearContrato(numPlan, numEquipo, numCuotas, clienteActual.getRut());
 								    // SE LE OTORGA NUEVO CONTRATO A CLIENTE DE LA COMPAÑIA
-									clienteActual.getContratos().add(datosEmpresa.interfazCrearContrato(numPlan, numEquipo, numCuotas));	
+									clienteActual.getContratos().add(datosEmpresa.interfazCrearContrato(
+											numPlan, numEquipo, numCuotas,clienteActual.getRut()));	
 									// Se escribira contrato en la BD
 									try {
-										bd.ingresarContratoBD(contratoNuevo, clienteActual.getRut());
+										bd.ingresarContratoBD(contratoNuevo);
 										System.out.println("Contrato agregado a la base de datos...");						
 									} catch (SQLException e2) {
 										// TODO Auto-generated catch block
