@@ -84,17 +84,17 @@ public class Database {
 
 	}
 	
-	public boolean ingresarContratoBD(Contrato contratoCliente,String rut) throws SQLException{
+	public boolean ingresarContratoBD(Contrato contratoCliente) throws SQLException{
 		if(c !=null )
 		{
 			// Si se cre� la conexi�n a la BD exitosamente se contin�a				
 			// Se crea una nueva sentencia SQL
 			stmt = c.createStatement();
 			String sql = "INSERT INTO contratos(id_contrato,id_ciente,id_equipo,id_plan,fecha_inicio,fecha_termino,rut_cliente)"
-					+"VALUES("+contratoCliente.getIdContrato()+",0,"
+					+"VALUES('"+contratoCliente.getRutCliente()+"','"+contratoCliente.getIdContrato()+",0,"
 					+ contratoCliente.getEquipoContratado().getIdEquipo()
 					+","+contratoCliente.getPlanContratado().getIdPlan()
-					+",'"+contratoCliente.getFechaInicio()+"','"+contratoCliente.getFechaTermino()+"','"+rut+"'); commit";
+					+",'"+contratoCliente.getFechaInicio()+"','"+contratoCliente.getFechaTermino()+"',); commit";
 			stmt.executeUpdate(sql);
 			stmt.close();
 			c.close();
@@ -154,12 +154,12 @@ public class Database {
 			rs = stmt.executeQuery("SELECT * FROM contratos;");
 			while (rs.next()) {
 				// Se obtienen datos de la equipos
-				Contrato c = new Contrato(rs.getInt("id_contrato"), rs.getInt("id_cliente")
+				Contrato c = new Contrato(rs.getString("rut_cliente"), rs.getInt("id_contrato")
 						, rs.getInt("id_equipo"), rs.getInt("id_plan")
-						, rs.getString("fecha_inicio"), rs.getString("fecha_termino"), rs.getString("rut_cliente")
+						, rs.getString("fecha_inicio"), rs.getString("fecha_termino")
 						, rs.getInt("monto"), rs.getInt("cuotas"));
-
-				empresa.getContratos().add(c);
+				
+				empresa.buscarCliente(c.getRutCliente()).getContratos().add(c);
 			}
 
 			rs.close();
