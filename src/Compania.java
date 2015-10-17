@@ -176,21 +176,46 @@ public class Compania {
 //			return null;
 //	}
 
+	
+	//ELIMINA UN CONTRATO , VERIFICCANDO ANTES DE QUE CUMPLA QUE LAS CUOTAS ESTEN PAGADAS
 	public boolean eliminarContrato(String rut) throws IOException {
 		if (buscarCliente(rut) != null) {
 			Cliente c = buscarCliente(rut);
 			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-			int resp, pos;
 			listarContratos(c); // listo todos los contratos del cliente
 			System.out.print("\nIngrese el ID del contrato: ");
-			resp = Integer.parseInt(bf.readLine());// solicito el contrato a eliminar
-
-			c.contratos.remove(buscarContrato(c, resp)); // elimino el contrato
-			//si quedo sin contratos , se ofrece eliminar
-			if(c.contratos.size()==0){
-					System.out.println("Cliente se encuentra sin contratos, se procede a eliminar su registro");
-					eliminarCliente(c.getRut());
-
+			int res=Integer.parseInt(bf.readLine()); // LEO EL ID DEL CONTRATO
+			
+			if(buscarContrato(c, res)!=null)
+			{
+				Contrato contr=buscarContrato(c, res);
+				System.out.println("Fecha de termino del contratro estipulada: "+contr.getFechaTermino());
+				System.out.println("¿Se cumplio el pazo minimo con el plan ?\n1-Si\n2-No");
+				
+				 // SI SE CUMPLE LOS MESES OLBIGATORIOS  pagados (HIPOTETICAMENTE) SE PROCEDE A ELMINAR EL CONTRATO
+				if((Integer.parseInt(bf.readLine())==1) && ((RegistroDePagos)contr).getCuotasRestantes()<=0)
+				{
+						c.contratos.remove(contr); // elimino el contrato
+		
+						if(c.contratos.size()==0){//si quedo sin contratos , se  elimina el cliente
+							System.out.println("Cliente se encuentra sin contratos, se procede a eliminar su registro");
+							eliminarCliente(c.getRut());						
+						}
+						return true;
+						
+				}
+				else// SI NO CUMPLIO EL PLAZO MINIMO , DEBE CANCELARLO Y PAGAR UN INTERES
+				{	System.out.println("No se a cumplido el plazo");	
+					if(pagarUnPlan(contr)) // si calcela lo debido se elimina
+						{
+							c.contratos.remove(contr); // elimino el contrato
+							if(c.contratos.size()==0){//si quedo sin contratos , se elimina el cliente
+								System.out.println("Cliente se encuentra sin contratos, se procede a eliminar su registro");
+								eliminarCliente(c.getRut());
+								return true;
+							}		
+						}
+				}
 			}
 			return true;
 		}
@@ -275,6 +300,82 @@ public class Compania {
 	}
 
 /////////////////// FUNCIONES EXTRAS ///////////////////////
+	
+	// 1 SOBRECARGA METODO PARA PAGAR UN PLAN
+	
+	//	METODO PARA PAGAR MENSUALIDAD MEDIENTE ELECION DE PLAN
+	public boolean pagarUnPlan(String rut)throws IOException
+	{
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		Cliente c;
+		Contrato contratoAPagar;
+		
+		if(buscarCliente(rut)!=null) // BUSCO AL CLIENTE
+		{
+			c=buscarCliente(rut);
+			if(c.contratos.size()>1)// SI EL CLIENTE TIENE MAS DE 1 PLAN CONTRATADO 
+			{						// SE PIDE IDENTIFICAR CUAL VA A CANCELAR
+				listarContratos(c);
+				System.out.println("Ingrese el Id del contrato: ");
+				int id=Integer.parseInt(bf.readLine()); //SE LEE EL  ID DEL CONTRATO A PAGAR
+				
+				if(buscarContrato(c,id)!=null)//VALIDACION DEL CONTRATO A PAGAR
+				{	// CUOTAS OBLIGATORIAS AL PLAN ( CORRESPONDIENTE A LOS MESES MINIMOS)
+					contratoAPagar=buscarContrato(c,id);
+					
+					if(((RegistroDePagos)contratoAPagar).getCuotasRestantes() > 0){  // SE DEBE MENSUALIDAD
+						System.out.println("Monto de Cuotas: "+ ((RegistroDePagos)contratoAPagar).getValorCuota());
+						System.out.println("Cuotas por pagar: "+ ((RegistroDePagos)contratoAPagar).getCuotasRestantes());
+						System.out.println("Ingrese el numero de cuotas a cancelar:");
+						//SE PROCEDE A PAGAR MENSUALIDAD
+						if(((RegistroDePagos)contratoAPagar).pagar(Integer.parseInt(bf.readLine())))
+							return true; // cuotas canceladas correctamente
+					}
+					else { // SI NO DEBE
+						System.out.println("Cuotas Obligatorias canceladas");
+						return false;
+					}
+						
+					
+				}
+				else{ // ID DE CONTRATO NO ENCONTRADA O NO EXISTE
+					System.out.println("ID ingresao no valido y/o no existe.");	
+					return false;
+				}
+			}			
+			else{// SI EL CLIENTE TIENE SOLO 1 PLAN CONTRATADO
+				
+				contratoAPagar=c.contratos.get(0);
+				System.out.println("Monto de Cuotas: "+ ((RegistroDePagos)contratoAPagar).getValorCuota());
+				System.out.println("Cuotas por pagar: "+((RegistroDePagos)contratoAPagar).getCuotasRestantes());
+				System.out.println("Ingrese el numero de cuotas a cancelar:");
+				//SE PROCEDE A PAGAR MENSUALIDAD
+				if(((RegistroDePagos)contratoAPagar).pagar(Integer.parseInt(bf.readLine())))
+					return true; // cuotas canceladas correctamente
+			}
+		}
+		else{ // SI NO SE ENCUENTRA EL CLIENTE
+			
+			System.out.println("Cliente no existe");
+			return false;
+		}
+		
+		return false;
+	}
+	
+	//METODO PARA PAGAR contrato Y FINALIZARLO
+	public boolean pagarUnPlan(Contrato contratoAPagar)throws IOException
+	{	
+		System.out.println("\nMeses a cancelar restantes para terminar el plazo minimo estipulado: "+((RegistroDePagos)contratoAPagar).getCuotasRestantes());
+		System.out.println("Al no terminar tener el plan contratado por los meses minimos estipulados.");
+		RegistroDePagos registro= (RegistroDePagos)contratoAPagar;
+		if(contratoAPagar.pagar(registro))
+			return true;
+				
+		return false;
+	}
+	
+		
 
 	public void buscarClientesConMasPlanes()
 	{
