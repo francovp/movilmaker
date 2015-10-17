@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /**
  *
  */
@@ -11,8 +15,8 @@ public class Contrato {
 	private int idContrato;
 	private int idEquipo;
 	private int idPlan;
-	private int monto; // Cantidad de dinero que el cliente va a pagar el cliente mensualmente
-	private int cuotas;
+	private int monto; // monto total (equipo + plan)
+	private int cuotas; // numero de cuotas
 	private String fechaInicio; // FECHA DE PAGO SERA LA FECHA DE INICIO DEL CONTRATO
 	private String fechaTermino;
 	private Equipo equipoContratado; // Referencia al Equipo contratado
@@ -146,20 +150,24 @@ public class Contrato {
 	}
 
 
-	/// METODO PAGAR CUOTA
-	public void pagar(int numeroCuota)
-	{
-		cuotas=cuotas-numeroCuota;
-		if(cuotas<=0)
-		{
-			System.out.println("Meses obligatorios Cancelados");
-			monto=planContratado.getPrecio();
-			fechaTermino="Indefinido";
-			System.out.println("Fecha de termino de contrato: "+fechaTermino+".\n Monto a cancelar $"+monto
-								+" correspondientes al plan suscrito.");
-		}
-		else
-			System.out.println(numeroCuota+". Cuotas restantes "+cuotas+".");
+	/// METODO PAGAR EL MONTO TOTAL DEL CONTRATO
+	public boolean pagar(RegistroDePagos registro) throws IOException
+	{	BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		
+		// interes sera de 7% del monto del celular
+		int interes= (int)(equipoContratado.getPrecio() * 0.07);
+		int monto = (registro.getCuotasRestantes() * 
+				( registro.getEquipoContratado().getPrecio() / registro.getCuotas() ));
+		
+		System.out.println("Monto Pendiente correspondiente al movil: "+monto);
+		System.out.println("Debera cancelar un monto total de $"+ (monto+interes)
+				+ " correspondientes al celular y un 7% del monto del celular, por terminos de contrato no cumplido");
+		
+		System.out.println("¿Pagar Monto?\n1-Si\n2-No");
+		if(Integer.parseInt(bf.readLine())==1) // Si cancela lo que debe 
+			return true;
+		
+		return false;
 	}
 
 }
