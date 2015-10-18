@@ -323,12 +323,17 @@ public class Compania {
 				{	// CUOTAS OBLIGATORIAS AL PLAN ( CORRESPONDIENTE A LOS MESES MINIMOS)
 					contratoAPagar=buscarContrato(c,id);
 					
-					if(((RegistroDePagos)contratoAPagar).getCuotasRestantes() > 0){  // SE DEBE MENSUALIDAD
-						System.out.println("Monto de Cuotas: "+ ((RegistroDePagos)contratoAPagar).getValorCuota());
-						System.out.println("Cuotas por pagar: "+ ((RegistroDePagos)contratoAPagar).getCuotasRestantes());
+					// SE CREA EL REGISTRO DE PAGO
+					RegistroDePagos registro = new RegistroDePagos(contratoAPagar.getIdContrato(),contratoAPagar.getFechaInicio(),contratoAPagar.getFechaTermino()
+							,contratoAPagar.getEquipoContratado(),contratoAPagar.getPlanContratado(),contratoAPagar.getCuotas(),contratoAPagar.getRutCliente());
+					
+					if(registro.getCuotasRestantes() > 0){  // SE DEBE MENSUALIDAD
+						System.out.println("Monto de Cuotas: "+ registro.getValorCuota());
+						System.out.println("Cuotas por pagar: "+ registro.getCuotasRestantes());
 						System.out.println("Ingrese el numero de cuotas a cancelar:");
+						
 						//SE PROCEDE A PAGAR MENSUALIDAD
-						if(((RegistroDePagos)contratoAPagar).pagar(Integer.parseInt(bf.readLine())))
+						if(registro.pagar(Integer.parseInt(bf.readLine())))
 							return true; // cuotas canceladas correctamente
 					}
 					else { // SI NO DEBE
@@ -346,13 +351,20 @@ public class Compania {
 			else{// SI EL CLIENTE TIENE SOLO 1 PLAN CONTRATADO
 				
 				contratoAPagar=c.contratos.get(0);
-				System.out.println("Monto de Cuotas: "+ ((RegistroDePagos)contratoAPagar).getValorCuota());
-				System.out.println("Cuotas por pagar: "+((RegistroDePagos)contratoAPagar).getCuotasRestantes());
-				System.out.println("Ingrese el numero de cuotas a cancelar:");
-				//SE PROCEDE A PAGAR MENSUALIDAD
-				if(((RegistroDePagos)contratoAPagar).pagar(Integer.parseInt(bf.readLine())))
-					return true; // cuotas canceladas correctamente
-			}
+				// SE CREA EL REGISTRO DE PAGO
+				RegistroDePagos registro = new RegistroDePagos(contratoAPagar.getIdContrato(),contratoAPagar.getFechaInicio(),contratoAPagar.getFechaTermino()
+						,contratoAPagar.getEquipoContratado(),contratoAPagar.getPlanContratado(),contratoAPagar.getCuotas(),contratoAPagar.getRutCliente());
+				
+				if(registro.getCuotasRestantes() > 0){  // SE DEBE MENSUALIDAD
+					System.out.println("Monto de Cuotas: "+ registro.getValorCuota());
+					System.out.println("Cuotas por pagar: "+ registro.getCuotasRestantes());
+					System.out.println("Ingrese el numero de cuotas a cancelar:");
+					
+					//SE PROCEDE A PAGAR MENSUALIDAD
+					if(registro.pagar(Integer.parseInt(bf.readLine())))
+						return true; // cuotas canceladas correctamente
+					}
+				}
 		}
 		else{ // SI NO SE ENCUENTRA EL CLIENTE
 			
@@ -366,9 +378,13 @@ public class Compania {
 	//METODO PARA PAGAR contrato Y FINALIZARLO
 	public boolean pagarUnPlan(Contrato contratoAPagar)throws IOException
 	{	
-		System.out.println("\nMeses a cancelar restantes para terminar el plazo minimo estipulado: "+((RegistroDePagos)contratoAPagar).getCuotasRestantes());
+		// SE CREA EL REGISTRO DE PAGO
+		RegistroDePagos registro = new RegistroDePagos(contratoAPagar.getIdContrato(),contratoAPagar.getFechaInicio(),contratoAPagar.getFechaTermino()
+				,contratoAPagar.getEquipoContratado(),contratoAPagar.getPlanContratado(),contratoAPagar.getCuotas(),contratoAPagar.getRutCliente());
+		
+		System.out.println("\nMeses a cancelar restantes para terminar el plazo minimo estipulado: "+ registro.getCuotasRestantes());
 		System.out.println("Al no terminar tener el plan contratado por los meses minimos estipulados.");
-		RegistroDePagos registro= (RegistroDePagos)contratoAPagar;
+
 		if(contratoAPagar.pagar(registro))
 			return true;
 				
