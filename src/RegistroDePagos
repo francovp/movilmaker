@@ -1,5 +1,6 @@
 
 public class RegistroDePagos extends Contrato { 
+	private int idRegistro;
 	private int valorCuota;
 	private int cuotasRestantes;
 	
@@ -22,6 +23,17 @@ public class RegistroDePagos extends Contrato {
 		valorCuota= (getEquipoContratado().getPrecio() / getCuotas()) + getPlanContratado().getPrecio();
 		cuotasRestantes = getCuotas();
 	}
+
+	
+	public int getIdRegistro() {
+		return idRegistro;
+	}
+
+
+	public void setIdRegistro(int idRegistro) {
+		this.idRegistro = idRegistro;
+	}
+
 
 	public int getValorCuota() {
 		return valorCuota;
