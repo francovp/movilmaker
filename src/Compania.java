@@ -23,7 +23,7 @@ public class Compania {
 	private ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 	private ArrayList<Equipo> moviles = new ArrayList<Equipo>();
 	private ArrayList<Plan> planes = new ArrayList<Plan>();
-
+	private ArrayList<Administrador> administradores = new ArrayList<Administrador>();
 	// CONSTRUCTOR
 	/**
 	 * @param nombre
@@ -79,9 +79,34 @@ public class Compania {
 	public void setPlanes(ArrayList<Plan> planes) {
 		this.planes = planes;
 	}
+	public ArrayList<Administrador> getTrabajadores() {
+		return administradores;
+	}
+
+	public void setTrabajadores(ArrayList<Administrador> trabajadores) {
+		this.administradores = trabajadores;
+	}
+	///////////////// METODOS DE TRABAJADOR ////////////////////////////
+	
+	public void agregarAdmin(Administrador a)
+	{
+		administradores.add(a);
+		
+	}
+	public Administrador buscarAdmin(String rut)
+	{
+		for(int i=0 ; i < administradores.size() ; i++)
+			if(administradores.get(i).getRut().equals(rut)){
+				administradores.get(i).identificarPersona();
+				return administradores.get(i);
+			}
+				
+		return null;
+	}
 
 	///////////////////// METODOS DE CLIENTES Y
 	///////////////////// CONTRATOS////////////////////////////
+
 
 	// MUESTRA LOS CLIENTES
 	public void mostrarClientes() {
@@ -240,6 +265,7 @@ public class Compania {
 								+ c.contratos.get(i).getPlanContratado().getNombrePlan()+".");
 
 	}
+	
 
 	///////////////////////// METODOS DE PLAN Y EQUIPOS /////////////////////////
 
