@@ -193,4 +193,11 @@ public class Cliente {
 		this.contratos = contratos;
 	}
 
+	// METODO PARA BUSCAR UN CONTRATO Y RETORNARLO
+	public Contrato buscarContrato(int id) {
+		for (int i = 0; i < contratos.size(); i++)
+			if (contratos.get(i).getIdContrato() == id) // si la id ingresada se encuenta
+				return contratos.get(i); // se retorna al cliente
+		return null;
+	}
 }
