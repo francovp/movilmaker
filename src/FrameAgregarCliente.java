@@ -253,7 +253,7 @@ public class FrameAgregarCliente extends JFrame {
 		direccion1=textDireccion1.getText();
 		direccion2=textDireccion2.getText();
 		// Se crea cliente nuevo
-		Cliente clienteNuevo = new Cliente(nombre1,nombre2,apellido1,apellido2,rut,fono1,fono2,email,direccion1,direccion2,datosEmpresa.getRut());
+		Cliente clienteNuevo = new Cliente(nombre1,nombre2,apellido1,apellido2,rut,fono1,fono2,email,direccion1,direccion2,0,datosEmpresa.getRut());
 		// Se ingresa cliente nuevo y se espera un resultado del ingreso
 		Cliente resultado = datosEmpresa.interfazCrearClienteNuevo(clienteNuevo);
 		if(resultado != null)

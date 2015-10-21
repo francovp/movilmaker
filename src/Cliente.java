@@ -5,74 +5,44 @@ import java.util.ArrayList;
  *
  */
 public class Cliente {
-	private int idCliente;
+	private String rut;
 	private String nombre1;
 	private String nombre2;
 	private String apellido1;
 	private String apellido2;
-	private String rut;
 	private int fonoCel;
 	private int fonoFijo;
 	private String email;
 	private String direccion1;
 	private String direccion2;
 	private String idCompania;
+	private int deuda;
 	public ArrayList<Contrato> contratos = new ArrayList<Contrato>();
 
 	// Constructor para cuando se leen datos desde la Base de datos
 	// Contiene id_cliente
-	/**
-	 * @param idCliente
-	 * @param nombre1
-	 * @param nombre2
-	 * @param apellido1
-	 * @param apellido2
-	 * @param rut
-	 * @param fonoCel
-	 * @param fonoFijo
-	 * @param email
-	 * @param direccion1
-	 * @param direccion2
-	 * @param idCompania
-	 * @param contratos
-	 */
-	public Cliente(int idCliente, String nombre1, String nombre2, String apellido1, String apellido2, String rut,
-			int fonoCel, int fonoFijo, String email, String direccion1, String direccion2, String idCompania) {
-		super();
-		this.idCliente = idCliente;
+	public Cliente(String rut, String idCompania, String nombre1, String nombre2, String apellido1, String apellido2,
+			int fonoCel, int fonoFijo, String email, String direccion1, String direccion2, int deuda) {
+		this.rut = rut;
 		this.nombre1 = nombre1;
 		this.nombre2 = nombre2;
 		this.apellido1 = apellido1;
 		this.apellido2 = apellido2;
-		this.rut = rut;
 		this.fonoCel = fonoCel;
 		this.fonoFijo = fonoFijo;
 		this.email = email;
 		this.direccion1 = direccion1;
 		this.direccion2 = direccion2;
+		this.deuda = deuda;
 		this.idCompania = idCompania;
 	}
 
 	// Constructor para cuando se crea un cliente nuevo para escribirlo posteriormente en la Base de Datos
 	// No contiene id_cliente
-	/**
-	 * @param idCliente
-	 * @param nombre1
-	 * @param nombre2
-	 * @param apellido1
-	 * @param apellido2
-	 * @param rut
-	 * @param fonoCel
-	 * @param fonoFijo
-	 * @param email
-	 * @param direccion1
-	 * @param direccion2
-	 * @param idCompania
-	 * @param contratos
-	 */
+	
 	public Cliente(String nombre1, String nombre2, String apellido1, String apellido2, String rut,
-			int fonoCel, int fonoFijo, String email, String direccion1, String direccion2, String idCompania) {
-		super();
+			int fonoCel, int fonoFijo, String email, String direccion1, String direccion2, 
+			int deuda, String idCompania) {
 		this.nombre1 = nombre1;
 		this.nombre2 = nombre2;
 		this.apellido1 = apellido1;
@@ -83,19 +53,12 @@ public class Cliente {
 		this.email = email;
 		this.direccion1 = direccion1;
 		this.direccion2 = direccion2;
+		this.deuda = deuda;
 		this.idCompania = idCompania;
 	}
 
 
 	///////////////////////////* GETTERS & SETTERS *////////////////////////////////////
-
-	public int getIdCliente() {
-		return idCliente;
-	}
-
-	public void setIdCliente(int idCliente) {
-		this.idCliente = idCliente;
-	}
 
 	public String getNombre1() {
 		return nombre1;
@@ -175,6 +138,14 @@ public class Cliente {
 
 	public void setDireccion2(String direccion2) {
 		this.direccion2 = direccion2;
+	}
+
+	public int getDeuda() {
+		return deuda;
+	}
+
+	public void setDeuda(int deudaTotal) {
+		this.deuda = deudaTotal;
 	}
 
 	public String getIdCompania() {
