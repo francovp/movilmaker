@@ -107,6 +107,7 @@ public class Compania {
 	///////////////////// METODOS DE CLIENTES Y
 	///////////////////// CONTRATOS////////////////////////////
 
+
 	// MUESTRA LOS CLIENTES
 	public void mostrarClientes() {
 		if(listaClientes.size()==0)
@@ -264,6 +265,7 @@ public class Compania {
 								+ c.contratos.get(i).getPlanContratado().getNombrePlan()+".");
 
 	}
+	
 
 	///////////////////////// METODOS DE PLAN Y EQUIPOS /////////////////////////
 
