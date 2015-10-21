@@ -125,6 +125,24 @@ public class Database {
 		return false;
 	}
 	
+	public boolean ingresarRegistroBD(RegistroDePagos registro) throws SQLException{
+		if(c !=null )
+		{
+			// Si se cre� la conexi�n a la BD exitosamente se contin�a				
+			// Se crea una nueva sentencia SQL
+			stmt = c.createStatement();
+			String sql = "INSERT INTO boletas(id_contrato, rut_cliente,cuotas_rest,id_boleta,monto_pagadop)"
+					+"VALUES('"+registro.getIdContrato()+"',"+registro.getRutCliente()
+					+"',"+registro.getCuotasRestantes()+","+registro.getIdRegistro()
+					+","+registro.getMontoPagado()+");";
+			stmt.executeUpdate(sql);
+			stmt.close();
+			c.close();
+			return true;
+		}
+		return false;
+	}
+	
 	// Establece todos los mótodos de lecturas desde la Base de datos
 	public Compania leerDatosBD() throws SQLException {
 		if (c != null){
@@ -182,6 +200,26 @@ public class Database {
 						, rs.getInt("valor_total"), rs.getInt("cuotas"), rs.getInt("valor_cuota"));
 				
 				empresa.buscarCliente(c.getRutCliente()).getContratos().add(c);
+			}
+			
+			// Se leen datos de Contratos desde la BD
+			int idContratoBoleta;
+			String rutClienteBoleta;
+			Contrato contratoBoleta = null;
+			Cliente clienteBoleta = null;
+			// Se ejecuta la sentencia SQL y se guarda
+			rs = stmt.executeQuery("SELECT * FROM boletas;");
+			while (rs.next()) {
+				idContratoBoleta = rs.getInt("id_contrato");
+				rutClienteBoleta = rs.getString("rut_cliente");
+				contratoBoleta = empresa.buscarCliente(rutClienteBoleta).buscarContrato(idContratoBoleta);
+				// Se obtienen datos de la equipos
+				RegistroDePagos c = new RegistroDePagos (idContratoBoleta, contratoBoleta.getIdEquipo(),contratoBoleta.getIdPlan()
+						, contratoBoleta.getFechaInicio(), contratoBoleta.getFechaTermino(), rutClienteBoleta
+						, contratoBoleta.getValorTotal(), contratoBoleta.getValorCuota(), contratoBoleta.getCuotas()
+						, rs.getInt("id_boleta"), rs.getInt("monto_pagado"), rs.getInt("cuotas_rest"));
+				
+				empresa.buscarCliente(rutClienteBoleta).getContratos().add(c);
 			}
 
 			rs.close();

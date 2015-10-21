@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -211,9 +212,9 @@ public class Compania {
 			System.out.print("\nIngrese el ID del contrato: ");
 			int res=Integer.parseInt(bf.readLine()); // LEO EL ID DEL CONTRATO
 			
-			if(buscarContrato(c, res)!=null)
+			if(c.buscarContrato(res)!=null)
 			{
-				Contrato contr=buscarContrato(c, res);
+				Contrato contr=c.buscarContrato(res);
 				System.out.println("Fecha de termino del contratro estipulada: "+contr.getFechaTermino());
 				System.out.println("¿Se cumplio el pazo minimo con el plan ?\n1-Si\n2-No");
 				
@@ -245,15 +246,6 @@ public class Compania {
 			return true;
 		}
 		return false;
-	}
-
-	// BUSCA UN CONTRATO DE UN CLIENTE MEDIANTE EL ID INGRESADO
-	public Contrato buscarContrato(Cliente c, int id) {
-		for (int i = 0; i < c.contratos.size(); i++)
-			if (c.contratos.get(i).getIdContrato() == id)
-				return c.contratos.get(i);
-		return null;
-
 	}
 
 	// MUESTRA TODOS LOS CONTRATOS DE 1 CLIENTE
@@ -330,7 +322,7 @@ public class Compania {
 	// 1 SOBRECARGA METODO PARA PAGAR UN PLAN
 	
 	//	METODO PARA PAGAR MENSUALIDAD MEDIANTE ELECCION DE PLAN
-	public boolean pagarUnPlan(String rut)throws IOException {
+	public boolean pagarUnPlan(String rut) throws IOException {
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		Cliente c;
 		Contrato contratoAPagar;
@@ -346,9 +338,9 @@ public class Compania {
 				System.out.println("Ingrese el Id del contrato: ");
 				int id=Integer.parseInt(bf.readLine()); //SE LEE EL ID DEL CONTRATO A PAGAR
 				
-				if(buscarContrato(c,id)!=null)//VALIDACION DEL CONTRATO A PAGAR
+				if(c.buscarContrato(id)!=null)//VALIDACION DEL CONTRATO A PAGAR
 				{	// CUOTAS OBLIGATORIAS AL PLAN ( CORRESPONDIENTE A LOS MESES MINIMOS)
-					contratoAPagar=buscarContrato(c,id);
+					contratoAPagar=c.buscarContrato(id);
 					
 					//Se verificará si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
 					boletaMasNueva = contratoAPagar.buscarPago(c.getRut());
@@ -371,8 +363,30 @@ public class Compania {
 						System.out.println("Ingrese el numero de cuotas a cancelar:");
 						
 						//SE PROCEDE A PAGAR MENSUALIDAD
-						if(registro.pagar(Integer.parseInt(bf.readLine()),contratoAPagar.getValorCuota()))
+						if(registro.pagar(Integer.parseInt(bf.readLine()),contratoAPagar.getValorCuota())){
+							
+							// GUARDADO DE REGISTROS EN LA BD
+							// Preparar Conexión a BD
+							Database bd = null;
+							try {
+								bd = new Database();
+							} catch (SQLException e2) {
+								// TODO Auto-generated catch block
+								e2.printStackTrace();
+							}
+							// Se escribira registro en la BD
+							try {
+								bd.ingresarRegistroBD(registro);
+								System.out.println("Boleta agregado a la base de datos...");						
+							} catch (SQLException e2) {
+								// TODO Auto-generated catch block
+								System.err.println("Boleta no se pudo escribir en la Base de Datos.\n"
+										+ "\nDetalles de la excepción:");
+								System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
+							}
+							
 							return true; // cuotas canceladas correctamente
+						}
 					}
 					else { // SI NO DEBE
 						System.out.println("Cuotas Obligatorias canceladas");
@@ -411,17 +425,36 @@ public class Compania {
 					System.out.println("Ingrese el numero de cuotas a cancelar:");
 					
 					//SE PROCEDE A PAGAR MENSUALIDAD
-					if(registro.pagar(Integer.parseInt(bf.readLine()),contratoAPagar.getValorCuota()))
+					if(registro.pagar(Integer.parseInt(bf.readLine()),contratoAPagar.getValorCuota())){
+						
+						// GUARDADO DE REGISTROS EN LA BD
+						// Preparar Conexión a BD
+						Database bd = null;
+						try {
+							bd = new Database();
+						} catch (SQLException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+						// Se escribira registro en la BD
+						try {
+							bd.ingresarRegistroBD(registro);
+							System.out.println("Boleta agregado a la base de datos...");						
+						} catch (SQLException e2) {
+							// TODO Auto-generated catch block
+							System.err.println("Boleta no se pudo escribir en la Base de Datos.\n"
+									+ "\nDetalles de la excepción:");
+							System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
+						}
 						return true; // cuotas canceladas correctamente
 					}
 				}
+			}
 		}
 		else{ // SI NO SE ENCUENTRA EL CLIENTE
-			
 			System.out.println("Cliente no existe");
 			return false;
 		}
-		
 		return false;
 	}
 	
@@ -429,6 +462,7 @@ public class Compania {
 	public boolean pagarUnPlan (Contrato contratoAPagar) throws IOException {
 		RegistroDePagos boletaMasNueva;
 		int cuotasRestantes;
+		
 		//Se verificará si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
 		boletaMasNueva = contratoAPagar.buscarPago(contratoAPagar.getRutCliente());
 		if(boletaMasNueva != null)
@@ -447,13 +481,31 @@ public class Compania {
 		System.out.println("\nMeses a cancelar restantes para terminar el plazo minimo estipulado: "+ registro.getCuotasRestantes());
 		System.out.println("Al no terminar tener el plan contratado por los meses minimos estipulados.");
 
-		if(contratoAPagar.pagar(registro, registro.getCuotasRestantes()))
+		if(contratoAPagar.pagar(registro, registro.getCuotasRestantes())){
+			
+			// GUARDADO DE REGISTROS EN LA BD
+			// Preparar Conexión a BD
+			Database bd = null;
+			try {
+				bd = new Database();
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			// Se escribira registro en la BD
+			try {
+				bd.ingresarRegistroBD(registro);
+				System.out.println("Boleta agregado a la base de datos...");						
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				System.err.println("Boleta no se pudo escribir en la Base de Datos.\n"
+						+ "\nDetalles de la excepción:");
+				System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
+			}
 			return true;
-				
+		}		
 		return false;
 	}
-	
-		
 
 	public void buscarClientesConMasPlanes()
 	{
