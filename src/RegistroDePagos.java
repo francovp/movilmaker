@@ -1,48 +1,36 @@
-
 public class RegistroDePagos extends Contrato { 
 	private int idRegistro;
-	private int valorCuota;
+	private int montoPagado;
 	private int cuotasRestantes;
 	
-
- // ATRIBUTOS HEREADOS DE CONTRATO
-	/**
-	 * @param idContrato
-	 * @param fechaInicio
-	 * @param fechaTermino
-	 * @param equipoContratado
-	 * @param planContratado
-	 * @param cuotas
-	 * @param rutCliente
-	 */
-	public RegistroDePagos(int idContrato, String fechaInicio, String fechaTermino, Equipo equipoContratado,
-			Plan planContratado, int cuotas, String rutCliente) {
-		super(idContrato, fechaInicio, fechaTermino, equipoContratado, planContratado, cuotas, rutCliente);
-		// TODO Auto-generated constructor stub
+	// Constructor para cuando se paga una mensualidad
+	public RegistroDePagos(int idContrato, int idEquipo, int idPlan, String fechaInicio, String fechaTermino,
+			String rutCliente, int valorTotal, int valorCuota, int cuotas, int idRegistro,
+			int montoPagado, int cuotasRestantes) {
 		
-		valorCuota= (getEquipoContratado().getPrecio() / getCuotas()) + getPlanContratado().getPrecio();
-		cuotasRestantes = getCuotas();
+		super(idContrato, idEquipo, idPlan, fechaInicio, fechaTermino, rutCliente, valorTotal, valorCuota, cuotas);
+		
+		this.idRegistro = idRegistro;
+		this.montoPagado = montoPagado;
+		this.cuotasRestantes = cuotasRestantes;
 	}
 
-	
 	public int getIdRegistro() {
 		return idRegistro;
 	}
 
-
 	public void setIdRegistro(int idRegistro) {
 		this.idRegistro = idRegistro;
 	}
-
-
-	public int getValorCuota() {
-		return valorCuota;
+	
+	public int getMontoPagado() {
+		return montoPagado;
 	}
 
-	public void setValorCuota(int valorCuota) {
-		this.valorCuota = valorCuota;
+	public void setMontoPagado(int montoPagado) {
+		this.montoPagado = montoPagado;
 	}
-
+	
 	public int getCuotasRestantes() {
 		return cuotasRestantes;
 	}
@@ -50,20 +38,19 @@ public class RegistroDePagos extends Contrato {
 	public void setCuotasRestantes(int cuotasRestantes) {
 		this.cuotasRestantes = cuotasRestantes;
 	}
-	
-	
+
 	// METODO PAGAR MENSUALIDAD (SOBREESCRITURA )
-	
-	public boolean pagar(int numeroCuotas)
-	{
-		
+	public boolean pagar(int numeroCuotas, int valorCuota){
 		System.out.println("Cliente: "+ getRutCliente());
-		cuotasRestantes= cuotasRestantes - numeroCuotas;
+		cuotasRestantes = getCuotasRestantes() - numeroCuotas;
 		
 		if(cuotasRestantes <= 0 ){ // si cancelo todas las cuotas 
-			System.out.println("Equipo movil se ecuentra pagado");
-			System.out.println("Nuevo monto Mensual: "+ getPlanContratado().getPrecio());
-			valorCuota=getPlanContratado().getPrecio(); // se actualiza el valor de la cuota
+			
+			System.out.println("Equipo movil se encuentra pagado");
+			montoPagado = getPlanContratado().getPrecio();
+			
+			System.out.println("Nuevo monto Mensual: " + montoPagado);
+			setValorCuota((getEquipoContratado().getPrecio() / cuotasRestantes) + getPlanContratado().getPrecio()); // se actualiza el valor de la cuota
 			return true;
 		}
 		else{
@@ -71,6 +58,4 @@ public class RegistroDePagos extends Contrato {
 			return true;
 		}
 	}
-	
-
 }
