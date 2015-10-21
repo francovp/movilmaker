@@ -69,16 +69,21 @@ public class FrameEliminarContrato extends JFrame {
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				int idContrato = 0;
+				Contrato contratoAEliminar = null;
 				Cliente c = datosEmpresa.buscarCliente(textRut.getText());
 				for (int i=0;i<c.getContratos().size();i++)
-					c.getContratos().remove(list.getSelectedIndex());	//CONTRATO ELIMINADO
+					if(list.isSelectedIndex(i)) 
+						idContrato = list.getSelectedIndex();
+						contratoAEliminar = c.buscarContrato(idContrato);
+						if(c.getContratos().remove(contratoAEliminar));	//CONTRATO ELIMINADO
+							System.out.println("Contrato eliminado");
 			}
 		});
+		
 		btnEliminar.setEnabled(false);
 		btnEliminar.setBounds(240, 216, 89, 23);
 		contentPane.add(btnEliminar);
-
 
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {

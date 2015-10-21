@@ -140,10 +140,9 @@ public class FrameContrato extends JFrame {
 								if (cliente.getRut().equals(clienteBuscado.getRut()))
 									clienteActual = clienteBuscado; // Solo para entendimiento
 									// Se crea un nuevo contrato
-								    contratoNuevo = datosEmpresa.interfazCrearContrato(numPlan, numEquipo, numCuotas, clienteActual.getRut());
+								    contratoNuevo = datosEmpresa.interfazCrearContrato(numPlan, numEquipo, numCuotas, clienteActual);
 								    // SE LE OTORGA NUEVO CONTRATO A CLIENTE DE LA COMPAÑIA
-									clienteActual.getContratos().add(datosEmpresa.interfazCrearContrato(
-											numPlan, numEquipo, numCuotas,clienteActual.getRut()));	
+									clienteActual.getContratos().add(contratoNuevo);	
 									// Se escribira contrato en la BD
 									try {
 										bd.ingresarContratoBD(contratoNuevo);

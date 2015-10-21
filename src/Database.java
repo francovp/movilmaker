@@ -84,17 +84,39 @@ public class Database {
 
 	}
 	
+	// Para eliminar un contrato de la BD
+	public boolean eliminarConstratoBD(String rut) throws SQLException {
+		String sql;
+		if(c !=null )
+		{
+			// Se crea una nueva sentencia SQL
+			stmt = c.createStatement();
+			sql = "DELETE FROM contratos WHERE (rut_cliente = '"+rut+"');";
+			stmt.executeUpdate(sql);
+			stmt.close();
+			
+			// Se cierra conexión a la BD
+			c.close();
+			return true;
+		} else
+			return false;
+			// Si no se pudo establecer la conexión a la BD se retorna null;
+
+	}
+	
 	public boolean ingresarContratoBD(Contrato contratoCliente) throws SQLException{
 		if(c !=null )
 		{
 			// Si se cre� la conexi�n a la BD exitosamente se contin�a				
 			// Se crea una nueva sentencia SQL
 			stmt = c.createStatement();
-			String sql = "INSERT INTO contratos(id_contrato,id_ciente,id_equipo,id_plan,fecha_inicio,fecha_termino,rut_cliente)"
-					+"VALUES('"+contratoCliente.getRutCliente()+"','"+contratoCliente.getIdContrato()+",0,"
-					+ contratoCliente.getEquipoContratado().getIdEquipo()
+			String sql = "INSERT INTO contratos(id_contrato,id_equipo,id_plan,fecha_inicio,fecha_termino,"
+					+ "rut_cliente,valor_total,cuotas,valor_cuota)"
+					+"VALUES('"+contratoCliente.getIdContrato()+"',"+ contratoCliente.getEquipoContratado().getIdEquipo()
 					+","+contratoCliente.getPlanContratado().getIdPlan()
-					+",'"+contratoCliente.getFechaInicio()+"','"+contratoCliente.getFechaTermino()+"',); commit";
+					+",'"+contratoCliente.getFechaInicio()+"','"+contratoCliente.getFechaTermino()
+					+"','"+contratoCliente.getRutCliente()+"',"+contratoCliente.getValorTotal()+","+contratoCliente.getCuotas()
+					+","+contratoCliente.getValorCuota()+");";
 			stmt.executeUpdate(sql);
 			stmt.close();
 			c.close();
@@ -144,9 +166,9 @@ public class Database {
 			rs = stmt.executeQuery("SELECT * FROM clientes;");
 			while (rs.next()) {
 				// Se obtienen datos de cliente y se asignan
-				Cliente cli = new Cliente(rs.getString("nombre1"),rs.getString("nombre2"),rs.getString("apellido1"),rs.getString("apellido2")
-						,rs.getString("rut"),rs.getInt("fono_celular"),rs.getInt("fono_fijo"),rs.getString("direccion1")
-						,rs.getString("direccion2"),rs.getString("rut"),rs.getString("id_compania"));
+				Cliente cli = new Cliente(rs.getString("rut"),rs.getString("id_compania"),rs.getString("nombre1"),rs.getString("nombre2")
+						,rs.getString("apellido1"),rs.getString("apellido2"),rs.getInt("fono_celular"),rs.getInt("fono_fijo"),rs.getString("email")
+						,rs.getString("direccion1"),rs.getString("direccion2"), rs.getInt("deuda"));
 				empresa.getListaClientes().add(cli);
 			}
 			
@@ -155,10 +177,9 @@ public class Database {
 			rs = stmt.executeQuery("SELECT * FROM contratos;");
 			while (rs.next()) {
 				// Se obtienen datos de la equipos
-				Contrato c = new Contrato(rs.getString("rut_cliente"), rs.getInt("id_contrato")
-						, rs.getInt("id_equipo"), rs.getInt("id_plan")
-						, rs.getString("fecha_inicio"), rs.getString("fecha_termino")
-						, rs.getInt("monto"), rs.getInt("cuotas"));
+				Contrato c = new Contrato(rs.getInt("id_contrato"), rs.getInt("id_equipo"), rs.getInt("id_plan")
+						, rs.getString("fecha_inicio"), rs.getString("fecha_termino"), rs.getString("rut_cliente")
+						, rs.getInt("valor_total"), rs.getInt("cuotas"), rs.getInt("valor_cuota"));
 				
 				empresa.buscarCliente(c.getRutCliente()).getContratos().add(c);
 			}
