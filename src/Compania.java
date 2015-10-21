@@ -25,13 +25,10 @@ public class Compania {
 	private ArrayList<Equipo> moviles = new ArrayList<Equipo>();
 	private ArrayList<Plan> planes = new ArrayList<Plan>();
 	private ArrayList<Administrador> administradores = new ArrayList<Administrador>();
-	// CONSTRUCTOR
+	
 	/**
 	 * @param nombre
 	 * @param rut
-	 * @param listaClientes
-	 * @param moviles
-	 * @param planes
 	 */
 	public Compania(String nombre, String rut) {
 		super();
@@ -129,6 +126,57 @@ public class Compania {
 		return null;
 
 	}
+	
+	// CREA UN NUEVO CLIENTE Y SU CONTRATO RESPECTIVO
+//	public Cliente crearClienteNuevo(String idCompania) throws IOException {
+//		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+//		String nombre1;
+//		String nombre2;
+//		String apellido1;
+//		String apellido2;
+//		String rut;
+//		int fonoCel;
+//		int fonoFijo;
+//		String email;
+//		String direccion1;
+//		String direccion2;
+//
+//		// peticion de datos del cliente
+//		System.out.println("Datos necesarios del cliente");
+//		System.out.print("Primer Nombre:");
+//		nombre1 = bf.readLine();
+//		System.out.print("Segundo Nombre:");
+//		nombre2 = bf.readLine();
+//		System.out.print("Apellido Paterno:");
+//		apellido1 = bf.readLine();
+//		System.out.print("Apellido Materno:");
+//		apellido2 = bf.readLine();
+//		System.out.print("RUT (123456780):");
+//		rut = bf.readLine();
+//		System.out.print("Nï¿½ Celular:");
+//		fonoCel = Integer.parseInt(bf.readLine());
+//		System.out.print("Nï¿½ Telefono fijo:");
+//		fonoFijo = Integer.parseInt(bf.readLine());
+//		System.out.print("Email:");
+//		email = bf.readLine();
+//		System.out.print("Direccion (Calle y nï¿½):");
+//		direccion1 = bf.readLine();
+//		System.out.print("Ciudad:");
+//		direccion2 = bf.readLine();
+//
+//		if (buscarCliente(rut) != null)
+//			// Si el rut existe, le informo que ya existe.
+//			return null;
+//		else {
+//			// Si no existe se crea el obj cliente y se guarda en el arraylist
+//			Cliente clienteNuevo = new Cliente(nombre1, nombre2, apellido1, apellido2, rut, fonoCel, fonoFijo, email, direccion1,
+//					direccion2, idCompania);
+//			clienteNuevo.contratos.add(crearContrato()); // creo el contrato del cliente ingresado
+//														// y lo agrego al ArrayList de contratos del Cliente
+//			listaClientes.add(clienteNuevo);
+//			return clienteNuevo;
+//		}
+//	}
 
 	// MODIFICA INFORMACION DEL CLIENTE
 	public boolean modificarCliente(String rut) throws IOException {
@@ -185,24 +233,54 @@ public class Compania {
 			return true;
 		}
 		return false;
-
 	}
-
-//	public Cliente agregarOtroContrato() throws IOException {
-//		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-//		System.out.println("Ingrese el rut del cliente:");
-//		String rut = bf.readLine();
-//		if (buscarCliente(rut) != null) // Si el cliente existe
-//		{
-//			Cliente c = buscarCliente(rut);
-//			c.contratos.add(crearContrato()); // Se le agrega el contrato del cliente
-//			return c;
-//		} else
-//			System.out.println("Cliente no existe.");
-//			return null;
+	
+//	public Contrato crearContrato() throws IOException {
+//		Random rnd = new Random();
+//		int idRandom,cuotas;
+//		Contrato contrato;
+//
+//		BufferedReader res = new BufferedReader(new InputStreamReader(System.in));
+//
+//		// Datos para usar fecha real
+//		Calendar fechaF = new GregorianCalendar();
+//		Calendar fechaI = new GregorianCalendar();
+//		DateFormat dfi = DateFormat.getDateInstance();
+//		DateFormat dff = DateFormat.getDateInstance();
+//		Date di = fechaI.getTime();
+//		fechaF.add(Calendar.MONTH, 5); // 5 meses como minimo con el plan
+//		Date d = fechaF.getTime();
+//		String fi = dfi.format(di);
+//		String ff = dff.format(d);
+//		System.out.println("Ingrese la cantidad de cuotas, estas pueden ser entre 1-12");
+//		cuotas= Integer.parseInt(res.readLine());
+//		idRandom = rnd.nextInt(100000); // Genera un numero random entre 0 y 100000 que sera el id con contrato
+//		contrato = new Contrato(idRandom, fi, ff, elegirMovil(), elegirPlan(), cuotas); // Se crea el obj contrato y se retorna
+//
+//		System.out.println("INFORMACION DEL CONTRATO\n"+
+//				"Fecha de inicio del contrato: " + fi + ". El dia de esta fecha se estipulara como fecha de pago. ");
+//		System.out.println("El cliente debera estar 5 meses como minimo con el plan contratado de lo contrario"
+//				+ " debera cancelar los meses restantes.");
+//		System.out.println("Fecha de termino: " + ff
+//				+ ". Despues de esta fecha el cliente seguira con el plan por el tiempo que el estime conveniente.");
+//
+//		return contrato;
 //	}
 
-	
+	public Cliente agregarOtroContrato() throws IOException {
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Ingrese el rut del cliente:");
+		String rut = bf.readLine();
+		if (buscarCliente(rut) != null) // Si el cliente existe
+		{
+			Cliente c = buscarCliente(rut);
+			c.contratos.add(crearContrato()); // Se le agrega el contrato del cliente
+			return c;
+		} else
+			System.out.println("Cliente no existe.");
+			return null;
+	}
+
 	//ELIMINA UN CONTRATO , VERIFICCANDO ANTES DE QUE CUMPLA QUE LAS CUOTAS ESTEN PAGADAS
 	public boolean eliminarContrato(String rut) throws IOException {
 		if (buscarCliente(rut) != null) {
@@ -216,7 +294,7 @@ public class Compania {
 			{
 				Contrato contr=c.buscarContrato(res);
 				System.out.println("Fecha de termino del contratro estipulada: "+contr.getFechaTermino());
-				System.out.println("¿Se cumplio el pazo minimo con el plan ?\n1-Si\n2-No");
+				System.out.println("Â¿Se cumplio el pazo minimo con el plan ?\n1-Si\n2-No");
 				
 				 // SI SE CUMPLE LOS MESES OLBIGATORIOS  pagados (HIPOTETICAMENTE) SE PROCEDE A ELMINAR EL CONTRATO
 				if((Integer.parseInt(bf.readLine())==1) && ((RegistroDePagos)contr).getCuotasRestantes()<=0)
@@ -342,13 +420,13 @@ public class Compania {
 				{	// CUOTAS OBLIGATORIAS AL PLAN ( CORRESPONDIENTE A LOS MESES MINIMOS)
 					contratoAPagar=c.buscarContrato(id);
 					
-					//Se verificará si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
+					//Se verificarÃ¡ si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
 					boletaMasNueva = contratoAPagar.buscarPago(c.getRut());
 					if(boletaMasNueva != null)
 						// Obtiene el ultimo valor de CuotasRestantes conocido
 						cuotasRestantes = boletaMasNueva.getCuotasRestantes(); 
 					else
-						// Como aún no ha producido ningun pago de cuotas, se Obtiene el valor total
+						// Como aÃºn no ha producido ningun pago de cuotas, se Obtiene el valor total
 						cuotasRestantes = contratoAPagar.getCuotas();
 					
 					// SE CREA EL REGISTRO DE PAGO
@@ -366,7 +444,7 @@ public class Compania {
 						if(registro.pagar(Integer.parseInt(bf.readLine()),contratoAPagar.getValorCuota())){
 							
 							// GUARDADO DE REGISTROS EN LA BD
-							// Preparar Conexión a BD
+							// Preparar ConexiÃ³n a BD
 							Database bd = null;
 							try {
 								bd = new Database();
@@ -381,7 +459,7 @@ public class Compania {
 							} catch (SQLException e2) {
 								// TODO Auto-generated catch block
 								System.err.println("Boleta no se pudo escribir en la Base de Datos.\n"
-										+ "\nDetalles de la excepción:");
+										+ "\nDetalles de la excepciÃ³n:");
 								System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
 							}
 							
@@ -404,13 +482,13 @@ public class Compania {
 				
 				contratoAPagar=c.contratos.get(0);
 				
-				//Se verificará si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
+				//Se verificarÃ¡ si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
 				boletaMasNueva = contratoAPagar.buscarPago(c.getRut());
 				if(boletaMasNueva != null)
 					// Obtiene el ultimo valor de CuotasRestantes conocido
 					cuotasRestantes = boletaMasNueva.getCuotasRestantes(); 
 				else
-					// Como aún no ha producido ningun pago de cuotas, se Obtiene el valor total
+					// Como aÃºn no ha producido ningun pago de cuotas, se Obtiene el valor total
 					cuotasRestantes = contratoAPagar.getCuotas();
 				
 				// SE CREA EL REGISTRO DE PAGO
@@ -428,7 +506,7 @@ public class Compania {
 					if(registro.pagar(Integer.parseInt(bf.readLine()),contratoAPagar.getValorCuota())){
 						
 						// GUARDADO DE REGISTROS EN LA BD
-						// Preparar Conexión a BD
+						// Preparar ConexiÃ³n a BD
 						Database bd = null;
 						try {
 							bd = new Database();
@@ -443,7 +521,7 @@ public class Compania {
 						} catch (SQLException e2) {
 							// TODO Auto-generated catch block
 							System.err.println("Boleta no se pudo escribir en la Base de Datos.\n"
-									+ "\nDetalles de la excepción:");
+									+ "\nDetalles de la excepciÃ³n:");
 							System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
 						}
 						return true; // cuotas canceladas correctamente
@@ -463,13 +541,13 @@ public class Compania {
 		RegistroDePagos boletaMasNueva;
 		int cuotasRestantes;
 		
-		//Se verificará si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
+		//Se verificarÃ¡ si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
 		boletaMasNueva = contratoAPagar.buscarPago(contratoAPagar.getRutCliente());
 		if(boletaMasNueva != null)
 			// Obtiene el ultimo valor de CuotasRestantes conocido
 			cuotasRestantes = boletaMasNueva.getCuotasRestantes(); 
 		else
-			// Como aún no ha producido ningun pago de cuotas, se Obtiene el valor total
+			// Como aÃºn no ha producido ningun pago de cuotas, se Obtiene el valor total
 			cuotasRestantes = contratoAPagar.getCuotas();
 		
 		// SE CREA EL REGISTRO DE PAGO
@@ -484,7 +562,7 @@ public class Compania {
 		if(contratoAPagar.pagar(registro, registro.getCuotasRestantes())){
 			
 			// GUARDADO DE REGISTROS EN LA BD
-			// Preparar Conexión a BD
+			// Preparar ConexiÃ³n a BD
 			Database bd = null;
 			try {
 				bd = new Database();
@@ -499,7 +577,7 @@ public class Compania {
 			} catch (SQLException e2) {
 				// TODO Auto-generated catch block
 				System.err.println("Boleta no se pudo escribir en la Base de Datos.\n"
-						+ "\nDetalles de la excepción:");
+						+ "\nDetalles de la excepciÃ³n:");
 				System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
 			}
 			return true;
