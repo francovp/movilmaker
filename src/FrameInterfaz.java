@@ -75,6 +75,16 @@ public class FrameInterfaz extends JFrame {
 				dispose();
 			}
 		});
+		
+		JButton btnActualizarDatosDe = new JButton("Actualizar datos de cliente");
+		btnActualizarDatosDe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FrameActualizarCliente fActualizarCliente = new FrameActualizarCliente(datosEmpresa);
+				fActualizarCliente.setVisible(true);
+				dispose();
+			}
+		});
+		panel.add(btnActualizarDatosDe);
 		panel.add(btnIngresarContratoclientes);
 
 		JButton btnTerminarContrato = new JButton("Terminar contrato");
