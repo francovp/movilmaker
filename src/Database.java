@@ -85,7 +85,7 @@ public class Database {
 	}
 	
 	// Para eliminar un contrato de la BD
-	public boolean eliminarConstratoBD(String rut) throws SQLException {
+	public boolean eliminarContratoBD(String rut) throws SQLException {
 		String sql;
 		if(c !=null )
 		{

@@ -90,7 +90,7 @@ public class FrameContrato extends JFrame {
 					model1.addElement(""+(i+1)+"-"+datosEmpresa.getPlanes().get(i).getNombrePlan());
 
 				for (int i=0;i<datosEmpresa.getMoviles().size();i++)
-					model2.addElement(""+(i+1)+"-"+datosEmpresa.getMoviles().get(i).getModelo());
+					model2.addElement(""+(i+1)+"-"+datosEmpresa.getMoviles().get(i).getCapacidad());
 
 				listEquipos.setModel(model2);
 				listPlanes.setModel(model1);
