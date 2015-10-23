@@ -63,7 +63,7 @@ public class FrameInterfaz extends JFrame {
 		
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon("C:\\Users\\MiguelAngel\\Documents\\Eclipse workspace\\Proyecto POO\\src\\vomistar3.png"));
+		label.setIcon(new ImageIcon("src\\vomistar3.png"));
 		panel.add(label);
 		panel.add(btnAgregarClientes);
 
