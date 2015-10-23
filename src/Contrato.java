@@ -175,7 +175,7 @@ public class Contrato {
 	{	BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		
 		// interes sera de 7% del monto del celular
-		int interes= (int)(equipoContratado.getPrecio() * 0.07);
+		int interes= (int)(equipoContratado.getValorConPlan() * 0.07);
 		int valorTotal = (cuotasRestantes * ( registro.getPlanContratado().getPrecio() / registro.getCuotas() ));
 		
 		System.out.println("Monto Pendiente correspondiente al movil: "+valorTotal);

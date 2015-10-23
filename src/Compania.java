@@ -428,6 +428,7 @@ public class Compania {
 					
 					//Se verificará si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
 					boletaMasNueva = contratoAPagar.buscarPago(c.getRut());
+					
 					if(boletaMasNueva != null){
 						// Obtiene el ultimo valor de CuotasRestantes conocido
 						cuotasRestantes = boletaMasNueva.getCuotasRestantes(); 
@@ -679,12 +680,12 @@ public class Compania {
 		plan = elegirPlan(numPlan);
 		
 		//Calcula el monto total de la deuda del contraro 
-		monto = movil.getPrecio() + plan.getPrecio(); 
+		monto = movil.getValorConPlan() + plan.getPrecio(); 
 		// Actualiza la deuda del cliente antes de crear el contrato
 		clienteActual.setDeuda(clienteActual.getDeuda()+monto);
 		
 		// Calcula el valor de cada cuota (sin interes)
-		valorCuota = (movil.getPrecio() / numCuotas) + plan.getPrecio();
+		valorCuota = (movil.getValorConPlan() / numCuotas) + plan.getPrecio();
 		
 		// Se crea el obj contrato y se retorna
 		contrato = new Contrato(idRandom, fi, ff, movil, plan, monto, valorCuota, numCuotas, clienteActual.getRut()); 
