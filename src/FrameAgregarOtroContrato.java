@@ -37,8 +37,9 @@ public class FrameAgregarOtroContrato extends JFrame {
 	 * Create the frame.
 	 */
 	public FrameAgregarOtroContrato(Compania datosEmpresa) {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 151);
+		setBounds(100, 100, 343, 151);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "Ingrese rut de cliente", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		setContentPane(contentPane);
@@ -61,8 +62,7 @@ public class FrameAgregarOtroContrato extends JFrame {
 				C = datosEmpresa.buscarCliente(textRut.getText());	// busca cliente en clase Compañia, si existe lo retorna
 
 				if(C==null){
-					lblAviso.setForeground(Color.BLUE);
-					lblAviso.setText("Este cliente no existe");
+					mensaje(lblAviso,"El cliente no existe");
 				}else{
 				FrameContrato fContrato = new FrameContrato(datosEmpresa,C);
 				fContrato.setVisible(true);
@@ -81,12 +81,14 @@ public class FrameAgregarOtroContrato extends JFrame {
 				dispose();
 			}
 		});
-		btnVolver.setBounds(175, 66, 89, 23);
+		btnVolver.setBounds(225, 66, 89, 23);
 		contentPane.add(btnVolver);
-
-
-
 
 	}
 
+	
+	public void mensaje(JLabel lblAviso, String mensaje){
+		lblAviso.setForeground(Color.RED);
+		lblAviso.setText(mensaje);
+	}
 }

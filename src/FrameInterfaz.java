@@ -9,6 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 public class FrameInterfaz extends JFrame {
 
@@ -34,17 +37,19 @@ public class FrameInterfaz extends JFrame {
 	 * Create the frame.
 	 */
 	public FrameInterfaz(Compania datosEmpresa) {
+		setResizable(false);
+		setTitle("Modo Interfaz");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 353, 324);
 		contentPane = new JPanel();
-		contentPane.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Interfaz Vomistar", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		contentPane.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Bienvenido a", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 21, 318, 229);
+		panel.setBounds(10, 21, 318, 251);
 		contentPane.add(panel);
-		panel.setLayout(new GridLayout(6, 2, 0, 0));
+		panel.setLayout(new GridLayout(0, 1, 0, 0));
 
 		//Boton Agregar Clientes
 		JButton btnAgregarClientes = new JButton("Agregar Clientes");
@@ -55,6 +60,11 @@ public class FrameInterfaz extends JFrame {
 				setVisible(false);
 			}
 		});
+		
+		JLabel label = new JLabel("");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setIcon(new ImageIcon("C:\\Users\\MiguelAngel\\Documents\\Eclipse workspace\\Proyecto POO\\src\\vomistar3.png"));
+		panel.add(label);
 		panel.add(btnAgregarClientes);
 
 		JButton btnIngresarContratoclientes = new JButton("Ingresar contrato (clientes existentes)");

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
@@ -61,7 +62,7 @@ public class FrameAgregarCliente extends JFrame {
 		panel.setLayout(null);
 
 		JLabel lblPrimerNombre = new JLabel("Nombre");
-		lblPrimerNombre.setBounds(10, 24, 70, 14);
+		lblPrimerNombre.setBounds(10, 24, 97, 14);
 		panel.add(lblPrimerNombre);
 
 			textNombre1 = new JTextField();
@@ -70,7 +71,7 @@ public class FrameAgregarCliente extends JFrame {
 			textNombre1.setColumns(10);
 
 		JLabel lblSegundoNombre = new JLabel("Segundo Nombre");
-		lblSegundoNombre.setBounds(10, 52, 97, 14);
+		lblSegundoNombre.setBounds(10, 52, 106, 14);
 		panel.add(lblSegundoNombre);
 
 			textNombre2 = new JTextField();
@@ -139,7 +140,7 @@ public class FrameAgregarCliente extends JFrame {
 			panel_1.add(textFonoCel);
 		
 		JLabel lblDireccion1 = new JLabel("Direccion");
-		lblDireccion1.setBounds(10, 115, 52, 14);
+		lblDireccion1.setBounds(10, 115, 87, 14);
 		panel_1.add(lblDireccion1);
 		
 			textDireccion1 = new JTextField();
@@ -165,12 +166,12 @@ public class FrameAgregarCliente extends JFrame {
 		lblAviso.setBounds(20, 252, 284, 14);
 		contentPane.add(lblAviso);
 
-		//Boton que caputura todos los datos del cliente, crea objeto y agrega a lista de Compañia
+		//Boton que caputura todos los datos del cliente, crea objeto y agrega a lista de Compania
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Cliente nuevoCliente = null;
-				// Creación de conección a base de datos
+				// Creacionn de conexion a base de datos
 				Database bd = null;
 				try {
 					bd = new Database();
@@ -179,17 +180,17 @@ public class FrameAgregarCliente extends JFrame {
 					e2.printStackTrace();
 				}
 				
-				// Comprobaciones de Datos
-				if (!comprobarFonoCel(textFonoCel.getText())){
+				// Comprobaciones de Datos, numeros de telefono deben ser int o el sistema se cae
+				if (!comprobarFono(textFonoCel.getText())){
 					lblAviso.setForeground(Color.RED);
-					lblAviso.setText("Datos de Telefono debe ser numerico");
+					lblAviso.setText("Datos de telefono debe ser numerico");
 				}
 				else{
 					//Llama metodo para crear Cliente
 					nuevoCliente = datosNuevoCliente(datosEmpresa);
 					if (nuevoCliente != null){
 						System.out.println("Cliente creado...");
-						// Si el cliente se creó exitosamente se escribira cliente en la BD
+						// Si el cliente se crea exitosamente se escribira cliente en la BD
 						try {
 							bd.ingresarClienteBD(nuevoCliente);
 							System.out.println("Cliente agregado a la base de datos...");						
@@ -199,15 +200,19 @@ public class FrameAgregarCliente extends JFrame {
 									+ "\nDetalles de la excepción:");
 							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 						}
-						
-						// Se creará un contrato
+						//Muestra mensaje que cilente fue ingresado exitosamente!
+						JOptionPane.showMessageDialog(null, "Cliente creado con ex�to!\nProceda en asignarle un contrato", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+						// Se creara� un contrato
 						FrameContrato fContrato = new FrameContrato(datosEmpresa,nuevoCliente);
 						fContrato.setVisible(true);
 						dispose();
 					}
-					else
-						//Sino, se informa que el cliente ya existe y se vuelve al men�
-						System.err.println("Cliente ya existe...");
+					else{
+					//Sino, se informa que el cliente ya existe y se vuelve al menu
+					System.err.println("Cliente ya existe...");
+					lblAviso.setForeground(Color.RED);
+					lblAviso.setText("Cliente ya existe!");
+					}
 				}
 			}
 		});
@@ -217,7 +222,7 @@ public class FrameAgregarCliente extends JFrame {
 		JButton btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				botonReset();
+				botonReset(lblAviso);
 			}
 		});
 		btnReset.setBounds(104, 11, 89, 23);
@@ -237,7 +242,11 @@ public class FrameAgregarCliente extends JFrame {
 	}
 		
 	//========================METODOS====================
-
+	
+	/**
+	* Ingresa atributos capturados desde los JTextField de la ventana
+	* y los atribuye a un objeto Cliente y envia a clase compa�ia
+	**/
 	//Obtiene los datos ingresados en las casillas y crea una nueva clase Cliente, luego es enviado a la listaClientes en clase Compañia
 	public Cliente datosNuevoCliente(Compania datosEmpresa){
 		String nombre1,nombre2,apellido1,apellido2,rut,email,direccion1,direccion2;
@@ -255,7 +264,7 @@ public class FrameAgregarCliente extends JFrame {
 		// Se crea cliente nuevo
 		Cliente clienteNuevo = new Cliente(datosEmpresa.getRut(),nombre1,nombre2,apellido1,apellido2,rut,fono1,fono2,email,direccion1,direccion2,0);
 		// Se ingresa cliente nuevo y se espera un resultado del ingreso
-		Cliente resultado = datosEmpresa.interfazCrearClienteNuevo(clienteNuevo);
+		Cliente resultado = datosEmpresa.crearClienteNuevo(clienteNuevo);
 		if(resultado != null)
 			// Si cliente no existe, todo bien
 			return clienteNuevo;
@@ -264,8 +273,11 @@ public class FrameAgregarCliente extends JFrame {
 			return null;
 	}
 
-	//Resetea todos los campos de ingreso en la ventana
-	public void botonReset() {
+	/**
+	* Resetea todos los JText y JLabel ingresados de la ventana
+	*@param lblAviso
+	**/
+	public void botonReset(JLabel lblAviso) {	//Resetea todos los campos de ingreso en la ventana
 
 		textNombre1.setText("");
 		textNombre2.setText("");
@@ -277,13 +289,20 @@ public class FrameAgregarCliente extends JFrame {
 		textFonoCel.setText("");
 		textDireccion1.setText("");
 		textDireccion2.setText("");
+		lblAviso.setText("");
 	}
+	
+	
+	/**
+	* Comprueba si en textFonoFijo y textFonoCel
+	* se han insertado datos del tipo int 
+	*@param fono
+	*@return boolean
+	**/
 
-	//========================METODOS DE COMPROBACIONES ====================
-	//Comprueba si el ingreso en casilla de telefono es un numero INT
-	public boolean comprobarFonoCel (String fonoCel) {
+	public boolean comprobarFono (String fono) {	//Comprueba si el ingreso en casilla de telefono es un numero INT
 		try {
-		    Integer.parseInt(fonoCel);	//Si es INT devuelve true
+		    Integer.parseInt(fono);	//Si es INT devuelve true
 			return true;
 		}
 		catch (Exception a) {
@@ -291,4 +310,7 @@ public class FrameAgregarCliente extends JFrame {
 			return false;
 		}
 	}
+	
+
+	
 }

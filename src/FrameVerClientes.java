@@ -10,6 +10,12 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.UIManager;
 
 public class FrameVerClientes extends JFrame {
 
@@ -35,6 +41,7 @@ public class FrameVerClientes extends JFrame {
 	 * Create the frame.
 	 */
 	public FrameVerClientes(Compania datosEmpresa) {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 587, 392);
 		contentPane = new JPanel();
@@ -43,6 +50,7 @@ public class FrameVerClientes extends JFrame {
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
+		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel.setBounds(10, 22, 551, 320);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -53,6 +61,7 @@ public class FrameVerClientes extends JFrame {
 		panel.add(scrollPane);
 
 		JList listClientes = new JList();
+		listClientes.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		scrollPane.setViewportView(listClientes);
 
 		// MUESTRA DATOS DE CLIENTES EN LA Compañia (rut,nombre1,apellido1,apellido2) , se agrego scroll panel

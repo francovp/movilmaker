@@ -10,14 +10,17 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.border.EtchedBorder;
 
 public class FrameContrato extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textCuotas;
 
 	/**
 	 * Launch the application.
@@ -39,7 +42,8 @@ public class FrameContrato extends JFrame {
 	 * Create the frame.
 	 */
 	// RECIBE DATOS DE LA EMPRESA Y DATOS DE CLIENTE (cliente para obtencion de nombre mostrado en el panel y rut para su busqueda)
-	public FrameContrato(Compania datosEmpresa, Cliente cliente) {	
+	public FrameContrato(Compania datosEmpresa, Cliente cliente) {
+		setResizable(false);	
 		setTitle("Contrato");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 332);
@@ -49,6 +53,7 @@ public class FrameContrato extends JFrame {
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
+		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel.setBounds(10, 25, 464, 173);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -62,13 +67,16 @@ public class FrameContrato extends JFrame {
 		panel.add(lblEquipos);
 
 		JList listEquipos = new JList();
+		listEquipos.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		listEquipos.setBounds(198, 25, 150, 137);
 		panel.add(listEquipos);
 
 		JList listPlanes = new JList();
+		listPlanes.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		listPlanes.setBounds(20, 25, 150, 137);
 		panel.add(listPlanes);
 
+//	BOTON PARA MOSTRAR PLANES Y EQUIPOS DESDE LA BASE DE DATOS EN LAS JLists respectivas
 		JButton btnMostrar = new JButton("Mostrar");
 		btnMostrar.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnMostrar.setBounds(358, 25, 96, 23);
@@ -77,6 +85,7 @@ public class FrameContrato extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel model1 = new DefaultListModel();	//Instancia para JList Planes
 				DefaultListModel model2 = new DefaultListModel();	//Instancia para JList Moviles
+				
 				for (int i=0;i<datosEmpresa.getPlanes().size();i++)
 					model1.addElement(""+(i+1)+"-"+datosEmpresa.getPlanes().get(i).getNombrePlan());
 
@@ -96,19 +105,17 @@ public class FrameContrato extends JFrame {
 		panel_1.setLayout(null);
 
 		JLabel lblAviso = new JLabel("");
-		lblAviso.setForeground(Color.RED);
 		lblAviso.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblAviso.setBounds(116, 237, 114, 14);
+		lblAviso.setBounds(30, 270, 201, 14);
 		contentPane.add(lblAviso);
+		
+		JComboBox comboBoxMeses = new JComboBox();
+		comboBoxMeses.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
+		comboBoxMeses.setBounds(30, 237, 88, 20);
+		contentPane.add(comboBoxMeses);
 
-		JLabel lblAviso2 = new JLabel("");
-		lblAviso2.setForeground(Color.BLUE);
-		lblAviso2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblAviso2.setBounds(215, 209, 209, 14);
-		contentPane.add(lblAviso2);
 
-
-		//	DATOS INGRESADOS SE ENVIAN A CLASE Compañia, metodo: interfazCrearContrato
+		//	DATOS INGRESADOS SE ENVIAN A CLASE Compania, metodo: interfazCrearContrato
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -126,25 +133,25 @@ public class FrameContrato extends JFrame {
 				
 				for (int i=0;i < datosEmpresa.getPlanes().size();i++)
 					for (int j=0;j<datosEmpresa.getMoviles().size();j++)
-						// Si estan Seleccionados en LA LISTA, "Plan", "Equipo" y "meses" (entre 1-12 cuotas) , se adjudica el contrato
-						if(listPlanes.isSelectedIndex(i) && listEquipos.isSelectedIndex(j) && 
-								comprobarMesInt() == true && Integer.parseInt(textCuotas.getText())>=1 && 
-								Integer.parseInt(textCuotas.getText())<=12){
+						// Si estan Seleccionados en LA LISTA, "Plan", "Equipo" y "meses" (entre 1-12 cuotas) es visible , se adjudica el contrato
+						if(listPlanes.isSelectedIndex(i) && listEquipos.isSelectedIndex(j) && comboBoxMeses.getVerifyInputWhenFocusTarget()){
 							//SE OTORGAN VALORES A VARIABLES PARA PLAN, EQUIPO Y CUOTAS
 							numPlan=listPlanes.getSelectedIndex();
 							numEquipo=listEquipos.getSelectedIndex();
-							numCuotas=Integer.parseInt(textCuotas.getText());
+							numCuotas=comboBoxMeses.getSelectedIndex();
 
 							for(int k=0;k<datosEmpresa.getListaClientes().size();k++)
 								clienteBuscado = datosEmpresa.getListaClientes().get(k);
 								if (cliente.getRut().equals(clienteBuscado.getRut()))
 									clienteActual = clienteBuscado; // Solo para entendimiento
 									// Se crea un nuevo contrato
-								    contratoNuevo = datosEmpresa.interfazCrearContrato(numPlan, numEquipo, numCuotas, clienteActual);
-								    // SE LE OTORGA NUEVO CONTRATO A CLIENTE DE LA COMPAÑIA
+								    contratoNuevo = datosEmpresa.crearContrato(numPlan, numEquipo, numCuotas, clienteActual);
+								    // SE LE OTORGA NUEVO CONTRATO A CLIENTE DE LA COMPA�IA
 									clienteActual.getContratos().add(contratoNuevo);	
 									// Se escribira contrato en la BD
 									try {
+										//Cuadro de texto informa exito en asignacion de contrato
+										JOptionPane.showMessageDialog(null, "Contrato asignado exitosamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 										bd.ingresarContratoBD(contratoNuevo);
 										System.out.println("Contrato agregado a la base de datos...");						
 									} catch (SQLException e2) {
@@ -153,14 +160,15 @@ public class FrameContrato extends JFrame {
 												+ "\nDetalles de la excepción:");
 										System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
 									}
-							lblAviso2.setForeground(Color.BLUE);
-							lblAviso2.setText("Datos Ingresados correctamente");
+									
+									//CIERRE INTERFAZ FrameContrato
+									FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
+									fInterfaz.setVisible(true);
+									dispose();
+						}else {
+							lblAviso.setForeground(Color.RED);
+							lblAviso.setText("Seleccione todos los campos");
 						}
-
-				//CIERRE INTERFAZ FrameContrato
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
-				fInterfaz.setVisible(true);
-				dispose();
 			}
 		});
 
@@ -176,32 +184,15 @@ public class FrameContrato extends JFrame {
 		btnNewButton_1.setBounds(110, 11, 89, 23);
 		panel_1.add(btnNewButton_1);
 
-		textCuotas = new JTextField();
-		textCuotas.setBounds(20, 234, 86, 20);
-		contentPane.add(textCuotas);
-		textCuotas.setColumns(10);
-
-		JLabel lblNewLabel = new JLabel("Ingrese cantidad de cuotas (1-12)");
+		JLabel lblNewLabel = new JLabel("Escoja cantidad de cuotas (1-12)");
 		lblNewLabel.setBounds(20, 209, 191, 14);
 		contentPane.add(lblNewLabel);
 
 		JLabel labelCliente = new JLabel(cliente.getNombre1()+" "+cliente.getNombre2()+" "+cliente.getApellido1()+" "+ cliente.getApellido2());
 		labelCliente.setBounds(120, 0, 304, 14);
 		contentPane.add(labelCliente);
-	}
+		
 
-	//============================== METODOS ==============================
-
-	//Comprueba si el ingreso en casilla Cuotas es un numero INT
-	public boolean comprobarMesInt(){
-		try {
-			Integer.parseInt(textCuotas.getText());	//Si es INT devuelve true
-			return true;
-		}
-		catch (Exception a) {
-			//Not an integer
-		}
-		return false;
 	}
 
 }

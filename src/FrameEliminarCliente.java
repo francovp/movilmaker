@@ -9,11 +9,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EtchedBorder;
 
 @SuppressWarnings("serial")
 public class FrameEliminarCliente extends JFrame {
@@ -41,16 +44,18 @@ public class FrameEliminarCliente extends JFrame {
 	 * Create the frame.
 	 */
 	public FrameEliminarCliente(Compania datosEmpresa) {
+		setResizable(false);
 		setTitle("Eliminar cliente");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 382, 331);
+		setBounds(100, 100, 382, 313);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "Eliminaci\u00F3n de cliente", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 21, 284, 75);
+		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panel.setBounds(10, 21, 347, 75);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -77,11 +82,13 @@ public class FrameEliminarCliente extends JFrame {
 					e1.printStackTrace();
 				}
 				//Llama a metodo en clase Compañia para eliminar Cliente
-				if (datosEmpresa.interfazEliminarCliente(rut) == true){
+				if (datosEmpresa.eliminarCliente(rut) == true){
 					System.out.println("Cliente eliminado...");
 					// Si el cliente se elimino exitosamente se eliminará cliente en la BD
 					try {
 						bd.eliminarClienteBD(rut);
+						//Cuadro de dialogo, que informa eliminacion exitosa
+						JOptionPane.showMessageDialog(null, "El Cliente ha sido eliminado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 						System.out.println("Cliente eliminado de la base de datos...");						
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
@@ -96,7 +103,7 @@ public class FrameEliminarCliente extends JFrame {
 			}
 		});
 
-		btnEliminar.setBounds(182, 36, 98, 20);
+		btnEliminar.setBounds(227, 31, 110, 31);
 		panel.add(btnEliminar);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -120,7 +127,7 @@ public class FrameEliminarCliente extends JFrame {
 		btnMostrar.setBounds(260, 126, 97, 23);
 		contentPane.add(btnMostrar);
 
-		JLabel lblListaClientes = new JLabel("Lista clientes");
+		JLabel lblListaClientes = new JLabel("Lista clientes en DB");
 		lblListaClientes.setBounds(260, 107, 136, 14);
 		contentPane.add(lblListaClientes);
 
@@ -132,7 +139,7 @@ public class FrameEliminarCliente extends JFrame {
 				dispose();
 			}
 		});
-		btnVolver.setBounds(258, 258, 97, 23);
+		btnVolver.setBounds(260, 227, 97, 23);
 		contentPane.add(btnVolver);
 
 	}
