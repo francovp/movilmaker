@@ -1,17 +1,19 @@
 public class RegistroDePagos extends Contrato { 
 	private int idRegistro;
 	private int montoPagado;
+	private int montoAdeudado;
 	private int cuotasRestantes;
 	
 	// Constructor para cuando se paga una mensualidad
 	public RegistroDePagos(int idContrato, int idEquipo, int idPlan, String fechaInicio, String fechaTermino,
 			String rutCliente, int valorTotal, int valorCuota, int cuotas, int idRegistro,
-			int montoPagado, int cuotasRestantes) {
+			int montoPagado, int montoAdeudado, int cuotasRestantes) {
 		
 		super(idContrato, idEquipo, idPlan, fechaInicio, fechaTermino, rutCliente, valorTotal, valorCuota, cuotas);
 		
 		this.idRegistro = idRegistro;
 		this.montoPagado = montoPagado;
+		this.montoAdeudado = montoAdeudado;
 		this.cuotasRestantes = cuotasRestantes;
 	}
 
@@ -37,6 +39,14 @@ public class RegistroDePagos extends Contrato {
 
 	public void setCuotasRestantes(int cuotasRestantes) {
 		this.cuotasRestantes = cuotasRestantes;
+	}
+
+	public int getMontoAdeudado() {
+		return montoAdeudado;
+	}
+
+	public void setMontoAdeudado(int montoAdeudado) {
+		this.montoAdeudado = montoAdeudado;
 	}
 
 	// METODO PAGAR MENSUALIDAD (SOBREESCRITURA )

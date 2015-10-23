@@ -25,13 +25,10 @@ public class Compania {
 	private ArrayList<Equipo> moviles = new ArrayList<Equipo>();
 	private ArrayList<Plan> planes = new ArrayList<Plan>();
 	private ArrayList<Administrador> administradores = new ArrayList<Administrador>();
-	// CONSTRUCTOR
+	
 	/**
 	 * @param nombre
 	 * @param rut
-	 * @param listaClientes
-	 * @param moviles
-	 * @param planes
 	 */
 	public Compania(String nombre, String rut) {
 		super();
@@ -129,6 +126,57 @@ public class Compania {
 		return null;
 
 	}
+	
+	// CREA UN NUEVO CLIENTE Y SU CONTRATO RESPECTIVO
+//	public Cliente crearClienteNuevo(String idCompania) throws IOException {
+//		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+//		String nombre1;
+//		String nombre2;
+//		String apellido1;
+//		String apellido2;
+//		String rut;
+//		int fonoCel;
+//		int fonoFijo;
+//		String email;
+//		String direccion1;
+//		String direccion2;
+//
+//		// peticion de datos del cliente
+//		System.out.println("Datos necesarios del cliente");
+//		System.out.print("Primer Nombre:");
+//		nombre1 = bf.readLine();
+//		System.out.print("Segundo Nombre:");
+//		nombre2 = bf.readLine();
+//		System.out.print("Apellido Paterno:");
+//		apellido1 = bf.readLine();
+//		System.out.print("Apellido Materno:");
+//		apellido2 = bf.readLine();
+//		System.out.print("RUT (123456780):");
+//		rut = bf.readLine();
+//		System.out.print("Nï¿½ Celular:");
+//		fonoCel = Integer.parseInt(bf.readLine());
+//		System.out.print("Nï¿½ Telefono fijo:");
+//		fonoFijo = Integer.parseInt(bf.readLine());
+//		System.out.print("Email:");
+//		email = bf.readLine();
+//		System.out.print("Direccion (Calle y nï¿½):");
+//		direccion1 = bf.readLine();
+//		System.out.print("Ciudad:");
+//		direccion2 = bf.readLine();
+//
+//		if (buscarCliente(rut) != null)
+//			// Si el rut existe, le informo que ya existe.
+//			return null;
+//		else {
+//			// Si no existe se crea el obj cliente y se guarda en el arraylist
+//			Cliente clienteNuevo = new Cliente(nombre1, nombre2, apellido1, apellido2, rut, fonoCel, fonoFijo, email, direccion1,
+//					direccion2, idCompania);
+//			clienteNuevo.contratos.add(crearContrato()); // creo el contrato del cliente ingresado
+//														// y lo agrego al ArrayList de contratos del Cliente
+//			listaClientes.add(clienteNuevo);
+//			return clienteNuevo;
+//		}
+//	}
 
 	// MODIFICA INFORMACION DEL CLIENTE
 	public boolean modificarCliente(String rut) throws IOException {
@@ -185,24 +233,60 @@ public class Compania {
 			return true;
 		}
 		return false;
+	}
+	
+	public Contrato crearContrato(Cliente clienteActual) throws IOException {
+		Random rnd = new Random();
+		int idRandom, monto, valorCuota;
+		Contrato contrato = null;
+		Equipo movil = null;
+		Plan plan = null;
 
+//		// Datos para usar fecha real
+//		Calendar fechaF = new GregorianCalendar();
+//		Calendar fechaI = new GregorianCalendar();
+//		DateFormat dfi = DateFormat.getDateInstance();
+//		DateFormat dff = DateFormat.getDateInstance();
+//		Date di = fechaI.getTime();
+//		fechaF.add(Calendar.MONTH, 5); // 5 meses como minimo con el plan
+//		Date d = fechaF.getTime();
+//		String fi = dfi.format(di);
+//		String ff = dff.format(d);
+//		// Genera un numero random entre 0 y 100000 que sera el id con contrato
+//		idRandom = rnd.nextInt(100000); 
+//		
+//		//Obtiene el Equipo y el plan del contrato
+//		movil = interfazElegirMovil(numEquipo);
+//		plan = interfazElegirPlan(numPlan);
+//		
+//		//Calcula el monto total de la deuda del contraro 
+//		monto = movil.getPrecio() + plan.getPrecio(); 
+//		// Actualiza la deuda del cliente antes de crear el contrato
+//		clienteActual.setDeuda(clienteActual.getDeuda()+monto);
+//		
+//		// Calcula el valor de cada cuota (sin interes)
+//		valorCuota = (movil.getPrecio() / numCuotas) + plan.getPrecio();
+//		
+//		// Se crea el obj contrato y se retorna
+//		contrato = new Contrato(idRandom, fi, ff, movil, plan, monto, valorCuota, numCuotas, clienteActual.getRut()); 
+//		
+		return contrato;
 	}
 
-//	public Cliente agregarOtroContrato() throws IOException {
-//		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-//		System.out.println("Ingrese el rut del cliente:");
-//		String rut = bf.readLine();
-//		if (buscarCliente(rut) != null) // Si el cliente existe
-//		{
-//			Cliente c = buscarCliente(rut);
-//			c.contratos.add(crearContrato()); // Se le agrega el contrato del cliente
-//			return c;
-//		} else
-//			System.out.println("Cliente no existe.");
-//			return null;
-//	}
+	public Cliente agregarOtroContrato(Cliente clienteActual) throws IOException {
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Ingrese el rut del cliente:");
+		String rut = bf.readLine();
+		if (buscarCliente(rut) != null) // Si el cliente existe
+		{
+			Cliente c = buscarCliente(rut);
+			c.contratos.add(crearContrato(clienteActual)); // Se le agrega el contrato del cliente
+			return c;
+		} else
+			System.out.println("Cliente no existe.");
+			return null;
+	}
 
-	
 	//ELIMINA UN CONTRATO , VERIFICCANDO ANTES DE QUE CUMPLA QUE LAS CUOTAS ESTEN PAGADAS
 	public boolean eliminarContrato(String rut) throws IOException {
 		if (buscarCliente(rut) != null) {
@@ -216,7 +300,7 @@ public class Compania {
 			{
 				Contrato contr=c.buscarContrato(res);
 				System.out.println("Fecha de termino del contratro estipulada: "+contr.getFechaTermino());
-				System.out.println("¿Se cumplio el pazo minimo con el plan ?\n1-Si\n2-No");
+				System.out.println("Â¿Se cumplio el pazo minimo con el plan ?\n1-Si\n2-No");
 				
 				 // SI SE CUMPLE LOS MESES OLBIGATORIOS  pagados (HIPOTETICAMENTE) SE PROCEDE A ELMINAR EL CONTRATO
 				if((Integer.parseInt(bf.readLine())==1) && ((RegistroDePagos)contr).getCuotasRestantes()<=0)
@@ -327,7 +411,7 @@ public class Compania {
 		Cliente c;
 		Contrato contratoAPagar;
 		RegistroDePagos boletaMasNueva;
-		int cuotasRestantes;
+		int cuotasRestantes = 0, montoAdeudado = 0;
 		
 		if(buscarCliente(rut)!=null) // BUSCO AL CLIENTE
 		{
@@ -342,20 +426,25 @@ public class Compania {
 				{	// CUOTAS OBLIGATORIAS AL PLAN ( CORRESPONDIENTE A LOS MESES MINIMOS)
 					contratoAPagar=c.buscarContrato(id);
 					
-					//Se verificará si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
+					//Se verificarÃ¡ si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
 					boletaMasNueva = contratoAPagar.buscarPago(c.getRut());
-					if(boletaMasNueva != null)
+					if(boletaMasNueva != null){
 						// Obtiene el ultimo valor de CuotasRestantes conocido
 						cuotasRestantes = boletaMasNueva.getCuotasRestantes(); 
-					else
-						// Como aún no ha producido ningun pago de cuotas, se Obtiene el valor total
+						// OBtiene el ultimo valor de montoAdeudado conocido
+						montoAdeudado = boletaMasNueva.getMontoAdeudado(); 
+					}
+					else{
+						// Como aun no ha producido ningun pago, se Obtienen los valores totales
 						cuotasRestantes = contratoAPagar.getCuotas();
+						montoAdeudado = contratoAPagar.getValorTotal();
+					}
 					
 					// SE CREA EL REGISTRO DE PAGO
 					RegistroDePagos registro = new RegistroDePagos (contratoAPagar.getIdContrato(),contratoAPagar.getIdEquipo(),
 							contratoAPagar.getIdPlan(), contratoAPagar.getFechaInicio(), contratoAPagar.getFechaTermino(),
 							contratoAPagar.getRutCliente(),contratoAPagar.getValorTotal(),contratoAPagar.getValorCuota(),
-							contratoAPagar.getCuotas(),0,contratoAPagar.getValorCuota(),cuotasRestantes-1);
+							contratoAPagar.getCuotas(),0,contratoAPagar.getValorCuota(), montoAdeudado, cuotasRestantes-1);
 					
 					if(registro.getCuotasRestantes() > 0){  // SE DEBE MENSUALIDAD
 						System.out.println("Monto de Cuotas: "+ registro.getValorCuota());
@@ -366,7 +455,7 @@ public class Compania {
 						if(registro.pagar(Integer.parseInt(bf.readLine()),contratoAPagar.getValorCuota())){
 							
 							// GUARDADO DE REGISTROS EN LA BD
-							// Preparar Conexión a BD
+							// Preparar ConexiÃ³n a BD
 							Database bd = null;
 							try {
 								bd = new Database();
@@ -381,7 +470,7 @@ public class Compania {
 							} catch (SQLException e2) {
 								// TODO Auto-generated catch block
 								System.err.println("Boleta no se pudo escribir en la Base de Datos.\n"
-										+ "\nDetalles de la excepción:");
+										+ "\nDetalles de la excepciÃ³n:");
 								System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
 							}
 							
@@ -404,20 +493,25 @@ public class Compania {
 				
 				contratoAPagar=c.contratos.get(0);
 				
-				//Se verificará si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
+				//Se verificarÃ¡ si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
 				boletaMasNueva = contratoAPagar.buscarPago(c.getRut());
-				if(boletaMasNueva != null)
+				if(boletaMasNueva != null){
 					// Obtiene el ultimo valor de CuotasRestantes conocido
 					cuotasRestantes = boletaMasNueva.getCuotasRestantes(); 
-				else
-					// Como aún no ha producido ningun pago de cuotas, se Obtiene el valor total
+					// OBtiene el ultimo valor de montoAdeudado conocido
+					montoAdeudado = boletaMasNueva.getMontoAdeudado(); 
+				}
+				else{
+					// Como aun no ha producido ningun pago, se Obtienen los valores totales
 					cuotasRestantes = contratoAPagar.getCuotas();
+					montoAdeudado = contratoAPagar.getValorTotal();
+				}
 				
 				// SE CREA EL REGISTRO DE PAGO
 				RegistroDePagos registro = new RegistroDePagos (contratoAPagar.getIdContrato(),contratoAPagar.getIdEquipo(),
 						contratoAPagar.getIdPlan(), contratoAPagar.getFechaInicio(), contratoAPagar.getFechaTermino(),
 						contratoAPagar.getRutCliente(),contratoAPagar.getValorTotal(),contratoAPagar.getValorCuota(),
-						contratoAPagar.getCuotas(),0,contratoAPagar.getValorCuota(),cuotasRestantes-1);
+						contratoAPagar.getCuotas(),0,contratoAPagar.getValorCuota(), montoAdeudado, cuotasRestantes-1);
 				
 				if(registro.getCuotasRestantes() > 0){  // SE DEBE MENSUALIDAD
 					System.out.println("Monto de Cuotas: "+ registro.getValorCuota());
@@ -428,7 +522,7 @@ public class Compania {
 					if(registro.pagar(Integer.parseInt(bf.readLine()),contratoAPagar.getValorCuota())){
 						
 						// GUARDADO DE REGISTROS EN LA BD
-						// Preparar Conexión a BD
+						// Preparar ConexiÃ³n a BD
 						Database bd = null;
 						try {
 							bd = new Database();
@@ -443,7 +537,7 @@ public class Compania {
 						} catch (SQLException e2) {
 							// TODO Auto-generated catch block
 							System.err.println("Boleta no se pudo escribir en la Base de Datos.\n"
-									+ "\nDetalles de la excepción:");
+									+ "\nDetalles de la excepciÃ³n:");
 							System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
 						}
 						return true; // cuotas canceladas correctamente
@@ -461,22 +555,27 @@ public class Compania {
 	//METODO PARA PAGAR contrato Y FINALIZARLO
 	public boolean pagarUnPlan (Contrato contratoAPagar) throws IOException {
 		RegistroDePagos boletaMasNueva;
-		int cuotasRestantes;
+		int cuotasRestantes, montoAdeudado;
 		
-		//Se verificará si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
+		//Se verificarÃ¡ si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
 		boletaMasNueva = contratoAPagar.buscarPago(contratoAPagar.getRutCliente());
-		if(boletaMasNueva != null)
+		if(boletaMasNueva != null){
 			// Obtiene el ultimo valor de CuotasRestantes conocido
 			cuotasRestantes = boletaMasNueva.getCuotasRestantes(); 
-		else
-			// Como aún no ha producido ningun pago de cuotas, se Obtiene el valor total
+			// OBtiene el ultimo valor de montoAdeudado conocido
+			montoAdeudado = boletaMasNueva.getMontoAdeudado(); 
+		}
+		else{
+			// Como aun no ha producido ningun pago, se Obtienen los valores totales
 			cuotasRestantes = contratoAPagar.getCuotas();
+			montoAdeudado = contratoAPagar.getValorTotal();
+		}
 		
 		// SE CREA EL REGISTRO DE PAGO
 		RegistroDePagos registro = new RegistroDePagos (contratoAPagar.getIdContrato(),contratoAPagar.getIdEquipo(),
 				contratoAPagar.getIdPlan(), contratoAPagar.getFechaInicio(), contratoAPagar.getFechaTermino(),
 				contratoAPagar.getRutCliente(),contratoAPagar.getValorTotal(),contratoAPagar.getValorCuota(),
-				contratoAPagar.getCuotas(),0,contratoAPagar.getValorCuota(),cuotasRestantes-1);
+				contratoAPagar.getCuotas(),0,contratoAPagar.getValorCuota(), montoAdeudado, cuotasRestantes-1);
 		
 		System.out.println("\nMeses a cancelar restantes para terminar el plazo minimo estipulado: "+ registro.getCuotasRestantes());
 		System.out.println("Al no terminar tener el plan contratado por los meses minimos estipulados.");
@@ -484,7 +583,7 @@ public class Compania {
 		if(contratoAPagar.pagar(registro, registro.getCuotasRestantes())){
 			
 			// GUARDADO DE REGISTROS EN LA BD
-			// Preparar Conexión a BD
+			// Preparar ConexiÃ³n a BD
 			Database bd = null;
 			try {
 				bd = new Database();
@@ -499,7 +598,7 @@ public class Compania {
 			} catch (SQLException e2) {
 				// TODO Auto-generated catch block
 				System.err.println("Boleta no se pudo escribir en la Base de Datos.\n"
-						+ "\nDetalles de la excepción:");
+						+ "\nDetalles de la excepciÃ³n:");
 				System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
 			}
 			return true;
@@ -539,7 +638,7 @@ public class Compania {
 	//=============================== METODOS DE LA INTERFAZ =================================
 
 	// CREA UN NUEVO CLIENTE Y SU CONTRATO RESPECTIVO
-		public Cliente interfazCrearClienteNuevo(Cliente clienteNuevo) {
+		public Cliente crearClienteNuevo(Cliente clienteNuevo) {
 
 			if (buscarCliente(clienteNuevo.getRut()) != null)
 				// Si el rut existe, le informo que ya existe.
@@ -554,93 +653,82 @@ public class Compania {
 			}
 		}
 
-	// ELIMINA CLIENTE DESDE LA INTERFAZ FrameEliminarCliente
-		public boolean interfazEliminarCliente(String rut) {
-			Cliente c;
-			if (buscarCliente(rut) != null) {
-				c = buscarCliente(rut);
-				listaClientes.remove(c);
-				return true;
-			}
-			return false;
-		}
-
 	// CREA NUEVO CONTRATO DESDE LA INTERFAZ FrameContrato
-		public Contrato interfazCrearContrato(int numPlan, int numEquipo, int numCuotas, Cliente clienteActual)  {
-			Random rnd = new Random();
-			int idRandom, monto, valorCuota;
-			Contrato contrato = null;
-			Equipo movil = null;
-			Plan plan = null;
+	public Contrato crearContrato(int numPlan, int numEquipo, int numCuotas, Cliente clienteActual)  {
+		Random rnd = new Random();
+		int idRandom, monto, valorCuota;
+		Contrato contrato = null;
+		Equipo movil = null;
+		Plan plan = null;
 
-			// Datos para usar fecha real
-			Calendar fechaF = new GregorianCalendar();
-			Calendar fechaI = new GregorianCalendar();
-			DateFormat dfi = DateFormat.getDateInstance();
-			DateFormat dff = DateFormat.getDateInstance();
-			Date di = fechaI.getTime();
-			fechaF.add(Calendar.MONTH, 5); // 5 meses como minimo con el plan
-			Date d = fechaF.getTime();
-			String fi = dfi.format(di);
-			String ff = dff.format(d);
-			// Genera un numero random entre 0 y 100000 que sera el id con contrato
-			idRandom = rnd.nextInt(100000); 
-			
-			//Obtiene el Equipo y el plan del contrato
-			movil = interfazElegirMovil(numEquipo);
-			plan = interfazElegirPlan(numPlan);
-			
-			//Calcula el monto total de la deuda del contraro 
-			monto = movil.getPrecio() + plan.getPrecio(); 
-			// Actualiza la deuda del cliente antes de crear el contrato
-			clienteActual.setDeuda(clienteActual.getDeuda()+monto);
-			
-			// Calcula el valor de cada cuota (sin interes)
-			valorCuota = (movil.getPrecio() / numCuotas) + plan.getPrecio();
-			
-			// Se crea el obj contrato y se retorna
-			contrato = new Contrato(idRandom, fi, ff, movil, plan, monto, valorCuota, numCuotas, clienteActual.getRut()); 
+		// Datos para usar fecha real
+		Calendar fechaF = new GregorianCalendar();
+		Calendar fechaI = new GregorianCalendar();
+		DateFormat dfi = DateFormat.getDateInstance();
+		DateFormat dff = DateFormat.getDateInstance();
+		Date di = fechaI.getTime();
+		fechaF.add(Calendar.MONTH, 5); // 5 meses como minimo con el plan
+		Date d = fechaF.getTime();
+		String fi = dfi.format(di);
+		String ff = dff.format(d);
+		// Genera un numero random entre 0 y 100000 que sera el id con contrato
+		idRandom = rnd.nextInt(100000); 
+		
+		//Obtiene el Equipo y el plan del contrato
+		movil = elegirMovil(numEquipo);
+		plan = elegirPlan(numPlan);
+		
+		//Calcula el monto total de la deuda del contraro 
+		monto = movil.getPrecio() + plan.getPrecio(); 
+		// Actualiza la deuda del cliente antes de crear el contrato
+		clienteActual.setDeuda(clienteActual.getDeuda()+monto);
+		
+		// Calcula el valor de cada cuota (sin interes)
+		valorCuota = (movil.getPrecio() / numCuotas) + plan.getPrecio();
+		
+		// Se crea el obj contrato y se retorna
+		contrato = new Contrato(idRandom, fi, ff, movil, plan, monto, valorCuota, numCuotas, clienteActual.getRut()); 
 
-			System.out.println("INFORMACION DEL CONTRATO\n"+
-					"Fecha de inicio del contrato: " + fi + ". El dia de esta fecha se estipulara como fecha de pago. ");
-			System.out.println("\nEl cliente debera estar 5 meses como minimo con el plan contratado de lo contrario"
-					+ " debera cancelar los meses restantes.");
-			System.out.println("\nFecha de termino: " + ff
-					+ ". Despues de esta fecha el cliente seguira con el plan por el tiempo que el estime conveniente.");
-			System.out.println("\nMonto total de la deuda a pagar: " + monto);
-			System.out.println("\nCantidad de cuotas: " + numCuotas);
-			System.out.println("\nValor de cada cuota: " + valorCuota);
-			System.out.println("\n");
-			
-			return contrato;
-		}
+		System.out.println("INFORMACION DEL CONTRATO\n"+
+				"Fecha de inicio del contrato: " + fi + ". El dia de esta fecha se estipulara como fecha de pago. ");
+		System.out.println("\nEl cliente debera estar 5 meses como minimo con el plan contratado de lo contrario"
+				+ " debera cancelar los meses restantes.");
+		System.out.println("\nFecha de termino: " + ff
+				+ ". Despues de esta fecha el cliente seguira con el plan por el tiempo que el estime conveniente.");
+		System.out.println("\nMonto total de la deuda a pagar: " + monto);
+		System.out.println("\nCantidad de cuotas: " + numCuotas);
+		System.out.println("\nValor de cada cuota: " + valorCuota);
+		System.out.println("\n");
+		
+		return contrato;
+	}
 
-		public Cliente interfazAgregarOtroContrato(Cliente cliente) {
-			String rut = cliente.getRut();
-			if (buscarCliente(rut) != null) // Si el cliente existe
-			{
-				Cliente c = buscarCliente(rut);
-				//c.contratos.add(crearContrato()); // Se le agrega el contrato del cliente
-				return c;
-			} else
-				System.out.println("Cliente no existe.");
-				return null;
-		}
+	public Cliente agregarOtroContrato2(Cliente cliente) {
+		String rut = cliente.getRut();
+		if (buscarCliente(rut) != null) // Si el cliente existe
+		{
+			Cliente c = buscarCliente(rut);
+			//c.contratos.add(crearContrato()); // Se le agrega el contrato del cliente
+			return c;
+		} else
+			System.out.println("Cliente no existe.");
+			return null;
+	}
 
 
-		// seleciona un movil, escogido desde FrameContrato
-		public Equipo interfazElegirMovil(int movil) {
-			int i;
-			i = movil;
-			return moviles.get(i);
-		}
+	// seleciona un movil, escogido desde FrameContrato
+	public Equipo elegirMovil(int movil) {
+		int i;
+		i = movil;
+		return moviles.get(i);
+	}
 
-		// Se seleciona el Plan, escogido desde FrameContrato
-		public Plan interfazElegirPlan(int plan) {
-			int i;
-			i= plan;
-			return planes.get(i);
-		}
+	// Se seleciona el Plan, escogido desde FrameContrato
+	public Plan elegirPlan(int plan) {
+		int i;
+		i= plan;
+		return planes.get(i);
+	}
 
 }
 

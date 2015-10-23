@@ -217,7 +217,7 @@ public class Database {
 				RegistroDePagos c = new RegistroDePagos (idContratoBoleta, contratoBoleta.getIdEquipo(),contratoBoleta.getIdPlan()
 						, contratoBoleta.getFechaInicio(), contratoBoleta.getFechaTermino(), rutClienteBoleta
 						, contratoBoleta.getValorTotal(), contratoBoleta.getValorCuota(), contratoBoleta.getCuotas()
-						, rs.getInt("id_boleta"), rs.getInt("monto_pagado"), rs.getInt("cuotas_rest"));
+						, rs.getInt("id_boleta"), rs.getInt("monto_pagado"), rs.getInt("montoAdeudado"), rs.getInt("cuotas_rest"));
 				
 				empresa.buscarCliente(rutClienteBoleta).getContratos().add(c);
 			}
