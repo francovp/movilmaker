@@ -1,6 +1,7 @@
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -47,8 +48,6 @@ public class FrameEliminarContrato extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-				
 
 		JLabel lblIngreseRutDe = new JLabel("Ingrese rut de cliente");
 		lblIngreseRutDe.setBounds(10, 26, 126, 14);
@@ -77,16 +76,26 @@ public class FrameEliminarContrato extends JFrame {
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int idContrato = 0;
 				Contrato contratoAEliminar = null;
 				Cliente c = datosEmpresa.buscarCliente(textRut.getText());
-				for (int i=0;i<c.getContratos().size();i++)
-					if(list.isSelectedIndex(i)) 
-						idContrato = list.getSelectedIndex();
-						contratoAEliminar = c.buscarContrato(idContrato);
-						if(c.getContratos().remove(contratoAEliminar));	//CONTRATO ELIMINADO
-							System.out.println("Contrato eliminado");
-							JOptionPane.showMessageDialog(null, "Contrato removido con exíto", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+				for (int i=0; i<c.getContratos().size(); i++){
+					if(list.isSelectedIndex(i)){
+						contratoAEliminar = c.buscarContrato(list.getSelectedIndex());
+						if(contratoAEliminar!=null){
+							if(c.eliminarContrato(contratoAEliminar)){
+								//CONTRATO ELIMINADO
+								System.out.println("Contrato eliminado");
+								JOptionPane.showMessageDialog(null, "Contrato removido con exíto!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+							}else{
+								System.err.println("No se eliminó contrato");
+								JOptionPane.showMessageDialog(null, "No se eliminó contrato!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+							}
+						}else{
+							System.err.println("No se encontró contrato en la lista de contratos del cliente!");
+							JOptionPane.showMessageDialog(null, "No se encontró contrato en la lista de contratos del cliente!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				}
 			}
 		});
 		

@@ -273,76 +273,6 @@ public class Compania {
 		return contrato;
 	}
 
-	public Cliente agregarOtroContrato(Cliente clienteActual) throws IOException {
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Ingrese el rut del cliente:");
-		String rut = bf.readLine();
-		if (buscarCliente(rut) != null) // Si el cliente existe
-		{
-			Cliente c = buscarCliente(rut);
-			c.contratos.add(crearContrato(clienteActual)); // Se le agrega el contrato del cliente
-			return c;
-		} else
-			System.out.println("Cliente no existe.");
-			return null;
-	}
-
-	//ELIMINA UN CONTRATO , VERIFICCANDO ANTES DE QUE CUMPLA QUE LAS CUOTAS ESTEN PAGADAS
-	public boolean eliminarContrato(String rut) throws IOException {
-		if (buscarCliente(rut) != null) {
-			Cliente c = buscarCliente(rut);
-			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-			listarContratos(c); // listo todos los contratos del cliente
-			System.out.print("\nIngrese el ID del contrato: ");
-			int res=Integer.parseInt(bf.readLine()); // LEO EL ID DEL CONTRATO
-			
-			if(c.buscarContrato(res)!=null)
-			{
-				Contrato contr=c.buscarContrato(res);
-				System.out.println("Fecha de termino del contratro estipulada: "+contr.getFechaTermino());
-				System.out.println("¿Se cumplio el pazo minimo con el plan ?\n1-Si\n2-No");
-				
-				 // SI SE CUMPLE LOS MESES OLBIGATORIOS  pagados (HIPOTETICAMENTE) SE PROCEDE A ELMINAR EL CONTRATO
-				if((Integer.parseInt(bf.readLine())==1) && ((RegistroDePagos)contr).getCuotasRestantes()<=0)
-				{
-						c.contratos.remove(contr); // elimino el contrato
-		
-						if(c.contratos.size()==0){//si quedo sin contratos , se  elimina el cliente
-							System.out.println("Cliente se encuentra sin contratos, se procede a eliminar su registro");
-							eliminarCliente(c.getRut());						
-						}
-						return true;
-						
-				}
-				else// SI NO CUMPLIO EL PLAZO MINIMO , DEBE CANCELARLO Y PAGAR UN INTERES
-				{	System.out.println("No se a cumplido el plazo");	
-					if(pagarUnPlan(contr)) // si calcela lo debido se elimina
-					{
-						c.contratos.remove(contr); // elimino el contrato
-						if(c.contratos.size()==0){//si quedo sin contratos , se elimina el cliente
-							System.out.println("Cliente se encuentra sin contratos, se procede a eliminar su registro");
-							eliminarCliente(c.getRut());
-							return true;
-						}		
-					}
-				}
-			}
-			return true;
-		}
-		return false;
-	}
-
-	// MUESTRA TODOS LOS CONTRATOS DE 1 CLIENTE
-	public void listarContratos(Cliente c) {
-		System.out.println("Contratos de " + c.getNombre1() + " " + c.getApellido1() + ".");
-		for (int i = 0; i < c.contratos.size(); i++)
-			System.out.println(i + 1 + "- ID Contrato: " + c.contratos.get(i).getIdContrato() + ". Movil: "
-								+ c.contratos.get(i).getEquipoContratado().getModelo() + ". Plan: "
-								+ c.contratos.get(i).getPlanContratado().getNombrePlan()+".");
-
-	}
-	
-
 	///////////////////////// METODOS DE PLAN Y EQUIPOS /////////////////////////
 
 	public void mostrarPlanes() {
@@ -418,7 +348,7 @@ public class Compania {
 			c = buscarCliente(rut);
 			if(c.contratos.size()>1)// SI EL CLIENTE TIENE MAS DE 1 PLAN CONTRATADO 
 			{						// SE PIDE IDENTIFICAR CUAL VA A CANCELAR
-				listarContratos(c);
+				c.listarContratos();
 				System.out.println("Ingrese el Id del contrato: ");
 				int id=Integer.parseInt(bf.readLine()); //SE LEE EL ID DEL CONTRATO A PAGAR
 				
@@ -653,68 +583,6 @@ public class Compania {
 				return clienteNuevo;
 			}
 		}
-
-	// CREA NUEVO CONTRATO DESDE LA INTERFAZ FrameContrato
-	public Contrato crearContrato(int numPlan, int numEquipo, int numCuotas, Cliente clienteActual)  {
-		Random rnd = new Random();
-		int idRandom, monto, valorCuota;
-		Contrato contrato = null;
-		Equipo movil = null;
-		Plan plan = null;
-
-		// Datos para usar fecha real
-		Calendar fechaF = new GregorianCalendar();
-		Calendar fechaI = new GregorianCalendar();
-		DateFormat dfi = DateFormat.getDateInstance();
-		DateFormat dff = DateFormat.getDateInstance();
-		Date di = fechaI.getTime();
-		fechaF.add(Calendar.MONTH, 5); // 5 meses como minimo con el plan
-		Date d = fechaF.getTime();
-		String fi = dfi.format(di);
-		String ff = dff.format(d);
-		// Genera un numero random entre 0 y 100000 que sera el id con contrato
-		idRandom = rnd.nextInt(100000); 
-		
-		//Obtiene el Equipo y el plan del contrato
-		movil = elegirMovil(numEquipo);
-		plan = elegirPlan(numPlan);
-		
-		//Calcula el monto total de la deuda del contraro 
-		monto = movil.getValorConPlan() + plan.getPrecio(); 
-		// Actualiza la deuda del cliente antes de crear el contrato
-		clienteActual.setDeuda(clienteActual.getDeuda()+monto);
-		
-		// Calcula el valor de cada cuota (sin interes)
-		valorCuota = (movil.getValorConPlan() / numCuotas) + plan.getPrecio();
-		
-		// Se crea el obj contrato y se retorna
-		contrato = new Contrato(idRandom, fi, ff, movil, plan, monto, valorCuota, numCuotas, clienteActual.getRut()); 
-
-		System.out.println("INFORMACION DEL CONTRATO\n"+
-				"Fecha de inicio del contrato: " + fi + ". El dia de esta fecha se estipulara como fecha de pago. ");
-		System.out.println("\nEl cliente debera estar 5 meses como minimo con el plan contratado de lo contrario"
-				+ " debera cancelar los meses restantes.");
-		System.out.println("\nFecha de termino: " + ff
-				+ ". Despues de esta fecha el cliente seguira con el plan por el tiempo que el estime conveniente.");
-		System.out.println("\nMonto total de la deuda a pagar: " + monto);
-		System.out.println("\nCantidad de cuotas: " + numCuotas);
-		System.out.println("\nValor de cada cuota: " + valorCuota);
-		System.out.println("\n");
-		
-		return contrato;
-	}
-
-	public Cliente agregarOtroContrato2(Cliente cliente) {
-		String rut = cliente.getRut();
-		if (buscarCliente(rut) != null) // Si el cliente existe
-		{
-			Cliente c = buscarCliente(rut);
-			//c.contratos.add(crearContrato()); // Se le agrega el contrato del cliente
-			return c;
-		} else
-			System.out.println("Cliente no existe.");
-			return null;
-	}
 
 
 	// seleciona un movil, escogido desde FrameContrato
