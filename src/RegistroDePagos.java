@@ -60,7 +60,7 @@ public class RegistroDePagos extends Contrato {
 			montoPagado = getPlanContratado().getPrecio();
 			
 			System.out.println("Nuevo monto Mensual: " + montoPagado);
-			setValorCuota((getEquipoContratado().getPrecio() / cuotasRestantes) + getPlanContratado().getPrecio()); // se actualiza el valor de la cuota
+			setValorCuota((getEquipoContratado().getValorConPlan() / cuotasRestantes) + getPlanContratado().getPrecio()); // se actualiza el valor de la cuota
 			return true;
 		}
 		else{
