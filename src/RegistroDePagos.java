@@ -5,11 +5,11 @@ public class RegistroDePagos extends Contrato {
 	private int cuotasRestantes;
 	
 	// Constructor para cuando se paga una mensualidad
-	public RegistroDePagos(int idContrato, int idEquipo, int idPlan, String fechaInicio, String fechaTermino,
-			String rutCliente, int valorTotal, int valorCuota, int cuotas, int idRegistro,
+	public RegistroDePagos(int idContrato, int idEquipo, int idPlan, Equipo equipoContratado, Plan planContratado,
+			String fechaInicio, String fechaTermino, String rutCliente, int valorTotal, int valorCuota, int cuotas, int idRegistro,
 			int montoPagado, int montoAdeudado, int cuotasRestantes) {
 		
-		super(idContrato, idEquipo, idPlan, fechaInicio, fechaTermino, rutCliente, valorTotal, valorCuota, cuotas);
+		super(idContrato, fechaInicio, fechaTermino, idEquipo, idPlan, equipoContratado, planContratado, valorTotal, valorCuota, cuotas, rutCliente);
 		
 		this.idRegistro = idRegistro;
 		this.montoPagado = montoPagado;

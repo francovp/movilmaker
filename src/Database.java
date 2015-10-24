@@ -195,9 +195,14 @@ public class Database {
 			rs = stmt.executeQuery("SELECT * FROM contratos;");
 			while (rs.next()) {
 				// Se obtienen datos de la equipos
-				Contrato c = new Contrato(rs.getInt("id_contrato"), rs.getInt("id_equipo"), rs.getInt("id_plan")
-						, rs.getString("fecha_inicio"), rs.getString("fecha_termino"), rs.getString("rut_cliente")
-						, rs.getInt("valor_total"), rs.getInt("cuotas"), rs.getInt("valor_cuota"));
+				
+				int idPlan = rs.getInt("id_plan");
+				int idEquipo = rs.getInt("id_equipo");
+				Plan p = empresa.buscarPlan(idPlan);
+				Equipo e = empresa.buscarEquipo(idEquipo);
+				
+				Contrato c = new Contrato(rs.getInt("id_contrato"), rs.getString("fecha_inicio"), rs.getString("fecha_termino")
+						, idEquipo, idPlan, e, p, rs.getInt("valor_total"), rs.getInt("cuotas"), rs.getInt("valor_cuota"), rs.getString("rut_cliente"));
 				
 				empresa.buscarCliente(c.getRutCliente()).getContratos().add(c);
 			}
@@ -214,9 +219,12 @@ public class Database {
 				rutClienteBoleta = rs.getString("rut_cliente");
 				contratoBoleta = empresa.buscarCliente(rutClienteBoleta).buscarContrato(idContratoBoleta);
 				// Se obtienen datos de la equipos
-				RegistroDePagos c = new RegistroDePagos (idContratoBoleta, contratoBoleta.getIdEquipo(),contratoBoleta.getIdPlan()
-						, contratoBoleta.getFechaInicio(), contratoBoleta.getFechaTermino(), rutClienteBoleta
-						, contratoBoleta.getValorTotal(), contratoBoleta.getValorCuota(), contratoBoleta.getCuotas()
+						
+				RegistroDePagos c = new RegistroDePagos (idContratoBoleta, contratoBoleta.getIdEquipo(),
+						contratoBoleta.getIdPlan(), contratoBoleta.getEquipoContratado(), contratoBoleta.getPlanContratado(), 
+						contratoBoleta.getFechaInicio(), contratoBoleta.getFechaTermino(),
+						contratoBoleta.getRutCliente(),contratoBoleta.getValorTotal(),contratoBoleta.getValorCuota(),
+						contratoBoleta.getCuotas()
 						, rs.getInt("id_boleta"), rs.getInt("monto_pagado"), rs.getInt("montoAdeudado"), rs.getInt("cuotas_rest"));
 				
 				empresa.buscarCliente(rutClienteBoleta).getContratos().add(c);

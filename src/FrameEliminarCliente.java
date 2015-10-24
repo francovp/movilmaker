@@ -73,19 +73,14 @@ public class FrameEliminarCliente extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String rut;
 				rut=textRut.getText();
-				// Creación de conección a base de datos
-				Database bd = null;
-				try {
-					bd = new Database();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+
 				//Llama a metodo en clase Compañia para eliminar Cliente
 				if (datosEmpresa.eliminarCliente(rut) == true){
 					System.out.println("Cliente eliminado...");
 					// Si el cliente se elimino exitosamente se eliminará cliente en la BD
 					try {
+						// Creacion de conexion a base de datos
+						Database bd = new Database();
 						bd.eliminarClienteBD(rut);
 						//Cuadro de dialogo, que informa eliminacion exitosa
 						JOptionPane.showMessageDialog(null, "El Cliente ha sido eliminado", "Aviso", JOptionPane.INFORMATION_MESSAGE);

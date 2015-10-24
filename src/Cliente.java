@@ -96,7 +96,9 @@ public class Cliente extends Persona {
 		valorCuota = (movil.getValorConPlan() / numCuotas) + plan.getPrecio();
 		
 		// Se crea el obj contrato y se retorna
-		contrato = new Contrato(idRandom, fi, ff, movil, plan, monto, valorCuota, numCuotas, getRut()); 
+		contrato = new Contrato(idRandom, fi, ff, movil.getIdEquipo(), plan.getIdPlan(), movil, plan, monto, valorCuota, numCuotas, getRut()); 
+		// SE LE OTORGA NUEVO CONTRATO AL CLIENTE
+		contratos.add(contrato);
 
 		System.out.println("INFORMACION DEL CONTRATO\n"+
 				"Fecha de inicio del contrato: " + fi + ". El dia de esta fecha se estipulara como fecha de pago. ");

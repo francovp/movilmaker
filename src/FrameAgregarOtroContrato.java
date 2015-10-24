@@ -37,6 +37,7 @@ public class FrameAgregarOtroContrato extends JFrame {
 	 * Create the frame.
 	 */
 	public FrameAgregarOtroContrato(Compania datosEmpresa) {
+		setTitle("Contrato adicional");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 343, 151);
@@ -46,49 +47,45 @@ public class FrameAgregarOtroContrato extends JFrame {
 		contentPane.setLayout(null);
 
 		textRut = new JTextField();
-		textRut.setBounds(10, 27, 137, 20);
+		textRut.setBounds(10, 27, 188, 20);
 		contentPane.add(textRut);
 		textRut.setColumns(10);
 
 		lblAviso = new JLabel("");
-		lblAviso.setBounds(177, 27, 137, 14);
+		lblAviso.setBounds(10, 86, 188, 14);
 		contentPane.add(lblAviso);
 
 		JButton btnBuscar = new JButton("Ingresar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Cliente C;
-
-				C = datosEmpresa.buscarCliente(textRut.getText());	// busca cliente en clase Compañia, si existe lo retorna
-
-				if(C==null){
-					mensaje(lblAviso,"El cliente no existe");
-				}else{
-				FrameContrato fContrato = new FrameContrato(datosEmpresa,C);
-				fContrato.setVisible(true);
-				dispose();
+				// BUSCA CLIENTE EN CLASE COMPAÑIA Y LO ASIGNA A c, SI LO ENCUENTRA LO RETORNA SI NO DEVUELVE NULL
+				Cliente c = datosEmpresa.buscarCliente(textRut.getText());
+				
+				//SI EXISTE LLAMA A VENTANA FrameContrato Y LE ENVIA datosEmpresa y c (Cliente)
+				if (c!=null){
+					FrameContrato fContrato = new FrameContrato(datosEmpresa,c);
+					fContrato.setVisible(true);
+					dispose();
+					
+				}else	{
+					lblAviso.setForeground(Color.RED);
+					lblAviso.setText("El cliente no existe");
 				}
 			}
 		});
-		btnBuscar.setBounds(10, 66, 89, 23);
+		btnBuscar.setBounds(10, 58, 89, 23);
 		contentPane.add(btnBuscar);
 
 		btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//LLAMA AL MENU PRINCIPAL Y CIERRA ESTA VENTANA
 				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}
 		});
-		btnVolver.setBounds(225, 66, 89, 23);
+		btnVolver.setBounds(109, 58, 89, 23);
 		contentPane.add(btnVolver);
-
-	}
-
-	
-	public void mensaje(JLabel lblAviso, String mensaje){
-		lblAviso.setForeground(Color.RED);
-		lblAviso.setText(mensaje);
 	}
 }

@@ -171,14 +171,6 @@ public class FrameAgregarCliente extends JFrame {
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Cliente nuevoCliente = null;
-				// Creacionn de conexion a base de datos
-				Database bd = null;
-				try {
-					bd = new Database();
-				} catch (SQLException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
 				
 				// Comprobaciones de Datos, numeros de telefono deben ser int o el sistema se cae
 				if (!comprobarFono(textFonoCel.getText())){
@@ -190,8 +182,11 @@ public class FrameAgregarCliente extends JFrame {
 					nuevoCliente = datosNuevoCliente(datosEmpresa);
 					if (nuevoCliente != null){
 						System.out.println("Cliente creado...");
+						
 						// Si el cliente se crea exitosamente se escribira cliente en la BD
 						try {
+							// Creacion de conexion a base de datos
+							Database bd = new Database();
 							bd.ingresarClienteBD(nuevoCliente);
 							System.out.println("Cliente agregado a la base de datos...");						
 						} catch (SQLException e1) {
@@ -200,18 +195,26 @@ public class FrameAgregarCliente extends JFrame {
 									+ "\nDetalles de la excepción:");
 							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 						}
+						
+						// Para guardar cliente en un XML
+						// Objeto XML
+						XML xml = new XML();
+						if(xml.ingresarClienteXML(datosEmpresa, nuevoCliente))
+							System.out.println("Cliente guardado en XML.");						
+						else System.err.println("Cliente no fue guardado en XML.");
+							
 						//Muestra mensaje que cilente fue ingresado exitosamente!
-						JOptionPane.showMessageDialog(null, "Cliente creado con ex�to!\nProceda en asignarle un contrato", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Cliente creado con exito!\nProceda en asignarle un contrato", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 						// Se creara� un contrato
 						FrameContrato fContrato = new FrameContrato(datosEmpresa,nuevoCliente);
 						fContrato.setVisible(true);
 						dispose();
 					}
 					else{
-					//Sino, se informa que el cliente ya existe y se vuelve al menu
-					System.err.println("Cliente ya existe...");
-					lblAviso.setForeground(Color.RED);
-					lblAviso.setText("Cliente ya existe!");
+						//Sino, se informa que el cliente ya existe y se vuelve al menu
+						System.err.println("Cliente ya existe...");
+						lblAviso.setForeground(Color.RED);
+						lblAviso.setText("Cliente ya existe!");
 					}
 				}
 			}

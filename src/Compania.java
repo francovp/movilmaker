@@ -373,7 +373,8 @@ public class Compania {
 					
 					// SE CREA EL REGISTRO DE PAGO
 					RegistroDePagos registro = new RegistroDePagos (contratoAPagar.getIdContrato(),contratoAPagar.getIdEquipo(),
-							contratoAPagar.getIdPlan(), contratoAPagar.getFechaInicio(), contratoAPagar.getFechaTermino(),
+							contratoAPagar.getIdPlan(), contratoAPagar.getEquipoContratado(), contratoAPagar.getPlanContratado(), 
+							contratoAPagar.getFechaInicio(), contratoAPagar.getFechaTermino(),
 							contratoAPagar.getRutCliente(),contratoAPagar.getValorTotal(),contratoAPagar.getValorCuota(),
 							contratoAPagar.getCuotas(),0,contratoAPagar.getValorCuota(), montoAdeudado, cuotasRestantes-1);
 					
@@ -440,7 +441,8 @@ public class Compania {
 				
 				// SE CREA EL REGISTRO DE PAGO
 				RegistroDePagos registro = new RegistroDePagos (contratoAPagar.getIdContrato(),contratoAPagar.getIdEquipo(),
-						contratoAPagar.getIdPlan(), contratoAPagar.getFechaInicio(), contratoAPagar.getFechaTermino(),
+						contratoAPagar.getIdPlan(), contratoAPagar.getEquipoContratado(), contratoAPagar.getPlanContratado(), 
+						contratoAPagar.getFechaInicio(), contratoAPagar.getFechaTermino(),
 						contratoAPagar.getRutCliente(),contratoAPagar.getValorTotal(),contratoAPagar.getValorCuota(),
 						contratoAPagar.getCuotas(),0,contratoAPagar.getValorCuota(), montoAdeudado, cuotasRestantes-1);
 				
@@ -504,7 +506,8 @@ public class Compania {
 		
 		// SE CREA EL REGISTRO DE PAGO
 		RegistroDePagos registro = new RegistroDePagos (contratoAPagar.getIdContrato(),contratoAPagar.getIdEquipo(),
-				contratoAPagar.getIdPlan(), contratoAPagar.getFechaInicio(), contratoAPagar.getFechaTermino(),
+				contratoAPagar.getIdPlan(), contratoAPagar.getEquipoContratado(), contratoAPagar.getPlanContratado(), 
+				contratoAPagar.getFechaInicio(), contratoAPagar.getFechaTermino(),
 				contratoAPagar.getRutCliente(),contratoAPagar.getValorTotal(),contratoAPagar.getValorCuota(),
 				contratoAPagar.getCuotas(),0,contratoAPagar.getValorCuota(), montoAdeudado, cuotasRestantes-1);
 		
@@ -599,5 +602,34 @@ public class Compania {
 		return planes.get(i);
 	}
 
+	// METODO PARA BUSCAR UN PLAN Y RETORNARLO
+	public Plan buscarPlan(int id) {
+		for (int i = 0; i < planes.size(); i++){
+			if (planes.get(i).getIdPlan() == id)
+				// si la id ingresada se encuentra
+				return planes.get(i); // se retorna al cliente
+			else{ 
+				System.err.println("No se encontró plan");
+				return null ;
+			}
+		}
+		System.err.println("No existen planes registrados");
+		return null;
+	}
+	
+	// METODO PARA BUSCAR UN PLAN Y RETORNARLO
+	public Equipo buscarEquipo(int id) {
+		for (int i = 0; i < moviles.size(); i++){
+			if (moviles.get(i).getIdEquipo() == id)
+				// si la id ingresada se encuentra
+				return moviles.get(i); // se retorna al cliente
+			else{ 
+				System.err.println("No se encontró equipo");
+				return null ;
+			}
+		}
+		System.err.println("No existen equipos registrados");
+		return null;
+	}
 }
 
