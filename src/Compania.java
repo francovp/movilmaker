@@ -544,13 +544,13 @@ public class Compania {
 		for(int i=0;i<listaClientes.size();i++)
 		{
 			//CALCULA AL FIN DEL CICLO QUE CLIENTE TIENE MAS PLANES
-			if(listaClientes.get(i).contratos.size()-1>cont)
+			if(listaClientes.get(i).contratos.size() > cont)
 			{
-				cont=listaClientes.get(i).contratos.size()-1;
+				cont=listaClientes.get(i).contratos.size();
 				c = listaClientes.get(i);
 			}
 			//SE MUESTRAN LOS CLIENTES CON MAS DE 3 CONTRATOS
-			if(listaClientes.get(i).contratos.size()-1>3){
+			if(listaClientes.get(i).contratos.size() > 3){
 
 				while(j==1){//ciclo solo para imprimir 1 sola vez
 					System.out.println("Clientes con mas de 3 planes:");
