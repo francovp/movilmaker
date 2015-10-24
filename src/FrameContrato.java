@@ -83,18 +83,19 @@ public class FrameContrato extends JFrame {
 		panel.add(btnMostrar);
 		btnMostrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DefaultListModel model1 = new DefaultListModel();	//INSTANCIA PARA JList Planes
-				DefaultListModel model2 = new DefaultListModel();	//INSTANCIA PARA JList Moviles
+				DefaultListModel model1 = new DefaultListModel();	// INSTANCIA PARA JList Planes
+				DefaultListModel model2 = new DefaultListModel();	// INSTANCIA PARA JList Moviles
 				
-				// RECORRE PLANES DE COMPA�IA
+				// RECORRE PLANES DE COMPANIA
 				for (int i=0;i<datosEmpresa.getPlanes().size();i++)
-				//INGRESA EN LA LISTA CADA ELEMENTO
+				// INGRESA EN LA LISTA CADA ELEMENTO
 					model1.addElement(""+(i+1)+"-"+datosEmpresa.getPlanes().get(i).getNombrePlan());
-				// RECORRE EQUIPOS MOVILES DE COMPA�IA
+				// RECORRE EQUIPOS MOVILES DE COMPANIA
 				for (int i=0;i<datosEmpresa.getMoviles().size();i++)
-				//INGRESA EN LA LISTA CADA ELEMENTO
+				// INGRESA EN LA LISTA CADA ELEMENTO
 					model2.addElement(""+(i+1)+"-"+datosEmpresa.getMoviles().get(i).getCapacidad());
 
+				// HACE A LOS ELEMENTOS VISIBLES
 				listEquipos.setModel(model2);
 				listPlanes.setModel(model1);
 				btnMostrar.setEnabled(false);
@@ -119,31 +120,24 @@ public class FrameContrato extends JFrame {
 		contentPane.add(comboBoxMeses);
 
 
-		//	DATOS INGRESADOS SE ENVIAN A CLASE Compania, metodo: interfazCrearContrato
+		//	DATOS INGRESADOS SE ENVIAN A CLASE Cliente, metodo : crearContrato y luego a la DB
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int numPlan, numEquipo, numCuotas;
-				Cliente clienteBuscado = null;
-				Cliente clienteActual = null;
 				Contrato contratoNuevo = null;
-				
-				for (int i=0;i < datosEmpresa.getPlanes().size();i++){
-					for (int j=0;j<datosEmpresa.getMoviles().size();j++){
-						// Si estan Seleccionados en LA LISTA, "Plan", "Equipo" y "meses" (entre 1-12 cuotas) es visible , se adjudica el contrato
-						if(listPlanes.isSelectedIndex(i) && listEquipos.isSelectedIndex(j) && comboBoxMeses.isDisplayable()){
-							//SE OTORGAN VALORES A VARIABLES PARA PLAN, EQUIPO Y CUOTAS
-							numPlan=listPlanes.getSelectedIndex();
+			 
+				for(int i=0; i<datosEmpresa.getPlanes().size();i++)	// Recorre planes de compania
+					for(int j=0; j<datosEmpresa.getMoviles().size();j++)	// Recorre equipos de compania
+						// Si estan Seleccionados en LA LISTA, 1 Plan y 1 Equipo , se procede
+						if(listPlanes.isSelectedIndex(i) && listEquipos.isSelectedIndex(j)){
+							numPlan=(listPlanes.getSelectedIndex());
 							numEquipo=listEquipos.getSelectedIndex();
 							numCuotas=comboBoxMeses.getSelectedIndex()+1;
 
-							for(int k=0;k<datosEmpresa.getListaClientes().size();k++)
-								clienteBuscado = datosEmpresa.getListaClientes().get(k);
-								if (cliente.getRut().equals(clienteBuscado.getRut()))
-									clienteActual = clienteBuscado; // Solo para entendimiento
-									// Se crea un nuevo contrato
-								    contratoNuevo = clienteActual.crearContrato(numPlan, numEquipo, numCuotas, datosEmpresa);
-									
+									// Se crea un nuevo contrato en: CLIENTE OBTENIDO A ESTA CLASE/VENTANA, POR REFERENCIA linea 44
+								    contratoNuevo = cliente.crearContrato(numPlan, numEquipo, numCuotas, datosEmpresa);
+								    
 									//Cuadro de texto informa exito en asignacion de contrato
 									JOptionPane.showMessageDialog(null, "Contrato asignado exitosamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 									
@@ -161,21 +155,16 @@ public class FrameContrato extends JFrame {
 									}
 									
 									// Guardado en archivo XML
-									XML xml = new XML();
-									if(xml.ingresarContratoXML(datosEmpresa, clienteActual, contratoNuevo))
-										System.out.println("Contrato guardado en XML.");						
-									else System.err.println("Contrato no fue guardado en XML.");
+//									XML xml = new XML();
+//									if(xml.ingresarContratoXML(datosEmpresa, cliente, contratoNuevo))
+//										System.out.println("Contrato guardado en XML.");						
+//									else System.err.println("Contrato no fue guardado en XML.");
 									
 									//CIERRE INTERFAZ FrameContrato
 									FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 									fInterfaz.setVisible(true);
 									dispose();
-
-						}else {					
-						lblAviso.setForeground(Color.RED);
-						lblAviso.setText("Seleccione todos los campos");}
-					}
-				}
+						}		
 			}
 		});
 
