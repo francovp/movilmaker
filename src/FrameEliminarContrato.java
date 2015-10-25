@@ -12,7 +12,6 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
@@ -26,6 +25,7 @@ public class FrameEliminarContrato extends JFrame {
 	 */
 	public static void main(String[] args, Compania datosEmpresa) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					FrameEliminarContrato frame = new FrameEliminarContrato(datosEmpresa);
@@ -49,8 +49,6 @@ public class FrameEliminarContrato extends JFrame {
 		contentPane.setBorder(new TitledBorder(null, null, TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-				
 
 		JLabel lblIngreseRutDe = new JLabel("Ingrese rut de cliente");
 		lblIngreseRutDe.setBounds(10, 11, 126, 14);
@@ -75,9 +73,10 @@ public class FrameEliminarContrato extends JFrame {
 		JLabel lblContratos = new JLabel("Contratos");
 		lblContratos.setBounds(10, 11, 69, 14);
 		panel.add(lblContratos);
-		
+
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
 				fInterfaz.setVisible(true);
@@ -89,17 +88,20 @@ public class FrameEliminarContrato extends JFrame {
 
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Contrato contratoAEliminar = null;
 
-				// SI EL ID DEL CONTRATO ESTA SELECCIONADO EN LA LISTA, SE PROCEDE A ELIMINAR CONTRATO
-				if(list.isSelectedIndex(list.getSelectedIndex())){
+				// SI EL ID DEL CONTRATO ESTA SELECCIONADO EN LA LISTA, SE
+				// PROCEDE A ELIMINAR CONTRATO
+				if (list.isSelectedIndex(list.getSelectedIndex())) {
 					Cliente c = datosEmpresa.buscarCliente(textRut.getText());
-					if(c.getContratos().remove(list.getSelectedIndex()) != null) {
-						//CONTRATO ELIMINADO
+					if (c.getContratos().remove(list.getSelectedIndex()) != null) {
+						// CONTRATO ELIMINADO
 						System.out.println("Contrato eliminado");
-						JOptionPane.showMessageDialog(null, "Contrato eliminado con exito!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-						
+						JOptionPane.showMessageDialog(null, "Contrato eliminado con exito!", "Aviso",
+								JOptionPane.INFORMATION_MESSAGE);
+
 						// Se eliminará contrato en la BD
 						try {
 							// Creacion de conexion a base de datos
@@ -112,49 +114,54 @@ public class FrameEliminarContrato extends JFrame {
 									+ "\nDetalles de la excepción:");
 							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 						}
-					}else{
+					} else {
 						System.err.println("No se eliminó contrato");
-						JOptionPane.showMessageDialog(null, "No se eliminó contrato!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "No se eliminó contrato!", "Aviso",
+								JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 				btnCancelar.setText("Volver");
 			}
 		});
-		
+
 		btnEliminar.setEnabled(false);
 		btnEliminar.setBounds(185, 216, 80, 23);
 		contentPane.add(btnEliminar);
-		
+
 		JLabel lblAviso = new JLabel("");
 		lblAviso.setBounds(10, 216, 156, 19);
 		contentPane.add(lblAviso);
-		
-		
+
 		// BUSCA CONTRATOS DE X CLIENTE Y LO MUESTRA EN LISTA
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel listContratos = new DefaultListModel();
-	
+
 				Cliente c = datosEmpresa.buscarCliente(textRut.getText());
-				if (c!=null){
+				if (c != null) {
 					textRut.setEnabled(false);
-					if(c.getContratos().size() == 0){
+					if (c.getContratos().size() == 0) {
 						lblAviso.setForeground(Color.RED);
 						lblAviso.setText("Cliente no tiene contratos");
 						btnCancelar.setText("Volver");
-					}else{
+					} else {
 						lblAviso.setForeground(Color.BLUE);
 						lblAviso.setText("Cliente encontrado!");
 						btnCancelar.setText("Volver");
-						for (int i=0;i<c.getContratos().size();i++){
-							listContratos.addElement(c.getContratos().get(i).getIdContrato());	// AGREGA ELEMENTO A LA LISTA
-							list.setModel(listContratos);	// APARECE ELEMENTO EN LA LISTA
+						for (int i = 0; i < c.getContratos().size(); i++) {
+							listContratos.addElement(c.getContratos().get(i).getIdContrato()); // AGREGA
+																								// ELEMENTO
+																								// A
+																								// LA
+																								// LISTA
+							list.setModel(listContratos); // APARECE ELEMENTO EN
+															// LA LISTA
 						}
 						btnEliminar.setEnabled(true);
 					}
-				}
-				else {
+				} else {
 					lblAviso.setForeground(Color.RED);
 					lblAviso.setText("Cliente no existe!");
 					btnCancelar.setText("Volver");
@@ -164,5 +171,5 @@ public class FrameEliminarContrato extends JFrame {
 		btnBuscar.setBounds(10, 67, 89, 23);
 		contentPane.add(btnBuscar);
 	}
-	
+
 }

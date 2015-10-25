@@ -22,6 +22,7 @@ public class FrameAgregarOtroContrato extends JFrame {
 	 */
 	public static void main(String[] args, Compania datosEmpresa) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					FrameAgregarOtroContrato frame = new FrameAgregarOtroContrato(datosEmpresa);
@@ -42,7 +43,8 @@ public class FrameAgregarOtroContrato extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 343, 151);
 		contentPane = new JPanel();
-		contentPane.setBorder(new TitledBorder(null, "Ingrese rut de cliente", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
+		contentPane.setBorder(new TitledBorder(null, "Ingrese rut de cliente", TitledBorder.LEADING, TitledBorder.TOP,
+				null, Color.BLUE));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -57,17 +59,20 @@ public class FrameAgregarOtroContrato extends JFrame {
 
 		JButton btnBuscar = new JButton("Ingresar");
 		btnBuscar.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				// BUSCA CLIENTE EN CLASE COMPAÑIA Y LO ASIGNA A c, SI LO ENCUENTRA LO RETORNA SI NO DEVUELVE NULL
+				// BUSCA CLIENTE EN CLASE COMPAÑIA Y LO ASIGNA A c, SI LO
+				// ENCUENTRA LO RETORNA SI NO DEVUELVE NULL
 				Cliente c = datosEmpresa.buscarCliente(textRut.getText());
-				
-				//SI EXISTE LLAMA A VENTANA FrameContrato Y LE ENVIA datosEmpresa y c (Cliente)
-				if (c!=null){
-					FrameContrato fContrato = new FrameContrato(datosEmpresa,c);
+
+				// SI EXISTE LLAMA A VENTANA FrameContrato Y LE ENVIA
+				// datosEmpresa y c (Cliente)
+				if (c != null) {
+					FrameContrato fContrato = new FrameContrato(datosEmpresa, c);
 					fContrato.setVisible(true);
 					dispose();
-					
-				}else	{
+
+				} else {
 					lblAviso.setForeground(Color.RED);
 					lblAviso.setText("El cliente no existe");
 				}
@@ -78,8 +83,9 @@ public class FrameAgregarOtroContrato extends JFrame {
 
 		btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				//LLAMA AL MENU PRINCIPAL Y CIERRA ESTA VENTANA
+				// LLAMA AL MENU PRINCIPAL Y CIERRA ESTA VENTANA
 				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
 				fInterfaz.setVisible(true);
 				dispose();

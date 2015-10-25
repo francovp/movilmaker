@@ -14,9 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class FrameEliminarCliente extends JFrame {
@@ -29,6 +28,7 @@ public class FrameEliminarCliente extends JFrame {
 	 */
 	public static void main(String[] args, Compania datosEmpresa) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					FrameEliminarCliente frame = new FrameEliminarCliente(datosEmpresa);
@@ -49,7 +49,8 @@ public class FrameEliminarCliente extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 382, 313);
 		contentPane = new JPanel();
-		contentPane.setBorder(new TitledBorder(null, "Eliminaci\u00F3n de cliente", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
+		contentPane.setBorder(new TitledBorder(null, "Eliminaci\u00F3n de cliente", TitledBorder.LEADING,
+				TitledBorder.TOP, null, Color.BLUE));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -70,30 +71,32 @@ public class FrameEliminarCliente extends JFrame {
 
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String rut;
-				rut=textRut.getText();
+				rut = textRut.getText();
 
-				//Llama a metodo en clase Compañia para eliminar Cliente
-				if (datosEmpresa.eliminarCliente(rut) == true){
+				// Llama a metodo en clase Compañia para eliminar Cliente
+				if (datosEmpresa.eliminarCliente(rut) == true) {
 					System.out.println("Cliente eliminado...");
-					// Si el cliente se elimino exitosamente se eliminará cliente en la BD
+					// Si el cliente se elimino exitosamente se eliminará
+					// cliente en la BD
 					try {
 						// Creacion de conexion a base de datos
 						Database bd = new Database();
 						bd.eliminarClienteBD(rut);
-						//Cuadro de dialogo, que informa eliminacion exitosa
-						JOptionPane.showMessageDialog(null, "El Cliente ha sido eliminado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-						System.out.println("Cliente eliminado de la base de datos...");						
+						// Cuadro de dialogo, que informa eliminacion exitosa
+						JOptionPane.showMessageDialog(null, "El Cliente ha sido eliminado", "Aviso",
+								JOptionPane.INFORMATION_MESSAGE);
+						System.out.println("Cliente eliminado de la base de datos...");
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
-						System.err.println("Cliente no se pudo eliminar de la Base de Datos.\n"
-								+ "\nDetalles de la excepción:");
+						System.err.println(
+								"Cliente no se pudo eliminar de la Base de Datos.\n" + "\nDetalles de la excepción:");
 						System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 					}
-				}
-				else
-					//Sino, se informa que el cliente no existe
+				} else
+					// Sino, se informa que el cliente no existe
 					System.err.println("Cliente no existe...");
 			}
 		});
@@ -111,11 +114,12 @@ public class FrameEliminarCliente extends JFrame {
 
 		JButton btnMostrar = new JButton("Mostrar");
 		btnMostrar.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel listmodel = new DefaultListModel();
-				for(int i=0; i<datosEmpresa.getListaClientes().size();i++){
-				listmodel.addElement("rut: "+datosEmpresa.getListaClientes().get(i).getRut());
-				list.setModel(listmodel);
+				for (int i = 0; i < datosEmpresa.getListaClientes().size(); i++) {
+					listmodel.addElement("rut: " + datosEmpresa.getListaClientes().get(i).getRut());
+					list.setModel(listmodel);
 				}
 			}
 		});
@@ -128,8 +132,9 @@ public class FrameEliminarCliente extends JFrame {
 
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz (datosEmpresa, -1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
 				fInterfaz.setVisible(true);
 				dispose();
 			}

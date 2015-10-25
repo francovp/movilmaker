@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-import java.awt.Window.Type;
 
 public class FrameAgregarAdmin extends JFrame {
 
@@ -30,6 +29,7 @@ public class FrameAgregarAdmin extends JFrame {
 	 */
 	public static void main(String[] args, Compania datosEmpresa, int falta) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					FrameAgregarAdmin frame = new FrameAgregarAdmin(datosEmpresa, falta);
@@ -50,12 +50,14 @@ public class FrameAgregarAdmin extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 268);
 		contentPane = new JPanel();
-		contentPane.setBorder(new TitledBorder(null, "Datos de administrador", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
+		contentPane.setBorder(new TitledBorder(null, "Datos de administrador", TitledBorder.LEADING, TitledBorder.TOP,
+				null, Color.BLUE));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Atributos personales", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(
+				new TitledBorder(null, "Atributos personales", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(10, 25, 270, 170);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -64,28 +66,28 @@ public class FrameAgregarAdmin extends JFrame {
 		lblPrimerNombre.setBounds(10, 24, 97, 14);
 		panel.add(lblPrimerNombre);
 
-			textNombre1 = new JTextField();
-			textNombre1.setBounds(117, 21, 143, 20);
-			panel.add(textNombre1);
-			textNombre1.setColumns(10);
+		textNombre1 = new JTextField();
+		textNombre1.setBounds(117, 21, 143, 20);
+		panel.add(textNombre1);
+		textNombre1.setColumns(10);
 
 		JLabel lblSegundoNombre = new JLabel("Segundo Nombre");
 		lblSegundoNombre.setBounds(10, 52, 106, 14);
 		panel.add(lblSegundoNombre);
 
-			textNombre2 = new JTextField();
-			textNombre2.setColumns(10);
-			textNombre2.setBounds(117, 49, 143, 20);
-			panel.add(textNombre2);
+		textNombre2 = new JTextField();
+		textNombre2.setColumns(10);
+		textNombre2.setBounds(117, 49, 143, 20);
+		panel.add(textNombre2);
 
 		JLabel lblApellidoPaterno = new JLabel("Apellido Paterno");
 		lblApellidoPaterno.setBounds(10, 80, 97, 14);
 		panel.add(lblApellidoPaterno);
 
-			textApellido1 = new JTextField();
-			textApellido1.setColumns(10);
-			textApellido1.setBounds(117, 77, 143, 20);
-			panel.add(textApellido1);
+		textApellido1 = new JTextField();
+		textApellido1.setColumns(10);
+		textApellido1.setBounds(117, 77, 143, 20);
+		panel.add(textApellido1);
 
 		JLabel lblApellidoMaterno = new JLabel("Apellido Materno");
 		lblApellidoMaterno.setBounds(10, 108, 97, 14);
@@ -100,10 +102,10 @@ public class FrameAgregarAdmin extends JFrame {
 		lblRut.setBounds(10, 136, 70, 14);
 		panel.add(lblRut);
 
-			textRut = new JTextField();
-			textRut.setColumns(10);
-			textRut.setBounds(117, 133, 143, 20);
-			panel.add(textRut);
+		textRut = new JTextField();
+		textRut.setColumns(10);
+		textRut.setBounds(117, 133, 143, 20);
+		panel.add(textRut);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(290, 25, 294, 113);
@@ -114,29 +116,29 @@ public class FrameAgregarAdmin extends JFrame {
 		JLabel lblEmail = new JLabel("Email");
 		lblEmail.setBounds(10, 25, 70, 14);
 		panel_1.add(lblEmail);
-		
-			textEmail = new JTextField();
-			textEmail.setColumns(10);
-			textEmail.setBounds(107, 22, 177, 20);
-			panel_1.add(textEmail);
+
+		textEmail = new JTextField();
+		textEmail.setColumns(10);
+		textEmail.setBounds(107, 22, 177, 20);
+		panel_1.add(textEmail);
 
 		JLabel lblFonoFijo = new JLabel("Telefono fijo");
 		lblFonoFijo.setBounds(10, 53, 70, 14);
 		panel_1.add(lblFonoFijo);
-		
-			textFonoFijo = new JTextField();
-			textFonoFijo.setColumns(10);
-			textFonoFijo.setBounds(107, 50, 177, 20);
-			panel_1.add(textFonoFijo);
+
+		textFonoFijo = new JTextField();
+		textFonoFijo.setColumns(10);
+		textFonoFijo.setBounds(107, 50, 177, 20);
+		panel_1.add(textFonoFijo);
 
 		JLabel lblFonoCel = new JLabel("Celular");
 		lblFonoCel.setBounds(10, 79, 70, 14);
 		panel_1.add(lblFonoCel);
 
-			textFonoCel = new JTextField();
-			textFonoCel.setColumns(10);
-			textFonoCel.setBounds(107, 76, 177, 20);
-			panel_1.add(textFonoCel);
+		textFonoCel = new JTextField();
+		textFonoCel.setColumns(10);
+		textFonoCel.setBounds(107, 76, 177, 20);
+		panel_1.add(textFonoCel);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(290, 149, 294, 42);
@@ -147,52 +149,59 @@ public class FrameAgregarAdmin extends JFrame {
 		lblAviso.setBounds(10, 206, 284, 14);
 		contentPane.add(lblAviso);
 
-		//Boton que caputura todos los datos del Administrador, crea objeto y agrega a lista de Compania
+		// Boton que caputura todos los datos del Administrador, crea objeto y
+		// agrega a lista de Compania
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Administrador nuevoAdmin = null;
-				
-				// Comprobaciones de Datos, numeros de telefono deben ser int o el sistema se cae
-				if (!comprobarFono(textFonoCel.getText())){
+
+				// Comprobaciones de Datos, numeros de telefono deben ser int o
+				// el sistema se cae
+				if (!comprobarFono(textFonoCel.getText())) {
 					lblAviso.setForeground(Color.RED);
 					lblAviso.setText("Datos de telefono debe ser numerico");
-				}
-				else{
-					//Llama metodo para crear Administrador
+				} else {
+					// Llama metodo para crear Administrador
 					nuevoAdmin = datosNuevaPersona(datosEmpresa);
-					if (nuevoAdmin != null){
+					if (nuevoAdmin != null) {
 						System.out.println("Administrador creado...");
-						
-						// Si el Administrador se crea exitosamente se escribira Administrador en la BD
+
+						// Si el Administrador se crea exitosamente se escribira
+						// Administrador en la BD
 						try {
 							// Creacion de conexion a base de datos
 							Database bd = new Database();
 							bd.ingresarAdminBD(nuevoAdmin);
-							System.out.println("Administrador agregado a la base de datos...");						
+							System.out.println("Administrador agregado a la base de datos...");
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							System.err.println("Administrador no se pudo escribir en la Base de Datos.\n"
 									+ "\nDetalles de la excepción:");
 							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 						}
-						
-//						// Para guardar Administrador en un XML
-//						// Objeto XML
-//						XML xml = new XML();
-//						if(xml.ingresarAdministradorXML(datosEmpresa, nuevoAdmin))
-//							System.out.println("Administrador guardado en XML.");						
-//						else System.err.println("Administrador no fue guardado en XML.");
-//							
-						//Muestra mensaje que el Administrador fue ingresado exitosamente!
-						JOptionPane.showMessageDialog(null, "Administrador creado con exito!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-//						// Se volverá a Interfaz principal
-						FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, falta);
+
+						// // Para guardar Administrador en un XML
+						// // Objeto XML
+						// XML xml = new XML();
+						// if(xml.ingresarAdministradorXML(datosEmpresa,
+						// nuevoAdmin))
+						// System.out.println("Administrador guardado en XML.");
+						// else System.err.println("Administrador no fue
+						// guardado en XML.");
+						//
+						// Muestra mensaje que el Administrador fue ingresado
+						// exitosamente!
+						JOptionPane.showMessageDialog(null, "Administrador creado con exito!", "Aviso",
+								JOptionPane.INFORMATION_MESSAGE);
+						// // Se volverá a Interfaz principal
+						FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
 						fInterfaz.setVisible(true);
 						dispose();
-					}
-					else{
-						//Sino, se informa que el Administrador ya existe y se vuelve al menu
+					} else {
+						// Sino, se informa que el Administrador ya existe y se
+						// vuelve al menu
 						System.err.println("Administrador ya existe...");
 						lblAviso.setForeground(Color.RED);
 						lblAviso.setText("Administrador ya existe!");
@@ -205,6 +214,7 @@ public class FrameAgregarAdmin extends JFrame {
 
 		JButton btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				botonReset(lblAviso);
 			}
@@ -214,13 +224,14 @@ public class FrameAgregarAdmin extends JFrame {
 
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(falta == 0 || falta == 1){
-					FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa,falta);
+				if (falta == 0 || falta == 1) {
+					FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, falta);
 					fInterfaz.setVisible(true);
 					dispose();
-				}else{
-					FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa,-1);
+				} else {
+					FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
 					fInterfaz.setVisible(true);
 					dispose();
 				}
@@ -230,42 +241,47 @@ public class FrameAgregarAdmin extends JFrame {
 		panel_2.add(btnCancelar);
 
 	}
-		
-	//========================METODOS====================
-	
+
+	// ========================METODOS====================
+
 	/**
-	* Ingresa atributos capturados desde los JTextField de la ventana
-	* y los atribuye a un objeto Administrador y envia a clase compa�ia
-	**/
-	//Obtiene los datos ingresados en las casillas y crea una nueva clase Administrador, luego es enviado a la listaAdministradors en clase Compañia
-	public Administrador datosNuevaPersona(Compania datosEmpresa){
-		String nombre1,nombre2,apellido1,apellido2,rut,email,direccion1,direccion2;
-		int fono1,fono2;
-		nombre1=textNombre1.getText();
-		nombre2=textNombre2.getText();
-		apellido1=textApellido1.getText();
-		apellido2=textApellido2.getText();
-		rut=textRut.getText();
-		email=textEmail.getText();
-		fono1=Integer.parseInt(textFonoFijo.getText());
-		fono2=Integer.parseInt(textFonoCel.getText());
+	 * Ingresa atributos capturados desde los JTextField de la ventana y los
+	 * atribuye a un objeto Administrador y envia a clase compa�ia
+	 **/
+	// Obtiene los datos ingresados en las casillas y crea una nueva clase
+	// Administrador, luego es enviado a la listaAdministradors en clase
+	// Compañia
+	public Administrador datosNuevaPersona(Compania datosEmpresa) {
+		String nombre1, nombre2, apellido1, apellido2, rut, email, direccion1, direccion2;
+		int fono1, fono2;
+		nombre1 = textNombre1.getText();
+		nombre2 = textNombre2.getText();
+		apellido1 = textApellido1.getText();
+		apellido2 = textApellido2.getText();
+		rut = textRut.getText();
+		email = textEmail.getText();
+		fono1 = Integer.parseInt(textFonoFijo.getText());
+		fono2 = Integer.parseInt(textFonoCel.getText());
 		// Se crea Administrador nuevo
-		Administrador adminNuevo = new Administrador(rut,datosEmpresa.getRut(),nombre1,nombre2,apellido1,apellido2,fono1,fono2,email,1,null,null,0,null);
+		Administrador adminNuevo = new Administrador(rut, datosEmpresa.getRut(), nombre1, nombre2, apellido1, apellido2,
+				fono1, fono2, email, 0, null, null, 0, null);
 		// Se ingresa Administrador nuevo y se espera un resultado del ingreso
 		Administrador resultado = datosEmpresa.crearAdminNuevo(adminNuevo);
-		if(resultado != null)
+		if (resultado != null)
 			// Si la persona no existe, todo bien
 			return adminNuevo;
-		else 
+		else
 			// Entonces la persona ya existe
 			return null;
 	}
 
 	/**
-	* Resetea todos los JText y JLabel ingresados de la ventana
-	*@param lblAviso
-	**/
-	public void botonReset(JLabel lblAviso) {	//Resetea todos los campos de ingreso en la ventana
+	 * Resetea todos los JText y JLabel ingresados de la ventana
+	 * 
+	 * @param lblAviso
+	 **/
+	public void botonReset(JLabel lblAviso) { // Resetea todos los campos de
+												// ingreso en la ventana
 
 		textNombre1.setText("");
 		textNombre2.setText("");
@@ -277,26 +293,25 @@ public class FrameAgregarAdmin extends JFrame {
 		textFonoCel.setText("");
 		lblAviso.setText("");
 	}
-	
-	
-	/**
-	* Comprueba si en textFonoFijo y textFonoCel
-	* se han insertado datos del tipo int 
-	*@param fono
-	*@return boolean
-	**/
 
-	public boolean comprobarFono (String fono) {	//Comprueba si el ingreso en casilla de telefono es un numero INT
+	/**
+	 * Comprueba si en textFonoFijo y textFonoCel se han insertado datos del
+	 * tipo int
+	 * 
+	 * @param fono
+	 * @return boolean
+	 **/
+
+	public boolean comprobarFono(String fono) { // Comprueba si el ingreso en
+												// casilla de telefono es un
+												// numero INT
 		try {
-		    Integer.parseInt(fono);	//Si es INT devuelve true
+			Integer.parseInt(fono); // Si es INT devuelve true
 			return true;
-		}
-		catch (Exception a) {
-		     //Not an integer
+		} catch (Exception a) {
+			// Not an integer
 			return false;
 		}
 	}
-	
 
-	
 }

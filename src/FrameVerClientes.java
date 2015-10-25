@@ -89,21 +89,20 @@ public class FrameVerClientes extends JFrame {
 		
 		
 		//BOTÓN QUE GENERA UN  ARCHIVO EN PDF DE LOS CLIENTES
-				JButton btnImprimirEnPdf = new JButton("Generar PDF");
-				btnImprimirEnPdf.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						DocumentoPdf pdf = new DocumentoPdf();
-						try {
-							pdf.generarDocumento(datosEmpresa);
-							JOptionPane.showMessageDialog(null, "Reporte creado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-						} catch (FileNotFoundException | DocumentException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				});
-				btnImprimirEnPdf.setBounds(447, 286, 127, 23);
-				panel.add(btnImprimirEnPdf);
+		JButton btnImprimirEnPdf = new JButton("Generar PDF");
+		btnImprimirEnPdf.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {;
+				try {
+					datosEmpresa.reporte();
+					JOptionPane.showMessageDialog(null, "Reporte empresa creado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+				} catch (FileNotFoundException | DocumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		btnImprimirEnPdf.setBounds(447, 286, 127, 23);
+		panel.add(btnImprimirEnPdf);
 
 
 		btnVolver = new JButton("Volver");
