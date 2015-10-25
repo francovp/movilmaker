@@ -205,7 +205,7 @@ public class Database {
 			else {
 				while (rs.next()) {
 					// Se obtienen datos de la plan
-					Plan p = new Plan(rs.getInt("id_plan"), rs.getString("nombrePlan"), rs.getInt("precio"),
+					Plan p = new Plan(rs.getInt("id_plan"), rs.getString("nombre_plan"), rs.getInt("precio"),
 							rs.getInt("minutos"), rs.getInt("gigas"), rs.getString("id_compania"));
 
 					empresa.getPlanes().add(p);
@@ -238,7 +238,7 @@ public class Database {
 			else {
 				while (rs.next()) {
 					// Se obtienen datos de la equipos
-					Equipo e = new Equipo(rs.getInt("id_equipo"), rs.getString("nombreEquipo"),
+					Equipo e = new Equipo(rs.getInt("id_equipo"), rs.getString("nombre_equipo"),
 							rs.getInt("valor_con_plan"), rs.getInt("valor_sin_plan"), rs.getString("capacidad"),
 							rs.getString("id_compania"));
 
