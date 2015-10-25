@@ -46,18 +46,13 @@ public class Principal {
 				// Se verificará si en el ArrayList hay algun admin
 				if (datos.getListaAdmins().size() == 0) {
 					System.err.println("Datos de personas obtenidos, pero NO HAY ADMIN");
-					// Para saber que hay personas guardadas, pero ninguna es un
-					// admin.
+					// Para saber que hay personas guardadas, pero ninguna es un admin.
 					falta = 1;
-					// Se llamará a una Interfaz AgregarAdmin para registrar al
-					// primer administrador
-					FrameAgregarAdmin fAdmin = new FrameAgregarAdmin(datos, falta);
-					fAdmin.setVisible(true);
 				} else {
 					// Hay admins en la lista de Personas
 					System.out.println("Datos de personas obtenidos");
 					// Para saber que hay admin
-					falta = 2;
+					if(falta != 1) falta = 2;
 					// Ahora se obtienen datos de Contratos
 					bd = new Database();
 					datos = bd.leerContratosBD(datos);
@@ -73,7 +68,13 @@ public class Principal {
 							datos = bd.leerEquiposBD(datos);
 							if (datos != null) {
 								System.out.println("Datos de equipos obtenidos");
-								falta = -1;
+								if(falta != 1) falta = -1;
+								else{
+									// Se llamará a una Interfaz AgregarAdmin para registrar al
+									// primer administrador
+									FrameAgregarAdmin fAdmin = new FrameAgregarAdmin(datos, falta);
+									fAdmin.setVisible(true);
+								}
 								// Se llamará a Interfaz principal
 								FrameInterfaz fInterfaz = new FrameInterfaz(datos, falta);
 								fInterfaz.setVisible(true);
