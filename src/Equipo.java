@@ -47,30 +47,6 @@ public class Equipo {
 		this.idCompania = idCompania;
 	}
 
-	public Equipo(int idEquipo, String nombreEquipo, String modelo, String manufactor, int ram, String procesador,
-			byte tamPantalla, int resPantallaX, int resPantallaY, int densPantalla, int cantMemInt, int cantMemExt,
-			String os, String versionOS, int valorConPlan, int valorSinPlan, String capacidad, String idCompania) {
-		super();
-		this.idEquipo = idEquipo;
-		this.nombreEquipo = nombreEquipo;
-		// this.modelo = modelo;
-		// this.manufactor = manufactor;
-		// this.ram = ram;
-		// this.procesador = procesador;
-		// this.tamPantalla = tamPantalla;
-		// this.resPantallaX = resPantallaX;
-		// this.resPantallaY = resPantallaY;
-		// this.densPantalla = densPantalla;
-		// this.cantMemInt = cantMemInt;
-		// this.cantMemExt = cantMemExt;
-		// this.os = os;
-		// this.versionOS = versionOS;
-		this.valorConPlan = valorConPlan;
-		this.valorSinPlan = valorSinPlan;
-		this.capacidad = capacidad;
-		this.idCompania = idCompania;
-	}
-
 	public int getIdEquipo() {
 		return idEquipo;
 	}
