@@ -12,6 +12,13 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class FrameInterfaz extends JFrame {
 
@@ -20,11 +27,11 @@ public class FrameInterfaz extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args, Compania datosEmpresa) {
+	public static void main(String[] args, Compania datosEmpresa, int falta) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrameInterfaz frame = new FrameInterfaz(datosEmpresa);
+					FrameInterfaz frame = new FrameInterfaz(datosEmpresa, falta);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,38 +43,43 @@ public class FrameInterfaz extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrameInterfaz(Compania datosEmpresa) {
+	public FrameInterfaz(Compania datosEmpresa, int falta) {
 		setResizable(false);
 		setTitle("Modo Interfaz");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 353, 324);
+		setBounds(100, 100, 418, 423);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Bienvenido a", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JPanel panel = new JPanel();
-		panel.setBounds(10, 21, 318, 251);
-		contentPane.add(panel);
-		panel.setLayout(new GridLayout(0, 1, 0, 0));
+		// Creación del logo
+		JLabel label = new JLabel("");
+		label.setBounds(92, 24, 217, 54);
+		contentPane.add(label);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setIcon(new ImageIcon("resources\\logo.png"));
 
-		//Boton Agregar Clientes
-		JButton btnAgregarClientes = new JButton("Agregar Clientes");
-		btnAgregarClientes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				FrameAgregarCliente fAgregaCliente = new FrameAgregarCliente(datosEmpresa);
-				fAgregaCliente.setVisible(true);
-				setVisible(false);
+		JPanel panel = new JPanel();
+		panel.setBounds(10, 89, 189, 244);
+		contentPane.add(panel);	
+
+		JButton btnAgregarAdmin = new JButton("Agregar Administrador");
+		btnAgregarAdmin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FrameAgregarAdmin fAdmin = new FrameAgregarAdmin(datosEmpresa,falta);
+				fAdmin.setVisible(true);
+				dispose();
 			}
 		});
-		
-		JLabel label = new JLabel("");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon("src\\vomistar3.png"));
-		panel.add(label);
-		panel.add(btnAgregarClientes);
 
-		JButton btnIngresarContratoclientes = new JButton("Ingresar contrato (clientes existentes)");
+		panel.setLayout(new GridLayout(0, 1, 0, 0));
+		panel.add(btnAgregarAdmin);
+
+		JButton btnIngresarContratoclientes = new JButton("Ingresar contrato a cliente");
+		panel.add(btnIngresarContratoclientes);
+		// Si no hay admin (Falta = 0 o 1) no se puede activar este botón
+			if(falta == 0 || falta == 1) btnIngresarContratoclientes.setEnabled(false);
 		btnIngresarContratoclientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FrameAgregarOtroContrato fOtroContrato = new FrameAgregarOtroContrato(datosEmpresa);
@@ -75,8 +87,25 @@ public class FrameInterfaz extends JFrame {
 				dispose();
 			}
 		});
+
+		//Boton Agregar Clientes
+		JButton btnAgregarClientes = new JButton("Agregar Clientes");
+		panel.add(btnAgregarClientes);
+		// Si no hay admin (Falta = 0 o 1) no se puede activar este botón
+			if(falta == 0 || falta == 1)btnAgregarClientes.setEnabled(false);
 		
+		btnAgregarClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FrameAgregarCliente fAgregaCliente = new FrameAgregarCliente(datosEmpresa);
+				fAgregaCliente.setVisible(true);
+				dispose();
+			}
+		});
+
 		JButton btnActualizarDatosDe = new JButton("Actualizar datos de cliente");
+		panel.add(btnActualizarDatosDe);
+		// Si no hay admin (Falta = 0 o 1) no se puede activar este botón
+			if(falta == 0 || falta == 1) btnActualizarDatosDe.setEnabled(false);
 		btnActualizarDatosDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FrameActualizarCliente fActualizarCliente = new FrameActualizarCliente(datosEmpresa);
@@ -84,30 +113,16 @@ public class FrameInterfaz extends JFrame {
 				dispose();
 			}
 		});
-		panel.add(btnActualizarDatosDe);
-		panel.add(btnIngresarContratoclientes);
 
-		JButton btnTerminarContrato = new JButton("Terminar contrato");
-		btnTerminarContrato.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				FrameEliminarContrato fEliminarContrato= new FrameEliminarContrato(datosEmpresa);
-				fEliminarContrato.setVisible(true);
-				dispose();
-			}
-		});
-		panel.add(btnTerminarContrato);
-
-		JButton btnNewButton = new JButton("Eliminar cliente");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				FrameEliminarCliente fEliminarCliente = new FrameEliminarCliente(datosEmpresa);
-				fEliminarCliente.setVisible(true);
-				setVisible(false);
-			}
-		});
-		panel.add(btnNewButton);
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(209, 89, 189, 244);
+		contentPane.add(panel_1);
+		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
 
 		JButton btnVerClientesActuales = new JButton("Ver Clientes Actuales");
+		panel_1.add(btnVerClientesActuales);
+		// Si no hay admin (Falta = 0 o 1) no se puede activar este botón
+			if(falta == 0 || falta == 1) btnVerClientesActuales.setEnabled(false);
 		btnVerClientesActuales.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FrameVerClientes verClientes = new FrameVerClientes(datosEmpresa);
@@ -115,10 +130,33 @@ public class FrameInterfaz extends JFrame {
 				dispose();
 			}
 		});
-		panel.add(btnVerClientesActuales);
+
+		JButton btnTerminarContrato = new JButton("Terminar contrato");
+		panel_1.add(btnTerminarContrato);
+		// Si no hay admin (Falta = 0 o 1) no se puede activar este botón
+			if(falta == 0 || falta == 1) btnTerminarContrato.setEnabled(false);
+		btnTerminarContrato.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FrameEliminarContrato fEliminarContrato= new FrameEliminarContrato(datosEmpresa);
+				fEliminarContrato.setVisible(true);
+				dispose();
+			}
+		});
+
+		JButton btnNewButton = new JButton("Eliminar cliente");
+		panel_1.add(btnNewButton);
+		// Si no hay admin (Falta = 0 o 1) no se puede activar este botón
+			if(falta == 0 || falta == 1) btnNewButton.setEnabled(false);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FrameEliminarCliente fEliminarCliente = new FrameEliminarCliente(datosEmpresa);
+				fEliminarCliente.setVisible(true);
+				dispose();
+			}
+		});
 
 		JButton btnSalir = new JButton("Salir");
-		panel.add(btnSalir);
+		panel_1.add(btnSalir);
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

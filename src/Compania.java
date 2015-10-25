@@ -24,7 +24,7 @@ public class Compania {
 	private ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 	private ArrayList<Equipo> moviles = new ArrayList<Equipo>();
 	private ArrayList<Plan> planes = new ArrayList<Plan>();
-	private ArrayList<Administrador> administradores = new ArrayList<Administrador>();
+	private ArrayList<Administrador> listaAdmins = new ArrayList<Administrador>();
 	
 	/**
 	 * @param nombre
@@ -77,26 +77,28 @@ public class Compania {
 	public void setPlanes(ArrayList<Plan> planes) {
 		this.planes = planes;
 	}
-	public ArrayList<Administrador> getTrabajadores() {
-		return administradores;
+	public ArrayList<Administrador> getListaAdmins() {
+		return listaAdmins;
 	}
 
-	public void setTrabajadores(ArrayList<Administrador> trabajadores) {
-		this.administradores = trabajadores;
+	public void setListaAdmins(ArrayList<Administrador> listaAdmins) {
+		this.listaAdmins = listaAdmins;
 	}
-	///////////////// METODOS DE TRABAJADOR ////////////////////////////
 	
+	///////////////// METODOS DE ADMINISTRADOR ////////////////////////////
+
 	public void agregarAdmin(Administrador a)
 	{
-		administradores.add(a);
+		listaAdmins.add(a);
 		
 	}
+	
 	public Administrador buscarAdmin(String rut)
 	{
-		for(int i=0 ; i < administradores.size() ; i++)
-			if(administradores.get(i).getRut().equals(rut)){
-				administradores.get(i).identificarPersona();
-				return administradores.get(i);
+		for(int i=0 ; i < listaAdmins.size() ; i++)
+			if(listaAdmins.get(i).getRut().equals(rut)){
+				listaAdmins.get(i).identificarPersona();
+				return listaAdmins.get(i);
 			}
 				
 		return null;
@@ -571,23 +573,42 @@ public class Compania {
 
 	//=============================== METODOS DE LA INTERFAZ =================================
 
-	// CREA UN NUEVO CLIENTE Y SU CONTRATO RESPECTIVO
-		public Cliente crearClienteNuevo(Cliente clienteNuevo) {
+	/**
+	 * Crea un nuevo Cliente y lo agrega al Arralist listaClientes de Compania
+	 * @param clienteNuevo
+	 * @return Un objeto de tipo Cliente con el cliente nuevo creado
+	 */
+	public Cliente crearClienteNuevo(Cliente clienteNuevo) {
 
-			if (buscarCliente(clienteNuevo.getRut()) != null)
-				// Si el rut existe, le informo que ya existe.
-				return null;
-			else {
-				// Si no existe se crea el obj cliente y se guarda en el arraylist
-				//clienteNuevo.contratos.add(interfazCrearContrato()); // creo el contrato del cliente ingresado
-				// y lo agrego al ArrayList de contratos del Cliente
-				listaClientes.add(clienteNuevo);
-				System.out.println("Cliente agregado");
-				return clienteNuevo;
-			}
+		if (buscarCliente(clienteNuevo.getRut()) != null)
+			// Si el rut existe, le informo que ya existe.
+			return null;
+		else {
+			// Si no existe se guarda en el arraylist
+			listaClientes.add(clienteNuevo);
+			System.out.println("Cliente agregado");
+			return clienteNuevo;
 		}
+	}
 
+	/**
+	 * Crea un nuevo Administrador y lo agrega al Arralist listaAdmins de Compania
+	 * @param adminNuevo
+	 * @return Un objeto de tipo Administrado con el administrador nuevo creado
+	 */
+	public Administrador crearAdminNuevo(Administrador adminNuevo) {
 
+		if (buscarAdmin(adminNuevo.getRut()) != null)
+			// Si el rut existe, le informo que ya existe.
+			return null;
+		else {
+			// Si no existe se guarda en el arraylist
+			listaAdmins.add(adminNuevo);
+			System.out.println("Administrador agregado");
+			return adminNuevo;
+		}
+	}
+		
 	// seleciona un movil, escogido desde FrameContrato
 	public Equipo elegirMovil(int movil) {
 		int i;

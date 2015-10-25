@@ -23,7 +23,7 @@ public class DocumentoPdf {
 		PdfWriter.getInstance(documento,new FileOutputStream("Reporte.pdf"));	
 		documento.open();	// ABRE DOCUMENTO
 		
-		documento.add(new Paragraph("Documento emitido por compañia "+datosEmpresa.getNombre()));
+		documento.add(new Paragraph("Documento emitido por compañia "+datosEmpresa.getNombre()+", RUT: "+datosEmpresa.getRut()));
 		documento.add(new Paragraph("\nInformación de contrato de cada cliente en la empresa :"));
 		
 		// RECORRE CADA CLIENTE E IMPRIME EN PDF SUS DATOS PERSONALES

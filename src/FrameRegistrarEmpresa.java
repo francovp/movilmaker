@@ -1,6 +1,9 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -8,6 +11,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
@@ -67,5 +71,32 @@ public class FrameRegistrarEmpresa extends JFrame {
 		JButton btnRegistrar = new JButton("Registrar");
 		btnRegistrar.setBounds(122, 88, 89, 23);
 		contentPane.add(btnRegistrar);
+		btnRegistrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nombre = tfNombre.getText();
+				String rut = tfRut.getText();
+				Compania empresaNueva = new Compania (nombre,rut);
+				
+				// Se escribira empresa en la BD
+				try {
+					// Creacion de conexion a base de datos
+					Database bd = new Database();
+					bd.ingresarEmpresaBD(empresaNueva);
+					System.out.println("Empresa agregada a la base de datos...");						
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					System.err.println("Empresa no se pudo escribir en la Base de Datos.\n"
+							+ "\nDetalles de la excepción:");
+					System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
+				}
+				
+				//Muestra mensaje que cilente fue ingresado exitosamente!
+				JOptionPane.showMessageDialog(null, "Empresa creada!\nProceda a crear un Administrador...", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+				// Se llamará a una Interfaz AgregarAdmin para registrar al primer administrador
+				FrameAgregarAdmin fAdmin = new FrameAgregarAdmin(datosEmpresa,0);
+				fAdmin.setVisible(true);
+				dispose();
+			}
+		});
 	}
 }

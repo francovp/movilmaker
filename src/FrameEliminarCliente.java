@@ -129,7 +129,7 @@ public class FrameEliminarCliente extends JFrame {
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz (datosEmpresa);
+				FrameInterfaz fInterfaz = new FrameInterfaz (datosEmpresa, -1);
 				fInterfaz.setVisible(true);
 				dispose();
 			}

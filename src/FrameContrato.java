@@ -43,7 +43,7 @@ public class FrameContrato extends JFrame {
 	// RECIBE DATOS DE LA EMPRESA Y DATOS DE CLIENTE (cliente para obtencion de nombre mostrado en el panel y rut para su busqueda)
 	public FrameContrato(Compania datosEmpresa, Cliente cliente) {
 		setResizable(false);	
-		setTitle("Contrato");
+		setTitle("Agregar Contrato");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 532, 354);
 		contentPane = new JPanel();
@@ -161,7 +161,7 @@ public class FrameContrato extends JFrame {
 //									else System.err.println("Contrato no fue guardado en XML.");
 									
 									//CIERRE INTERFAZ FrameContrato
-									FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
+									FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
 									fInterfaz.setVisible(true);
 									dispose();
 						}		
@@ -174,7 +174,7 @@ public class FrameContrato extends JFrame {
 		JButton btnNewButton_1 = new JButton("Cancelar");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
 				fInterfaz.setVisible(true);
 				dispose();
 			}

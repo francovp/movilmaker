@@ -80,7 +80,7 @@ public class FrameAgregarOtroContrato extends JFrame {
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//LLAMA AL MENU PRINCIPAL Y CIERRA ESTA VENTANA
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
 				fInterfaz.setVisible(true);
 				dispose();
 			}

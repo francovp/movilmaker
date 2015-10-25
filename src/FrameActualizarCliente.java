@@ -156,7 +156,7 @@ public class FrameActualizarCliente extends JFrame {
 				c.setDireccion2(textFieldCiudad.getText());
 				c.setEmail(textFieldEmail.getText());
 				JOptionPane.showMessageDialog(null, "Cliente modificado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa,2);
 				fInterfaz.setVisible(true);
 				dispose();
 			}
@@ -214,7 +214,7 @@ public class FrameActualizarCliente extends JFrame {
 		btnCancelar.setBounds(297, 6, 86, 23);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa,2);
 				fInterfaz.setVisible(true);
 				dispose();
 			}

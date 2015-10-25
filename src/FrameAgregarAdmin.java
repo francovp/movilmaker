@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import java.awt.Window.Type;
 
-public class FrameAgregarCliente extends JFrame {
+public class FrameAgregarAdmin extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textNombre1;
@@ -21,8 +21,6 @@ public class FrameAgregarCliente extends JFrame {
 	private JTextField textApellido1;
 	private JTextField textApellido2;
 	private JTextField textRut;
-	private JTextField textDireccion1;
-	private JTextField textDireccion2;
 	private JTextField textEmail;
 	private JTextField textFonoFijo;
 	private JTextField textFonoCel;
@@ -30,11 +28,11 @@ public class FrameAgregarCliente extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args, Compania datosEmpresa) {
+	public static void main(String[] args, Compania datosEmpresa, int falta) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrameAgregarCliente frame = new FrameAgregarCliente(datosEmpresa);
+					FrameAgregarAdmin frame = new FrameAgregarAdmin(datosEmpresa, falta);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,19 +44,19 @@ public class FrameAgregarCliente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrameAgregarCliente(Compania datosEmpresa) {
+	public FrameAgregarAdmin(Compania datosEmpresa, int falta) {
 		setResizable(false);
-		setTitle("Agregar Cliente");
+		setTitle("Agregar Admin");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 321);
+		setBounds(100, 100, 600, 268);
 		contentPane = new JPanel();
-		contentPane.setBorder(new TitledBorder(null, "Datos de cliente", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
+		contentPane.setBorder(new TitledBorder(null, "Datos de administrador", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Atributos personales", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 25, 294, 170);
+		panel.setBounds(10, 25, 270, 170);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -67,7 +65,7 @@ public class FrameAgregarCliente extends JFrame {
 		panel.add(lblPrimerNombre);
 
 			textNombre1 = new JTextField();
-			textNombre1.setBounds(117, 21, 153, 20);
+			textNombre1.setBounds(117, 21, 143, 20);
 			panel.add(textNombre1);
 			textNombre1.setColumns(10);
 
@@ -77,7 +75,7 @@ public class FrameAgregarCliente extends JFrame {
 
 			textNombre2 = new JTextField();
 			textNombre2.setColumns(10);
-			textNombre2.setBounds(117, 49, 153, 20);
+			textNombre2.setBounds(117, 49, 143, 20);
 			panel.add(textNombre2);
 
 		JLabel lblApellidoPaterno = new JLabel("Apellido Paterno");
@@ -86,7 +84,7 @@ public class FrameAgregarCliente extends JFrame {
 
 			textApellido1 = new JTextField();
 			textApellido1.setColumns(10);
-			textApellido1.setBounds(117, 77, 153, 20);
+			textApellido1.setBounds(117, 77, 143, 20);
 			panel.add(textApellido1);
 
 		JLabel lblApellidoMaterno = new JLabel("Apellido Materno");
@@ -95,7 +93,7 @@ public class FrameAgregarCliente extends JFrame {
 
 		textApellido2 = new JTextField();
 		textApellido2.setColumns(10);
-		textApellido2.setBounds(117, 105, 153, 20);
+		textApellido2.setBounds(117, 105, 143, 20);
 		panel.add(textApellido2);
 
 		JLabel lblRut = new JLabel("RUT");
@@ -104,11 +102,11 @@ public class FrameAgregarCliente extends JFrame {
 
 			textRut = new JTextField();
 			textRut.setColumns(10);
-			textRut.setBounds(117, 133, 153, 20);
+			textRut.setBounds(117, 133, 143, 20);
 			panel.add(textRut);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(314, 25, 260, 183);
+		panel_1.setBounds(290, 25, 294, 113);
 		contentPane.add(panel_1);
 		panel_1.setBorder(new TitledBorder(null, "Contacto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_1.setLayout(null);
@@ -119,7 +117,7 @@ public class FrameAgregarCliente extends JFrame {
 		
 			textEmail = new JTextField();
 			textEmail.setColumns(10);
-			textEmail.setBounds(107, 22, 143, 20);
+			textEmail.setBounds(107, 22, 177, 20);
 			panel_1.add(textEmail);
 
 		JLabel lblFonoFijo = new JLabel("Telefono fijo");
@@ -128,7 +126,7 @@ public class FrameAgregarCliente extends JFrame {
 		
 			textFonoFijo = new JTextField();
 			textFonoFijo.setColumns(10);
-			textFonoFijo.setBounds(107, 50, 143, 20);
+			textFonoFijo.setBounds(107, 50, 177, 20);
 			panel_1.add(textFonoFijo);
 
 		JLabel lblFonoCel = new JLabel("Celular");
@@ -137,41 +135,23 @@ public class FrameAgregarCliente extends JFrame {
 
 			textFonoCel = new JTextField();
 			textFonoCel.setColumns(10);
-			textFonoCel.setBounds(107, 76, 143, 20);
+			textFonoCel.setBounds(107, 76, 177, 20);
 			panel_1.add(textFonoCel);
-		
-		JLabel lblDireccion1 = new JLabel("Direccion");
-		lblDireccion1.setBounds(10, 115, 87, 14);
-		panel_1.add(lblDireccion1);
-		
-			textDireccion1 = new JTextField();
-			textDireccion1.setBounds(107, 104, 143, 40);
-			panel_1.add(textDireccion1);
-			textDireccion1.setColumns(10);
-
-		JLabel lblDireccion2 = new JLabel("Ciudad");
-		lblDireccion2.setBounds(10, 155, 52, 14);
-		panel_1.add(lblDireccion2);
-		
-			textDireccion2 = new JTextField();
-			textDireccion2.setBounds(107, 152, 143, 20);
-			panel_1.add(textDireccion2);
-			textDireccion2.setColumns(10);
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 199, 294, 42);
+		panel_2.setBounds(290, 149, 294, 42);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 
 		JLabel lblAviso = new JLabel("");
-		lblAviso.setBounds(20, 252, 284, 14);
+		lblAviso.setBounds(10, 206, 284, 14);
 		contentPane.add(lblAviso);
 
-		//Boton que caputura todos los datos del cliente, crea objeto y agrega a lista de Compania
+		//Boton que caputura todos los datos del Administrador, crea objeto y agrega a lista de Compania
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Cliente nuevoCliente = null;
+				Administrador nuevoAdmin = null;
 				
 				// Comprobaciones de Datos, numeros de telefono deben ser int o el sistema se cae
 				if (!comprobarFono(textFonoCel.getText())){
@@ -179,43 +159,43 @@ public class FrameAgregarCliente extends JFrame {
 					lblAviso.setText("Datos de telefono debe ser numerico");
 				}
 				else{
-					//Llama metodo para crear Cliente
-					nuevoCliente = datosNuevoCliente(datosEmpresa);
-					if (nuevoCliente != null){
-						System.out.println("Cliente creado...");
+					//Llama metodo para crear Administrador
+					nuevoAdmin = datosNuevaPersona(datosEmpresa);
+					if (nuevoAdmin != null){
+						System.out.println("Administrador creado...");
 						
-						// Si el cliente se crea exitosamente se escribira cliente en la BD
+						// Si el Administrador se crea exitosamente se escribira Administrador en la BD
 						try {
 							// Creacion de conexion a base de datos
 							Database bd = new Database();
-							bd.ingresarClienteBD(nuevoCliente);
-							System.out.println("Cliente agregado a la base de datos...");						
+							bd.ingresarAdminBD(nuevoAdmin);
+							System.out.println("Administrador agregado a la base de datos...");						
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
-							System.err.println("Cliente no se pudo escribir en la Base de Datos.\n"
+							System.err.println("Administrador no se pudo escribir en la Base de Datos.\n"
 									+ "\nDetalles de la excepción:");
 							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 						}
 						
-						// Para guardar cliente en un XML
-						// Objeto XML
-						XML xml = new XML();
-						if(xml.ingresarClienteXML(datosEmpresa, nuevoCliente))
-							System.out.println("Cliente guardado en XML.");						
-						else System.err.println("Cliente no fue guardado en XML.");
-							
-						//Muestra mensaje que cilente fue ingresado exitosamente!
-						JOptionPane.showMessageDialog(null, "Cliente creado con exito!\nProceda en asignarle un contrato", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-						// Se creara� un contrato
-						FrameContrato fContrato = new FrameContrato(datosEmpresa,nuevoCliente);
-						fContrato.setVisible(true);
+//						// Para guardar Administrador en un XML
+//						// Objeto XML
+//						XML xml = new XML();
+//						if(xml.ingresarAdministradorXML(datosEmpresa, nuevoAdmin))
+//							System.out.println("Administrador guardado en XML.");						
+//						else System.err.println("Administrador no fue guardado en XML.");
+//							
+						//Muestra mensaje que el Administrador fue ingresado exitosamente!
+						JOptionPane.showMessageDialog(null, "Administrador creado con exito!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+//						// Se volverá a Interfaz principal
+						FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, falta);
+						fInterfaz.setVisible(true);
 						dispose();
 					}
 					else{
-						//Sino, se informa que el cliente ya existe y se vuelve al menu
-						System.err.println("Cliente ya existe...");
+						//Sino, se informa que el Administrador ya existe y se vuelve al menu
+						System.err.println("Administrador ya existe...");
 						lblAviso.setForeground(Color.RED);
-						lblAviso.setText("Cliente ya existe!");
+						lblAviso.setText("Administrador ya existe!");
 					}
 				}
 			}
@@ -235,9 +215,15 @@ public class FrameAgregarCliente extends JFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa,-1);
-				fInterfaz.setVisible(true);
-				dispose();
+				if(falta == 0 || falta == 1){
+					FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa,falta);
+					fInterfaz.setVisible(true);
+					dispose();
+				}else{
+					FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa,-1);
+					fInterfaz.setVisible(true);
+					dispose();
+				}
 			}
 		});
 		btnCancelar.setBounds(195, 11, 89, 23);
@@ -249,10 +235,10 @@ public class FrameAgregarCliente extends JFrame {
 	
 	/**
 	* Ingresa atributos capturados desde los JTextField de la ventana
-	* y los atribuye a un objeto Cliente y envia a clase compa�ia
+	* y los atribuye a un objeto Administrador y envia a clase compa�ia
 	**/
-	//Obtiene los datos ingresados en las casillas y crea una nueva clase Cliente, luego es enviado a la listaClientes en clase Compañia
-	public Cliente datosNuevoCliente(Compania datosEmpresa){
+	//Obtiene los datos ingresados en las casillas y crea una nueva clase Administrador, luego es enviado a la listaAdministradors en clase Compañia
+	public Administrador datosNuevaPersona(Compania datosEmpresa){
 		String nombre1,nombre2,apellido1,apellido2,rut,email,direccion1,direccion2;
 		int fono1,fono2;
 		nombre1=textNombre1.getText();
@@ -263,17 +249,15 @@ public class FrameAgregarCliente extends JFrame {
 		email=textEmail.getText();
 		fono1=Integer.parseInt(textFonoFijo.getText());
 		fono2=Integer.parseInt(textFonoCel.getText());
-		direccion1=textDireccion1.getText();
-		direccion2=textDireccion2.getText();
-		// Se crea cliente nuevo
-		Cliente clienteNuevo = new Cliente(rut,datosEmpresa.getRut(),nombre1,nombre2,apellido1,apellido2,fono1,fono2,email,1,direccion1,direccion2,0,null);
-		// Se ingresa cliente nuevo y se espera un resultado del ingreso
-		Cliente resultado = datosEmpresa.crearClienteNuevo(clienteNuevo);
+		// Se crea Administrador nuevo
+		Administrador adminNuevo = new Administrador(rut,datosEmpresa.getRut(),nombre1,nombre2,apellido1,apellido2,fono1,fono2,email,1,null,null,0,null);
+		// Se ingresa Administrador nuevo y se espera un resultado del ingreso
+		Administrador resultado = datosEmpresa.crearAdminNuevo(adminNuevo);
 		if(resultado != null)
-			// Si cliente no existe, todo bien
-			return clienteNuevo;
+			// Si la persona no existe, todo bien
+			return adminNuevo;
 		else 
-			// Entonces el cliente ya existe
+			// Entonces la persona ya existe
 			return null;
 	}
 
@@ -291,8 +275,6 @@ public class FrameAgregarCliente extends JFrame {
 		textEmail.setText("");
 		textFonoFijo.setText("");
 		textFonoCel.setText("");
-		textDireccion1.setText("");
-		textDireccion2.setText("");
 		lblAviso.setText("");
 	}
 	

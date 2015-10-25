@@ -20,9 +20,9 @@ public class Cliente extends Persona {
 
 	//CONSTRUCTOR 
 	public Cliente(String rut, String idCompania, String nombre1, String nombre2, String apellido1, String apellido2,
-			int fonoCel, int fonoFijo, String email, String direccion1, String direccion2, int deuda) {
+			int fonoCel, int fonoFijo, String email, int tipo, String direccion1, String direccion2, int deuda, String password) {
 
-		super(rut,idCompania,nombre1,nombre2,apellido1,apellido2,fonoCel,fonoFijo,email);
+		super(rut,idCompania,nombre1,nombre2,apellido1,apellido2,fonoCel,fonoFijo,email,tipo);
 		
 		this.direccion1 = direccion1;
 		this.direccion2 = direccion2;

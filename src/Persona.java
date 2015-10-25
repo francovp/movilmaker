@@ -8,9 +8,10 @@ public class Persona {
 	private int fonoCel;
 	private int fonoFijo;
 	private String email;
+	private int tipo = 0; // 0 = Admin, 1 = Cliente ... n = Algo más
 	
 	public Persona (String rut, String idCompania, String nombre1, String nombre2, String apellido1, String apellido2,
-			int fonoCel, int fonoFijo, String email) {
+			int fonoCel, int fonoFijo, String email, int tipo) {
 		this.rut = rut;
 		this.nombre1 = nombre1;
 		this.nombre2 = nombre2;
@@ -20,6 +21,7 @@ public class Persona {
 		this.fonoFijo = fonoFijo;
 		this.email = email;
 		this.idCompania = idCompania;
+		this.tipo = tipo;
 	}
 	
 	public String getNombre1() {
@@ -77,6 +79,14 @@ public class Persona {
 		this.idCompania = idCompania;
 	}
 	
+	public int getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
+
 	public void identificarPersona()
 	{
 		System.out.println(nombre1 + " " + apellido2);
