@@ -160,23 +160,6 @@ public class Database {
 		return false;
 	}
 
-	public boolean ingresarRegistroBD(RegistroDePagos registro) throws SQLException {
-		if (c != null) {
-			// Si se cre� la conexi�n a la BD exitosamente se contin�a
-			// Se crea una nueva sentencia SQL
-			stmt = c.createStatement();
-			String sql = "INSERT INTO boletas(id_contrato, rut_cliente,cuotas_rest,id_boleta,monto_pagadop)"
-					+ "VALUES('" + registro.getIdContrato() + "'," + registro.getContratoAPagar().getRutCliente() + "',"
-					+ registro.getCuotasRestantes() + "," + registro.getIdRegistro() + "," + registro.getMontoPagado()
-					+ ");";
-			stmt.executeUpdate(sql);
-			stmt.close();
-			c.close();
-			return true;
-		}
-		return false;
-	}
-
 	// Establece todos los mótodos de lecturas desde la Base de datos
 	public Compania leerEmpresaBD(Compania empresa) throws SQLException {
 		if (c != null) {

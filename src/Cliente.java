@@ -178,62 +178,6 @@ public class Cliente extends Persona {
 		return null;
 	}
 
-	// ELIMINA UN CONTRATO , VERIFICCANDO ANTES DE QUE CUMPLA QUE LAS CUOTAS
-	// ESTEN PAGADAS
-	public boolean eliminarContrato(Compania e) throws IOException {
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		RegistroDePagos boletaMasNueva;
-		int cuotasRestantes, montoAdeudado;
-		listarContratos(); // listo todos los contratos del cliente
-		System.out.print("\nIngrese el ID del contrato: ");
-		int res = Integer.parseInt(bf.readLine()); // LEO EL ID DEL CONTRATO
-
-		if (buscarContrato(res) != null) {
-			Contrato contr = buscarContrato(res);
-			System.out.println("Fecha de termino del contratro estipulada: " + contr.getFechaTermino());
-			System.out.println("¿Se cumplio el pazo minimo con el plan ?\n1-Si\n2-No");
-			
-			// Se verificarÃ¡ si en el contrato existe alguna boleta para obtener el
-			// valor de cuotasRestantes
-			boletaMasNueva = contr.buscarPago(contr.getRutCliente());
-			if (boletaMasNueva != null) {
-				// Obtiene el ultimo valor de CuotasRestantes conocido
-				cuotasRestantes = boletaMasNueva.getCuotasRestantes();
-			} else {
-				// Como aun no ha producido ningun pago, se Obtienen los valores totales
-				cuotasRestantes = contr.getCuotas();
-			}
-
-			// SI SE CUMPLE LOS MESES OLBIGATORIOS pagados (HIPOTETICAMENTE) SE
-			// PROCEDE A ELMINAR EL CONTRATO
-			if (Integer.parseInt(bf.readLine()) == 1 && cuotasRestantes <= 0) {
-				contratos.remove(contr); // elimino el contrato
-
-				if (contratos.size() == 0) {// si quedo sin contratos , se elimina el cliente
-					System.out.println("Cliente se encuentra sin contratos, se procede a eliminar su registro");
-					e.eliminarCliente(getRut());
-				}
-				return true;
-
-			} else// SI NO CUMPLIO EL PLAZO MINIMO , DEBE CANCELARLO Y PAGAR UN
-					// INTERES
-			{
-				System.out.println("No se a cumplido el plazo");
-				if (e.pagarUnPlan(contr)) // si calcela lo debido se elimina
-				{
-					contratos.remove(contr); // elimino el contrato
-					if (contratos.size() == 0) {// si quedo sin contratos , se
-												// elimina el cliente
-						System.out.println("Cliente se encuentra sin contratos, se procede a eliminar su registro");
-						e.eliminarCliente(getRut());
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
 	// MUESTRA TODOS LOS CONTRATOS DE 1 CLIENTE
 	public void listarContratos() {
 		System.out.println("Contratos de " + getNombre1() + " " + getApellido1() + ".");
