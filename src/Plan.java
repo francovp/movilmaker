@@ -36,36 +36,47 @@ public class Plan {
 	public int getIdPlan() {
 		return idPlan;
 	}
+
 	public void setIdPlan(int idPlan) {
 		this.idPlan = idPlan;
 	}
+
 	public String getNombrePlan() {
 		return nombrePlan;
 	}
+
 	public void setNombrePlan(String nombrePlan) {
 		this.nombrePlan = nombrePlan;
 	}
+
 	public int getPrecio() {
 		return precio;
 	}
+
 	public void setPrecio(int precio) {
 		this.precio = precio;
 	}
+
 	public int getMinutos() {
 		return minutos;
 	}
+
 	public void setMinutos(int minutos) {
 		this.minutos = minutos;
 	}
+
 	public int getGigas() {
 		return gigas;
 	}
+
 	public void setGigas(int gigas) {
 		this.gigas = gigas;
 	}
+
 	public String getIdCompania() {
 		return idCompania;
 	}
+
 	public void setIdCompania(String idCompania) {
 		this.idCompania = idCompania;
 	}
