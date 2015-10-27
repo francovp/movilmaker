@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
 
 public class FrameRegistrarEmpresa extends JFrame {
@@ -40,6 +41,15 @@ public class FrameRegistrarEmpresa extends JFrame {
 	 * Create the frame.
 	 */
 	public FrameRegistrarEmpresa(Compania datosEmpresa) {
+		/* Use an appropriate Look and Feel */
+	    try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+	    
 		setResizable(false);
 		setTitle("MovilMaker");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
