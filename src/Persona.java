@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -120,6 +121,8 @@ public class Persona {
 	 * @throws DocumentException
 	 */
 	public void reporte(Compania datosEmpresa) throws FileNotFoundException, DocumentException {
+		ArrayList<Cliente> listaClientes = datosEmpresa.mostrarClientes();
+		ArrayList<Administrador> listaAdmins = datosEmpresa.mostrarAdmins();
 		String fonoFijo, fonoCel, email, direccion1, direccion2, nombre2, apellido2, deuda;
 		Document documento = new Document();
 		int idPlan, idEquipo; // Compararan ids de cada contrato de x cliente
@@ -132,8 +135,8 @@ public class Persona {
 		documento.add(new Paragraph("\nLista de administradores:"));
 
 		// RECORRE CADA ADMINISTRADOR E IMPRIME SUS DATOS PERSONALES
-		for (int i = 0; i < datosEmpresa.getListaAdmins().size(); i++) {
-			Administrador admin = datosEmpresa.getListaAdmins().get(i);
+		for (int i = 0; i < listaAdmins.size(); i++) {
+			Administrador admin = listaAdmins.get(i);
 			if (admin.getFonoFijo() == 0)
 				fonoFijo = "Sin datos";
 			else
@@ -164,8 +167,8 @@ public class Persona {
 		documento.add(new Paragraph("\nLista de clientes:"));
 
 		// RECORRE CADA CLIENTE E IMPRIME EN PDF SUS DATOS PERSONALES
-		for (int i = 0; i < datosEmpresa.getListaClientes().size(); i++) {
-			Cliente c = datosEmpresa.getListaClientes().get(i);
+		for (int i = 0; i < listaClientes.size(); i++) {
+			Cliente c = listaClientes.get(i);
 			if (c.getFonoFijo() == 0)
 				fonoFijo = "Sin datos";
 			else

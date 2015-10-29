@@ -24,10 +24,9 @@ public class Compania {
 
 	private String nombre;
 	private String rut;
-	private ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
+	private ArrayList<Persona> listaPersona = new ArrayList<Persona>();
 	private ArrayList<Equipo> moviles = new ArrayList<Equipo>();
 	private ArrayList<Plan> planes = new ArrayList<Plan>();
-	private ArrayList<Administrador> listaAdmins = new ArrayList<Administrador>();
 
 	/**
 	 * @param nombre
@@ -58,12 +57,12 @@ public class Compania {
 		this.rut = rut;
 	}
 
-	public ArrayList<Cliente> getListaClientes() {
-		return listaClientes;
+	public ArrayList<Persona> getListaPersona() {
+		return listaPersona;
 	}
 
-	public void setListaClientes(ArrayList<Cliente> listaClientes) {
-		this.listaClientes = listaClientes;
+	public void getListaPersona(ArrayList<Persona> ListaPersona) {
+		this.listaPersona = listaPersona;
 	}
 
 	public ArrayList<Equipo> getMoviles() {
@@ -82,105 +81,86 @@ public class Compania {
 		this.planes = planes;
 	}
 
-	public ArrayList<Administrador> getListaAdmins() {
-		return listaAdmins;
+	///////////////// METODOS DE ADMINISTRADOR ////////////////////
+	
+	/**
+	 * Crea un nuevo Administrador y lo agrega al Arralist listaAdmins de
+	 * Compania
+	 *
+	 * @param adminNuevo
+	 * @return Un objeto de tipo Administrado con el administrador nuevo creado
+	 */
+	public Administrador crearAdminNuevo(Administrador adminNuevo) {
+
+		if (buscarAdmin(adminNuevo.getRut()) != null)
+			// Si el rut existe, le informo que ya existe.
+			return null;
+		else {
+			// Si no existe se guarda en el arraylist
+			listaPersona.add(adminNuevo);
+			return adminNuevo;
+		}
 	}
-
-	public void setListaAdmins(ArrayList<Administrador> listaAdmins) {
-		this.listaAdmins = listaAdmins;
-	}
-
-	///////////////// METODOS DE ADMINISTRADOR ////////////////////////////
-
-	public void agregarAdmin(Administrador a) {
-		listaAdmins.add(a);
-
-	}
-
+	
 	public Administrador buscarAdmin(String rut) {
-		for (int i = 0; i < listaAdmins.size(); i++)
-			if (listaAdmins.get(i).getRut().equals(rut))
-				return listaAdmins.get(i);
+		for (int i = 0; i < listaPersona.size(); i++)
+			if (listaPersona.get(i).getRut().equals(rut) && listaPersona.get(i).getTipo() == 0)
+				return (Administrador) listaPersona.get(i);
 
 		return null;
 	}
+	
+	public ArrayList<Administrador> mostrarAdmins() {
+		ArrayList<Administrador> admins = new ArrayList<Administrador>();
+		for (int i = 0; i < listaPersona.size(); i++){
+			if(listaPersona.get(i) instanceof Administrador){
+				admins.add((Administrador)listaPersona.get(i));
+			}
+		}
+		return admins;
+	}
 
-	///////////////////// METODOS DE CLIENTES Y
-	///////////////////// CONTRATOS////////////////////////////
+	///////////////////// METODOS DE CLIENTES ///////////////////// 
+	
+	/**
+	 * Crea un nuevo Cliente y lo agrega al Arralist listaClientes de Compania
+	 *
+	 * @param clienteNuevo
+	 * @return Un objeto de tipo Cliente con el cliente nuevo creado
+	 */
+	public Cliente crearClienteNuevo(Cliente clienteNuevo) {
+
+		if (buscarCliente(clienteNuevo.getRut()) != null)
+			// Si el rut existe, le informo que ya existe.
+			return null;
+		else {
+			// Si no existe se guarda en el arraylist
+			listaPersona.add(clienteNuevo);
+			return clienteNuevo;
+		}
+	}
 
 	// MUESTRA LOS CLIENTES
-	public void mostrarClientes() {
-		if (listaClientes.size() == 0)
-			System.out.println("No hay clientes.");
-		else
-			for (int i = 0; i < listaClientes.size(); i++)
-				System.out.println(i + 1 + "- " + listaClientes.get(i).getNombre1() + " "
-						+ listaClientes.get(i).getApellido1() + ".");
+	public ArrayList<Cliente> mostrarClientes() {
+		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+		for (int i = 0; i < listaPersona.size(); i++){
+			if(listaPersona.get(i) instanceof Cliente){
+				clientes.add((Cliente)listaPersona.get(i));
+			}
+		}
+		return clientes;
 	}
 
 	// BUSCA A UN CLIENTE Y SI LO ENCUENTRA LO RETORNA.
 	public Cliente buscarCliente(String rut) {
-		for (int i = 0; i < listaClientes.size(); i++)
-			if (listaClientes.get(i).getRut().equals(rut)) // si el rut
-															// ingresado se
-															// encuenta
-				return listaClientes.get(i); // se retorna al cliente
+		for (int i = 0; i < listaPersona.size(); i++)
+			// si el rut ingresado se encuenta
+			if (listaPersona.get(i).getRut().equals(rut) && listaPersona.get(i).getTipo() == 1) 
+				// se retorna al cliente
+				return (Cliente) listaPersona.get(i); 
 		return null;
 
 	}
-
-	// CREA UN NUEVO CLIENTE Y SU CONTRATO RESPECTIVO
-	// public Cliente crearClienteNuevo(String idCompania) throws IOException {
-	// BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-	// String nombre1;
-	// String nombre2;
-	// String apellido1;
-	// String apellido2;
-	// String rut;
-	// int fonoCel;
-	// int fonoFijo;
-	// String email;
-	// String direccion1;
-	// String direccion2;
-	//
-	// // peticion de datos del cliente
-	// System.out.println("Datos necesarios del cliente");
-	// System.out.print("Primer Nombre:");
-	// nombre1 = bf.readLine();
-	// System.out.print("Segundo Nombre:");
-	// nombre2 = bf.readLine();
-	// System.out.print("Apellido Paterno:");
-	// apellido1 = bf.readLine();
-	// System.out.print("Apellido Materno:");
-	// apellido2 = bf.readLine();
-	// System.out.print("RUT (123456780):");
-	// rut = bf.readLine();
-	// System.out.print("Nï¿½ Celular:");
-	// fonoCel = Integer.parseInt(bf.readLine());
-	// System.out.print("Nï¿½ Telefono fijo:");
-	// fonoFijo = Integer.parseInt(bf.readLine());
-	// System.out.print("Email:");
-	// email = bf.readLine();
-	// System.out.print("Direccion (Calle y nï¿½):");
-	// direccion1 = bf.readLine();
-	// System.out.print("Ciudad:");
-	// direccion2 = bf.readLine();
-	//
-	// if (buscarCliente(rut) != null)
-	// // Si el rut existe, le informo que ya existe.
-	// return null;
-	// else {
-	// // Si no existe se crea el obj cliente y se guarda en el arraylist
-	// Cliente clienteNuevo = new Cliente(nombre1, nombre2, apellido1,
-	// apellido2, rut, fonoCel, fonoFijo, email, direccion1,
-	// direccion2, idCompania);
-	// clienteNuevo.contratos.add(crearContrato()); // creo el contrato del
-	// cliente ingresado
-	// // y lo agrego al ArrayList de contratos del Cliente
-	// listaClientes.add(clienteNuevo);
-	// return clienteNuevo;
-	// }
-	// }
 
 	// MODIFICA INFORMACION DEL CLIENTE
 	public boolean modificarCliente(String rut) throws IOException {
@@ -233,54 +213,13 @@ public class Compania {
 		Cliente c;
 		if (buscarCliente(rut) != null) {
 			c = buscarCliente(rut);
-			listaClientes.remove(c);
+			listaPersona.remove(c);
 			return true;
 		}
 		return false;
 	}
 
-	public Contrato crearContrato(Cliente clienteActual) throws IOException {
-		Random rnd = new Random();
-		int idRandom, monto, valorCuota;
-		Contrato contrato = null;
-		Equipo movil = null;
-		Plan plan = null;
-
-		// // Datos para usar fecha real
-		// Calendar fechaF = new GregorianCalendar();
-		// Calendar fechaI = new GregorianCalendar();
-		// DateFormat dfi = DateFormat.getDateInstance();
-		// DateFormat dff = DateFormat.getDateInstance();
-		// Date di = fechaI.getTime();
-		// fechaF.add(Calendar.MONTH, 5); // 5 meses como minimo con el plan
-		// Date d = fechaF.getTime();
-		// String fi = dfi.format(di);
-		// String ff = dff.format(d);
-		// // Genera un numero random entre 0 y 100000 que sera el id con
-		// contrato
-		// idRandom = rnd.nextInt(100000);
-		//
-		// //Obtiene el Equipo y el plan del contrato
-		// movil = interfazElegirMovil(numEquipo);
-		// plan = interfazElegirPlan(numPlan);
-		//
-		// //Calcula el monto total de la deuda del contraro
-		// monto = movil.getPrecio() + plan.getPrecio();
-		// // Actualiza la deuda del cliente antes de crear el contrato
-		// clienteActual.setDeuda(clienteActual.getDeuda()+monto);
-		//
-		// // Calcula el valor de cada cuota (sin interes)
-		// valorCuota = (movil.getPrecio() / numCuotas) + plan.getPrecio();
-		//
-		// // Se crea el obj contrato y se retorna
-		// contrato = new Contrato(idRandom, fi, ff, movil, plan, monto,
-		// valorCuota, numCuotas, clienteActual.getRut());
-		//
-		return contrato;
-	}
-
-	///////////////////////// METODOS DE PLAN Y EQUIPOS
-	///////////////////////// /////////////////////////
+	///////////////////////// METODOS DE PLAN Y EQUIPOS /////////////////////////
 
 	public void mostrarPlanes() {
 		for (int i = 0; i < planes.size(); i++) {
@@ -291,33 +230,50 @@ public class Compania {
 		}
 	}
 
-	// seleciona un movil, de los que tiene la compania disponible
-	public Equipo elegirMovil() throws IOException {
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		int i;
-		System.out.println("Moviles Disponibles");
-		for (i = 0; i < moviles.size(); i++)
-			System.out.println(i + 1 + "- " + moviles.get(i).getModelo());
-
-		System.out.println("Igrese el numero de la opcion:");
-		i = Integer.parseInt(bf.readLine());
-		i--;
-		return moviles.get(i);
-	}
-
-	// Se seleciona el Plan que desea asignar al contrato
-	public Plan elegirPlan() throws IOException {
-		int i;
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Nuestros Plan para ud son:");
-		for (i = 0; i < planes.size(); i++)
-			System.out.println(i + 1 + "- " + planes.get(i).getNombrePlan() + ", coste: " + planes.get(i).getPrecio());
-
-		System.out.println("Igrese el numero de la opcion:");
-		i = Integer.parseInt(bf.readLine());
-		i--;
-		return planes.get(i);
-	}
+	// Consola
+	
+		// seleciona un movil, de los que tiene la compania disponible
+		public Equipo elegirMovil() throws IOException {
+			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+			int i;
+			System.out.println("Moviles Disponibles");
+			for (i = 0; i < moviles.size(); i++)
+				System.out.println(i + 1 + "- " + moviles.get(i).getModelo());
+	
+			System.out.println("Ingrese el numero de la opcion:");
+			i = Integer.parseInt(bf.readLine());
+			i--;
+			return moviles.get(i);
+		}
+	
+		// Se seleciona el Plan que desea asignar al contrato
+		public Plan elegirPlan() throws IOException {
+			int i;
+			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+			System.out.println("Nuestros Plan para ud son:");
+			for (i = 0; i < planes.size(); i++)
+				System.out.println(i + 1 + "- " + planes.get(i).getNombrePlan() + ", coste: " + planes.get(i).getPrecio());
+	
+			System.out.println("Igrese el numero de la opcion:");
+			i = Integer.parseInt(bf.readLine());
+			i--;
+			return planes.get(i);
+		}
+	
+	// Interfaz
+		// seleciona un movil, escogido desde FrameContrato
+		public Equipo elegirMovil(int movil) {
+			int i;
+			i = movil;
+			return moviles.get(i);
+		}
+	
+		// Se seleciona el Plan, escogido desde FrameContrato
+		public Plan elegirPlan(int plan) {
+			int i;
+			i = plan;
+			return planes.get(i);
+		}
 
 	//////////////////////////// **TXT**////////////////////////////////////////////////////////////////
 
@@ -343,86 +299,31 @@ public class Compania {
 	{
 		int cont=0,j=1;
 		Cliente c=null;
-		for(int i=0;i<listaClientes.size();i++)
+		for(int i=0;i<listaPersona.size();i++)
 		{
-			//CALCULA AL FIN DEL CICLO QUE CLIENTE TIENE MAS PLANES
-			if(listaClientes.get(i).contratos.size() > cont)
-			{
-				cont=listaClientes.get(i).contratos.size();
-				c = listaClientes.get(i);
-			}
-			//SE MUESTRAN LOS CLIENTES CON MAS DE 3 CONTRATOS
-			if(listaClientes.get(i).contratos.size() > 3){
-
-				while (j == 1) {// ciclo solo para imprimir 1 sola vez
-					System.out.println("Clientes con mas de 3 planes:");
-					j = 0;
+			if(listaPersona.get(i) instanceof Cliente)
+				//CALCULA AL FIN DEL CICLO QUE CLIENTE TIENE MAS PLANES
+				if(((Cliente)listaPersona.get(i)).contratos.size() > cont)
+				{
+					cont=((Cliente)listaPersona.get(i)).contratos.size();
+					c = ((Cliente)listaPersona.get(i));
 				}
-
-				System.out.println(" Rut: " + c.getRut() + " " + c.getNombre1() + " " + c.getApellido1());
-			}
+				//SE MUESTRAN LOS CLIENTES CON MAS DE 3 CONTRATOS
+				if(((Cliente)listaPersona.get(i)).contratos.size() > 3){
+	
+					while (j == 1) {// ciclo solo para imprimir 1 sola vez
+						System.out.println("Clientes con mas de 3 planes:");
+						j = 0;
+					}
+	
+					System.out.println(" Rut: " + c.getRut() + " " + c.getNombre1() + " " + c.getApellido1());
+				}
 
 		}
 		// CLIENTE ESTRELLA CON MAS CONTRATOS
 		if (c != null)
 			System.out.println("Cliente estrella, con un total de: " + cont + " planes contratados.\n*** "
 					+ c.getNombre1() + " " + c.getApellido1() + ". Rut: " + c.getRut() + " ***");
-	}
-
-	// =============================== METODOS DE LA INTERFAZ
-	// =================================
-
-	/**
-	 * Crea un nuevo Cliente y lo agrega al Arralist listaClientes de Compania
-	 *
-	 * @param clienteNuevo
-	 * @return Un objeto de tipo Cliente con el cliente nuevo creado
-	 */
-	public Cliente crearClienteNuevo(Cliente clienteNuevo) {
-
-		if (buscarCliente(clienteNuevo.getRut()) != null)
-			// Si el rut existe, le informo que ya existe.
-			return null;
-		else {
-			// Si no existe se guarda en el arraylist
-			listaClientes.add(clienteNuevo);
-			System.out.println("Cliente agregado");
-			return clienteNuevo;
-		}
-	}
-
-	/**
-	 * Crea un nuevo Administrador y lo agrega al Arralist listaAdmins de
-	 * Compania
-	 *
-	 * @param adminNuevo
-	 * @return Un objeto de tipo Administrado con el administrador nuevo creado
-	 */
-	public Administrador crearAdminNuevo(Administrador adminNuevo) {
-
-		if (buscarAdmin(adminNuevo.getRut()) != null)
-			// Si el rut existe, le informo que ya existe.
-			return null;
-		else {
-			// Si no existe se guarda en el arraylist
-			listaAdmins.add(adminNuevo);
-			System.out.println("Administrador agregado");
-			return adminNuevo;
-		}
-	}
-
-	// seleciona un movil, escogido desde FrameContrato
-	public Equipo elegirMovil(int movil) {
-		int i;
-		i = movil;
-		return moviles.get(i);
-	}
-
-	// Se seleciona el Plan, escogido desde FrameContrato
-	public Plan elegirPlan(int plan) {
-		int i;
-		i = plan;
-		return planes.get(i);
 	}
 
 	// METODO PARA BUSCAR UN PLAN Y RETORNARLO
@@ -435,7 +336,7 @@ public class Compania {
 				System.err.println("No se encontró plan");
 				return null;
 			}
-		System.err.println("No existen planes registrados");
+		System.err.println("No existe plan en el contrato");
 		return null;
 	}
 
@@ -449,7 +350,7 @@ public class Compania {
 				System.err.println("No se encontró equipo");
 				return null;
 			}
-		System.err.println("No existen equipos registrados");
+		System.err.println("No existe equipo en el contrato");
 		return null;
 	}
 
@@ -461,6 +362,8 @@ public class Compania {
 	 * @throws DocumentException
 	 */
 	public void reporte() throws FileNotFoundException, DocumentException {
+		ArrayList<Cliente> listaClientes = mostrarClientes();
+		ArrayList<Administrador> listaAdmins = mostrarAdmins();
 		String fonoFijo, fonoCel, email, direccion1, direccion2, nombre2, apellido2, deuda;
 		Document documento = new Document();
 		int idPlan, idEquipo; // Compararan ids de cada contrato de x cliente

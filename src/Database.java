@@ -282,7 +282,7 @@ public class Database {
 								rs.getString("apellido2"), rs.getInt("fono_celular"), rs.getInt("fono_fijo"),
 								rs.getString("email"), rs.getInt("tipo"), rs.getString("direccion1"),
 								rs.getString("direccion2"), rs.getInt("deuda"), rs.getString("password"));
-						empresa.getListaAdmins().add(admin);
+						empresa.getListaPersona().add(admin);
 					}
 					if (tipo == 1) {
 						// Cliente
@@ -291,7 +291,7 @@ public class Database {
 								rs.getString("apellido2"), rs.getInt("fono_celular"), rs.getInt("fono_fijo"),
 								rs.getString("email"), rs.getInt("tipo"), rs.getString("direccion1"),
 								rs.getString("direccion2"), rs.getInt("deuda"), rs.getString("password"));
-						empresa.getListaClientes().add(cli);
+						empresa.getListaPersona().add(cli);
 					}
 				}
 				rs.close();

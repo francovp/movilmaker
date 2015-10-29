@@ -3,6 +3,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -44,6 +45,7 @@ public class FrameEliminarCliente extends JFrame {
 	 * Create the frame.
 	 */
 	public FrameEliminarCliente(Compania datosEmpresa) {
+		ArrayList<Cliente> listaClientes = datosEmpresa.mostrarClientes();
 		setResizable(false);
 		setTitle("Eliminar cliente");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,8 +119,8 @@ public class FrameEliminarCliente extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel listmodel = new DefaultListModel();
-				for (int i = 0; i < datosEmpresa.getListaClientes().size(); i++) {
-					listmodel.addElement("rut: " + datosEmpresa.getListaClientes().get(i).getRut());
+				for (int i = 0; i < listaClientes.size(); i++) {
+					listmodel.addElement(i+1 + "- Rut: " + listaClientes.get(i).getRut());
 					list.setModel(listmodel);
 				}
 			}

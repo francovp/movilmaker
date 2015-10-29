@@ -166,10 +166,8 @@ public class FrameActualizarCliente extends JFrame {
 		btnBuscar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (datosEmpresa.buscarCliente(textFieldRut.getText()) != null) { // SI
-																					// CLIENTE
-																					// EXISTE
-
+				if (datosEmpresa.buscarCliente(textFieldRut.getText()) != null) { 
+					// SI CLIENTE EXISTE
 					Cliente c = datosEmpresa.buscarCliente(textFieldRut.getText());
 
 					// CONVIERTE EN EDITABLES LOS JTextField Movil, Fono,
@@ -192,24 +190,8 @@ public class FrameActualizarCliente extends JFrame {
 					textFieldNombre2.setText(c.getNombre2());
 					textFieldApellido1.setText(c.getApellido1());
 					textFieldApellido2.setText(c.getApellido2());
-					textFieldMovil.setText(Integer.toString(c.getFonoCel())); // convierto
-																				// a
-																				// string
-																				// debido
-																				// a
-																				// que
-																				// FonoCel
-																				// =
-																				// int
-					textFieldFono.setText(Integer.toString(c.getFonoFijo())); // convierto
-																				// a
-																				// string
-																				// debido
-																				// a
-																				// que
-																				// FOnoFijo
-																				// =
-																				// int
+					textFieldMovil.setText(Integer.toString(c.getFonoCel())); 
+					textFieldFono.setText(Integer.toString(c.getFonoFijo())); 
 					textFieldDireccion.setText(c.getDireccion1());
 					textFieldEmail.setText(c.getEmail());
 					textFieldCiudad.setText(c.getDireccion2());

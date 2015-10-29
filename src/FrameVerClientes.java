@@ -3,6 +3,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -40,7 +41,9 @@ public class FrameVerClientes extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public FrameVerClientes(Compania datosEmpresa) {
+		ArrayList<Cliente> listaClientes = datosEmpresa.mostrarClientes();
 		setTitle("Reporte de clientes");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,7 +59,6 @@ public class FrameVerClientes extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 
-
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 427, 298);
 		panel.add(scrollPane);
@@ -70,20 +72,21 @@ public class FrameVerClientes extends JFrame {
 		btnMostrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel listModel = new DefaultListModel();	// OBJETO DEL TIPO LISTA
-
-				if(datosEmpresa.getListaClientes().size()==0){		// MENSAJE EN EL JList POR SI NO EXISTEN CLIENTES
+				if(listaClientes.size() == 0){		// MENSAJE EN EL JList POR SI NO EXISTEN CLIENTES
 					listModel.addElement("No existen Clientes");
 					listClientes.setModel(listModel);
 				}
-				for(int i=0; i<datosEmpresa.getListaClientes().size();i++){		// AGREGA 1 A 1 DATOS BASICOS DE CADA CLIENTE
-					listModel.addElement((i+1)+" -Rut "+datosEmpresa.getListaClientes().get(i).getRut()+"\n   -Nombre  "
-					+datosEmpresa.getListaClientes().get(i).getNombre1()+" "
-					+datosEmpresa.getListaClientes().get(i).getApellido1()+" "
-					+datosEmpresa.getListaClientes().get(i).getApellido2());
+				// AGREGA 1 A 1 DATOS BASICOS DE CADA CLIENTE
+				for(int i=0; i<listaClientes.size();i++){		
+					listModel.addElement((i+1)+" - Rut: "+listaClientes.get(i).getRut()+" - Nombre: "
+					+listaClientes.get(i).getNombre1()+" "
+					+listaClientes.get(i).getApellido1()+" "
+					+listaClientes.get(i).getApellido2());
 					listClientes.setModel(listModel);	// VUELVE VISIBLE LOS ELEMENTOS
 				}
 			}
 		});
+		
 		btnMostrar.setBounds(447, 10, 127, 23);
 		panel.add(btnMostrar);
 		
@@ -93,8 +96,12 @@ public class FrameVerClientes extends JFrame {
 		btnImprimirEnPdf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {;
 				try {
-					datosEmpresa.reporte();
-					JOptionPane.showMessageDialog(null, "Reporte empresa creado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+					if (listClientes.isSelectedIndex(listClientes.getSelectedIndex())) {
+							Cliente c = listaClientes.get(listClientes.getSelectedIndex());
+							c.reporte(datosEmpresa);
+							JOptionPane.showMessageDialog(null, 
+									"Reporte del cliente creado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+					}
 				} catch (FileNotFoundException | DocumentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
