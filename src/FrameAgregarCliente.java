@@ -12,17 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import javax.swing.*;
-
 public class FrameAgregarCliente extends JFrame {
 
 	private JPanel contentPane;
@@ -38,32 +27,24 @@ public class FrameAgregarCliente extends JFrame {
 	private JTextField textFonoCel;
 
 	/**
-	 * Crea y lanza la ventana de la aplicación.
+	 * Launch the application.
 	 */
 	public static void main(String[] args, Compania datosEmpresa) {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				crearYMostrarUI(datosEmpresa);
+				try {
+					FrameAgregarCliente frame = new FrameAgregarCliente(datosEmpresa);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}
-	
-	/**
-     * Crea la ventana de esta interfaz
-     */
-    private static void crearYMostrarUI(Compania datosEmpresa) {
-        //Creaa y configura la ventana
-    	FrameAgregarCliente frame = new FrameAgregarCliente(datosEmpresa);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         
-        //Muestra la ventana
-        frame.setVisible(true);
-    }
-
 
 	/**
-	 * Crea el Frame.
+	 * Create the frame.
 	 */
 	public FrameAgregarCliente(Compania datosEmpresa) {
 		setResizable(false);
@@ -82,10 +63,6 @@ public class FrameAgregarCliente extends JFrame {
 		panel.setBounds(10, 25, 294, 170);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
-		JLabel lblAviso = new JLabel("");
-		lblAviso.setBounds(20, 252, 284, 14);
-		contentPane.add(lblAviso);
 
 		JLabel lblPrimerNombre = new JLabel("Nombre");
 		lblPrimerNombre.setBounds(10, 24, 97, 14);
@@ -95,12 +72,7 @@ public class FrameAgregarCliente extends JFrame {
 		textNombre1.setBounds(117, 21, 153, 20);
 		panel.add(textNombre1);
 		textNombre1.setColumns(10);
-		textNombre1.addKeyListener(new KeyAdapter() {
-			public void keyReleased(KeyEvent evt) {
-				//textNombre1KeyReleased(evt);
-				}
-		});
-		
+
 		JLabel lblSegundoNombre = new JLabel("Segundo Nombre");
 		lblSegundoNombre.setBounds(10, 52, 106, 14);
 		panel.add(lblSegundoNombre);
@@ -160,12 +132,6 @@ public class FrameAgregarCliente extends JFrame {
 		textFonoFijo.setColumns(10);
 		textFonoFijo.setBounds(107, 50, 143, 20);
 		panel_1.add(textFonoFijo);
-		textFonoFijo.addKeyListener(new KeyAdapter() {
-			public void keyReleased(KeyEvent evt) {
-				String var = "Teléfono fijo";
-				textNumericoValidador(textFonoFijo, lblAviso, var, evt);
-			}
-		});
 
 		JLabel lblFonoCel = new JLabel("Celular");
 		lblFonoCel.setBounds(10, 79, 70, 14);
@@ -175,12 +141,6 @@ public class FrameAgregarCliente extends JFrame {
 		textFonoCel.setColumns(10);
 		textFonoCel.setBounds(107, 76, 143, 20);
 		panel_1.add(textFonoCel);
-		textFonoCel.addKeyListener(new KeyAdapter() {
-			public void keyReleased(KeyEvent evt) {
-				String var = "Celular";
-				textNumericoValidador(textFonoCel, lblAviso, var, evt);
-			}
-		});
 
 		JLabel lblDireccion1 = new JLabel("Direccion");
 		lblDireccion1.setBounds(10, 115, 87, 14);
@@ -205,6 +165,10 @@ public class FrameAgregarCliente extends JFrame {
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 
+		JLabel lblAviso = new JLabel("");
+		lblAviso.setBounds(20, 252, 284, 14);
+		contentPane.add(lblAviso);
+
 		// Boton que caputura todos los datos del cliente, crea objeto y agrega
 		// a lista de Compania
 		JButton btnAgregar = new JButton("Agregar");
@@ -212,14 +176,18 @@ public class FrameAgregarCliente extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Cliente nuevoCliente = null;
-				
-				// Comprobaciones de Datos ingresados
-				if(comprobarIngreso(lblAviso)){
+
+				// Comprobaciones de Datos, numeros de telefono deben ser int o
+				// el sistema se cae
+				if (!comprobarFono(textFonoCel.getText())) {
+					lblAviso.setForeground(Color.RED);
+					lblAviso.setText("Datos de telefono debe ser numerico");
+				} else {
 					// Llama metodo para crear Cliente
-					nuevoCliente = datosNuevaPersona(datosEmpresa);
+					nuevoCliente = datosNuevoCliente(datosEmpresa);
 					if (nuevoCliente != null) {
 						System.out.println("Cliente creado...");
-	
+
 						// Si el cliente se crea exitosamente se escribira
 						// cliente en la BD
 						try {
@@ -233,15 +201,15 @@ public class FrameAgregarCliente extends JFrame {
 									+ "\nDetalles de la excepción:");
 							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 						}
-	
-	//						// Para guardar cliente en un XML
-	//						// Objeto XML
-	//						XML xml = new XML();
-	//						if (xml.ingresarClienteXML(datosEmpresa, nuevoCliente))
-	//							System.out.println("Cliente guardado en XML.");
-	//						else
-	//							System.err.println("Cliente no fue guardado en XML.");
-	
+
+//						// Para guardar cliente en un XML
+//						// Objeto XML
+//						XML xml = new XML();
+//						if (xml.ingresarClienteXML(datosEmpresa, nuevoCliente))
+//							System.out.println("Cliente guardado en XML.");
+//						else
+//							System.err.println("Cliente no fue guardado en XML.");
+
 						// Muestra mensaje que cilente fue ingresado
 						// exitosamente!
 						JOptionPane.showMessageDialog(null,
@@ -296,21 +264,19 @@ public class FrameAgregarCliente extends JFrame {
 	 **/
 	// Obtiene los datos ingresados en las casillas y crea una nueva clase
 	// Cliente, luego es enviado a la listaClientes en clase Compañia
-	public Cliente datosNuevaPersona(Compania datosEmpresa) {
-		String nombre1 = null, nombre2 = null, apellido1 = null, apellido2 = null, rut = null, email = null, direccion1 = null, direccion2 = null;
-		int fono1 = 0, fono2 = 0;
-				
-		if(textNombre1.getText().isEmpty()) nombre1 = textNombre1.getText();
-		if(textNombre2.getText().isEmpty()) nombre2 = textNombre2.getText();
-		if(textApellido1.getText().isEmpty()) apellido1 = textApellido1.getText();
-		if(textApellido2.getText().isEmpty()) apellido2 = textApellido2.getText();
-		if(textRut.getText().isEmpty()) rut = textRut.getText();
-		if(textEmail.getText().isEmpty()) email = textEmail.getText();
-		if(textFonoCel.getText().isEmpty()) fono1 = Integer.parseInt(textFonoCel.getText());
-		if(textFonoCel.getText().isEmpty()) fono1 = Integer.parseInt(textFonoCel.getText());
-		if(textDireccion1.getText().isEmpty()) direccion1 = textDireccion1.getText();
-		if(textDireccion2.getText().isEmpty()) direccion2 = textDireccion2.getText();
-		
+	public Cliente datosNuevoCliente(Compania datosEmpresa) {
+		String nombre1, nombre2, apellido1, apellido2, rut, email, direccion1, direccion2;
+		int fono1, fono2;
+		nombre1 = textNombre1.getText();
+		nombre2 = textNombre2.getText();
+		apellido1 = textApellido1.getText();
+		apellido2 = textApellido2.getText();
+		rut = textRut.getText();
+		email = textEmail.getText();
+		fono1 = Integer.parseInt(textFonoFijo.getText());
+		fono2 = Integer.parseInt(textFonoCel.getText());
+		direccion1 = textDireccion1.getText();
+		direccion2 = textDireccion2.getText();
 		// Se crea cliente nuevo
 		Cliente clienteNuevo = new Cliente(rut, datosEmpresa.getRut(), nombre1, nombre2, apellido1, apellido2, fono1,
 				fono2, email, 1, direccion1, direccion2, 0, null);
@@ -346,58 +312,23 @@ public class FrameAgregarCliente extends JFrame {
 	}
 
 	/**
-	 * Comprueba si los ingresos en las casillas violan restricciones
+	 * Comprueba si en textFonoFijo y textFonoCel se han insertado datos del
+	 * tipo int
+	 * 
+	 * @param fono
 	 * @return boolean
-	 */
-	public boolean comprobarIngreso(JLabel aviso) {
-		if(textNombre1.getText().length()==0){
-			aviso.setForeground(Color.RED);
-			aviso.setText("Nombre no puede estar vacío");
+	 **/
+
+	public boolean comprobarFono(String fono) { // Comprueba si el ingreso en
+												// casilla de telefono es un
+												// numero INT
+		try {
+			Integer.parseInt(fono); // Si es INT devuelve true
+			return true;
+		} catch (Exception a) {
+			// Not an integer
 			return false;
-		}
-		if(textApellido1.getText().length() == 0){
-			aviso.setForeground(Color.RED);
-			aviso.setText("Apellido no puede estar vacío");
-			return false;
-		}
-		if(textRut.getText().length() == 0){
-			aviso.setForeground(Color.RED);
-			aviso.setText("RUT no puede estar vacío");
-			return false;
-		}
-		
-		if(!Principal.validarRut(textRut.getText())){
-			aviso.setForeground(Color.RED);
-			aviso.setText("Ingrese un RUT válido");
-			return false;
-		}
-		return true;
-	}
-	
-	/**
-	 * Comprueba si los campos numéricos son del tipo numerico
-	 */
-	private void textNumericoValidador (JTextField tf, JLabel aviso, String var, KeyEvent evt) {
-		String str = tf.getText();
-		char[] fuente = str.toCharArray();
-		char[] resultado = new char[fuente.length];
-		int j=0;
-		boolean error=false;
-		for(int i=0; i<fuente.length;i++){
-			if(fuente[i]>='0' && fuente[i]<='9'){
-				resultado[j++] = fuente[i];
-				aviso.setText("");
-			}
-			else{
-				error=true;
-				Toolkit.getDefaultToolkit().beep();
-			}
-		}
-		if(error){
-			tf.setText("");
-			tf.setText(new String(resultado,0,j));
-			aviso.setForeground(Color.RED);
-			aviso.setText(var+" debe ser numerico");
 		}
 	}
+
 }

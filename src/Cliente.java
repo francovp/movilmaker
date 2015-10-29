@@ -208,35 +208,35 @@ public class Cliente extends Persona {
 		documento.add(new Paragraph(
 				"Documento emitido por compañia " + datosEmpresa.getNombre() + ", RUT: " + datosEmpresa.getRut()));
 
-		if (Integer.toString(getFonoCel()) == null || getFonoFijo() == 0)
+		if (getFonoFijo() == 0)
 			fonoFijo = "Sin datos";
 		else
 			fonoFijo = Integer.toString(getFonoFijo());
-		if (Integer.toString(getFonoCel()) == null || getFonoCel() == 0)
+		if (getFonoCel() == 0)
 			fonoCel = "Sin datos";
 		else
 			fonoCel = Integer.toString(getFonoCel());
-		if (getEmail() == null || getEmail().length() == 0)
+		if (getEmail() == null || getEmail() == "0" || getEmail() == "")
 			email = "Sin datos";
 		else
 			email = getEmail();
-		if (getDireccion1() == null || getDireccion1().length() == 0)
+		if (getDireccion1() == null || getDireccion1() == "0" || getDireccion1() == "")
 			direccion1 = "Sin datos";
 		else
 			direccion1 = getDireccion1();
-		if (getDireccion2() == null || getDireccion2().length() == 0)
+		if (getDireccion2() == null || getDireccion2() == "0" || getDireccion2() == "")
 			direccion2 = "Sin datos";
 		else
 			direccion2 = getDireccion2();
-		if (getNombre2() == null || getNombre2().length() == 0)
+		if (getNombre2() == null || getNombre2() == "0" || getNombre2() == "")
 			nombre2 = "Sin datos";
 		else
 			nombre2 = getNombre2();
-		if (getApellido2() == null || getApellido2().length() == 0)
+		if (getApellido2() == null || getApellido2() == "0" || getApellido2() == "")
 			apellido2 = "Sin datos";
 		else
 			apellido2 = getApellido2();
-		if (Integer.toString(getDeuda()) == null || getDeuda() == 0)
+		if (getDeuda() == 0)
 			deuda = "Sin deuda";
 		else
 			deuda = Integer.toString(getDeuda());

@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
 
 import com.itextpdf.text.DocumentException;
@@ -43,15 +42,6 @@ public class FrameInterfaz extends JFrame {
 	 * Create the frame.
 	 */
 	public FrameInterfaz(Compania datosEmpresa, int falta) {
-		/* Use an appropriate Look and Feel */
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-
 		setResizable(false);
 		setTitle("Modo Interfaz");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,19 +76,6 @@ public class FrameInterfaz extends JFrame {
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 		panel.add(btnAgregarAdmin);
 
-		// Boton Agregar Clientes
-		JButton btnAgregarClientes = new JButton("Agregar Clientes");
-		panel.add(btnAgregarClientes);
-
-		btnAgregarClientes.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				FrameAgregarCliente fAgregaCliente = new FrameAgregarCliente(datosEmpresa);
-				fAgregaCliente.setVisible(true);
-				dispose();
-			}
-		});
-
 		JButton btnIngresarContratoclientes = new JButton("Ingresar contrato a cliente");
 		panel.add(btnIngresarContratoclientes);
 		// Si no hay admin (Falta = 0 o 1) no se puede activar este botón
@@ -112,9 +89,22 @@ public class FrameInterfaz extends JFrame {
 				dispose();
 			}
 		});
+
+		// Boton Agregar Clientes
+		JButton btnAgregarClientes = new JButton("Agregar Clientes");
+		panel.add(btnAgregarClientes);
 		// Si no hay admin (Falta = 0 o 1) no se puede activar este botón
 		if (falta == 0 || falta == 1)
 			btnAgregarClientes.setEnabled(false);
+
+		btnAgregarClientes.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				FrameAgregarCliente fAgregaCliente = new FrameAgregarCliente(datosEmpresa);
+				fAgregaCliente.setVisible(true);
+				dispose();
+			}
+		});
 
 		JButton btnActualizarDatosDe = new JButton("Actualizar datos de cliente");
 		panel.add(btnActualizarDatosDe);
@@ -149,17 +139,6 @@ public class FrameInterfaz extends JFrame {
 			}
 		});
 
-		JButton btnNewButton = new JButton("Eliminar cliente");
-		panel_1.add(btnNewButton);
-		btnNewButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				FrameEliminarCliente fEliminarCliente = new FrameEliminarCliente(datosEmpresa);
-				fEliminarCliente.setVisible(true);
-				dispose();
-			}
-		});
-
 		JButton btnTerminarContrato = new JButton("Terminar contrato");
 		panel_1.add(btnTerminarContrato);
 		// Si no hay admin (Falta = 0 o 1) no se puede activar este botón
@@ -173,10 +152,21 @@ public class FrameInterfaz extends JFrame {
 				dispose();
 			}
 		});
+
+		JButton btnNewButton = new JButton("Eliminar cliente");
+		panel_1.add(btnNewButton);
 		// Si no hay admin (Falta = 0 o 1) no se puede activar este botón
 		if (falta == 0 || falta == 1)
 			btnNewButton.setEnabled(false);
-
+		btnNewButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FrameEliminarCliente fEliminarCliente = new FrameEliminarCliente(datosEmpresa);
+				fEliminarCliente.setVisible(true);
+				dispose();
+			}
+		});
+		
 		//BOTÓN QUE GENERA UN  ARCHIVO EN PDF DE LOS CLIENTES
 		JButton btnGenerarReporte = new JButton("Generar Reporte PDF");
 		panel_1.add(btnGenerarReporte);
@@ -186,13 +176,13 @@ public class FrameInterfaz extends JFrame {
 		btnGenerarReporte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//BOTÓN QUE GENERA UN  ARCHIVO EN PDF DE LOS CLIENTES
-				try {
-					datosEmpresa.reporte();
-					JOptionPane.showMessageDialog(null, "Reporte empresa creado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-				} catch (FileNotFoundException | DocumentException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+					try {
+						datosEmpresa.reporte();
+						JOptionPane.showMessageDialog(null, "Reporte empresa creado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+					} catch (FileNotFoundException | DocumentException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 			}
 		});
 

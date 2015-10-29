@@ -157,8 +157,12 @@ public class FrameAgregarAdmin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Administrador nuevoAdmin = null;
 
-				// Comprobaciones de Datos ingresados
-				if(comprobarIngreso(lblAviso)){					
+				// Comprobaciones de Datos, numeros de telefono deben ser int o
+				// el sistema se cae
+				if (!comprobarFono(textFonoCel.getText())) {
+					lblAviso.setForeground(Color.RED);
+					lblAviso.setText("Datos de telefono debe ser numerico");
+				} else {
 					// Llama metodo para crear Administrador
 					nuevoAdmin = datosNuevaPersona(datosEmpresa);
 					if (nuevoAdmin != null) {
@@ -248,18 +252,16 @@ public class FrameAgregarAdmin extends JFrame {
 	// Administrador, luego es enviado a la listaAdministradors en clase
 	// Compañia
 	public Administrador datosNuevaPersona(Compania datosEmpresa) {
-		String nombre1 = null, nombre2 = null, apellido1 = null, apellido2 = null, rut = null, email = null;
-		int fono1 = 0, fono2 = 0;
-				
-		if(textNombre1.getText().isEmpty()) nombre1 = textNombre1.getText();
-		if(textNombre2.getText().isEmpty()) nombre2 = textNombre2.getText();
-		if(textApellido1.getText().isEmpty()) apellido1 = textApellido1.getText();
-		if(textApellido2.getText().isEmpty()) apellido2 = textApellido2.getText();
-		if(textRut.getText().isEmpty()) rut = textRut.getText();
-		if(textEmail.getText().isEmpty()) email = textEmail.getText();
-		if(textFonoCel.getText().isEmpty()) fono1 = Integer.parseInt(textFonoCel.getText());
-		if(textFonoCel.getText().isEmpty()) fono1 = Integer.parseInt(textFonoCel.getText());
-		
+		String nombre1, nombre2, apellido1, apellido2, rut, email, direccion1, direccion2;
+		int fono1, fono2;
+		nombre1 = textNombre1.getText();
+		nombre2 = textNombre2.getText();
+		apellido1 = textApellido1.getText();
+		apellido2 = textApellido2.getText();
+		rut = textRut.getText();
+		email = textEmail.getText();
+		fono1 = Integer.parseInt(textFonoFijo.getText());
+		fono2 = Integer.parseInt(textFonoCel.getText());
 		// Se crea Administrador nuevo
 		Administrador adminNuevo = new Administrador(rut, datosEmpresa.getRut(), nombre1, nombre2, apellido1, apellido2,
 				fono1, fono2, email, 0, null, null, 0, null);
@@ -278,7 +280,9 @@ public class FrameAgregarAdmin extends JFrame {
 	 * 
 	 * @param lblAviso
 	 **/
-	public void botonReset(JLabel lblAviso) { 
+	public void botonReset(JLabel lblAviso) { // Resetea todos los campos de
+												// ingreso en la ventana
+
 		textNombre1.setText("");
 		textNombre2.setText("");
 		textApellido1.setText("");
@@ -308,54 +312,6 @@ public class FrameAgregarAdmin extends JFrame {
 			// Not an integer
 			return false;
 		}
-	}
-	
-	/**
-	 * Comprueba si en textFonoFijo y textFonoCel se han insertado datos del
-	 * tipo int
-	 * 
-	 * @param fono
-	 * @return boolean
-	 **/
-
-	/**
-	 * Comprueba si los ingresos en las casillas violan restricciones
-	 * @return boolean
-	 */
-	public boolean comprobarIngreso(JLabel aviso) {
-		if(textNombre1.getText().length()==0){
-			aviso.setForeground(Color.RED);
-			aviso.setText("Nombre no puede estar vacío");
-			return false;
-		}
-		if(textApellido1.getText().length() == 0){
-			aviso.setForeground(Color.RED);
-			aviso.setText("Apellido no puede estar vacío");
-			return false;
-		}
-		if(textRut.getText().length() == 0){
-			aviso.setForeground(Color.RED);
-			aviso.setText("RUT no puede estar vacío");
-			return false;
-		}
-		
-		if(!Principal.validarRut(textRut.getText())){
-			aviso.setForeground(Color.RED);
-			aviso.setText("Ingrese un RUT válido");
-			return false;
-		}
-
-		if(textFonoFijo.getText().isEmpty() && !Principal.esNumerico(textFonoFijo.getText())){
-			aviso.setForeground(Color.RED);
-			aviso.setText("Teléfono fijo debe ser numerico");
-			return false;
-		}
-		if(textFonoCel.getText().isEmpty() && !Principal.esNumerico(textFonoCel.getText())){
-			aviso.setForeground(Color.RED);
-			aviso.setText("Teléfono celular debe ser numerico");
-			return false;
-		}
-		return true;
 	}
 
 }
