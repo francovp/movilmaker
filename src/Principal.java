@@ -22,15 +22,14 @@ public class Principal {
 
 	public static void obtenerDatos() throws SQLException {
 		Database bd = null;
-		Compania datos = null; // Aquí se guardará toda la información de la
-								// empresa
+		Compania datos = null; // AquÃ­ se guarda toda la informacion de la empresa
 
-		// Valor para saber qué datos faltan en los datos guardados
+		// Valor para saber que datos faltan en los datos guardados
 		int falta = 0;
 		// 0 = No hay personas, no hay admin ; 1 = Hay personas, NO hay admin ;
 		// 2 = Hay personas y hay admin
 		// -1 = hay todo
-		// ... continuará..
+		// ... continuarÃ¡..
 
 		// Conexion a la base de datos de Postgres
 		bd = new Database();
@@ -43,11 +42,16 @@ public class Principal {
 			bd = new Database();
 			datos = bd.leerPersonasBD(datos);
 			if (datos != null) {
-				// Se verificará si en el ArrayList hay algun admin
-				if (datos.getListaAdmins().size() == 0) {
-					System.err.println("Datos de personas obtenidos, pero NO HAY ADMIN");
+				// Se verifica si en el ArrayList hay algun admin
+				if (datos.mostrarAdmins().size() == 0) {
+					System.out.println("Datos de personas obtenidos");
+					System.out.println("NO HAY ADMINISTRADOR! Se procesedarÃ¡ a registrar uno");
 					// Para saber que hay personas guardadas, pero ninguna es un admin.
 					falta = 1;
+					// Se llama a una Interfaz AgregarAdmin para registrar al
+					// primer administrador
+					FrameAgregarAdmin fAdmin = new FrameAgregarAdmin(datos, falta);
+					fAdmin.setVisible(true);
 				} else {
 					// Hay admins en la lista de Personas
 					System.out.println("Datos de personas obtenidos");
@@ -70,42 +74,42 @@ public class Principal {
 								System.out.println("Datos de equipos obtenidos");
 								if(falta != 1) falta = -1;
 								else{
-									// Se llamará a una Interfaz AgregarAdmin para registrar al
+									// Se llama a una Interfaz AgregarAdmin para registrar al
 									// primer administrador
 									FrameAgregarAdmin fAdmin = new FrameAgregarAdmin(datos, falta);
 									fAdmin.setVisible(true);
 								}
-								// Se llamará a Interfaz principal
+								// Se llama a Interfaz principal
 								FrameInterfaz fInterfaz = new FrameInterfaz(datos, falta);
 								fInterfaz.setVisible(true);
 							} else
 								System.err.println("No hay datos de equipos");
-							// Por ahora aquí no se hace nada
+							// Por ahora aqui no se hace nada
 							// Mientras no se hace nada mientras no se agregue
 							// una interfaz para crear Equipos
 						} else
 							System.err.println("No hay datos de planes");
-						// Por ahora aquí no se hace nada
+						// Por ahora aqui no se hace nada
 						// Mientras no se hace nada mientras no se agregue una
 						// interfaz para crear Planes
 					} else
 						System.err.println("No hay datos de contratos");
-					// Por ahora aquí no se hace nada
+					// Por ahora aqui no se hace nada
 					// Mientras no se hace nada mientras no se agregue una
 					// interfaz para crear Equipos
 				}
 			} else {
 				System.err.println("No hay datos de personas");
-				// Para saber que no hay personas guardadas. Se creará un admin
+				// Para saber que no hay personas guardadas. Se crea un admin
 				falta = 0;
-				// Se llamará a una Interfaz AgregarAdmin para registrar al
+				// Se llama a una Interfaz AgregarAdmin para registrar al
 				// primer administrador
 				FrameAgregarAdmin fAdmin = new FrameAgregarAdmin(datos, falta);
 				fAdmin.setVisible(true);
 			}
 		} else {
 			System.err.println("No hay empresa registrada en el programa.\n");
-			System.out.println("Se procesederá a registrar una.");
+			System.out.println("Se procesede a registrar una.");
 			// Llama a Interfaz para Registrar Empresa
 			FrameRegistrarEmpresa iRegistrarEmpresa = new FrameRegistrarEmpresa(datos);
 			iRegistrarEmpresa.setVisible(true);
