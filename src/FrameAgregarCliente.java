@@ -218,15 +218,12 @@ public class FrameAgregarCliente extends JFrame {
 					// Llama metodo para crear Cliente
 					nuevoCliente = datosNuevaPersona(datosEmpresa);
 					if (nuevoCliente != null) {
-						System.out.println("Cliente creado...");
-	
 						// Si el cliente se crea exitosamente se escribira
 						// cliente en la BD
 						try {
 							// Creacion de conexion a base de datos
 							Database bd = new Database();
 							bd.ingresarClienteBD(nuevoCliente);
-							System.out.println("Cliente agregado a la base de datos...");
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							System.err.println("Cliente no se pudo escribir en la Base de Datos.\n"
@@ -252,9 +249,7 @@ public class FrameAgregarCliente extends JFrame {
 						fContrato.setVisible(true);
 						dispose();
 					} else {
-						// Sino, se informa que el cliente ya existe y se vuelve
-						// al menu
-						System.err.println("Cliente ya existe...");
+						// Sino, se informa que el cliente ya existe y se vuelve al menu
 						lblAviso.setForeground(Color.RED);
 						lblAviso.setText("Cliente ya existe!");
 					}
@@ -294,22 +289,20 @@ public class FrameAgregarCliente extends JFrame {
 	 * Ingresa atributos capturados desde los JTextField de la ventana y los
 	 * atribuye a un objeto Cliente y envia a clase compa�ia
 	 **/
-	// Obtiene los datos ingresados en las casillas y crea una nueva clase
-	// Cliente, luego es enviado a la listaClientes en clase Compañia
 	public Cliente datosNuevaPersona(Compania datosEmpresa) {
 		String nombre1 = null, nombre2 = null, apellido1 = null, apellido2 = null, rut = null, email = null, direccion1 = null, direccion2 = null;
 		int fono1 = 0, fono2 = 0;
 				
-		if(textNombre1.getText().isEmpty()) nombre1 = textNombre1.getText();
-		if(textNombre2.getText().isEmpty()) nombre2 = textNombre2.getText();
-		if(textApellido1.getText().isEmpty()) apellido1 = textApellido1.getText();
-		if(textApellido2.getText().isEmpty()) apellido2 = textApellido2.getText();
-		if(textRut.getText().isEmpty()) rut = textRut.getText();
-		if(textEmail.getText().isEmpty()) email = textEmail.getText();
-		if(textFonoCel.getText().isEmpty()) fono1 = Integer.parseInt(textFonoCel.getText());
-		if(textFonoCel.getText().isEmpty()) fono1 = Integer.parseInt(textFonoCel.getText());
-		if(textDireccion1.getText().isEmpty()) direccion1 = textDireccion1.getText();
-		if(textDireccion2.getText().isEmpty()) direccion2 = textDireccion2.getText();
+		if(!textNombre1.getText().isEmpty()) nombre1 = textNombre1.getText();
+		if(!textNombre2.getText().isEmpty()) nombre2 = textNombre2.getText();
+		if(!textApellido1.getText().isEmpty()) apellido1 = textApellido1.getText();
+		if(!textApellido2.getText().isEmpty()) apellido2 = textApellido2.getText();
+		if(!textRut.getText().isEmpty()) rut = textRut.getText();
+		if(!textEmail.getText().isEmpty()) email = textEmail.getText();
+		if(!textFonoCel.getText().isEmpty()) fono1 = Integer.parseInt(textFonoCel.getText());
+		if(!textFonoCel.getText().isEmpty()) fono1 = Integer.parseInt(textFonoCel.getText());
+		if(!textDireccion1.getText().isEmpty()) direccion1 = textDireccion1.getText();
+		if(!textDireccion2.getText().isEmpty()) direccion2 = textDireccion2.getText();
 		
 		// Se crea cliente nuevo
 		Cliente clienteNuevo = new Cliente(rut, datosEmpresa.getRut(), nombre1, nombre2, apellido1, apellido2, fono1,
@@ -329,8 +322,7 @@ public class FrameAgregarCliente extends JFrame {
 	 * 
 	 * @param lblAviso
 	 **/
-	public void botonReset(JLabel lblAviso) { // Resetea todos los campos de
-												// ingreso en la ventana
+	public void botonReset(JLabel lblAviso) {
 
 		textNombre1.setText("");
 		textNombre2.setText("");
@@ -366,11 +358,11 @@ public class FrameAgregarCliente extends JFrame {
 			return false;
 		}
 		
-		if(!Principal.validarRut(textRut.getText())){
-			aviso.setForeground(Color.RED);
-			aviso.setText("Ingrese un RUT válido");
-			return false;
-		}
+//		if(!Principal.validarRut(textRut.getText())){
+//			aviso.setForeground(Color.RED);
+//			aviso.setText("Ingrese un RUT válido");
+//			return false;
+//		}
 		return true;
 	}
 	

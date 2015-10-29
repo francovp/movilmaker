@@ -110,7 +110,7 @@ public class Cliente extends Persona {
 		// SE LE OTORGA NUEVO CONTRATO AL CLIENTE
 		contratos.add(contrato);
 
-		System.out.println("INFORMACION DEL CONTRATO\n" + "Fecha de inicio del contrato: " + fi
+		System.out.println("\nINFORMACION DEL CONTRATO\n" + "Fecha de inicio del contrato: " + fi
 				+ ". El dia de esta fecha se estipulara como fecha de pago. ");
 		System.out.println("\nEl cliente debera estar 5 meses como minimo con el plan contratado de lo contrario"
 				+ " debera cancelar los meses restantes.");
@@ -119,7 +119,6 @@ public class Cliente extends Persona {
 		System.out.println("\nMonto total de la deuda a pagar: " + monto);
 		System.out.println("\nCantidad de cuotas: " + numCuotas);
 		System.out.println("\nValor de cada cuota: " + valorCuota);
-		System.out.println("\n");
 
 		return contrato;
 	}

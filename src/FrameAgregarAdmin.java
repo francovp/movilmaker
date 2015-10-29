@@ -1,7 +1,10 @@
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
@@ -61,6 +64,10 @@ public class FrameAgregarAdmin extends JFrame {
 		panel.setBounds(10, 25, 270, 170);
 		contentPane.add(panel);
 		panel.setLayout(null);
+		
+		JLabel lblAviso = new JLabel("");
+		lblAviso.setBounds(10, 206, 284, 14);
+		contentPane.add(lblAviso);
 
 		JLabel lblPrimerNombre = new JLabel("Nombre");
 		lblPrimerNombre.setBounds(10, 24, 97, 14);
@@ -130,6 +137,12 @@ public class FrameAgregarAdmin extends JFrame {
 		textFonoFijo.setColumns(10);
 		textFonoFijo.setBounds(107, 50, 177, 20);
 		panel_1.add(textFonoFijo);
+		textFonoFijo.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent evt) {
+				String var = "Teléfono fijo";
+				textNumericoValidador(textFonoFijo, lblAviso, var, evt);
+			}
+		});
 
 		JLabel lblFonoCel = new JLabel("Celular");
 		lblFonoCel.setBounds(10, 79, 70, 14);
@@ -139,15 +152,17 @@ public class FrameAgregarAdmin extends JFrame {
 		textFonoCel.setColumns(10);
 		textFonoCel.setBounds(107, 76, 177, 20);
 		panel_1.add(textFonoCel);
+		textFonoCel.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent evt) {
+				String var = "Celular";
+				textNumericoValidador(textFonoCel, lblAviso, var, evt);
+			}
+		});
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(290, 149, 294, 42);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
-
-		JLabel lblAviso = new JLabel("");
-		lblAviso.setBounds(10, 206, 284, 14);
-		contentPane.add(lblAviso);
 
 		// Boton que caputura todos los datos del Administrador, crea objeto y
 		// agrega a lista de Compania
@@ -162,15 +177,12 @@ public class FrameAgregarAdmin extends JFrame {
 					// Llama metodo para crear Administrador
 					nuevoAdmin = datosNuevaPersona(datosEmpresa);
 					if (nuevoAdmin != null) {
-						System.out.println("Administrador creado...");
-
 						// Si el Administrador se crea exitosamente se escribira
 						// Administrador en la BD
 						try {
 							// Creacion de conexion a base de datos
 							Database bd = new Database();
 							bd.ingresarAdminBD(nuevoAdmin);
-							System.out.println("Administrador agregado a la base de datos...");
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							System.err.println("Administrador no se pudo escribir en la Base de Datos.\n"
@@ -198,7 +210,6 @@ public class FrameAgregarAdmin extends JFrame {
 					} else {
 						// Sino, se informa que el Administrador ya existe y se
 						// vuelve al menu
-						System.err.println("Administrador ya existe...");
 						lblAviso.setForeground(Color.RED);
 						lblAviso.setText("Administrador ya existe!");
 					}
@@ -251,14 +262,14 @@ public class FrameAgregarAdmin extends JFrame {
 		String nombre1 = null, nombre2 = null, apellido1 = null, apellido2 = null, rut = null, email = null;
 		int fono1 = 0, fono2 = 0;
 				
-		if(textNombre1.getText().isEmpty()) nombre1 = textNombre1.getText();
-		if(textNombre2.getText().isEmpty()) nombre2 = textNombre2.getText();
-		if(textApellido1.getText().isEmpty()) apellido1 = textApellido1.getText();
-		if(textApellido2.getText().isEmpty()) apellido2 = textApellido2.getText();
-		if(textRut.getText().isEmpty()) rut = textRut.getText();
-		if(textEmail.getText().isEmpty()) email = textEmail.getText();
-		if(textFonoCel.getText().isEmpty()) fono1 = Integer.parseInt(textFonoCel.getText());
-		if(textFonoCel.getText().isEmpty()) fono1 = Integer.parseInt(textFonoCel.getText());
+		if(!textNombre1.getText().isEmpty()) nombre1 = textNombre1.getText();
+		if(!textNombre2.getText().isEmpty()) nombre2 = textNombre2.getText();
+		if(!textApellido1.getText().isEmpty()) apellido1 = textApellido1.getText();
+		if(!textApellido2.getText().isEmpty()) apellido2 = textApellido2.getText();
+		if(!textRut.getText().isEmpty()) rut = textRut.getText();
+		if(!textEmail.getText().isEmpty()) email = textEmail.getText();
+		if(!textFonoCel.getText().isEmpty()) fono1 = Integer.parseInt(textFonoCel.getText());
+		if(!textFonoCel.getText().isEmpty()) fono1 = Integer.parseInt(textFonoCel.getText());
 		
 		// Se crea Administrador nuevo
 		Administrador adminNuevo = new Administrador(rut, datosEmpresa.getRut(), nombre1, nombre2, apellido1, apellido2,
@@ -311,14 +322,6 @@ public class FrameAgregarAdmin extends JFrame {
 	}
 	
 	/**
-	 * Comprueba si en textFonoFijo y textFonoCel se han insertado datos del
-	 * tipo int
-	 * 
-	 * @param fono
-	 * @return boolean
-	 **/
-
-	/**
 	 * Comprueba si los ingresos en las casillas violan restricciones
 	 * @return boolean
 	 */
@@ -344,18 +347,34 @@ public class FrameAgregarAdmin extends JFrame {
 			aviso.setText("Ingrese un RUT válido");
 			return false;
 		}
-
-		if(textFonoFijo.getText().isEmpty() && !Principal.esNumerico(textFonoFijo.getText())){
-			aviso.setForeground(Color.RED);
-			aviso.setText("Teléfono fijo debe ser numerico");
-			return false;
-		}
-		if(textFonoCel.getText().isEmpty() && !Principal.esNumerico(textFonoCel.getText())){
-			aviso.setForeground(Color.RED);
-			aviso.setText("Teléfono celular debe ser numerico");
-			return false;
-		}
 		return true;
+	}
+	
+	/**
+	 * Comprueba si los campos numéricos son del tipo numerico
+	 */
+	private void textNumericoValidador (JTextField tf, JLabel aviso, String var, KeyEvent evt) {
+		String str = tf.getText();
+		char[] fuente = str.toCharArray();
+		char[] resultado = new char[fuente.length];
+		int j=0;
+		boolean error=false;
+		for(int i=0; i<fuente.length;i++){
+			if(fuente[i]>='0' && fuente[i]<='9'){
+				resultado[j++] = fuente[i];
+				aviso.setText("");
+			}
+			else{
+				error=true;
+				Toolkit.getDefaultToolkit().beep();
+			}
+		}
+		if(error){
+			tf.setText("");
+			tf.setText(new String(resultado,0,j));
+			aviso.setForeground(Color.RED);
+			aviso.setText(var+" debe ser numerico");
+		}
 	}
 
 }
