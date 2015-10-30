@@ -14,8 +14,7 @@ import java.sql.Statement;
  */
 public class Database {
 
-	Connection c = null; // Objeto de tipo coneccion donde se guardarán los
-							// datos de coneccion
+	Connection c = null; // Objeto de tipo coneccion donde se guardarán los datos de coneccion
 	Statement stmt = null; // Objeto de tipo sentencia SQL
 	ResultSet rs = null; // Objeto de tipo resultado Query SQL
 
@@ -102,7 +101,7 @@ public class Database {
 			// Si se creó la conexión a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = c.createStatement();
-			sql = "DELETE FROM personas WHERE (rut = '" + rut + "');";
+			sql = "DELETE FROM persona WHERE (rut = '" + rut + "');";
 			stmt.executeUpdate(sql);
 			stmt.close();
 
