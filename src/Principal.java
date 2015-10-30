@@ -6,7 +6,7 @@ import java.sql.SQLException;
  */
 
 /**
- * @author Franco
+ * @author FValerio, DMayorga, MSilva, LMondaca
  *
  */
 public class Principal {
@@ -17,11 +17,16 @@ public class Principal {
 	 */
 	public static void main(String[] args) throws IOException, SQLException {
 		// TODO Auto-generated method stub
+		// Se obtendran los datos desde la BD y se cargarán las interfaces respectivas
 		obtenerDatos();
 	}
 
+	/////////////////////////// * METODOS * /////////////////////////////////////////////
+	
 	/**
 	 * Obtiene todos la estructura de datos del programa desde la Base de datos
+	 * Además se encarga de decidir qué interfaces cargar dependiendo de qué datos están
+	 * presentes en la BD
 	 **/
 	public static void obtenerDatos() throws SQLException {
 		Database bd = null;
@@ -53,44 +58,29 @@ public class Principal {
 					// primer administrador
 					FrameAgregarAdmin fAdmin = new FrameAgregarAdmin(datos, falta);
 					fAdmin.setVisible(true);
-				} else {
-					// Hay admins en la lista de Personas
-					// Para saber que hay admin
-					if(falta != 1) falta = 2;
-					// Ahora se obtienen datos de Contratos
-					bd = new Database();
-					datos = bd.leerContratosBD(datos);
-					if (datos != null) {
-						// Ahora se obtienen datos de Planes
-						bd = new Database();
-						datos = bd.leerPlanesBD(datos);
-						if (datos != null) {
-							// Ahora se obtienen datos de Equipos
-							bd = new Database();
-							datos = bd.leerEquiposBD(datos);
-							if (datos != null) {
-								if(falta != 1) falta = -1;
-								else{
-									// Se llama a una Interfaz AgregarAdmin para registrar al
-									// primer administrador
-									FrameAgregarAdmin fAdmin = new FrameAgregarAdmin(datos, falta);
-									fAdmin.setVisible(true);
-								}
-								// Se llama a Interfaz principal
-								FrameInterfaz fInterfaz = new FrameInterfaz(datos, falta);
-								fInterfaz.setVisible(true);
-							} else
-								System.err.println("No hay datos de equipos");
-							// Por ahora aqui no se hace nada
-							// No se hace nada mientras no se agregue una interfaz para crear Equipos
-						} else
-							System.err.println("No hay datos de planes");
-						// Por ahora aqui no se hace nada
-						// No se hace nada mientras no se agregue una interfaz para crear Planes
-					} else
-						System.err.println("No hay datos de contratos");
-					// Por ahora aqui no se hace nada
 				}
+				// Hay admins en la lista de Personas
+				// Para saber que hay admin
+				falta = 2;
+				// Ahora se obtienen datos de Contratos
+				bd = new Database();
+				datos = bd.leerContratosBD(datos);
+				if (datos != null) {
+					// Ahora se obtienen datos de Planes
+					bd = new Database();
+					datos = bd.leerPlanesBD(datos);
+					if (datos != null) {
+						// Ahora se obtienen datos de Equipos
+						bd = new Database();
+						datos = bd.leerEquiposBD(datos);
+						if (datos != null) {
+							falta = -1;
+							// Se llama a Interfaz principal
+							FrameInterfaz fInterfaz = new FrameInterfaz(datos, falta);
+							fInterfaz.setVisible(true);
+						} else System.err.println("No hay datos de equipos");
+					} else System.err.println("No hay datos de planes");
+				} else System.err.println("No hay datos de contratos");
 			} else {
 				System.err.println("No hay datos de personas");
 				// Para saber que no hay personas guardadas. Se crea un admin
