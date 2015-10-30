@@ -102,7 +102,7 @@ public class Database {
 			// Si se creó la conexión a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = c.createStatement();
-			sql = "DELETE FROM clientes WHERE (rut = '" + rut + "');";
+			sql = "DELETE FROM personas WHERE (rut = '" + rut + "');";
 			stmt.executeUpdate(sql);
 			stmt.close();
 
