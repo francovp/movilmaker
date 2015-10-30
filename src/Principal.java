@@ -37,15 +37,13 @@ public class Principal {
 		// Se obtienen datos de la Empresa
 		datos = bd.leerEmpresaBD(datos);
 		if (datos != null) {
-			System.out.println("Datos de empresa obtenidos");
 			// Ahora se obtienen datos de Personas
 			bd = new Database();
 			datos = bd.leerPersonasBD(datos);
 			if (datos != null) {
 				// Se verifica si en el ArrayList hay algun admin
 				if (datos.mostrarAdmins().size() == 0) {
-					System.out.println("Datos de personas obtenidos");
-					System.out.println("NO HAY ADMINISTRADOR! Se procesedará a registrar uno");
+					System.err.println("NO HAY ADMINISTRADOR! Se procesedará a registrar uno");
 					// Para saber que hay personas guardadas, pero ninguna es un admin.
 					falta = 1;
 					// Se llama a una Interfaz AgregarAdmin para registrar al
@@ -54,24 +52,20 @@ public class Principal {
 					fAdmin.setVisible(true);
 				} else {
 					// Hay admins en la lista de Personas
-					System.out.println("Datos de personas obtenidos");
 					// Para saber que hay admin
 					if(falta != 1) falta = 2;
 					// Ahora se obtienen datos de Contratos
 					bd = new Database();
 					datos = bd.leerContratosBD(datos);
 					if (datos != null) {
-						System.out.println("Datos de contratos obtenidos");
 						// Ahora se obtienen datos de Planes
 						bd = new Database();
 						datos = bd.leerPlanesBD(datos);
 						if (datos != null) {
-							System.out.println("Datos de planes obtenidos");
 							// Ahora se obtienen datos de Equipos
 							bd = new Database();
 							datos = bd.leerEquiposBD(datos);
 							if (datos != null) {
-								System.out.println("Datos de equipos obtenidos");
 								if(falta != 1) falta = -1;
 								else{
 									// Se llama a una Interfaz AgregarAdmin para registrar al

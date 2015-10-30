@@ -333,10 +333,10 @@ public class Compania {
 				// si la id ingresada se encuentra
 				return planes.get(i); // se retorna al cliente
 			else {
-				System.err.println("No se encontró plan");
+				//System.err.println("No se encontró plan");
 				return null;
 			}
-		System.err.println("No existe plan en el contrato");
+		//System.err.println("No existe plan en el contrato");
 		return null;
 	}
 
@@ -347,10 +347,10 @@ public class Compania {
 				// si la id ingresada se encuentra
 				return moviles.get(i); // se retorna al cliente
 			else {
-				System.err.println("No se encontró equipo");
+				//System.err.println("No se encontró equipo");
 				return null;
 			}
-		System.err.println("No existe equipo en el contrato");
+		//System.err.println("No existe equipo en el contrato");
 		return null;
 	}
 
