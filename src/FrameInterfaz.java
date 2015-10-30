@@ -53,7 +53,7 @@ public class FrameInterfaz extends JFrame {
 		}
 
 		setResizable(false);
-		setTitle("Modo Interfaz");
+		setTitle("MovilMaker");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 418, 466);
 		contentPane = new JPanel();

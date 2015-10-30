@@ -340,19 +340,19 @@ public class Compania {
 	 */
 	public void buscarClientesConMasPlanes()
 	{
+		ArrayList<Cliente> listaClientes = mostrarClientes();
 		int cont=0,j=1;
 		Cliente c=null;
-		for(int i=0;i<listaPersona.size();i++)
+		for(int i=0;i<listaClientes.size();i++)
 		{
-			if(listaPersona.get(i) instanceof Cliente)
 				//CALCULA AL FIN DEL CICLO QUE CLIENTE TIENE MAS PLANES
-				if(((Cliente)listaPersona.get(i)).contratos.size() > cont)
+				if(listaClientes.get(i).contratos.size() > cont)
 				{
-					cont=((Cliente)listaPersona.get(i)).contratos.size();
-					c = ((Cliente)listaPersona.get(i));
+					cont=listaClientes.get(i).contratos.size();
+					c = listaClientes.get(i);
 				}
 				//SE MUESTRAN LOS CLIENTES CON MAS DE 3 CONTRATOS
-				if(((Cliente)listaPersona.get(i)).contratos.size() > 3){
+				if(listaClientes.get(i).getContratos().size() > 3){
 	
 					while (j == 1) {// ciclo solo para imprimir 1 sola vez
 						System.out.println("Clientes con mas de 3 planes:");
@@ -418,7 +418,7 @@ public class Compania {
 		Document documento = new Document();
 		int idPlan, idEquipo; // Compararan ids de cada contrato de x cliente
 								// con las ids almacenadas en Compania
-		PdfWriter.getInstance(documento, new FileOutputStream("Reporte" + getNombre() + ".pdf"));
+		PdfWriter.getInstance(documento, new FileOutputStream("reportes\\Reporte" + getNombre() + ".pdf"));
 		documento.open(); // ABRE DOCUMENTO
 
 		documento.add(new Paragraph("Documento emitido por compañia " + getNombre() + ", RUT: " + getRut()));

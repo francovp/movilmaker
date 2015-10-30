@@ -178,7 +178,7 @@ public class Cliente extends Persona {
 		String fonoFijo, fonoCel, email, direccion1, direccion2, nombre2, apellido2, deuda;
 		int idPlan, idEquipo; // Compararan ids de cada contrato de x cliente
 								// con las ids almacenadas en Compania
-		PdfWriter.getInstance(documento, new FileOutputStream("Reporte_cliente_" + getRut() + ".pdf"));
+		PdfWriter.getInstance(documento, new FileOutputStream("reportes\\Reporte_cliente_" + getRut() + ".pdf"));
 		documento.open(); // ABRE DOCUMENTO
 
 		documento.add(new Paragraph(

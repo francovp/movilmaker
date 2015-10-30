@@ -44,7 +44,7 @@ public class Administrador extends Persona {
 		String fonoFijo, fonoCel, email, nombre2, apellido2;
 		int idPlan, idEquipo; // Compararan ids de cada contrato de x cliente
 								// con las ids almacenadas en Compania
-		PdfWriter.getInstance(documento, new FileOutputStream("Reporte_admin_" + getRut() + ".pdf"));
+		PdfWriter.getInstance(documento, new FileOutputStream("reportes\\Reporte_admin_" + getRut() + ".pdf"));
 		documento.open(); // ABRE DOCUMENTO
 
 		documento.add(new Paragraph(

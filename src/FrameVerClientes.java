@@ -68,7 +68,7 @@ public class FrameVerClientes extends JFrame {
 		scrollPane.setViewportView(listClientes);
 
 		// MUESTRA DATOS DE CLIENTES EN LA Compañia (rut,nombre1,apellido1,apellido2) , se agrego scroll panel
-		JButton btnMostrar = new JButton("Mostrar");
+		JButton btnMostrar = new JButton("Mostrar Clientes");
 		btnMostrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel listModel = new DefaultListModel();	// OBJETO DEL TIPO LISTA
@@ -126,5 +126,20 @@ public class FrameVerClientes extends JFrame {
 		JLabel lblReporteDetallado = new JLabel("Reporte detallado");
 		lblReporteDetallado.setBounds(447, 261, 127, 14);
 		panel.add(lblReporteDetallado);
+		
+		JButton btnMasPlanes = new JButton("Mostrar");
+		btnMasPlanes.setBounds(447, 227, 127, 23);
+		panel.add(btnMasPlanes);
+		btnMasPlanes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				datosEmpresa.buscarClientesConMasPlanes();
+				JOptionPane.showMessageDialog(null, 
+						"Cliente con más planes mostrado por consola!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		
+		JLabel lblClienteConMs = new JLabel("Cliente con mas planes");
+		lblClienteConMs.setBounds(447, 202, 127, 14);
+		panel.add(lblClienteConMs);
 	}
 }

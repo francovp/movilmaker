@@ -132,7 +132,7 @@ public class Persona {
 		Document documento = new Document();
 		int idPlan, idEquipo; // Compararan ids de cada contrato de x cliente
 								// con las ids almacenadas en Compania
-		PdfWriter.getInstance(documento, new FileOutputStream("ReportePersonas.pdf"));
+		PdfWriter.getInstance(documento, new FileOutputStream("reportes\\ReportePersonas.pdf"));
 		documento.open(); // ABRE DOCUMENTO
 
 		documento.add(new Paragraph(
