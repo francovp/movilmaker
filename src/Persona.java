@@ -19,6 +19,7 @@ public class Persona {
 	private String email;
 	private int tipo = 0; // 0 = Admin, 1 = Cliente ... n = Algo más
 
+	// CONSTRUCTOR
 	public Persona(String rut, String idCompania, String nombre1, String nombre2, String apellido1, String apellido2,
 			int fonoCel, int fonoFijo, String email, int tipo) {
 		this.rut = rut;
@@ -32,6 +33,8 @@ public class Persona {
 		this.idCompania = idCompania;
 		this.tipo = tipo;
 	}
+	
+	/////////////////////////// * GETTERS & SETTERS *////////////////////////////////////
 
 	public String getNombre1() {
 		return nombre1;
@@ -113,6 +116,8 @@ public class Persona {
 		this.tipo = tipo;
 	}
 
+	/////////////////////////// * METODOS * /////////////////////////////////////////////
+	
 	/**
 	 * Imprime un Reporte de todas las personas en la empresa.
 	 * 

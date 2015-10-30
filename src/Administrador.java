@@ -18,7 +18,9 @@ public class Administrador extends Persona {
 
 		this.password = password;
 	}
-
+	
+	/////////////////////////// * GETTERS & SETTERS *////////////////////////////////////
+	
 	public String getPassword() {
 		return password;
 	}
@@ -27,6 +29,8 @@ public class Administrador extends Persona {
 		this.password = password;
 	}
 
+	/////////////////////////// * METODOS * /////////////////////////////////////////////
+	
 	/**
 	 * Imprime un Reporte en pdf del Administrador (Sobreescritura de Persona
 	 * 

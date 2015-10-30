@@ -93,7 +93,6 @@ public class FrameRegistrarEmpresa extends JFrame {
 					// Creacion de conexion a base de datos
 					Database bd = new Database();
 					bd.ingresarEmpresaBD(empresaNueva);
-					System.out.println("Empresa agregada a la base de datos...");
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					System.err.println(

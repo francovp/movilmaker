@@ -32,6 +32,8 @@ public class Plan {
 		this.gigas = gigas;
 		this.idCompania = idCompania;
 	}
+	
+	/////////////////////////// * GETTERS & SETTERS *////////////////////////////////////
 
 	public int getIdPlan() {
 		return idPlan;

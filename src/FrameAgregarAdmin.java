@@ -253,11 +253,10 @@ public class FrameAgregarAdmin extends JFrame {
 
 	/**
 	 * Ingresa atributos capturados desde los JTextField de la ventana y los
-	 * atribuye a un objeto Administrador y envia a clase compa�ia
+	 * atribuye a un objeto Administrador que después se asocia a la empresaç
+	 * @param datosEmpresa - una referencia a la Compania
+	 * @return un objeto Administrador del administrador creado
 	 **/
-	// Obtiene los datos ingresados en las casillas y crea una nueva clase
-	// Administrador, luego es enviado a la listaAdministradors en clase
-	// Compañia
 	public Administrador datosNuevaPersona(Compania datosEmpresa) {
 		String nombre1 = null, nombre2 = null, apellido1 = null, apellido2 = null, rut = null, email = null;
 		int fono1 = 0, fono2 = 0;
@@ -287,7 +286,7 @@ public class FrameAgregarAdmin extends JFrame {
 	/**
 	 * Resetea todos los JText y JLabel ingresados de la ventana
 	 * 
-	 * @param lblAviso
+	 * @param lblAviso - una referencia al cuadro de texto para mensajes de aviso
 	 **/
 	public void botonReset(JLabel lblAviso) { 
 		textNombre1.setText("");
@@ -300,30 +299,10 @@ public class FrameAgregarAdmin extends JFrame {
 		textFonoCel.setText("");
 		lblAviso.setText("");
 	}
-
-	/**
-	 * Comprueba si en textFonoFijo y textFonoCel se han insertado datos del
-	 * tipo int
-	 * 
-	 * @param fono
-	 * @return boolean
-	 **/
-
-	public boolean comprobarFono(String fono) { // Comprueba si el ingreso en
-												// casilla de telefono es un
-												// numero INT
-		try {
-			Integer.parseInt(fono); // Si es INT devuelve true
-			return true;
-		} catch (Exception a) {
-			// Not an integer
-			return false;
-		}
-	}
 	
 	/**
 	 * Comprueba si los ingresos en las casillas violan restricciones
-	 * @return boolean
+	 * @return un boolean si no se encuentra ninguna restriccion o no
 	 */
 	public boolean comprobarIngreso(JLabel aviso) {
 		if(textNombre1.getText().length()==0){
@@ -351,7 +330,11 @@ public class FrameAgregarAdmin extends JFrame {
 	}
 	
 	/**
-	 * Comprueba si los campos numéricos son del tipo numerico
+	 * Comprueba si el ingreso en el cuadro de texto de Teléfono Fijo o Celular son numéricos
+	 * @param tf - una referencia al elemento JTextField con el texto a verificar
+	 * @param aviso - una referencia al cuadro de texto para mensajes de aviso
+	 * @param var - La variable que se está verificando
+	 * @param evt - una referencia a la tecla que se está pulsando actualmente para comprobarla
 	 */
 	private void textNumericoValidador (JTextField tf, JLabel aviso, String var, KeyEvent evt) {
 		String str = tf.getText();

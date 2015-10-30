@@ -36,8 +36,8 @@ public class Cliente extends Persona {
 		this.direccion2 = direccion2;
 		this.deuda = deuda;
 	}
-	/////////////////////////// * GETTERS & SETTERS
-	/////////////////////////// *////////////////////////////////////
+	
+	/////////////////////////// * GETTERS & SETTERS *////////////////////////////////////
 
 	public String getDireccion1() {
 		return direccion1;
@@ -70,8 +70,17 @@ public class Cliente extends Persona {
 	public void setContratos(ArrayList<Contrato> contratos) {
 		this.contratos = contratos;
 	}
-
-	// CREA NUEVO CONTRATO DESDE LA INTERFAZ FrameContrato
+	
+	/////////////////////////// * METODOS * /////////////////////////////////////////////
+	
+	/**
+	 * Crea un contrato nuevo con datos obtenidos desde la interfaz
+	 * @param numPlan - una ID del Plan elejido en la Interfaz para el nuevo contrato
+	 * @param numEquipo - una ID del Equipo elejido en la interfaz para el nuevo contrato
+	 * @param numCuotas - La cantidad de cuotas elejidas para pagar el nuevo contrato
+	 * @param e - Una referencia a la empresa para obtener algunas variables
+	 * @return Un objeto Contrato del contrato nuevo
+	 */
 	public Contrato crearContrato(int numPlan, int numEquipo, int numCuotas, Compania e) {
 		Random rnd = new Random();
 		int idRandom, monto, valorCuota;
@@ -122,61 +131,29 @@ public class Cliente extends Persona {
 
 		return contrato;
 	}
-
-	public Contrato crearContrato(Cliente clienteActual) throws IOException {
-		Random rnd = new Random();
-		int idRandom, monto, valorCuota;
-		Contrato contrato = null;
-		Equipo movil = null;
-		Plan plan = null;
-
-		// // Datos para usar fecha real
-		// Calendar fechaF = new GregorianCalendar();
-		// Calendar fechaI = new GregorianCalendar();
-		// DateFormat dfi = DateFormat.getDateInstance();
-		// DateFormat dff = DateFormat.getDateInstance();
-		// Date di = fechaI.getTime();
-		// fechaF.add(Calendar.MONTH, 5); // 5 meses como minimo con el plan
-		// Date d = fechaF.getTime();
-		// String fi = dfi.format(di);
-		// String ff = dff.format(d);
-		// // Genera un numero random entre 0 y 100000 que sera el id con
-		// contrato
-		// idRandom = rnd.nextInt(100000);
-		//
-		// //Obtiene el Equipo y el plan del contrato
-		// movil = interfazElegirMovil(numEquipo);
-		// plan = interfazElegirPlan(numPlan);
-		//
-		// //Calcula el monto total de la deuda del contraro
-		// monto = movil.getPrecio() + plan.getPrecio();
-		// // Actualiza la deuda del cliente antes de crear el contrato
-		// clienteActual.setDeuda(clienteActual.getDeuda()+monto);
-		//
-		// // Calcula el valor de cada cuota (sin interes)
-		// valorCuota = (movil.getPrecio() / numCuotas) + plan.getPrecio();
-		//
-		// // Se crea el obj contrato y se retorna
-		// contrato = new Contrato(idRandom, fi, ff, movil, plan, monto,
-		// valorCuota, numCuotas, clienteActual.getRut());
-		//
-		return contrato;
-	}
-
-	// METODO PARA BUSCAR UN CONTRATO Y RETORNARLO
+	
+	/**
+	 * Busca un contrato en especifico y lo retorna
+	 * @param id - un entero con la ID del Contrato a seleccionar
+	 * @return Un objeto Contrato con el contrato elejido
+	 */
 	public Contrato buscarContrato(int id) {
 		for (int i = 0; i < contratos.size(); i++)
 			if (contratos.get(i).getIdContrato() == id)
 				// si la id ingresada se encuentra
 				return contratos.get(i); // se retorna al cliente
 			else {
-				System.err.println("No se encontró contrato del cliente");
+				System.err.println("No se encontro contrato del cliente");
 				return null;
 			}
-		System.err.println("Cliente no tiene ningún contrato");
+		System.err.println("Cliente no tiene ningun contrato");
 		return null;
 	}
 
+	/**
+	 * Muestra todos los contratos del cliente
+	 * (Version consola)
+	 */
 	// MUESTRA TODOS LOS CONTRATOS DE 1 CLIENTE
 	public void listarContratos() {
 		System.out.println("Contratos de " + getNombre1() + " " + getApellido1() + ".");
@@ -191,7 +168,7 @@ public class Cliente extends Persona {
 	 * Imprime un Reporte en pdf del cliente y sus contratos (Sobreescritura de
 	 * Persona)
 	 * 
-	 * @param datosEmpresa
+	 * @param datosEmpresa - Una referencia a la Compañia con toda su estructura de datos
 	 * @throws FileNotFoundException
 	 * @throws DocumentException
 	 */
@@ -243,7 +220,7 @@ public class Cliente extends Persona {
 		documento.add(new Paragraph("\nDatos del cliente :                        " + getNombre1() + " " + nombre2 + " "
 				+ getApellido1() + " " + apellido2));
 		documento.add(new Paragraph("\nRut: " + getRut() + ", Email: " + email));
-		documento.add(new Paragraph("\nDirección: " + direccion1 + ", " + direccion2 + ", Teléfono: " + fonoFijo
+		documento.add(new Paragraph("\nDireccion: " + direccion1 + ", " + direccion2 + ", Telefono: " + fonoFijo
 				+ ", Celular: " + fonoCel));
 		documento.add(new Paragraph("\nDeuda: " + deuda));
 

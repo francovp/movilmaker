@@ -98,7 +98,6 @@ public class FrameEliminarContrato extends JFrame {
 					Cliente c = datosEmpresa.buscarCliente(textRut.getText());
 					if (c.getContratos().remove(list.getSelectedIndex()) != null) {
 						// CONTRATO ELIMINADO
-						System.out.println("Contrato eliminado");
 						JOptionPane.showMessageDialog(null, "Contrato eliminado con exito!", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
 
@@ -107,7 +106,6 @@ public class FrameEliminarContrato extends JFrame {
 							// Creacion de conexion a base de datos
 							Database bd = new Database();
 							bd.eliminarContratoBD(c.getRut());
-							System.out.println("Contrato eliminado de la Base de Datos.");
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							System.err.println("Contrato no se pudo eliminar de la Base de Datos.\n"

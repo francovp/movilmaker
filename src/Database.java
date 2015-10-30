@@ -14,45 +14,56 @@ import java.sql.Statement;
  */
 public class Database {
 
-	Connection c = null; // Objeto de tipo coneccion donde se guardarán los datos de coneccion
-	Statement stmt = null; // Objeto de tipo sentencia SQL
-	ResultSet rs = null; // Objeto de tipo resultado Query SQL
-
+	private Connection c = null; // Objeto de tipo coneccion donde se guardaran los datos de coneccion
+	private Statement stmt = null; // Objeto de tipo sentencia SQL
+	private ResultSet rs = null; // Objeto de tipo resultado Query SQL
+	
+	// CONSTRUCTOR
 	public Database() throws SQLException {
 		try {
 			Class.forName("org.postgresql.Driver");
 			c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/vomistar", "postgres", "12345");
 			c.setAutoCommit(true);
 		} catch (Exception e) {
-			System.err.println("No se pudo establecer la conexión con la base de datos!\n"
-					+ "Verifique que el servicio del servidor PostgreSQL esté iniciado, o que la base de datos de PostgreSQL esté instalada y configurada correctamente.\n"
-					+ "El nombre de la base de datos debería ser 'vomistar', el usuario 'postgres' y la contraseña '12345'"
-					+ "\n\nDetalles de la excepción:");
+			System.err.println("No se pudo establecer la conexion con la base de datos!\n"
+					+ "Verifique que el servicio del servidor PostgreSQL este iniciado, o que la base de datos de PostgreSQL este instalada y configurada correctamente.\n"
+					+ "El nombre de la base de datos deberia ser 'vomistar', el usuario 'postgres' y la contraseña '12345'"
+					+ "\n\nDetalles de la excepcion:");
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			c.close();
 		}
 	}
+	
+	/////////////////////////// * METODOS * /////////////////////////////////////////////
 
+	/**
+	 * Ingresa los datos de la empresa en la Tabla COMPANIA de la BD
+	 * @param empresa - una referencia a la Compania
+	 * @return Un boolean si se ingresaron los datos correctamente o no
+	 */
 	public boolean ingresarEmpresaBD(Compania empresa) throws SQLException {
 		if (c != null) {
-			// Si se creó la conexión a la BD exitosamente se continua
+			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = c.createStatement();
 			String sql = "INSERT INTO compania (nombre,id_compania) " + "VALUES ('" + empresa.getNombre() + "','"
 					+ empresa.getRut() + "');";
 			stmt.executeUpdate(sql);
-			stmt.close();
-			// Se cierra conexión a la BD
-			c.close();
+			cerrarDatabase();
 			return true;
 		} else
 			return false;
-		// Si no se pudo establecer la conexión a la BD se retorna null;
+		// Si no se pudo establecer la conexion a la BD se retorna null;
 	}
-
+	
+	/**
+	 * Ingresa los datos de un cliente en la Tabla PERSONA de la BD
+	 * @param datosCliente - una referencia al Cliente
+	 * @return Un boolean si se ingresaron los datos correctamente o no
+	 */
 	public boolean ingresarClienteBD(Cliente datosCliente) throws SQLException {
 		if (c != null) {
-			// Si se creó la conexión a la BD exitosamente se continua
+			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = c.createStatement();
 			String sql = "INSERT INTO persona (nombre1,apellido1,id_compania,"
@@ -64,18 +75,21 @@ public class Database {
 					+ datosCliente.getApellido2() + "','" + datosCliente.getRut() + "'," + datosCliente.getTipo()
 					+ ");";
 			stmt.executeUpdate(sql);
-			stmt.close();
-			// Se cierra conexión a la BD
-			c.close();
+			cerrarDatabase();
 			return true;
 		} else
 			return false;
-		// Si no se pudo establecer la conexión a la BD se retorna null
+		// Si no se pudo establecer la conexion a la BD se retorna null
 	}
 
+	/**
+	 * Ingresa los datos de un Administrador en la Tabla PERSONA de la BD
+	 * @param datosAdmin - una referencia al Administrador
+	 * @return Un boolean si se ingresaron los datos correctamente o no
+	 */
 	public boolean ingresarAdminBD(Administrador datosAdmin) throws SQLException {
 		if (c != null) {
-			// Si se creó la conexión a la BD exitosamente se continua
+			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = c.createStatement();
 			String sql = "INSERT INTO persona (nombre1,apellido1,id_compania,"
@@ -85,20 +99,22 @@ public class Database {
 					+ ",'" + datosAdmin.getEmail() + "','" + datosAdmin.getApellido2() + "','" + datosAdmin.getRut()
 					+ "'," + datosAdmin.getTipo() + ",'" + datosAdmin.getPassword() + "');";
 			stmt.executeUpdate(sql);
-			stmt.close();
-			// Se cierra conexión a la BD
-			c.close();
+			cerrarDatabase();
 			return true;
 		} else
 			return false;
-		// Si no se pudo establecer la conexión a la BD se retorna null;
+		// Si no se pudo establecer la conexion a la BD se retorna null;
 	}
 
-	// Para eliminar un cliente de la BD y todos sus contratos
+	/**
+	 * Elimina un Cliente desde la Tabla PERSONA de la BD
+	 * @param rut - el RUT de la persona a eliminar
+	 * @return Un boolean si se ingresaron los datos correctamente o no
+	 */
 	public boolean eliminarClienteBD(String rut) throws SQLException {
 		String sql;
 		if (c != null) {
-			// Si se creó la conexión a la BD exitosamente se continua
+			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = c.createStatement();
 			sql = "DELETE FROM persona WHERE (rut = '" + rut + "');";
@@ -109,18 +125,19 @@ public class Database {
 			stmt = c.createStatement();
 			sql = "DELETE FROM contratos WHERE (rut_cliente = '" + rut + "');";
 			stmt.executeUpdate(sql);
-			stmt.close();
-
-			// Se cierra conexión a la BD
-			c.close();
+			cerrarDatabase();
 			return true;
 		} else
 			return false;
-		// Si no se pudo establecer la conexión a la BD se retorna null;
+		// Si no se pudo establecer la conexion a la BD se retorna null;
 
 	}
 
-	// Para eliminar un contrato de la BD
+	/**
+	 * Elimina un Contrato desde la Tabla CONTRATOS de la BD
+	 * @param rut - el RUT de la persona a la que pertenece el Contrato
+	 * @return Un boolean si se ingresaron los datos correctamente o no
+	 */
 	public boolean eliminarContratoBD(String rut) throws SQLException {
 		String sql;
 		if (c != null) {
@@ -128,17 +145,19 @@ public class Database {
 			stmt = c.createStatement();
 			sql = "DELETE FROM contratos WHERE (rut_cliente = '" + rut + "');";
 			stmt.executeUpdate(sql);
-			stmt.close();
-
-			// Se cierra conexión a la BD
-			c.close();
+			cerrarDatabase();
 			return true;
 		} else
 			return false;
-		// Si no se pudo establecer la conexión a la BD se retorna null;
+		// Si no se pudo establecer la conexion a la BD se retorna null;
 
 	}
 
+	/**
+	 * Ingresa un Contrato de un Cliente en la Tabla CONTRATOS de la BD
+	 * @param contratoCliente - una referencia al Contrato del cliente a agregar
+	 * @return Un boolean si se ingresaron los datos correctamente o no
+	 */
 	public boolean ingresarContratoBD(Contrato contratoCliente) throws SQLException {
 		if (c != null) {
 			// Si se cre� la conexi�n a la BD exitosamente se contin�a
@@ -152,55 +171,64 @@ public class Database {
 					+ contratoCliente.getValorTotal() + "," + contratoCliente.getCuotas() + ","
 					+ contratoCliente.getValorCuota() + ");";
 			stmt.executeUpdate(sql);
-			stmt.close();
-			c.close();
+			cerrarDatabase();
 			return true;
 		}
 		return false;
 	}
 
-	// Establece todos los mótodos de lecturas desde la Base de datos
+	/**
+	 * Lee los datos de la Empresa desde la Tabla COMPANIA de la BD
+	 * @param empresa - una referencia a un objeto de tipo Empresa para guardar los datos 
+	 * @return Un objeto de tipo Compania con los datos ya ingresados en el
+	 */
 	public Compania leerEmpresaBD(Compania empresa) throws SQLException {
 		if (c != null) {
-			// Si se creó la conexión a la BD exitosamente se continua
+			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = c.createStatement();
 			// Se ejecuta la sentencia SQL y se guarda
 			rs = stmt.executeQuery("SELECT * FROM compania;");
-			if (rs == null)
+			if (rs == null){
 				// Si no hay ninguna empresa creada retorna null
+				cerrarDatabase();
 				return null;
+			}
 			else {
 				while (rs.next())
 					// Se obtienen datos de las tablas
-					// Se crearó un objeto compaóia con los datos obtenidos de
+					// Se crearo un objeto compaoia con los datos obtenidos de
 					// la DB
 					empresa = new Compania(rs.getString("nombre"), rs.getString("id_compania"));
-				rs.close();
-				stmt.close();
-				// Se cierra conexión a la BD
-				c.close();
-				// Se retorna toda la colección empresa
+				cerrarDatabase();
+				// Se retorna toda la coleccion empresa
 				return empresa;
 			}
 		} else
-			// Si no se pudo establecer la conexión a la BD se retorna null;
+			// Si no se pudo establecer la conexion a la BD se retorna null;
 			// Si hubo cualquier especie de error al conectar a la BD o al crear
 			// los datos.
 			return null;
 	}
 
+	/**
+	 * Lee los datos de los planes desde la Tabla PLANES de la BD
+	 * @param empresa - una referencia a un objeto de tipo Empresa para guardar los datos 
+	 * @return Un objeto de tipo Compania con los datos ya ingresados en el
+	 */
 	public Compania leerPlanesBD(Compania empresa) throws SQLException {
 		if (c != null) {
-			// Si se creó la conexión a la BD exitosamente se continua
+			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = c.createStatement();
 			// Se leen datos de Planes desde la BD
 			// Se ejecuta la sentencia SQL y se guarda
 			rs = stmt.executeQuery("SELECT * FROM planes;");
-			if (rs == null)
+			if (rs == null){
 				// Si no hay ningun plan creado retorna null
+				cerrarDatabase();
 				return null;
+			}
 			else {
 				while (rs.next()) {
 					// Se obtienen datos de la plan
@@ -209,31 +237,35 @@ public class Database {
 
 					empresa.getPlanes().add(p);
 				}
-				rs.close();
-				stmt.close();
-				// Se cierra conexión a la BD
-				c.close();
-				// Se retorna toda la colección empresa
+				cerrarDatabase();
+				// Se retorna toda la coleccion empresa
 				return empresa;
 			}
 		} else
-			// Si no se pudo establecer la conexión a la BD se retorna null;
+			// Si no se pudo establecer la conexion a la BD se retorna null;
 			// Si hubo cualquier especie de error al conectar a la BD o al crear
 			// los datos.
 			return null;
 	}
 
+	/**
+	 * Lee los datos de los Equipos desde la Tabla EQUIPOS de la BD
+	 * @param empresa - una referencia a un objeto de tipo Empresa para guardar los datos 
+	 * @return Un objeto de tipo Compania con los datos ya ingresados en el
+	 */
 	public Compania leerEquiposBD(Compania empresa) throws SQLException {
 		if (c != null) {
-			// Si se creó la conexión a la BD exitosamente se continua
+			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = c.createStatement();
 			// Se leen datos de Equipos desde la BD
 			// Se ejecuta la sentencia SQL y se guarda
 			rs = stmt.executeQuery("SELECT * FROM equipos;");
-			if (rs == null)
+			if (rs == null){
 				// Si no hay ningun Equipo creado retorna null
+				cerrarDatabase();
 				return null;
+			}
 			else {
 				while (rs.next()) {
 					// Se obtienen datos de la equipos
@@ -243,34 +275,38 @@ public class Database {
 
 					empresa.getMoviles().add(e);
 				}
-				rs.close();
-				stmt.close();
-				// Se cierra conexión a la BD
-				c.close();
-				// Se retorna toda la colección empresa
+				cerrarDatabase();
+				// Se retorna toda la coleccion empresa
 				return empresa;
 			}
 		} else
-			// Si no se pudo establecer la conexión a la BD se retorna null;
+			// Si no se pudo establecer la conexion a la BD se retorna null;
 			// Si hubo cualquier especie de error al conectar a la BD o al crear
 			// los datos.
 			return null;
 	}
 
+	/**
+	 * Lee los datos de las Personas desde la Tabla PERSONAS de la BD
+	 * @param empresa - una referencia a un objeto de tipo Empresa para guardar los datos 
+	 * @return Un objeto de tipo Compania con los datos ya ingresados en el
+	 */
 	public Compania leerPersonasBD(Compania empresa) throws SQLException {
 		if (c != null) {
-			// Si se creó la conexión a la BD exitosamente se continua
+			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = c.createStatement();
 			// Se leen datos de Personas desde la BD
 			// Se ejecuta la sentencia SQL y se guarda
 			rs = stmt.executeQuery("SELECT * FROM persona;");
-			if (rs == null)
+			if (rs == null){
 				// Si no hay ninguna Persona creada retorna null
+				cerrarDatabase();
 				return null;
+			}
 			else {
 				while (rs.next()) {
-					// Se obtienen datos de personas y se verifica qué tipo de
+					// Se obtienen datos de personas y se verifica que tipo de
 					// persona es la fila actual
 					int tipo = rs.getInt("tipo");
 					// y se asigna dependiendo del tipo
@@ -293,31 +329,35 @@ public class Database {
 						empresa.getListaPersona().add(cli);
 					}
 				}
-				rs.close();
-				stmt.close();
-				// Se cierra conexión a la BD
-				c.close();
-				// Se retorna toda la colección empresa
+				cerrarDatabase();
+				// Se retorna toda la coleccion empresa
 				return empresa;
 			}
 		} else
-			// Si no se pudo establecer la conexión a la BD se retorna null;
+			// Si no se pudo establecer la conexion a la BD se retorna null;
 			// Si hubo cualquier especie de error al conectar a la BD o al crear
 			// los datos.
 			return null;
 	}
 
+	/**
+	 * Lee los datos de los contratos desde la Tabla CONTRATOS de la BD
+	 * @param empresa - una referencia a un objeto de tipo Empresa para guardar los datos 
+	 * @return Un objeto de tipo Compania con los datos ya ingresados en el
+	 */
 	public Compania leerContratosBD(Compania empresa) throws SQLException {
 		if (c != null) {
-			// Si se creó la conexión a la BD exitosamente se continua
+			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = c.createStatement();
 			// Se leen datos de Contratos desde la BD
 			// Se ejecuta la sentencia SQL y se guarda
 			rs = stmt.executeQuery("SELECT * FROM contratos;");
-			if (rs == null)
+			if (rs == null){
 				// Si no hay ninguna Persona creada retorna null
+				cerrarDatabase();
 				return null;
+			}
 			else {
 				while (rs.next()) {
 					// Se obtienen datos de la equipos
@@ -330,31 +370,35 @@ public class Database {
 							rs.getString("fecha_termino"), idEquipo, idPlan, e, p, rs.getInt("valor_total"),
 							rs.getInt("cuotas"), rs.getInt("valor_cuota"), rs.getString("rut_cliente"));
 
-					// Busco el cliente al cual se le asignará el contrato
+					// Busco el cliente al cual se le asignara el contrato
 					Cliente cliente = empresa.buscarCliente(c.getRutCliente());
 					// Luego agrego el contrato a ESE cliente
 					cliente.getContratos().add(c);
 				}
-				// Se retorna toda la colección empresa
+				cerrarDatabase();
+				// Se retorna toda la coleccion empresa
 				return empresa;
 			}
 		} else
-			// Si no se pudo establecer la conexión a la BD se retorna null;
+			// Si no se pudo establecer la conexion a la BD se retorna null;
 			// Si hubo cualquier especie de error al conectar a la BD o al crear
 			// los datos.
 			return null;
 	}
 
+	/**
+	 * Cierra la coneccion con la BD
+	 */
 	public void cerrarDatabase() throws SQLException {
-		rs.close();
-		stmt.close();
-		// Se cierra conexión a la BD
+		if(rs != null) rs.close();
+		if(stmt != null) stmt.close();
+		// Se cierra conexion a la BD
 		c.close();
 	}
 
 	// public Compania leerBoletasBD(Compania empresa) throws SQLException {
 	// if (c != null){
-	// // Si se creó la conexión a la BD exitosamente se continua
+	// // Si se creo la conexion a la BD exitosamente se continua
 	// // Se crea una nueva sentencia SQL
 	// stmt = c.createStatement();
 	// // Se leen datos de boletas desde la BD
@@ -389,13 +433,13 @@ public class Database {
 	// }
 	// rs.close();
 	// stmt.close();
-	// // Se cierra conexión a la BD
+	// // Se cierra conexion a la BD
 	// c.close();
-	// // Se retorna toda la colección empresa
+	// // Se retorna toda la coleccion empresa
 	// return empresa;
 	// }
 	// }else{
-	// // Si no se pudo establecer la conexión a la BD se retorna null;
+	// // Si no se pudo establecer la conexion a la BD se retorna null;
 	// // Si hubo cualquier especie de error al conectar a la BD o al crear los
 	// datos.
 	// return null;

@@ -287,7 +287,9 @@ public class FrameAgregarCliente extends JFrame {
 
 	/**
 	 * Ingresa atributos capturados desde los JTextField de la ventana y los
-	 * atribuye a un objeto Cliente y envia a clase compa�ia
+	 * atribuye a un objeto Cliente que después se asocia a la empresa
+	 * @param datosEmpresa - una referencia a la Compania
+	 * @return un objeto Cliente del cliente creado
 	 **/
 	public Cliente datosNuevaPersona(Compania datosEmpresa) {
 		String nombre1 = null, nombre2 = null, apellido1 = null, apellido2 = null, rut = null, email = null, direccion1 = null, direccion2 = null;
@@ -320,7 +322,7 @@ public class FrameAgregarCliente extends JFrame {
 	/**
 	 * Resetea todos los JText y JLabel ingresados de la ventana
 	 * 
-	 * @param lblAviso
+	 * @param lblAviso una referencia al cuadro de texto para mensajes de aviso
 	 **/
 	public void botonReset(JLabel lblAviso) {
 
@@ -339,7 +341,7 @@ public class FrameAgregarCliente extends JFrame {
 
 	/**
 	 * Comprueba si los ingresos en las casillas violan restricciones
-	 * @return boolean
+	 * @return un boolean si no se encuentra ninguna restriccion o no
 	 */
 	public boolean comprobarIngreso(JLabel aviso) {
 		if(textNombre1.getText().length()==0){
@@ -367,7 +369,11 @@ public class FrameAgregarCliente extends JFrame {
 	}
 	
 	/**
-	 * Comprueba si los campos numéricos son del tipo numerico
+	 * Comprueba si el ingreso en el cuadro de texto de Teléfono Fijo o Celular son numéricos
+	 * @param tf - una referencia al elemento JTextField con el texto a verificar
+	 * @param aviso - una referencia al cuadro de texto para mensajes de aviso
+	 * @param var - La variable que se está verificando
+	 * @param evt - una referencia a la tecla que se está pulsando actualmente para comprobarla
 	 */
 	private void textNumericoValidador (JTextField tf, JLabel aviso, String var, KeyEvent evt) {
 		String str = tf.getText();

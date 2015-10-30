@@ -20,6 +20,9 @@ public class Principal {
 		obtenerDatos();
 	}
 
+	/**
+	 * Obtiene todos la estructura de datos del programa desde la Base de datos
+	 **/
 	public static void obtenerDatos() throws SQLException {
 		Database bd = null;
 		Compania datos = null; // Aquí se guarda toda la informacion de la empresa
@@ -79,18 +82,14 @@ public class Principal {
 							} else
 								System.err.println("No hay datos de equipos");
 							// Por ahora aqui no se hace nada
-							// Mientras no se hace nada mientras no se agregue
-							// una interfaz para crear Equipos
+							// No se hace nada mientras no se agregue una interfaz para crear Equipos
 						} else
 							System.err.println("No hay datos de planes");
 						// Por ahora aqui no se hace nada
-						// Mientras no se hace nada mientras no se agregue una
-						// interfaz para crear Planes
+						// No se hace nada mientras no se agregue una interfaz para crear Planes
 					} else
 						System.err.println("No hay datos de contratos");
 					// Por ahora aqui no se hace nada
-					// Mientras no se hace nada mientras no se agregue una
-					// interfaz para crear Equipos
 				}
 			} else {
 				System.err.println("No hay datos de personas");
@@ -109,7 +108,11 @@ public class Principal {
 			iRegistrarEmpresa.setVisible(true);
 		}
 	}
-
+	
+	/**
+	 * Limpia la consola
+	 * (No funciona)
+	 **/
 	public static void clearConsole() {
 		try {
 			final String os = System.getProperty("os.name");
@@ -123,6 +126,11 @@ public class Principal {
 		}
 	}
 	
+	/**
+	 * Verifica si una cadena es de tipo númerico
+	 * @param cadena - Un string con los datos a verificar
+	 * @return un boolean si la cadena es númerica o no
+	 **/
 	public static boolean esNumerico(String cadena){
 		try {
 			Integer.parseInt(cadena);
@@ -132,6 +140,11 @@ public class Principal {
 		}
 	}
 	
+	/**
+	 * Verifica si un RUT es válido o no
+	 * @param rut - El RUT a verificar
+	 * @return un boolean si el RUT es válido o no
+	 **/
 	public static boolean validarRut(String rut) {
 		 
 		boolean validacion = false;

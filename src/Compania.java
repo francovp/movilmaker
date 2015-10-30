@@ -38,8 +38,7 @@ public class Compania {
 		this.rut = rut;
 	}
 
-	/////////////////////////// * GETTERS & SETTERS
-	/////////////////////////// *////////////////////////////////////
+	/////////////////////////// * GETTERS & SETTERS ////////////////////////////////////
 
 	public String getNombre() {
 		return nombre;
@@ -80,6 +79,8 @@ public class Compania {
 	public void setPlanes(ArrayList<Plan> planes) {
 		this.planes = planes;
 	}
+	
+	/////////////////////////// * METODOS * /////////////////////////////////////////////
 
 	///////////////// METODOS DE ADMINISTRADOR ////////////////////
 	
@@ -102,6 +103,12 @@ public class Compania {
 		}
 	}
 	
+	/**
+	 * Busca un Administrador con el Rut recibido por parametro y lo retorna
+	 *
+	 * @param rut - Rut del administrador a buscar
+	 * @return un objeto del Administrador encontrado
+	 */
 	public Administrador buscarAdmin(String rut) {
 		for (int i = 0; i < listaPersona.size(); i++)
 			if (listaPersona.get(i).getRut().equals(rut) && listaPersona.get(i).getTipo() == 0)
@@ -110,6 +117,11 @@ public class Compania {
 		return null;
 	}
 	
+	/**
+	 * Obtiene todos los Administradores
+	 *
+	 * @return un ArrayList de tipo Administrador con todos los Administradores
+	 */
 	public ArrayList<Administrador> mostrarAdmins() {
 		ArrayList<Administrador> admins = new ArrayList<Administrador>();
 		for (int i = 0; i < listaPersona.size(); i++){
@@ -140,7 +152,11 @@ public class Compania {
 		}
 	}
 
-	// MUESTRA LOS CLIENTES
+	/**
+	 * Obtiene todos los Clientes
+	 *
+	 * @return un ArrayList de tipo Cliente con todos los clientes
+	 */
 	public ArrayList<Cliente> mostrarClientes() {
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 		for (int i = 0; i < listaPersona.size(); i++){
@@ -151,7 +167,12 @@ public class Compania {
 		return clientes;
 	}
 
-	// BUSCA A UN CLIENTE Y SI LO ENCUENTRA LO RETORNA.
+	/**
+	 * Busca un Cliente con el Rut recibido por parametro y lo retorna
+	 *
+	 * @param rut - Rut del Cliente a buscar
+	 * @return un objeto del Cliente encontrado
+	 */
 	public Cliente buscarCliente(String rut) {
 		for (int i = 0; i < listaPersona.size(); i++)
 			// si el rut ingresado se encuenta
@@ -162,7 +183,13 @@ public class Compania {
 
 	}
 
-	// MODIFICA INFORMACION DEL CLIENTE
+	/**
+	 * Modifica los datos de un Cliente en especifico
+	 * (Version consola)
+	 *
+	 * @param rut - Rut del Cliente a modificar
+	 * @return Un boolean si es que modifico o no correctamente el cliente
+	 */
 	public boolean modificarCliente(String rut) throws IOException {
 		if (buscarCliente(rut) != null) {
 			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
@@ -209,6 +236,12 @@ public class Compania {
 		return false;
 	}
 
+	/**
+	 * Elimina un cliente en especifico
+	 *
+	 * @param rut - Rut del Cliente a eliminar
+	 * @return Un boolean si es que elimino o no correctamente el cliente
+	 */
 	public boolean eliminarCliente(String rut) {
 		Cliente c;
 		if (buscarCliente(rut) != null) {
@@ -221,6 +254,9 @@ public class Compania {
 
 	///////////////////////// METODOS DE PLAN Y EQUIPOS /////////////////////////
 
+	/**
+	 * Muestra todos los planes existentes por consola
+	 */
 	public void mostrarPlanes() {
 		for (int i = 0; i < planes.size(); i++) {
 			System.out.println(planes.get(i).getNombrePlan());
@@ -230,9 +266,14 @@ public class Compania {
 		}
 	}
 
-	// Consola
+	// Versiones por Consola
 	
-		// seleciona un movil, de los que tiene la compania disponible
+		/**
+		 * Selecciona un movil, de los que tiene la compania disponible
+		 * (Version consola)
+		 *
+		 * @return Un objeto Equipo con el movil elejido
+		 */
 		public Equipo elegirMovil() throws IOException {
 			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 			int i;
@@ -246,7 +287,12 @@ public class Compania {
 			return moviles.get(i);
 		}
 	
-		// Se seleciona el Plan que desea asignar al contrato
+		/**
+		 * Selecciona un Plan, de los que tiene la compania disponible
+		 * (Version consola)
+		 *
+		 * @return Un objeto Plan con el plan elejido
+		 */
 		public Plan elegirPlan() throws IOException {
 			int i;
 			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
@@ -260,41 +306,38 @@ public class Compania {
 			return planes.get(i);
 		}
 	
-	// Interfaz
-		// seleciona un movil, escogido desde FrameContrato
+	// Versiones de Interfaz
+		
+		/**
+		 * Retorna un Equipo en especifico entre los Equipos que tiene la compañia
+		 * (Version interfaz)
+		 * @param movil - un entero con la ID del equipo a seleccionar
+		 * @return Un objeto Equipo con el movil elejido
+		 */
 		public Equipo elegirMovil(int movil) {
 			int i;
 			i = movil;
 			return moviles.get(i);
 		}
 	
-		// Se seleciona el Plan, escogido desde FrameContrato
+		/**
+		 * Retorna un Equipo en especifico entre los planes que tiene la compañia
+		 * (Version interfaz)
+		 * @param plan - un entero con la ID del plan a seleccionar
+		 * @return Un objeto Plan con el plan elejido
+		 */
 		public Plan elegirPlan(int plan) {
 			int i;
 			i = plan;
 			return planes.get(i);
 		}
 
-	//////////////////////////// **TXT**////////////////////////////////////////////////////////////////
-
-	// ESCRIBRE EN TXT LA INFORMACION ENVIADA EN "CADENA"
-	public void escribirEnTxt(String archivo, String cadena) {
-		File f;
-		f = new File(archivo);
-		try {
-			FileWriter w = new FileWriter(f);
-			BufferedWriter bw = new BufferedWriter(w);
-			PrintWriter wr = new PrintWriter(bw);
-			wr.write(cadena);
-			wr.close();
-			bw.close();
-		} catch (IOException e) {
-		}
-		;
-	}
-
 	/////////////////// FUNCIONES EXTRAS ///////////////////////
 
+	/**
+	 * Imprime el cliente que tenga mas planes
+	 * (Version consola)
+	 */
 	public void buscarClientesConMasPlanes()
 	{
 		int cont=0,j=1;
@@ -326,28 +369,36 @@ public class Compania {
 					+ c.getNombre1() + " " + c.getApellido1() + ". Rut: " + c.getRut() + " ***");
 	}
 
-	// METODO PARA BUSCAR UN PLAN Y RETORNARLO
+	/**
+	 * Busca un Plan especificado mediante una ID y lo retorna
+	 * @param id - un entero con la ID del plan a seleccionar
+	 * @return Un objeto Plan con el plan elejido
+	 */
 	public Plan buscarPlan(int id) {
 		for (int i = 0; i < planes.size(); i++)
 			if (planes.get(i).getIdPlan() == id)
 				// si la id ingresada se encuentra
-				return planes.get(i); // se retorna al cliente
+				return planes.get(i);
 			else {
-				//System.err.println("No se encontró plan");
+				//System.err.println("No se encontro plan");
 				return null;
 			}
 		//System.err.println("No existe plan en el contrato");
 		return null;
 	}
 
-	// METODO PARA BUSCAR UN PLAN Y RETORNARLO
+	/**
+	 * Busca un Equipo especificado mediante una ID y lo retorna
+	 * @param id - un entero con la ID del Equipo a seleccionar
+	 * @return Un objeto Equipo con el Equipo elejido
+	 */
 	public Equipo buscarEquipo(int id) {
 		for (int i = 0; i < moviles.size(); i++)
 			if (moviles.get(i).getIdEquipo() == id)
 				// si la id ingresada se encuentra
-				return moviles.get(i); // se retorna al cliente
+				return moviles.get(i);
 			else {
-				//System.err.println("No se encontró equipo");
+				//System.err.println("No se encontro equipo");
 				return null;
 			}
 		//System.err.println("No existe equipo en el contrato");
@@ -357,7 +408,6 @@ public class Compania {
 	/**
 	 * Imprime un Reporte completo de todos los datos de la empresa.
 	 *
-	 * @param datosEmpresa
 	 * @throws FileNotFoundException
 	 * @throws DocumentException
 	 */
@@ -401,7 +451,7 @@ public class Compania {
 			documento.add(new Paragraph("- " + admin.getNombre1() + " "
 					+ nombre2 + " " + admin.getApellido1() + " " + apellido2));
 			documento.add(new Paragraph("-- Rut: " + admin.getRut() + ", Email: " + email));
-			documento.add(new Paragraph("-- Teléfono: " + fonoFijo + ", Celular: " + fonoCel));
+			documento.add(new Paragraph("-- Telefono: " + fonoFijo + ", Celular: " + fonoCel));
 		}
 
 		documento.add(new Paragraph("\nLista de clientes y sus contratos:"));
@@ -445,7 +495,7 @@ public class Compania {
 			documento.add(new Paragraph("- " + c.getNombre1() + " " + nombre2 + " "
 					+ c.getApellido1() + " " + apellido2));
 			documento.add(new Paragraph("-- Rut: " + c.getRut() + ", Email: " + email));
-			documento.add(new Paragraph("-- Dirección: " + direccion1 + ", " + direccion2 + ", Teléfono: " + fonoFijo
+			documento.add(new Paragraph("-- Direccion: " + direccion1 + ", " + direccion2 + ", Telefono: " + fonoFijo
 					+ ", Celular: " + fonoCel));
 			documento.add(new Paragraph("-- Deuda: " + deuda));
 			

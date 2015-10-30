@@ -80,7 +80,6 @@ public class FrameEliminarCliente extends JFrame {
 
 				// Llama a metodo en clase Compañia para eliminar Cliente
 				if (datosEmpresa.eliminarCliente(rut) == true) {
-					System.out.println("Cliente eliminado...");
 					// Si el cliente se elimino exitosamente se eliminará
 					// cliente en la BD
 					try {
@@ -90,7 +89,6 @@ public class FrameEliminarCliente extends JFrame {
 						// Cuadro de dialogo, que informa eliminacion exitosa
 						JOptionPane.showMessageDialog(null, "El Cliente ha sido eliminado", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
-						System.out.println("Cliente eliminado de la base de datos...");
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						System.err.println(
