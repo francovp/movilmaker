@@ -174,13 +174,12 @@ public class FrameContrato extends JFrame {
 								System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
 							}
 
-							// Guardado en archivo XML
-							// XML xml = new XML();
-							// if(xml.ingresarContratoXML(datosEmpresa, cliente,
-							// contratoNuevo))
-							// System.out.println("Contrato guardado en XML.");
-							// else System.err.println("Contrato no fue guardado
-							// en XML.");
+							//Guardado en archivo XML
+							XML xml = new XML();
+							if(xml.ingresarContratoXML(datosEmpresa, cliente,
+									contratoNuevo))
+								System.out.println("Contrato guardado en XML.");
+							else System.err.println("Contrato no fue guardado en XML.");
 
 							// CIERRE INTERFAZ FrameContrato
 							FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
