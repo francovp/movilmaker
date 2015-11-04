@@ -334,6 +334,200 @@ public class Compania {
 
 	/////////////////// FUNCIONES EXTRAS ///////////////////////
 
+	// 1 SOBRECARGA METODO PARA PAGAR UN PLAN
+
+	// METODO PARA PAGAR MENSUALIDAD MEDIANTE ELECCION DE PLAN
+	public boolean pagarUnPlan(String rut) throws IOException {
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		Cliente c;
+		Contrato contratoAPagar;
+		RegistroDePagos boletaMasNueva;
+		int cuotasRestantes = 0, montoAdeudado = 0;
+
+		if (buscarCliente(rut) != null) // BUSCO AL CLIENTE
+		{
+			c = buscarCliente(rut);
+			if (c.contratos.size() > 1) // SI EL CLIENTE TIENE MAS DE 1 PLAN CONTRATADO
+			{ // SE PIDE IDENTIFICAR CUAL VA A CANCELAR
+				c.listarContratos();
+				System.out.println("Ingrese el Id del contrato: ");
+				int id = Integer.parseInt(bf.readLine()); // SE LEE EL ID DEL CONTRATO A PAGAR
+
+				if (c.buscarContrato(id) != null) // VALIDACION DEL CONTRATO A PAGAR
+				{ // CUOTAS OBLIGATORIAS AL PLAN ( CORRESPONDIENTE A LOS MESES MINIMOS)
+					contratoAPagar = c.buscarContrato(id);
+
+					// Se verificar� si en el contrato existe alguna boleta para obtener el valor de cuotasRestantes
+					boletaMasNueva = contratoAPagar.buscarPago(c.getRut());
+
+					if (boletaMasNueva != null) {
+						// Obtiene el ultimo valor de CuotasRestantes conocido
+						cuotasRestantes = boletaMasNueva.getCuotasRestantes();
+						// OBtiene el ultimo valor de montoAdeudado conocido
+						montoAdeudado = boletaMasNueva.getMontoAdeudado();
+					} else {
+						// Como aun no ha producido ningun pago, se Obtienen los valores totales
+						cuotasRestantes = contratoAPagar.getCuotas();
+						montoAdeudado = contratoAPagar.getValorTotal();
+					}
+
+					// SE CREA EL REGISTRO DE PAGO
+					RegistroDePagos registro = new RegistroDePagos(contratoAPagar.getIdContrato(),
+							0, contratoAPagar.getValorCuota(), montoAdeudado, cuotasRestantes - 1, contratoAPagar);
+
+					if (registro.getCuotasRestantes() > 0) { // SE DEBE MENSUALIDAD
+						System.out.println("Monto de Cuotas: " + contratoAPagar.getValorCuota());
+						System.out.println("Cuotas por pagar: " + registro.getCuotasRestantes());
+						System.out.println("Ingrese el numero de cuotas a cancelar:");
+
+						// SE PROCEDE A PAGAR MENSUALIDAD
+						if (registro.pagar(Integer.parseInt(bf.readLine()), contratoAPagar.getValorCuota())) {
+
+							// GUARDADO DE REGISTROS EN LA BD
+							// Preparar Conexion a BD
+							Database bd = null;
+							try {
+								bd = new Database();
+							} catch (SQLException e2) {
+								// TODO Auto-generated catch block
+								e2.printStackTrace();
+							}
+							// Se escribira registro en la BD
+							try {
+								bd.ingresarRegistroBD(registro);
+								System.out.println("Boleta agregado a la base de datos...");
+							} catch (SQLException e2) {
+								// TODO Auto-generated catch block
+								System.err.println("Boleta no se pudo escribir en la Base de Datos.\n"
+										+ "\nDetalles de la excepción:");
+								System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
+							}
+
+							return true; // cuotas canceladas correctamente
+						}
+					} else { // SI NO DEBE
+						System.out.println("Cuotas Obligatorias canceladas");
+						return false;
+					}
+
+				} else { // ID DE CONTRATO NO ENCONTRADA O NO EXISTE
+					System.out.println("ID ingresao no valido y/o no existe.");
+					return false;
+				}
+			} else {// SI EL CLIENTE TIENE SOLO 1 PLAN CONTRATADO
+
+				contratoAPagar = c.contratos.get(0);
+
+				// Se verificará si en el contrato existe alguna boleta para
+				// obtener el valor de cuotasRestantes
+				boletaMasNueva = contratoAPagar.buscarPago(c.getRut());
+				if (boletaMasNueva != null) {
+					// Obtiene el ultimo valor de CuotasRestantes conocido
+					cuotasRestantes = boletaMasNueva.getCuotasRestantes();
+					// OBtiene el ultimo valor de montoAdeudado conocido
+					montoAdeudado = boletaMasNueva.getMontoAdeudado();
+				} else {
+					// Como aun no ha producido ningun pago, se Obtienen los
+					// valores totales
+					cuotasRestantes = contratoAPagar.getCuotas();
+					montoAdeudado = contratoAPagar.getValorTotal();
+				}
+
+				// SE CREA EL REGISTRO DE PAGO
+				RegistroDePagos registro = new RegistroDePagos(contratoAPagar.getIdContrato(),
+						0, contratoAPagar.getValorCuota(), montoAdeudado, cuotasRestantes - 1, contratoAPagar);
+
+				if (registro.getCuotasRestantes() > 0) { // SE DEBE MENSUALIDAD
+					System.out.println("Monto de Cuotas: " + contratoAPagar.getValorCuota());
+					System.out.println("Cuotas por pagar: " + registro.getCuotasRestantes());
+					System.out.println("Ingrese el numero de cuotas a cancelar:");
+
+					// SE PROCEDE A PAGAR MENSUALIDAD
+					if (registro.pagar(Integer.parseInt(bf.readLine()), contratoAPagar.getValorCuota())) {
+
+						// GUARDADO DE REGISTROS EN LA BD
+						// Preparar Conexión a BD
+						Database bd = null;
+						try {
+							bd = new Database();
+						} catch (SQLException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+						// Se escribira registro en la BD
+						try {
+							bd.ingresarRegistroBD(registro);
+							System.out.println("Boleta agregado a la base de datos...");
+						} catch (SQLException e2) {
+							// TODO Auto-generated catch block
+							System.err.println("Boleta no se pudo escribir en la Base de Datos.\n"
+									+ "\nDetalles de la excepción:");
+							System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
+						}
+						return true; // cuotas canceladas correctamente
+					}
+				}
+			}
+		} else { // SI NO SE ENCUENTRA EL CLIENTE
+			System.out.println("Cliente no existe");
+			return false;
+		}
+		return false;
+	}
+
+	// METODO PARA PAGAR contrato Y FINALIZARLO
+	public boolean pagarUnPlan(Contrato contratoAPagar) throws IOException {
+		RegistroDePagos boletaMasNueva;
+		int cuotasRestantes, montoAdeudado;
+
+		// Se verificará si en el contrato existe alguna boleta para obtener el
+		// valor de cuotasRestantes
+		boletaMasNueva = contratoAPagar.buscarPago(contratoAPagar.getRutCliente());
+		if (boletaMasNueva != null) {
+			// Obtiene el ultimo valor de CuotasRestantes conocido
+			cuotasRestantes = boletaMasNueva.getCuotasRestantes();
+			// OBtiene el ultimo valor de montoAdeudado conocido
+			montoAdeudado = boletaMasNueva.getMontoAdeudado();
+		} else {
+			// Como aun no ha producido ningun pago, se Obtienen los valores totales
+			cuotasRestantes = contratoAPagar.getCuotas();
+			montoAdeudado = contratoAPagar.getValorTotal();
+		}
+
+		// SE CREA EL REGISTRO DE PAGO
+		RegistroDePagos registro = new RegistroDePagos(contratoAPagar.getIdContrato(),
+				0, montoAdeudado, montoAdeudado, 0, contratoAPagar);
+
+		System.out.println("\nMeses a cancelar restantes para terminar el plazo minimo estipulado: "
+				+ registro.getCuotasRestantes());
+		System.out.println("Al no terminar tener el plan contratado por los meses minimos estipulados.");
+
+		if (contratoAPagar.pagar(registro, registro.getCuotasRestantes())) {
+
+			// GUARDADO DE REGISTROS EN LA BD
+			// Preparar Conexión a BD
+			Database bd = null;
+			try {
+				bd = new Database();
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			// Se escribira registro en la BD
+			try {
+				bd.ingresarRegistroBD(registro);
+				System.out.println("Boleta agregado a la base de datos...");
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				System.err
+						.println("Boleta no se pudo escribir en la Base de Datos.\n" + "\nDetalles de la excepción:");
+				System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
+			}
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Imprime el cliente que tenga mas planes
 	 * (Version consola)
