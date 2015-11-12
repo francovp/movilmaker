@@ -231,13 +231,13 @@ public class FrameAgregarCliente extends JFrame {
 							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 						}
 	
-	//						// Para guardar cliente en un XML
-	//						// Objeto XML
-	//						XML xml = new XML();
-	//						if (xml.ingresarClienteXML(datosEmpresa, nuevoCliente))
-	//							System.out.println("Cliente guardado en XML.");
-	//						else
-	//							System.err.println("Cliente no fue guardado en XML.");
+						// Para guardar cliente en un XML
+						// Objeto XML
+						XML xml = new XML();
+						if (xml.ingresarClienteXML(datosEmpresa, nuevoCliente))
+							System.out.println("Cliente guardado en XML.");
+						else
+							System.err.println("Cliente no fue guardado en XML.");
 	
 						// Muestra mensaje que cilente fue ingresado
 						// exitosamente!
