@@ -12,28 +12,67 @@ import java.sql.Statement;
  * @author Franco
  *
  */
-public class Database {
+public class Database2 {
 
-	private Connection c = null; // Objeto de tipo coneccion donde se guardaran los datos de coneccion
+  private static Database2 db;
+  private static boolean databaseEstaDisponible = true;
+  
+	private Connection dbConnection = null; // Objeto de tipo coneccion donde se guardaran los datos de coneccion
 	private Statement stmt = null; // Objeto de tipo sentencia SQL
 	private ResultSet rs = null; // Objeto de tipo resultado Query SQL
 	
 	// CONSTRUCTOR
-	public Database() throws SQLException {
+	public Database2() throws SQLException {
 		try {
 			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/vomistar", "postgres", "12345");
-			c.setAutoCommit(true);
+			dbConnection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/vomistar", "postgres", "12345");
+			dbConnection.setAutoCommit(true);
 		} catch (Exception e) {
 			System.err.println("No se pudo establecer la conexion con la base de datos!\n"
 					+ "Verifique que el servicio del servidor PostgreSQL este iniciado, o que la base de datos de PostgreSQL este instalada y configurada correctamente.\n"
 					+ "El nombre de la base de datos deberia ser 'vomistar', el usuario 'postgres' y la contraseña '12345'"
 					+ "\n\nDetalles de la excepcion:");
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			c.close();
+			dbConnection.close();
 		}
 	}
 	
+	 public static Database2 obtenerDB() {
+       if (DatabaseEstaDisponible) {
+           if (db == null) {
+               db = new Database2();
+           }
+           DatabaseEstaDisponible = false;
+           return db;
+       } else {
+           return null;
+           //DB no está disponible, 
+           //  puede retornar un error o retornal null
+       }
+   }
+	
+	/**
+	 * Cierra la coneccion con la BD
+	 */
+	public static void cerrarDatabase() {
+       db.cleanDatabase();
+       DatabaseEstaDisponible = true;
+  }
+  
+  public void cleanDatabase() {
+    if(rs != null) rs.close();
+		if(stmt != null) stmt.close();
+		// Se cierra conexion a la BD
+		dbConnection.close();
+  }  
+  
+  public Soup getDatabaseConnection) {
+       return this.dbConnection;
+   }
+   public void setDatabaseConnection(Connection dbConnection) {
+       this.dbConnection = dbConnection;
+   }
+   
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
 
 	/**
@@ -401,16 +440,6 @@ public class Database {
 			// Si hubo cualquier especie de error al conectar a la BD o al crear
 			// los datos.
 			return null;
-	}
-
-	/**
-	 * Cierra la coneccion con la BD
-	 */
-	public void cerrarDatabase() throws SQLException {
-		if(rs != null) rs.close();
-		if(stmt != null) stmt.close();
-		// Se cierra conexion a la BD
-		c.close();
 	}
 
 	// public Compania leerBoletasBD(Compania empresa) throws SQLException {
