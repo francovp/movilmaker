@@ -1,6 +1,4 @@
-/**
- *
- */
+
 
 /**
  * @author FValerio, DMayorga, MSilva, LMondaca
@@ -13,26 +11,34 @@ public class Plan {
 	private int precio;
 	private int minutos; // minutos para hablar
 	private int gigas; // GB de navegacion
+	private int sms;
+	private int valorMin;
 	private String idCompania; // ID de la compania a la que pertenece el plan;
 
+	
 	/**
 	 * @param idPlan
 	 * @param nombrePlan
 	 * @param precio
 	 * @param minutos
 	 * @param gigas
+	 * @param sms
+	 * @param valorMin
 	 * @param idCompania
 	 */
-	public Plan(int idPlan, String nombrePlan, int precio, int minutos, int gigas, String idCompania) {
+	public Plan(int idPlan, String nombrePlan, int precio, int minutos, int gigas, int sms, int valorMin,
+			String idCompania) {
 		super();
 		this.idPlan = idPlan;
 		this.nombrePlan = nombrePlan;
 		this.precio = precio;
 		this.minutos = minutos;
 		this.gigas = gigas;
+		this.sms = sms;
+		this.valorMin = valorMin;
 		this.idCompania = idCompania;
 	}
-	
+
 	/////////////////////////// * GETTERS & SETTERS *////////////////////////////////////
 
 	public int getIdPlan() {
@@ -81,6 +87,22 @@ public class Plan {
 
 	public void setIdCompania(String idCompania) {
 		this.idCompania = idCompania;
+	}
+
+	public int getSms() {
+		return sms;
+	}
+
+	public void setSms(int sms) {
+		this.sms = sms;
+	}
+
+	public int getValorMin() {
+		return valorMin;
+	}
+
+	public void setValorMin(int valorMin) {
+		this.valorMin = valorMin;
 	}
 
 }
