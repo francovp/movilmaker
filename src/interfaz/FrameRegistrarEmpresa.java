@@ -1,3 +1,4 @@
+package interfaz;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -13,6 +14,10 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
+
+import colecciones.Compania;
+import extras.Database;
+import interfaz.agregar.FrameAgregarAdmin;
 
 public class FrameRegistrarEmpresa extends JFrame {
 

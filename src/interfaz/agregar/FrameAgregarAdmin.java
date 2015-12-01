@@ -1,3 +1,4 @@
+package interfaz.agregar;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -14,6 +15,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+
+import colecciones.Administrador;
+import colecciones.Compania;
+import colecciones.Principal;
+import extras.Database;
+import interfaz.FrameInterfaz;
 
 public class FrameAgregarAdmin extends JFrame {
 

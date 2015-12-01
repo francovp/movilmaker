@@ -1,6 +1,12 @@
+package colecciones;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
+import extras.Database;
+import interfaz.FrameInterfaz;
+import interfaz.FrameRegistrarEmpresa;
+import interfaz.agregar.FrameAgregarAdmin;
 
 /**
  *

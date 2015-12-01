@@ -1,3 +1,4 @@
+package interfaz.agregar;
 
 
 import java.awt.Color;
@@ -17,7 +18,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-public class FrameAgregarEquipo extends JFrame {
+import colecciones.Compania;
+import colecciones.Plan;
+import extras.Database;
+import interfaz.FrameInterfaz;
+
+public class FrameAgregarPlan extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textNombrePlan;
@@ -35,7 +41,7 @@ public class FrameAgregarEquipo extends JFrame {
 			@Override
 			public void run() {
 				try {
-					FrameAgregarEquipo frame = new FrameAgregarEquipo(datosEmpresa);
+					FrameAgregarPlan frame = new FrameAgregarPlan(datosEmpresa);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +53,7 @@ public class FrameAgregarEquipo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrameAgregarEquipo(Compania datosEmpresa) {
+	public FrameAgregarPlan(Compania datosEmpresa) {
 		setResizable(false);
 		setTitle("Agregar pLAN");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

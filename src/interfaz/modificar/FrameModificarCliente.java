@@ -1,3 +1,4 @@
+package interfaz.modificar;
 
 
 import java.awt.Color;
@@ -13,6 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+
+import colecciones.Cliente;
+import colecciones.Compania;
+import interfaz.FrameInterfaz;
 
 public class FrameModificarCliente extends JFrame {
 
