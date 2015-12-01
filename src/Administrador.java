@@ -1,3 +1,4 @@
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
@@ -42,8 +43,6 @@ public class Administrador extends Persona {
 	public void reporte(Compania datosEmpresa) throws FileNotFoundException, DocumentException {
 		Document documento = new Document();
 		String fonoFijo, fonoCel, email, nombre2, apellido2;
-		int idPlan, idEquipo; // Compararan ids de cada contrato de x cliente
-								// con las ids almacenadas en Compania
 		PdfWriter.getInstance(documento, new FileOutputStream("reportes\\Reporte_admin_" + getRut() + ".pdf"));
 		documento.open(); // ABRE DOCUMENTO
 

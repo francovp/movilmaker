@@ -1,3 +1,4 @@
+
 /**
  * 
  */
@@ -121,13 +122,13 @@ public class XML {
             //Por cada key creamos un item que contendrá la key y el value
             for(int i=0; i<key.size();i++){
                 //Item Node
-                Element itemNode = document.createElement("ITEM"); 
+                Element itemNode = document.createElement("TABLA"); 
                 //Key Node
-                Element keyNode = document.createElement("KEY"); 
+                Element keyNode = document.createElement("ATRIBUTO"); 
                 Text nodeKeyValue = document.createTextNode(key.get(i));
                 keyNode.appendChild(nodeKeyValue);      
                 //Value Node
-                Element valueNode = document.createElement("VALUE"); 
+                Element valueNode = document.createElement("VALOR"); 
                 Text nodeValueValue = document.createTextNode(value.get(i));                
                 valueNode.appendChild(nodeValueValue);
                 //append keyNode and valueNode to itemNode
