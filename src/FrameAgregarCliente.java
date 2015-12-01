@@ -1,3 +1,5 @@
+
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -245,7 +247,7 @@ public class FrameAgregarCliente extends JFrame {
 								"Cliente creado con exito!\nProceda en asignarle un contrato", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
 						// Se creara� un contrato
-						FrameContrato fContrato = new FrameContrato(datosEmpresa, nuevoCliente);
+						FrameAgregarContrato fContrato = new FrameAgregarContrato(datosEmpresa, nuevoCliente);
 						fContrato.setVisible(true);
 						dispose();
 					} else {

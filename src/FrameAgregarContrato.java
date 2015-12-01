@@ -1,3 +1,5 @@
+
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -17,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class FrameContrato extends JFrame {
+public class FrameAgregarContrato extends JFrame {
 
 	private JPanel contentPane;
 
@@ -29,7 +31,7 @@ public class FrameContrato extends JFrame {
 			@Override
 			public void run() {
 				try {
-					FrameContrato frame = new FrameContrato(datosEmpresa, cliente);
+					FrameAgregarContrato frame = new FrameAgregarContrato(datosEmpresa, cliente);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +45,7 @@ public class FrameContrato extends JFrame {
 	 */
 	// RECIBE DATOS DE LA EMPRESA Y DATOS DE CLIENTE (cliente para obtencion de
 	// nombre mostrado en el panel y rut para su busqueda)
-	public FrameContrato(Compania datosEmpresa, Cliente cliente) {
+	public FrameAgregarContrato(Compania datosEmpresa, Cliente cliente) {
 		setResizable(false);
 		setTitle("Agregar Contrato");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,3 +1,5 @@
+
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -68,7 +70,7 @@ public class FrameAgregarOtroContrato extends JFrame {
 				// SI EXISTE LLAMA A VENTANA FrameContrato Y LE ENVIA
 				// datosEmpresa y c (Cliente)
 				if (c != null) {
-					FrameContrato fContrato = new FrameContrato(datosEmpresa, c);
+					FrameAgregarContrato fContrato = new FrameAgregarContrato(datosEmpresa, c);
 					fContrato.setVisible(true);
 					dispose();
 
