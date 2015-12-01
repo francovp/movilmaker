@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -25,8 +26,8 @@ public class Compania {
 	private String nombre;
 	private String rut;
 	private ArrayList<Persona> listaPersona = new ArrayList<Persona>();
-	private ArrayList<Equipo> moviles = new ArrayList<Equipo>();
-	private ArrayList<Plan> planes = new ArrayList<Plan>();
+	private ArrayList<Equipo> listaEquipos = new ArrayList<Equipo>();
+	private ArrayList<Plan> listaPlanes = new ArrayList<Plan>();
 
 	/**
 	 * @param nombre
@@ -65,19 +66,19 @@ public class Compania {
 	}
 
 	public ArrayList<Equipo> getMoviles() {
-		return moviles;
+		return listaEquipos;
 	}
 
 	public void setMoviles(ArrayList<Equipo> moviles) {
-		this.moviles = moviles;
+		this.listaEquipos = moviles;
 	}
 
 	public ArrayList<Plan> getPlanes() {
-		return planes;
+		return listaPlanes;
 	}
 
 	public void setPlanes(ArrayList<Plan> planes) {
-		this.planes = planes;
+		this.listaPlanes = planes;
 	}
 	
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
@@ -253,16 +254,34 @@ public class Compania {
 	}
 
 	///////////////////////// METODOS DE PLAN Y EQUIPOS /////////////////////////
+	
+	/**
+	 * Crea un nuevo Plan y lo agrega al Arralist listaPlanes de Compania
+	 *
+	 * @param planNuevo
+	 * @return Un objeto de tipo Cliente con el cliente nuevo creado
+	 */
+	public Plan crearPlanNuevo(Plan planNuevo) {
+
+		if (buscarPlan(planNuevo.getIdPlan()) != null)
+			// Si la id ya existe, le informo que ya existe.
+			return null;
+		else {
+			// Si no existe se guarda en el arraylist
+			listaPlanes.add(planNuevo);
+			return planNuevo;
+		}
+	}
 
 	/**
 	 * Muestra todos los planes existentes por consola
 	 */
 	public void mostrarPlanes() {
-		for (int i = 0; i < planes.size(); i++) {
-			System.out.println(planes.get(i).getNombrePlan());
-			System.out.println("	A solo $" + planes.get(i).getPrecio() + ".");
-			System.out.println("	Con " + planes.get(i).getGigas() + "GB de navegacion y "
-					+ planes.get(i).getMinutos() + " minutos a todo destino!!\n");
+		for (int i = 0; i < listaPlanes.size(); i++) {
+			System.out.println(listaPlanes.get(i).getNombrePlan());
+			System.out.println("	A solo $" + listaPlanes.get(i).getPrecio() + ".");
+			System.out.println("	Con " + listaPlanes.get(i).getGigas() + "GB de navegacion y "
+					+ listaPlanes.get(i).getMinutos() + " minutos a todo destino!!\n");
 		}
 	}
 
@@ -278,13 +297,13 @@ public class Compania {
 			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 			int i;
 			System.out.println("Moviles Disponibles");
-			for (i = 0; i < moviles.size(); i++)
-				System.out.println(i + 1 + "- " + moviles.get(i).getModelo());
+			for (i = 0; i < listaEquipos.size(); i++)
+				System.out.println(i + 1 + "- " + listaEquipos.get(i).getModelo());
 	
 			System.out.println("Ingrese el numero de la opcion:");
 			i = Integer.parseInt(bf.readLine());
 			i--;
-			return moviles.get(i);
+			return listaEquipos.get(i);
 		}
 	
 		/**
@@ -297,13 +316,13 @@ public class Compania {
 			int i;
 			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Nuestros Plan para ud son:");
-			for (i = 0; i < planes.size(); i++)
-				System.out.println(i + 1 + "- " + planes.get(i).getNombrePlan() + ", coste: " + planes.get(i).getPrecio());
+			for (i = 0; i < listaPlanes.size(); i++)
+				System.out.println(i + 1 + "- " + listaPlanes.get(i).getNombrePlan() + ", coste: " + listaPlanes.get(i).getPrecio());
 	
 			System.out.println("Igrese el numero de la opcion:");
 			i = Integer.parseInt(bf.readLine());
 			i--;
-			return planes.get(i);
+			return listaPlanes.get(i);
 		}
 	
 	// Versiones de Interfaz
@@ -317,7 +336,7 @@ public class Compania {
 		public Equipo elegirMovil(int movil) {
 			int i;
 			i = movil;
-			return moviles.get(i);
+			return listaEquipos.get(i);
 		}
 	
 		/**
@@ -329,7 +348,7 @@ public class Compania {
 		public Plan elegirPlan(int plan) {
 			int i;
 			i = plan;
-			return planes.get(i);
+			return listaPlanes.get(i);
 		}
 
 	/////////////////// FUNCIONES EXTRAS ///////////////////////
@@ -337,7 +356,7 @@ public class Compania {
 	// 1 SOBRECARGA METODO PARA PAGAR UN PLAN
 
 	// METODO PARA PAGAR MENSUALIDAD MEDIANTE ELECCION DE PLAN
-	public boolean pagarUnPlan(String rut) throws IOException {
+	public boolean pagarUnPlan(String rut) throws IOException, SQLException {
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		Cliente c;
 		Contrato contratoAPagar;
@@ -386,12 +405,7 @@ public class Compania {
 							// GUARDADO DE REGISTROS EN LA BD
 							// Preparar Conexion a BD
 							Database bd = null;
-							try {
-								bd = new Database();
-							} catch (SQLException e2) {
-								// TODO Auto-generated catch block
-								e2.printStackTrace();
-							}
+							bd = new Database();
 							// Se escribira registro en la BD
 							try {
 								bd.ingresarRegistroBD(registro);
@@ -448,12 +462,7 @@ public class Compania {
 						// GUARDADO DE REGISTROS EN LA BD
 						// Preparar Conexión a BD
 						Database bd = null;
-						try {
-							bd = new Database();
-						} catch (SQLException e2) {
-							// TODO Auto-generated catch block
-							e2.printStackTrace();
-						}
+						bd = new Database();
 						// Se escribira registro en la BD
 						try {
 							bd.ingresarRegistroBD(registro);
@@ -476,7 +485,7 @@ public class Compania {
 	}
 
 	// METODO PARA PAGAR contrato Y FINALIZARLO
-	public boolean pagarUnPlan(Contrato contratoAPagar) throws IOException {
+	public boolean pagarUnPlan(Contrato contratoAPagar) throws IOException{
 		RegistroDePagos boletaMasNueva;
 		int cuotasRestantes, montoAdeudado;
 
@@ -507,12 +516,7 @@ public class Compania {
 			// GUARDADO DE REGISTROS EN LA BD
 			// Preparar Conexión a BD
 			Database bd = null;
-			try {
-				bd = new Database();
-			} catch (SQLException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
+			bd = new Database();
 			// Se escribira registro en la BD
 			try {
 				bd.ingresarRegistroBD(registro);
@@ -569,10 +573,10 @@ public class Compania {
 	 * @return Un objeto Plan con el plan elejido
 	 */
 	public Plan buscarPlan(int id) {
-		for (int i = 0; i < planes.size(); i++)
-			if (planes.get(i).getIdPlan() == id)
+		for (int i = 0; i < listaPlanes.size(); i++)
+			if (listaPlanes.get(i).getIdPlan() == id)
 				// si la id ingresada se encuentra
-				return planes.get(i);
+				return listaPlanes.get(i);
 			else {
 				//System.err.println("No se encontro plan");
 				return null;
@@ -587,10 +591,10 @@ public class Compania {
 	 * @return Un objeto Equipo con el Equipo elejido
 	 */
 	public Equipo buscarEquipo(int id) {
-		for (int i = 0; i < moviles.size(); i++)
-			if (moviles.get(i).getIdEquipo() == id)
+		for (int i = 0; i < listaEquipos.size(); i++)
+			if (listaEquipos.get(i).getIdEquipo() == id)
 				// si la id ingresada se encuentra
-				return moviles.get(i);
+				return listaEquipos.get(i);
 			else {
 				//System.err.println("No se encontro equipo");
 				return null;
