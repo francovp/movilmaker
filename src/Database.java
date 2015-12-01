@@ -1,3 +1,4 @@
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,24 +14,48 @@ import java.sql.Statement;
  *
  */
 public class Database {
-
+	
+	private int tipodb = 0; // 0 = remota (openshift) ; 1 = localhost
 	private Connection c = null; // Objeto de tipo coneccion donde se guardaran los datos de coneccion
 	private Statement stmt = null; // Objeto de tipo sentencia SQL
 	private ResultSet rs = null; // Objeto de tipo resultado Query SQL
 	
 	// CONSTRUCTOR
-	public Database() throws SQLException {
-		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/vomistar", "postgres", "12345");
-			c.setAutoCommit(true);
-		} catch (Exception e) {
-			System.err.println("No se pudo establecer la conexion con la base de datos!\n"
-					+ "Verifique que el servicio del servidor PostgreSQL este iniciado, o que la base de datos de PostgreSQL este instalada y configurada correctamente.\n"
-					+ "El nombre de la base de datos deberia ser 'vomistar', el usuario 'postgres' y la contraseña '12345'"
-					+ "\n\nDetalles de la excepcion:");
-			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			c.close();
+	public Database(){
+		if(tipodb == 0){
+			try {
+				Class.forName("org.postgresql.Driver");
+				c = DriverManager.getConnection("jdbc:postgresql://localhost:5433/movilmaker", "adminvkgxatl", "YxjXw3He8hzu");
+				c.setAutoCommit(true);
+			} catch (SQLException | ClassNotFoundException e) {
+				System.err.println("No se pudo establecer la conexion con la base de datos!\n"
+						+ "Verifique que el proceso db_connection.exe esté iniciado y que el puerto local sea 5433\n"
+						+ "Verifique que la base de datos PostgreSQL este configurada correctamente.\n"
+						+ "\n\nDetalles de la excepcion:");
+				System.err.println(e.getClass().getName() + ": " + e.getMessage());
+				try {
+					c.close();
+				} catch (SQLException e1) {
+					System.err.println(e.getClass().getName() + ": " + e.getMessage());
+				}
+			}
+		}
+		if(tipodb == 1){
+			try {
+				Class.forName("org.postgresql.Driver");
+				c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/movilmaker", "postgres", "12345");
+				c.setAutoCommit(true);
+			} catch (SQLException | ClassNotFoundException e) {
+				System.err.println("No se pudo establecer la conexion con la base de datos!\n"
+						+ "Verifique que el servicio del servidor PostgreSQL este iniciado, o que la base de datos de PostgreSQL este instalada y configurada correctamente.\n"
+						+ "\n\nDetalles de la excepcion:");
+				System.err.println(e.getClass().getName() + ": " + e.getMessage());
+				try {
+					c.close();
+				} catch (SQLException e1) {
+					System.err.println(e.getClass().getName() + ": " + e.getMessage());
+				}
+			}
 		}
 	}
 	
@@ -105,6 +130,67 @@ public class Database {
 			return false;
 		// Si no se pudo establecer la conexion a la BD se retorna null;
 	}
+	
+	/**
+	 * Ingresa un Contrato de un Cliente en la Tabla CONTRATOS de la BD
+	 * @param contratoCliente - una referencia al Contrato del cliente a agregar
+	 * @return Un boolean si se ingresaron los datos correctamente o no
+	 */
+	public boolean ingresarContratoBD(Contrato contratoCliente) throws SQLException {
+		if (c != null) {
+			// Si se cre� la conexi�n a la BD exitosamente se contin�a
+			// Se crea una nueva sentencia SQL
+			stmt = c.createStatement();
+			String sql = "INSERT INTO contratos(id_contrato,id_equipo,id_plan,fecha_inicio,fecha_termino,"
+					+ "rut_cliente,valor_total,cuotas,valor_cuota)" + "VALUES('" + contratoCliente.getIdContrato()
+					+ "'," + contratoCliente.getEquipoContratado().getIdEquipo() + ","
+					+ contratoCliente.getPlanContratado().getIdPlan() + ",'" + contratoCliente.getFechaInicio() + "','"
+					+ contratoCliente.getFechaTermino() + "','" + contratoCliente.getRutCliente() + "',"
+					+ contratoCliente.getValorTotal() + "," + contratoCliente.getCuotas() + ","
+					+ contratoCliente.getValorCuota() + ");";
+			stmt.executeUpdate(sql);
+			cerrarDatabase();
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Ingresa un Plan en la Tabla PLANES de la BD
+	 * @param p - una referencia al Contrato del cliente a agregar
+	 * @return Un boolean si se ingresaron los datos correctamente o no
+	 */
+	public boolean ingresarPlanBD(Plan p) throws SQLException {
+		if (c != null) {
+			// Si se cre� la conexi�n a la BD exitosamente se contin�a
+			// Se crea una nueva sentencia SQL
+			stmt = c.createStatement();
+			String sql = "INSERT INTO planes(id_plan,nombre_plan,minutos,gigas,precio,sms,valor_min,id_compania)"
+					+ "VALUES('" + p.getIdPlan() + "','" + p.getNombrePlan()+ "'," + p.getMinutos() + "," + p.getGigas() + ","
+					+ p.getPrecio() + "," + p.getSms() + "," + p.getValorMin() + "," + p.getIdCompania() + ");";
+			stmt.executeUpdate(sql);
+			cerrarDatabase();
+			return true;
+		}
+		return false;
+	}
+
+	public boolean ingresarRegistroBD(RegistroDePagos registro) throws SQLException {
+		if (c != null) {
+			// Si se cre� la conexi�n a la BD exitosamente se contin�a
+			// Se crea una nueva sentencia SQL
+			stmt = c.createStatement();
+			String sql = "INSERT INTO boletas(id_contrato, rut_cliente,cuotas_rest,id_boleta,monto_pagadop)"
+					+ "VALUES('" + registro.getIdContrato() + "'," + registro.getContratoAPagar().getRutCliente() + "',"
+					+ registro.getCuotasRestantes() + "," + registro.getIdRegistro() + "," + registro.getMontoPagado()
+					+ ");";
+			stmt.executeUpdate(sql);
+			stmt.close();
+			c.close();
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Elimina un Cliente desde la Tabla PERSONA de la BD
@@ -151,47 +237,6 @@ public class Database {
 			return false;
 		// Si no se pudo establecer la conexion a la BD se retorna null;
 
-	}
-
-	/**
-	 * Ingresa un Contrato de un Cliente en la Tabla CONTRATOS de la BD
-	 * @param contratoCliente - una referencia al Contrato del cliente a agregar
-	 * @return Un boolean si se ingresaron los datos correctamente o no
-	 */
-	public boolean ingresarContratoBD(Contrato contratoCliente) throws SQLException {
-		if (c != null) {
-			// Si se cre� la conexi�n a la BD exitosamente se contin�a
-			// Se crea una nueva sentencia SQL
-			stmt = c.createStatement();
-			String sql = "INSERT INTO contratos(id_contrato,id_equipo,id_plan,fecha_inicio,fecha_termino,"
-					+ "rut_cliente,valor_total,cuotas,valor_cuota)" + "VALUES('" + contratoCliente.getIdContrato()
-					+ "'," + contratoCliente.getEquipoContratado().getIdEquipo() + ","
-					+ contratoCliente.getPlanContratado().getIdPlan() + ",'" + contratoCliente.getFechaInicio() + "','"
-					+ contratoCliente.getFechaTermino() + "','" + contratoCliente.getRutCliente() + "',"
-					+ contratoCliente.getValorTotal() + "," + contratoCliente.getCuotas() + ","
-					+ contratoCliente.getValorCuota() + ");";
-			stmt.executeUpdate(sql);
-			cerrarDatabase();
-			return true;
-		}
-		return false;
-	}
-
-	public boolean ingresarRegistroBD(RegistroDePagos registro) throws SQLException {
-		if (c != null) {
-			// Si se cre� la conexi�n a la BD exitosamente se contin�a
-			// Se crea una nueva sentencia SQL
-			stmt = c.createStatement();
-			String sql = "INSERT INTO boletas(id_contrato, rut_cliente,cuotas_rest,id_boleta,monto_pagadop)"
-					+ "VALUES('" + registro.getIdContrato() + "'," + registro.getContratoAPagar().getRutCliente() + "',"
-					+ registro.getCuotasRestantes() + "," + registro.getIdRegistro() + "," + registro.getMontoPagado()
-					+ ");";
-			stmt.executeUpdate(sql);
-			stmt.close();
-			c.close();
-			return true;
-		}
-		return false;
 	}
 	
 	/**
@@ -250,7 +295,7 @@ public class Database {
 				while (rs.next()) {
 					// Se obtienen datos de la plan
 					Plan p = new Plan(rs.getInt("id_plan"), rs.getString("nombre_plan"), rs.getInt("precio"),
-							rs.getInt("minutos"), rs.getInt("gigas"), rs.getString("id_compania"));
+							rs.getInt("minutos"), rs.getInt("gigas"), rs.getInt("sms"), rs.getInt("valor_min"), rs.getString("id_compania"));
 
 					empresa.getPlanes().add(p);
 				}
