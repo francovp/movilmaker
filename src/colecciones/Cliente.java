@@ -1,3 +1,5 @@
+package colecciones;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -138,14 +140,11 @@ public class Cliente extends Persona {
 	 * @return Un objeto Contrato con el contrato elejido
 	 */
 	public Contrato buscarContrato(int id) {
-		for (int i = 0; i < contratos.size(); i++)
+		for (int i = 0; i < contratos.size(); i++){
 			if (contratos.get(i).getIdContrato() == id)
 				// si la id ingresada se encuentra
 				return contratos.get(i); // se retorna al cliente
-			else {
-				System.err.println("No se encontro contrato del cliente");
-				return null;
-			}
+		}
 		System.err.println("Cliente no tiene ningun contrato");
 		return null;
 	}

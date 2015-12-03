@@ -1,3 +1,6 @@
+package interfaz.modificar;
+
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -12,7 +15,11 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-public class FrameActualizarCliente extends JFrame {
+import colecciones.Cliente;
+import colecciones.Compania;
+import interfaz.FrameInterfaz;
+
+public class FrameModificarCliente extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFieldRut;
@@ -34,7 +41,7 @@ public class FrameActualizarCliente extends JFrame {
 			@Override
 			public void run() {
 				try {
-					FrameActualizarCliente frame = new FrameActualizarCliente(datosEmpresa);
+					FrameModificarCliente frame = new FrameModificarCliente(datosEmpresa);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,7 +53,7 @@ public class FrameActualizarCliente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrameActualizarCliente(Compania datosEmpresa) {
+	public FrameModificarCliente(Compania datosEmpresa) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Actualizar datos cliente");
 		setResizable(false);

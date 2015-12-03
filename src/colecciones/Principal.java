@@ -1,5 +1,12 @@
+package colecciones;
+
 import java.io.IOException;
 import java.sql.SQLException;
+
+import extras.Database;
+import interfaz.FrameInterfaz;
+import interfaz.FrameRegistrarEmpresa;
+import interfaz.agregar.FrameAgregarAdmin;
 
 /**
  *
@@ -27,8 +34,9 @@ public class Principal {
 	 * Obtiene todos la estructura de datos del programa desde la Base de datos
 	 * Además se encarga de decidir qué interfaces cargar dependiendo de qué datos están
 	 * presentes en la BD
+	 * @throws ClassNotFoundException 
 	 **/
-	public static void obtenerDatos() throws SQLException {
+	public static boolean obtenerDatos() throws SQLException{
 		Database bd = null;
 		Compania datos = null; // Aquí se guarda toda la informacion de la empresa
 
@@ -97,6 +105,7 @@ public class Principal {
 			FrameRegistrarEmpresa iRegistrarEmpresa = new FrameRegistrarEmpresa(datos);
 			iRegistrarEmpresa.setVisible(true);
 		}
+		return true;
 	}
 	
 	/**
