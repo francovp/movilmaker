@@ -1,3 +1,4 @@
+package interfaz.agregar;
 
 
 import java.awt.Color;
@@ -18,6 +19,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+
+import colecciones.Cliente;
+import colecciones.Compania;
+import colecciones.Contrato;
+import extras.Database;
+import extras.XML;
+import interfaz.FrameInterfaz;
 
 public class FrameAgregarContrato extends JFrame {
 

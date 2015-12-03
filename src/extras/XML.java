@@ -1,3 +1,4 @@
+package extras;
 
 /**
  * 
@@ -20,6 +21,10 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
+
+import colecciones.Cliente;
+import colecciones.Compania;
+import colecciones.Contrato;
 
 /**
  * @author Franco
