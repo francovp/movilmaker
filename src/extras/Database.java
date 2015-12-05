@@ -19,115 +19,44 @@ import colecciones.RegistroDePagos;
  */
 public class Database {
 	
-	private int tipodb = 0; // 0 = remota (openshift) ; 1 = localhost
-	private static Database db;
-	private static boolean databaseEstaDisponible = true;
-  
-	private static Connection dbConnection = null; // Objeto de tipo coneccion donde se guardaran los datos de coneccion
+	// Objeto de tipo coneccion donde se guardaran los datos de coneccion
+	private static Connection dbConnection = DatabaseConnection.conectarDB(); 
 	private static Statement stmt = null; // Objeto de tipo sentencia SQL
 	private static ResultSet rs = null; // Objeto de tipo resultado Query SQL
 	
 	// CONSTRUCTOR
 	private Database() {
-		if(tipodb == 0){
-			try {
-				Class.forName("org.postgresql.Driver");
-				dbConnection = DriverManager.getConnection("jdbc:postgresql://localhost:5433/movilmaker", "adminvkgxatl", "YxjXw3He8hzu");
-				dbConnection.setAutoCommit(true);
-			} catch (SQLException | ClassNotFoundException e) {
-				System.err.println("No se pudo establecer la conexion con la base de datos!\n"
-						+ "Verifique que el proceso db_connection.exe estÃ© iniciado y que el puerto local sea 5433\n"
-						+ "Verifique que la base de datos PostgreSQL este configurada correctamente.\n"
-						+ "\n\nDetalles de la excepcion:");
-				System.err.println(e.getClass().getName() + ": " + e.getMessage());
-				try {
-					dbConnection.close();
-				} catch (SQLException e1) {
-					System.err.println(e.getClass().getName() + ": " + e.getMessage());
-				}
-			}
-		}
-		if(tipodb == 1){
-			try {
-				Class.forName("org.postgresql.Driver");
-				dbConnection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/movilmaker", "postgres", "12345");
-				dbConnection.setAutoCommit(true);
-			} catch (SQLException | ClassNotFoundException e) {
-				System.err.println("No se pudo establecer la conexion con la base de datos!\n"
-						+ "Verifique que el servicio del servidor PostgreSQL este iniciado, o que la base de datos de PostgreSQL este instalada y configurada correctamente.\n"
-						+ "\n\nDetalles de la excepcion:");
-				System.err.println(e.getClass().getName() + ": " + e.getMessage());
-				try {
-					dbConnection.close();
-				} catch (SQLException e1) {
-					System.err.println(e.getClass().getName() + ": " + e.getMessage());
-				}
-			}
-		}
 	}
 
-	public static Database obtenerDB() {
-		if (databaseEstaDisponible) {
-			if (db == null) {
-				db = new Database();
-			}
-			databaseEstaDisponible = false;
-			return db;
-		} else {
-			return null;
-			//DB no está¡ disponible, 
-			//  puede retornar un error o retornal null
-		}
-	}
-
-	/**
-	 * Cierra la coneccion con la BD
-	 */
-	public static void cerrarDatabase() {
-		try {
-			db.cleanDatabase();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		databaseEstaDisponible = true;
-	}
-
-	public void cleanDatabase() throws SQLException {
+	public static void cerrarDatabase() throws SQLException{
 		if(rs != null) rs.close();
 		if(stmt != null) stmt.close();
 		// Se cierra conexion a la BD
-		dbConnection.close();
 	}  
 
-	public Connection getDatabaseConnection() {
-		return this.dbConnection;
+	public static Connection getDbConnection() {
+		return dbConnection;
 	}
-	
-	public void setDatabaseConnection(Connection dbConnection) {
-		this.dbConnection = dbConnection;
-	}
-	
-	/////////////////////////// * METODOS * /////////////////////////////////////////////
 
+	public static void setDbConnection(Connection dbConnection) {
+		Database.dbConnection = dbConnection;
+	}
+
+	/////////////////////////// * METODOS * /////////////////////////////////////////////
+	
 	/**
 	 * Ingresa los datos de la empresa en la Tabla COMPANIA de la BD
 	 * @param empresa - una referencia a la Compania
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
-	public static boolean ingresarEmpresaBD(Compania empresa) throws SQLException {
-		if (dbConnection != null) {
-			// Si se creo la conexion a la BD exitosamente se continua
-			// Se crea una nueva sentencia SQL
-			stmt = dbConnection.createStatement();
-			String sql = "INSERT INTO compania (nombre,id_compania) " + "VALUES ('" + empresa.getNombre() + "','"
-					+ empresa.getRut() + "');";
-			stmt.executeUpdate(sql);
-			cerrarDatabase();
-			return true;
-		} else
-			return false;
-		// Si no se pudo establecer la conexion a la BD se retorna null;
+	public static void ingresarEmpresaBD(Compania empresa) throws SQLException {
+		// Si se creo la conexion a la BD exitosamente se continua
+		// Se crea una nueva sentencia SQL
+		stmt = dbConnection.createStatement();
+		String sql = "INSERT INTO compania (nombre,id_compania) " + "VALUES ('" + empresa.getNombre() + "','"
+				+ empresa.getRut() + "');";
+		stmt.executeUpdate(sql);
+		cerrarDatabase();
 	}
 	
 	/**
@@ -135,25 +64,20 @@ public class Database {
 	 * @param datosCliente - una referencia al Cliente
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
-	public static boolean ingresarClienteBD(Cliente datosCliente) throws SQLException {
-		if (dbConnection != null) {
-			// Si se creo la conexion a la BD exitosamente se continua
-			// Se crea una nueva sentencia SQL
-			stmt = dbConnection.createStatement();
-			String sql = "INSERT INTO persona (nombre1,apellido1,id_compania,"
-					+ "nombre2,fono_celular,fono_fijo,email,direccion1,direccion2,apellido2,rut,tipo) " + "VALUES ('"
-					+ datosCliente.getNombre1() + "','" + datosCliente.getApellido1() + "','"
-					+ datosCliente.getIdCompania() + "','" + datosCliente.getNombre2() + "',"
-					+ datosCliente.getFonoCel() + "," + datosCliente.getFonoFijo() + ",'" + datosCliente.getEmail()
-					+ "','" + datosCliente.getDireccion1() + "','" + datosCliente.getDireccion2() + "','"
-					+ datosCliente.getApellido2() + "','" + datosCliente.getRut() + "'," + datosCliente.getTipo()
-					+ ");";
-			stmt.executeUpdate(sql);
-			cerrarDatabase();
-			return true;
-		} else
-			return false;
-		// Si no se pudo establecer la conexion a la BD se retorna null
+	public static void ingresarClienteBD(Cliente datosCliente) throws SQLException {
+		// Si se creo la conexion a la BD exitosamente se continua
+		// Se crea una nueva sentencia SQL
+		stmt = dbConnection.createStatement();
+		String sql = "INSERT INTO persona (nombre1,apellido1,id_compania,"
+				+ "nombre2,fono_celular,fono_fijo,email,direccion1,direccion2,apellido2,rut,tipo) " + "VALUES ('"
+				+ datosCliente.getNombre1() + "','" + datosCliente.getApellido1() + "','"
+				+ datosCliente.getIdCompania() + "','" + datosCliente.getNombre2() + "',"
+				+ datosCliente.getFonoCel() + "," + datosCliente.getFonoFijo() + ",'" + datosCliente.getEmail()
+				+ "','" + datosCliente.getDireccion1() + "','" + datosCliente.getDireccion2() + "','"
+				+ datosCliente.getApellido2() + "','" + datosCliente.getRut() + "'," + datosCliente.getTipo()
+				+ ");";
+		stmt.executeUpdate(sql);
+		cerrarDatabase();
 	}
 
 	/**
@@ -161,23 +85,18 @@ public class Database {
 	 * @param datosAdmin - una referencia al Administrador
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
-	public static boolean ingresarAdminBD(Administrador datosAdmin) throws SQLException {
-		if (dbConnection != null) {
-			// Si se creo la conexion a la BD exitosamente se continua
-			// Se crea una nueva sentencia SQL
-			stmt = dbConnection.createStatement();
-			String sql = "INSERT INTO persona (nombre1,apellido1,id_compania,"
-					+ "nombre2,fono_celular,fono_fijo,email,apellido2,rut,tipo,password) " + "VALUES ('"
-					+ datosAdmin.getNombre1() + "','" + datosAdmin.getApellido1() + "','" + datosAdmin.getIdCompania()
-					+ "','" + datosAdmin.getNombre2() + "'," + datosAdmin.getFonoCel() + "," + datosAdmin.getFonoFijo()
-					+ ",'" + datosAdmin.getEmail() + "','" + datosAdmin.getApellido2() + "','" + datosAdmin.getRut()
-					+ "'," + datosAdmin.getTipo() + ",'" + datosAdmin.getPassword() + "');";
-			stmt.executeUpdate(sql);
-			cerrarDatabase();
-			return true;
-		} else
-			return false;
-		// Si no se pudo establecer la conexion a la BD se retorna null;
+	public static void ingresarAdminBD(Administrador datosAdmin) throws SQLException {
+		// Si se creo la conexion a la BD exitosamente se continua
+		// Se crea una nueva sentencia SQL
+		stmt = dbConnection.createStatement();
+		String sql = "INSERT INTO persona (nombre1,apellido1,id_compania,"
+				+ "nombre2,fono_celular,fono_fijo,email,apellido2,rut,tipo,password) " + "VALUES ('"
+				+ datosAdmin.getNombre1() + "','" + datosAdmin.getApellido1() + "','" + datosAdmin.getIdCompania()
+				+ "','" + datosAdmin.getNombre2() + "'," + datosAdmin.getFonoCel() + "," + datosAdmin.getFonoFijo()
+				+ ",'" + datosAdmin.getEmail() + "','" + datosAdmin.getApellido2() + "','" + datosAdmin.getRut()
+				+ "'," + datosAdmin.getTipo() + ",'" + datosAdmin.getPassword() + "');";
+		stmt.executeUpdate(sql);
+		cerrarDatabase();
 	}
 	
 	/**
@@ -185,23 +104,19 @@ public class Database {
 	 * @param contratoCliente - una referencia al Contrato del cliente a agregar
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
-	public static boolean ingresarContratoBD(Contrato contratoCliente) throws SQLException {
-		if (dbConnection != null) {
-			// Si se creï¿½ la conexiï¿½n a la BD exitosamente se continï¿½a
-			// Se crea una nueva sentencia SQL
-			stmt = dbConnection.createStatement();
-			String sql = "INSERT INTO contratos(id_contrato,id_equipo,id_plan,fecha_inicio,fecha_termino,"
-					+ "rut_cliente,valor_total,cuotas,valor_cuota)" + "VALUES('" + contratoCliente.getIdContrato()
-					+ "'," + contratoCliente.getEquipoContratado().getIdEquipo() + ","
-					+ contratoCliente.getPlanContratado().getIdPlan() + ",'" + contratoCliente.getFechaInicio() + "','"
-					+ contratoCliente.getFechaTermino() + "','" + contratoCliente.getRutCliente() + "',"
-					+ contratoCliente.getValorTotal() + "," + contratoCliente.getCuotas() + ","
-					+ contratoCliente.getValorCuota() + ");";
-			stmt.executeUpdate(sql);
-			cerrarDatabase();
-			return true;
-		}
-		return false;
+	public static void ingresarContratoBD(Contrato contratoCliente) throws SQLException {
+		// Si se creï¿½ la conexiï¿½n a la BD exitosamente se continï¿½a
+		// Se crea una nueva sentencia SQL
+		stmt = dbConnection.createStatement();
+		String sql = "INSERT INTO contratos(id_contrato,id_equipo,id_plan,fecha_inicio,fecha_termino,"
+				+ "rut_cliente,valor_total,cuotas,valor_cuota)" + "VALUES('" + contratoCliente.getIdContrato()
+				+ "'," + contratoCliente.getEquipoContratado().getIdEquipo() + ","
+				+ contratoCliente.getPlanContratado().getIdPlan() + ",'" + contratoCliente.getFechaInicio() + "','"
+				+ contratoCliente.getFechaTermino() + "','" + contratoCliente.getRutCliente() + "',"
+				+ contratoCliente.getValorTotal() + "," + contratoCliente.getCuotas() + ","
+				+ contratoCliente.getValorCuota() + ");";
+		stmt.executeUpdate(sql);
+		cerrarDatabase();
 	}
 	
 	/**
@@ -209,36 +124,28 @@ public class Database {
 	 * @param p - una referencia al Contrato del cliente a agregar
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
-	public static boolean ingresarPlanBD(Plan p) throws SQLException {
-		if (dbConnection != null) {
-			// Si se creï¿½ la conexiï¿½n a la BD exitosamente se continï¿½a
-			// Se crea una nueva sentencia SQL
-			stmt = dbConnection.createStatement();
-			String sql = "INSERT INTO planes(id_plan,nombre_plan,minutos,gigas,precio,sms,valor_min,id_compania)"
-					+ "VALUES('" + p.getIdPlan() + "','" + p.getNombrePlan()+ "'," + p.getMinutos() + "," + p.getGigas() + ","
-					+ p.getPrecio() + "," + p.getSms() + "," + p.getValorMin() + "," + p.getIdCompania() + ");";
-			stmt.executeUpdate(sql);
-			cerrarDatabase();
-			return true;
-		}
-		return false;
+	public static void ingresarPlanBD(Plan p) throws SQLException {
+		// Si se creï¿½ la conexiï¿½n a la BD exitosamente se continï¿½a
+		// Se crea una nueva sentencia SQL
+		stmt = dbConnection.createStatement();
+		String sql = "INSERT INTO planes(id_plan,nombre_plan,minutos,gigas,precio,sms,valor_min,id_compania)"
+				+ "VALUES('" + p.getIdPlan() + "','" + p.getNombrePlan()+ "'," + p.getMinutos() + "," + p.getGigas() + ","
+				+ p.getPrecio() + "," + p.getSms() + "," + p.getValorMin() + "," + p.getIdCompania() + ");";
+		stmt.executeUpdate(sql);
+		cerrarDatabase();
 	}
 
-	public static boolean ingresarRegistroBD(RegistroDePagos registro) throws SQLException {
-		if (dbConnection != null) {
-			// Si se creï¿½ la conexiï¿½n a la BD exitosamente se continï¿½a
-			// Se crea una nueva sentencia SQL
-			stmt = dbConnection.createStatement();
-			String sql = "INSERT INTO boletas(id_contrato, rut_cliente,cuotas_rest,id_boleta,monto_pagadop)"
-					+ "VALUES('" + registro.getIdContrato() + "'," + registro.getContratoAPagar().getRutCliente() + "',"
-					+ registro.getCuotasRestantes() + "," + registro.getIdRegistro() + "," + registro.getMontoPagado()
-					+ ");";
-			stmt.executeUpdate(sql);
-			stmt.close();
-			dbConnection.close();
-			return true;
-		}
-		return false;
+	public void ingresarRegistroBD(RegistroDePagos registro) throws SQLException {
+		// Si se creï¿½ la conexiï¿½n a la BD exitosamente se continï¿½a
+		// Se crea una nueva sentencia SQL
+		stmt = dbConnection.createStatement();
+		String sql = "INSERT INTO boletas(id_contrato, rut_cliente,cuotas_rest,id_boleta,monto_pagadop)"
+				+ "VALUES('" + registro.getIdContrato() + "'," + registro.getContratoAPagar().getRutCliente() + "',"
+				+ registro.getCuotasRestantes() + "," + registro.getIdRegistro() + "," + registro.getMontoPagado()
+				+ ");";
+		stmt.executeUpdate(sql);
+		stmt.close();
+		cerrarDatabase();
 	}
 
 	/**
@@ -246,26 +153,20 @@ public class Database {
 	 * @param rut - el RUT de la persona a eliminar
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
-	public static boolean eliminarClienteBD(String rut) throws SQLException {
+	public static void eliminarClienteBD(String rut) throws SQLException {
 		String sql;
-		if (dbConnection != null) {
-			// Si se creo la conexion a la BD exitosamente se continua
-			// Se crea una nueva sentencia SQL
-			stmt = dbConnection.createStatement();
-			sql = "DELETE FROM persona WHERE (rut = '" + rut + "');";
-			stmt.executeUpdate(sql);
-			stmt.close();
+		// Si se creo la conexion a la BD exitosamente se continua
+		// Se crea una nueva sentencia SQL
+		stmt = dbConnection.createStatement();
+		sql = "DELETE FROM persona WHERE (rut = '" + rut + "');";
+		stmt.executeUpdate(sql);
+		stmt.close();
 
-			// Se crea una nueva sentencia SQL
-			stmt = dbConnection.createStatement();
-			sql = "DELETE FROM contratos WHERE (rut_cliente = '" + rut + "');";
-			stmt.executeUpdate(sql);
-			cerrarDatabase();
-			return true;
-		} else
-			return false;
-		// Si no se pudo establecer la conexion a la BD se retorna null;
-
+		// Se crea una nueva sentencia SQL
+		stmt = dbConnection.createStatement();
+		sql = "DELETE FROM contratos WHERE (rut_cliente = '" + rut + "');";
+		stmt.executeUpdate(sql);
+		cerrarDatabase();
 	}
 
 	/**
@@ -273,19 +174,13 @@ public class Database {
 	 * @param rut - el RUT de la persona a la que pertenece el Contrato
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
-	public static boolean eliminarContratoBD(String rut) throws SQLException {
+	public static void eliminarContratoBD(String rut) throws SQLException {
 		String sql;
-		if (dbConnection != null) {
 			// Se crea una nueva sentencia SQL
 			stmt = dbConnection.createStatement();
 			sql = "DELETE FROM contratos WHERE (rut_cliente = '" + rut + "');";
 			stmt.executeUpdate(sql);
 			cerrarDatabase();
-			return true;
-		} else
-			return false;
-		// Si no se pudo establecer la conexion a la BD se retorna null;
-
 	}
 	
 	/**
@@ -294,7 +189,6 @@ public class Database {
 	 * @return Un objeto de tipo Compania con los datos ya ingresados en el
 	 */
 	public static Compania leerEmpresaBD(Compania empresa) throws SQLException {
-		if (dbConnection != null) {
 			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = dbConnection.createStatement();
@@ -315,11 +209,6 @@ public class Database {
 				// Se retorna toda la coleccion empresa
 				return empresa;
 			}
-		} else
-			// Si no se pudo establecer la conexion a la BD se retorna null;
-			// Si hubo cualquier especie de error al conectar a la BD o al crear
-			// los datos.
-			return null;
 	}
 
 	/**
@@ -328,7 +217,6 @@ public class Database {
 	 * @return Un objeto de tipo Compania con los datos ya ingresados en el
 	 */
 	public static Compania leerPlanesBD(Compania empresa) throws SQLException {
-		if (dbConnection != null) {
 			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = dbConnection.createStatement();
@@ -352,11 +240,6 @@ public class Database {
 				// Se retorna toda la coleccion empresa
 				return empresa;
 			}
-		} else
-			// Si no se pudo establecer la conexion a la BD se retorna null;
-			// Si hubo cualquier especie de error al conectar a la BD o al crear
-			// los datos.
-			return null;
 	}
 
 	/**
@@ -365,7 +248,6 @@ public class Database {
 	 * @return Un objeto de tipo Compania con los datos ya ingresados en el
 	 */
 	public static Compania leerEquiposBD(Compania empresa) throws SQLException {
-		if (dbConnection != null) {
 			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = dbConnection.createStatement();
@@ -390,11 +272,6 @@ public class Database {
 				// Se retorna toda la coleccion empresa
 				return empresa;
 			}
-		} else
-			// Si no se pudo establecer la conexion a la BD se retorna null;
-			// Si hubo cualquier especie de error al conectar a la BD o al crear
-			// los datos.
-			return null;
 	}
 
 	/**
@@ -403,7 +280,6 @@ public class Database {
 	 * @return Un objeto de tipo Compania con los datos ya ingresados en el
 	 */
 	public static Compania leerPersonasBD(Compania empresa) throws SQLException {
-		if (dbConnection != null) {
 			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = dbConnection.createStatement();
@@ -444,11 +320,6 @@ public class Database {
 				// Se retorna toda la coleccion empresa
 				return empresa;
 			}
-		} else
-			// Si no se pudo establecer la conexion a la BD se retorna null;
-			// Si hubo cualquier especie de error al conectar a la BD o al crear
-			// los datos.
-			return null;
 	}
 
 	/**
@@ -457,7 +328,6 @@ public class Database {
 	 * @return Un objeto de tipo Compania con los datos ya ingresados en el
 	 */
 	public static Compania leerContratosBD(Compania empresa) throws SQLException {
-		if (dbConnection != null) {
 			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
 			stmt = dbConnection.createStatement();
@@ -490,11 +360,6 @@ public class Database {
 				// Se retorna toda la coleccion empresa
 				return empresa;
 			}
-		} else
-			// Si no se pudo establecer la conexion a la BD se retorna null;
-			// Si hubo cualquier especie de error al conectar a la BD o al crear
-			// los datos.
-			return null;
 	}
 
 	// public Compania leerBoletasBD(Compania empresa) throws SQLException {
