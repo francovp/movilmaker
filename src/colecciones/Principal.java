@@ -2,6 +2,7 @@ package colecciones;
 import java.sql.SQLException;
 
 import extras.Database;
+import extras.DatabaseConnection;
 import interfaz.FrameAccesoProxy;
 
 public class Principal {
@@ -12,16 +13,26 @@ public class Principal {
 	 */
 	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
-
 		Compania datos = null;
+		datos = obtenerDatos(datos);
+		FrameAccesoProxy accessproxy = new FrameAccesoProxy(datos);
+		accessproxy.setVisible(true);
+	}
+	
+	/**
+	 * Obtiene todos la estructura de datos del programa desde la Base de datos
+	 * Además se encarga de decidir qué interfaces cargar dependiendo de qué datos están
+	 * presentes en la BD
+	 * @throws ClassNotFoundException 
+	 **/
+	public static Compania obtenerDatos(Compania datos) throws SQLException{
 		datos = Database.leerEmpresaBD(datos);
 		datos = Database.leerPersonasBD(datos);
 		datos = Database.leerPlanesBD(datos);
 		datos = Database.leerEquiposBD(datos);
 		datos = Database.leerContratosBD(datos);
-		
-		FrameAccesoProxy accessproxy = new FrameAccesoProxy(datos);
-		accessproxy.setVisible(true);
+		DatabaseConnection.cerrarConnection();
+		return datos;
 	}
 	
 	/**
