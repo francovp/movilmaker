@@ -1,4 +1,3 @@
-package interfaz.eliminar;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -15,12 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-
-import colecciones.Cliente;
-import colecciones.Compania;
-import colecciones.Contrato;
-import extras.Database;
-import interfaz.FrameInterfaz;
 
 public class FrameEliminarContrato extends JFrame {
 
@@ -85,7 +78,7 @@ public class FrameEliminarContrato extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}
@@ -103,7 +96,7 @@ public class FrameEliminarContrato extends JFrame {
 				// PROCEDE A ELIMINAR CONTRATO
 				if (list.isSelectedIndex(list.getSelectedIndex())) {
 					Cliente c = datosEmpresa.buscarCliente(textRut.getText());
-					if (c.getContratos().remove(list.getSelectedIndex()) != null) {
+					if (c.getContratos().getContratos().remove(list.getSelectedIndex()) != null) {
 						// CONTRATO ELIMINADO
 						JOptionPane.showMessageDialog(null, "Contrato eliminado con exito!", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
@@ -112,7 +105,7 @@ public class FrameEliminarContrato extends JFrame {
 						try {
 							// Creacion de conexion a base de datos
 							Database bd = new Database();
-							bd.eliminarContratoBD(c.getRut());
+							bd.eliminarContratoBD(c.getRut(),list.getSelectedIndex());
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							System.err.println("Contrato no se pudo eliminar de la Base de Datos.\n"
@@ -147,7 +140,7 @@ public class FrameEliminarContrato extends JFrame {
 				Cliente c = datosEmpresa.buscarCliente(textRut.getText());
 				if (c != null) {
 					textRut.setEnabled(false);
-					if (c.getContratos().size() == 0) {
+					if (c.getContratos().getContratos().size() == 0) {
 						lblAviso.setForeground(Color.RED);
 						lblAviso.setText("Cliente no tiene contratos");
 						btnCancelar.setText("Volver");
@@ -155,8 +148,8 @@ public class FrameEliminarContrato extends JFrame {
 						lblAviso.setForeground(Color.BLUE);
 						lblAviso.setText("Cliente encontrado!");
 						btnCancelar.setText("Volver");
-						for (int i = 0; i < c.getContratos().size(); i++) {
-							listContratos.addElement(c.getContratos().get(i).getIdContrato()); // AGREGA
+						for (int i = 0; i < c.getContratos().getContratos().size(); i++) {
+							listContratos.addElement(c.getContratos().getContratos().get(i).getIdContrato()); // AGREGA
 																								// ELEMENTO
 																								// A
 																								// LA

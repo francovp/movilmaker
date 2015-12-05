@@ -1,6 +1,3 @@
-package interfaz.agregar;
-
-
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -14,12 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-
-import colecciones.Cliente;
-import colecciones.Compania;
-import extras.Database;
-import extras.XML;
-import interfaz.FrameInterfaz;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -240,13 +231,13 @@ public class FrameAgregarCliente extends JFrame {
 							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 						}
 	
-						// Para guardar cliente en un XML
-						// Objeto XML
-						XML xml = new XML();
-						if (xml.ingresarClienteXML(datosEmpresa, nuevoCliente))
-							System.out.println("Cliente guardado en XML.");
-						else
-							System.err.println("Cliente no fue guardado en XML.");
+	//						// Para guardar cliente en un XML
+	//						// Objeto XML
+	//						XML xml = new XML();
+	//						if (xml.ingresarClienteXML(datosEmpresa, nuevoCliente))
+	//							System.out.println("Cliente guardado en XML.");
+	//						else
+	//							System.err.println("Cliente no fue guardado en XML.");
 	
 						// Muestra mensaje que cilente fue ingresado
 						// exitosamente!
@@ -254,7 +245,7 @@ public class FrameAgregarCliente extends JFrame {
 								"Cliente creado con exito!\nProceda en asignarle un contrato", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
 						// Se creara� un contrato
-						FrameAgregarContrato fContrato = new FrameAgregarContrato(datosEmpresa, nuevoCliente);
+						FrameContrato fContrato = new FrameContrato(datosEmpresa, nuevoCliente);
 						fContrato.setVisible(true);
 						dispose();
 					} else {
@@ -282,7 +273,7 @@ public class FrameAgregarCliente extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}
@@ -319,8 +310,8 @@ public class FrameAgregarCliente extends JFrame {
 		Cliente clienteNuevo = new Cliente(rut, datosEmpresa.getRut(), nombre1, nombre2, apellido1, apellido2, fono1,
 				fono2, email, 1, direccion1, direccion2, 0, null);
 		// Se ingresa cliente nuevo y se espera un resultado del ingreso
-		Cliente resultado = datosEmpresa.crearClienteNuevo(clienteNuevo);
-		if (resultado != null)
+		
+		if (datosEmpresa.validarCliente(clienteNuevo.getRut()) == false)
 			// Si cliente no existe, todo bien
 			return clienteNuevo;
 		else

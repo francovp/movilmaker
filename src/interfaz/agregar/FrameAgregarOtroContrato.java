@@ -1,6 +1,3 @@
-package interfaz.agregar;
-
-
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -12,10 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-
-import colecciones.Cliente;
-import colecciones.Compania;
-import interfaz.FrameInterfaz;
 
 public class FrameAgregarOtroContrato extends JFrame {
 
@@ -75,7 +68,7 @@ public class FrameAgregarOtroContrato extends JFrame {
 				// SI EXISTE LLAMA A VENTANA FrameContrato Y LE ENVIA
 				// datosEmpresa y c (Cliente)
 				if (c != null) {
-					FrameAgregarContrato fContrato = new FrameAgregarContrato(datosEmpresa, c);
+					FrameContrato fContrato = new FrameContrato(datosEmpresa, c);
 					fContrato.setVisible(true);
 					dispose();
 
@@ -93,7 +86,7 @@ public class FrameAgregarOtroContrato extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// LLAMA AL MENU PRINCIPAL Y CIERRA ESTA VENTANA
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}

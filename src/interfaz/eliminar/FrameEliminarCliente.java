@@ -1,4 +1,3 @@
-package interfaz.eliminar;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -18,11 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-
-import colecciones.Cliente;
-import colecciones.Compania;
-import extras.Database;
-import interfaz.FrameInterfaz;
 
 @SuppressWarnings("serial")
 public class FrameEliminarCliente extends JFrame {
@@ -51,7 +45,7 @@ public class FrameEliminarCliente extends JFrame {
 	 * Create the frame.
 	 */
 	public FrameEliminarCliente(Compania datosEmpresa) {
-		ArrayList<Cliente> listaClientes = datosEmpresa.mostrarClientes();
+		ArrayList<Cliente> listaClientes = datosEmpresa.obtenerClientes();
 		setResizable(false);
 		setTitle("Eliminar cliente");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,6 +82,7 @@ public class FrameEliminarCliente extends JFrame {
 				if (datosEmpresa.eliminarCliente(rut) == true) {
 					// Si el cliente se elimino exitosamente se eliminará
 					// cliente en la BD
+					
 					try {
 						// Creacion de conexion a base de datos
 						Database bd = new Database();
@@ -140,7 +135,7 @@ public class FrameEliminarCliente extends JFrame {
 		btnVolver.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}
