@@ -133,6 +133,23 @@ public class Compania {
 			planes.agregarPlan(plan);
 		}
 		
+		/**
+		 * Crea un nuevo Plan y lo agrega al Arralist listaPlanes de Compania
+		 *
+		 * @param planNuevo
+		 * @return Un objeto de tipo Cliente con el cliente nuevo creado
+		 */
+		public Plan crearPlan (Plan plan) {
+			if (buscarPlan(plan.getIdPlan()) != null)
+				// Si la id ya existe, le informo que ya existe.
+				return null;
+			else {
+				// Si no existe se guarda en el arraylist
+				agregarPlan(plan);
+				return plan;
+			}
+		}
+		
 		public Plan buscarPlan (int id){
 			return planes.buscarPlan(id);
 		}
@@ -141,6 +158,7 @@ public class Compania {
 			System.out.println("aaaa: "+nombre);
 			return planes.buscarPlan(nombre);
 		}
+		
 
 		/**
 		 * Imprime un Reporte completo de todos los datos de la empresa.
