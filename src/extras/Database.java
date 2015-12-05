@@ -1,5 +1,4 @@
 package extras;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,10 +12,6 @@ import colecciones.Contrato;
 import colecciones.Equipo;
 import colecciones.Plan;
 import colecciones.RegistroDePagos;
-
-/**
- *
- */
 
 /**
  * @author Franco

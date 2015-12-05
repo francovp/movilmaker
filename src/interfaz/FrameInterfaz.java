@@ -1,3 +1,5 @@
+package interfaz;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
@@ -17,6 +19,15 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
 
 import com.itextpdf.text.DocumentException;
+
+import colecciones.Compania;
+import interfaz.agregar.FrameAgregarAdmin;
+import interfaz.agregar.FrameAgregarCliente;
+import interfaz.agregar.FrameAgregarOtroContrato;
+import interfaz.eliminar.FrameEliminarCliente;
+import interfaz.eliminar.FrameEliminarContrato;
+import interfaz.modificar.FrameModificarCliente;
+import interfaz.reportar.FrameVerClientes;
 
 public class FrameInterfaz extends JFrame {
 
@@ -115,7 +126,7 @@ public class FrameInterfaz extends JFrame {
 		btnActualizarDatosDe.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameActualizarCliente fActualizarCliente = new FrameActualizarCliente(datosEmpresa);
+				FrameModificarCliente fActualizarCliente = new FrameModificarCliente(datosEmpresa);
 				fActualizarCliente.setVisible(true);
 				dispose();
 			}

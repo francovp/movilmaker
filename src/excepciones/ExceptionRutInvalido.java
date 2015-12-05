@@ -1,3 +1,4 @@
+package excepciones;
 
 public class ExceptionRutInvalido extends Exception {
 

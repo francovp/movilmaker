@@ -1,3 +1,4 @@
+package colecciones;
 
 public abstract class Persona {
 

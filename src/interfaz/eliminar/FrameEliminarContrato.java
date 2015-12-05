@@ -1,3 +1,4 @@
+package interfaz.eliminar;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -14,6 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+
+import colecciones.Cliente;
+import colecciones.Compania;
+import colecciones.Contrato;
+import extras.Database;
+import interfaz.FrameInterfaz;
 
 public class FrameEliminarContrato extends JFrame {
 

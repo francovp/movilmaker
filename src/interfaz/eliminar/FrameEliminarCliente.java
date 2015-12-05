@@ -1,3 +1,4 @@
+package interfaz.eliminar;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,11 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+
+import colecciones.Cliente;
+import colecciones.Compania;
+import extras.Database;
+import interfaz.FrameInterfaz;
 
 @SuppressWarnings("serial")
 public class FrameEliminarCliente extends JFrame {

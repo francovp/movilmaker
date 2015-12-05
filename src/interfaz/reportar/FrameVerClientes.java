@@ -1,3 +1,4 @@
+package interfaz.reportar;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,11 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import com.itextpdf.text.DocumentException;
+
+import colecciones.Cliente;
+import colecciones.Compania;
+import interfaz.FrameInterfaz;
+
 import javax.swing.JLabel;
 
 public class FrameVerClientes extends JFrame {

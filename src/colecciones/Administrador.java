@@ -1,5 +1,6 @@
 package colecciones;
 
+
 public class Administrador extends Persona {
 	private String password;
 

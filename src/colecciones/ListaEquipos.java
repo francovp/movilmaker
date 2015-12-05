@@ -1,3 +1,4 @@
+package colecciones;
 import java.util.ArrayList;
 
 public class ListaEquipos implements ListaElementos {

@@ -1,3 +1,4 @@
+package interfaz.agregar;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -12,9 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import colecciones.Cliente;
+import colecciones.Compania;
+import extras.Database;
+import interfaz.FrameInterfaz;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -245,7 +249,7 @@ public class FrameAgregarCliente extends JFrame {
 								"Cliente creado con exito!\nProceda en asignarle un contrato", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
 						// Se creara� un contrato
-						FrameContrato fContrato = new FrameContrato(datosEmpresa, nuevoCliente);
+						FrameAgregarContrato fContrato = new FrameAgregarContrato(datosEmpresa, nuevoCliente);
 						fContrato.setVisible(true);
 						dispose();
 					} else {

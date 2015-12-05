@@ -1,6 +1,7 @@
 package interfaz.agregar;
 
 
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -176,7 +177,8 @@ public class FrameAgregarPlan extends JFrame {
 						JOptionPane.showMessageDialog(null, "Plan creado con exito!", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
 						// // Se volverá a Interfaz principal
-						FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+						//FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+						FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 						fInterfaz.setVisible(true);
 						dispose();
 					} else {
@@ -205,7 +207,8 @@ public class FrameAgregarPlan extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				//FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}

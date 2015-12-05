@@ -1,3 +1,6 @@
+package interfaz;
+
+import colecciones.Compania;
 
 public class FrameAcceso implements IFrameAcceso {
 	

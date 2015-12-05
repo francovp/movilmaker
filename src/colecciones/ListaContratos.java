@@ -1,3 +1,4 @@
+package colecciones;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -7,6 +8,8 @@ import java.util.GregorianCalendar;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
+
+import extras.Database;
 
 public class ListaContratos implements ListaElementos {
 	private ArrayList <Contrato> contratos;
