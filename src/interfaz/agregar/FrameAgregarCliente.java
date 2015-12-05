@@ -227,8 +227,7 @@ public class FrameAgregarCliente extends JFrame {
 						// cliente en la BD
 						try {
 							// Creacion de conexion a base de datos
-							Database bd = new Database();
-							bd.ingresarClienteBD(nuevoCliente);
+							Database.ingresarClienteBD(nuevoCliente);
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							System.err.println("Cliente no se pudo escribir en la Base de Datos.\n"

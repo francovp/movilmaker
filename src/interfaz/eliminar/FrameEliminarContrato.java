@@ -111,8 +111,8 @@ public class FrameEliminarContrato extends JFrame {
 						// Se eliminará contrato en la BD
 						try {
 							// Creacion de conexion a base de datos
-							Database bd = new Database();
-							bd.eliminarContratoBD(c.getRut(),list.getSelectedIndex());
+							
+							Database.eliminarContratoBD(c.getRut());
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							System.err.println("Contrato no se pudo eliminar de la Base de Datos.\n"

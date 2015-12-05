@@ -180,8 +180,7 @@ public class FrameAgregarContrato extends JFrame {
 							// Se escribira contrato en la BD
 							try {
 								// Creacion de conexion a base de datos
-								Database bd = new Database();
-								bd.ingresarContratoBD(contratoNuevo);
+								Database.ingresarContratoBD(contratoNuevo);
 							} catch (SQLException e2) {
 								// TODO Auto-generated catch block
 								System.err.println("Contrato no se pudo escribir en la Base de Datos.\n"

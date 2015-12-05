@@ -19,6 +19,7 @@ import javax.swing.border.TitledBorder;
 import colecciones.Administrador;
 import colecciones.Compania;
 import colecciones.Principal;
+import extras.Database;
 import interfaz.FrameInterfaz;
 
 public class FrameAgregarAdmin extends JFrame {
@@ -187,12 +188,12 @@ public class FrameAgregarAdmin extends JFrame {
 						// Administrador en la BD
 						try {
 							// Creacion de conexion a base de datos
-							Database bd = new Database();
-							bd.ingresarAdminBD(nuevoAdmin);
+						
+							Database.ingresarAdminBD(nuevoAdmin);
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							System.err.println("Administrador no se pudo escribir en la Base de Datos.\n"
-									+ "\nDetalles de la excepción:");
+									+ "\nDetalles de la excepciï¿½n:");
 							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 						}
 
@@ -209,7 +210,7 @@ public class FrameAgregarAdmin extends JFrame {
 						// exitosamente!
 						JOptionPane.showMessageDialog(null, "Administrador creado con exito!", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
-						// // Se volverá a Interfaz principal
+						// // Se volverï¿½ a Interfaz principal
 						FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 						fInterfaz.setVisible(true);
 						dispose();
