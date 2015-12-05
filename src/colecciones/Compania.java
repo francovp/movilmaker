@@ -21,7 +21,7 @@ public class Compania {
 		 * @param nombre
 		 * @param rut
 		 */
-		public Compania(String nombre, String rut, String password) {
+		public Compania(String nombre, String rut) {
 			super();
 			this.nombre = nombre;
 			this.rut = rut;

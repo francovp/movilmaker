@@ -23,9 +23,9 @@ public class Database {
 	private static Database db;
 	private static boolean databaseEstaDisponible = true;
   
-	private Connection dbConnection = null; // Objeto de tipo coneccion donde se guardaran los datos de coneccion
-	private Statement stmt = null; // Objeto de tipo sentencia SQL
-	private ResultSet rs = null; // Objeto de tipo resultado Query SQL
+	private static Connection dbConnection = null; // Objeto de tipo coneccion donde se guardaran los datos de coneccion
+	private static Statement stmt = null; // Objeto de tipo sentencia SQL
+	private static ResultSet rs = null; // Objeto de tipo resultado Query SQL
 	
 	// CONSTRUCTOR
 	private Database() {
@@ -346,7 +346,7 @@ public class Database {
 					Plan p = new Plan(rs.getInt("id_plan"), rs.getString("nombre_plan"), rs.getInt("precio"),
 							rs.getInt("minutos"), rs.getInt("gigas"), rs.getInt("sms"), rs.getInt("valor_min"), rs.getString("id_compania"));
 
-					empresa.getPlanes().add(p);
+					empresa.getPlanes().agregarPlan(p);
 				}
 				cerrarDatabase();
 				// Se retorna toda la coleccion empresa
@@ -384,7 +384,7 @@ public class Database {
 							rs.getInt("valor_con_plan"), rs.getInt("valor_sin_plan"), rs.getString("capacidad"),
 							rs.getString("id_compania"));
 
-					empresa.getMoviles().add(e);
+					empresa.getEquipos().agregarEquipo(e);
 				}
 				cerrarDatabase();
 				// Se retorna toda la coleccion empresa
@@ -428,7 +428,7 @@ public class Database {
 								rs.getString("apellido2"), rs.getInt("fono_celular"), rs.getInt("fono_fijo"),
 								rs.getString("email"), rs.getInt("tipo"), rs.getString("direccion1"),
 								rs.getString("direccion2"), rs.getInt("deuda"), rs.getString("password"));
-						empresa.getListaPersona().add(admin);
+						empresa.getAdministradores().agregarAdministrador(admin);
 					}
 					if (tipo == 1) {
 						// Cliente
@@ -437,7 +437,7 @@ public class Database {
 								rs.getString("apellido2"), rs.getInt("fono_celular"), rs.getInt("fono_fijo"),
 								rs.getString("email"), rs.getInt("tipo"), rs.getString("direccion1"),
 								rs.getString("direccion2"), rs.getInt("deuda"), rs.getString("password"));
-						empresa.getListaPersona().add(cli);
+						empresa.getClientes().agregarCliente(cli);
 					}
 				}
 				cerrarDatabase();
@@ -484,7 +484,7 @@ public class Database {
 					// Busco el cliente al cual se le asignara el contrato
 					Cliente cliente = empresa.buscarCliente(c.getRutCliente());
 					// Luego agrego el contrato a ESE cliente
-					cliente.getContratos().add(c);
+					cliente.getContratos().agregarContrato(c);
 				}
 				cerrarDatabase();
 				// Se retorna toda la coleccion empresa

@@ -98,8 +98,7 @@ public class ListaContratos implements ListaElementos {
 		contratos.remove(indice);
 		try {
 			// Creacion de conexion a base de datos
-			Database bd = new Database();
-			bd.eliminarContratoBD(rut,indice);
+			Database.eliminarContratoBD(rut);
 			return true;
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
