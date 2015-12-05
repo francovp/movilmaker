@@ -222,7 +222,8 @@ public class FrameAgregarCliente extends JFrame {
 					// Llama metodo para crear Cliente
 					nuevoCliente = datosNuevaPersona(datosEmpresa);
 					if (nuevoCliente != null) {
-						// Si el cliente se crea exitosamente se escribira
+						// Si el cliente se crea exitosamente 
+						//se escribira
 						// cliente en la BD
 						try {
 							// Creacion de conexion a base de datos
@@ -315,9 +316,11 @@ public class FrameAgregarCliente extends JFrame {
 				fono2, email, 1, direccion1, direccion2, 0, null);
 		// Se ingresa cliente nuevo y se espera un resultado del ingreso
 		
-		if (datosEmpresa.validarCliente(clienteNuevo.getRut()) == false)
+		if (datosEmpresa.validarCliente(clienteNuevo.getRut()) == false){
 			// Si cliente no existe, todo bien
+			datosEmpresa.agregarCliente(clienteNuevo);
 			return clienteNuevo;
+		}
 		else
 			// Entonces el cliente ya existe
 			return null;

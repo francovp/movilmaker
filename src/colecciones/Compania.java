@@ -87,12 +87,20 @@ public class Compania {
 			clientes.agregarCliente(c);
 		}
 		
+		public void agregarAdministrador (Administrador admin) {
+			administradores.agregarAdministrador(admin);
+		}
+		
 		public Cliente buscarCliente (String rut) {
 			return clientes.buscarCliente(rut);
 		}
 		
 		public boolean validarCliente (String rut){
 			return clientes.validarCliente(rut);
+		}
+		
+		public boolean validarAdmin (String rut){
+			return administradores.validarAdmin(rut);
 		}
 		
 		public ArrayList <Cliente> obtenerClientes(){
@@ -102,10 +110,6 @@ public class Compania {
 		public boolean eliminarCliente (String rut){
 			clientes.eliminarCliente(rut);
 			return true;
-		}
-		
-		public void agregarAdministrador (Administrador admin) {
-			administradores.agregarAdministrador(admin);
 		}
 		
 		public ArrayList <Administrador> obtenerAdministradores(){

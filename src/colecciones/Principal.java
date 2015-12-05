@@ -13,18 +13,12 @@ public class Principal {
 	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
 
-		Database bd = null;
 		Compania datos = null;
-		bd = new Database();
-		datos = bd.leerEmpresaBD(datos);
-		bd = new Database();
-		datos = bd.leerPersonasBD(datos);
-		bd = new Database();
-		datos = bd.leerPlanesBD(datos);
-		bd = new Database();
-		datos = bd.leerEquiposBD(datos);
-		bd = new Database();
-		datos = bd.leerContratosBD(datos);
+		datos = Database.leerEmpresaBD(datos);
+		datos = Database.leerPersonasBD(datos);
+		datos = Database.leerPlanesBD(datos);
+		datos = Database.leerEquiposBD(datos);
+		datos = Database.leerContratosBD(datos);
 		
 		FrameAccesoProxy accessproxy = new FrameAccesoProxy(datos);
 		accessproxy.setVisible(true);

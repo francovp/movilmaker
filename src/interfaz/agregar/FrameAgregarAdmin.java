@@ -181,10 +181,35 @@ public class FrameAgregarAdmin extends JFrame {
 				// Comprobaciones de Datos ingresados
 				if(comprobarIngreso(lblAviso)){					
 					// Llama metodo para crear Administrador
-					datosEmpresa.agregarAdministrador(nuevoAdmin);
+					nuevoAdmin = datosNuevaPersona(datosEmpresa);
+					if (nuevoAdmin != null) {
+						// Si el Administrador se crea exitosamente se escribira
+						// Administrador en la BD
+						try {
+							// Creacion de conexion a base de datos
+							Database bd = new Database();
+							bd.ingresarAdminBD(nuevoAdmin);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							System.err.println("Administrador no se pudo escribir en la Base de Datos.\n"
+									+ "\nDetalles de la excepción:");
+							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
+						}
+
+						// // Para guardar Administrador en un XML
+						// // Objeto XML
+						// XML xml = new XML();
+						// if(xml.ingresarAdministradorXML(datosEmpresa,
+						// nuevoAdmin))
+						// System.out.println("Administrador guardado en XML.");
+						// else System.err.println("Administrador no fue
+						// guardado en XML.");
+						//
+						// Muestra mensaje que el Administrador fue ingresado
+						// exitosamente!
 						JOptionPane.showMessageDialog(null, "Administrador creado con exito!", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
-						// // Se volverÃ¡ a Interfaz principal
+						// // Se volverá a Interfaz principal
 						FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 						fInterfaz.setVisible(true);
 						dispose();
@@ -195,6 +220,7 @@ public class FrameAgregarAdmin extends JFrame {
 						lblAviso.setText("Administrador ya existe!");
 					}
 				}
+			}
 		});
 		btnAgregar.setBounds(10, 11, 89, 23);
 		panel_2.add(btnAgregar);
@@ -220,7 +246,7 @@ public class FrameAgregarAdmin extends JFrame {
 	 * @param datosEmpresa - una referencia a la Compania
 	 * @return un objeto Administrador del administrador creado
 	 **/
-	public void datosNuevaPersona(Compania datosEmpresa) {
+	public Administrador datosNuevaPersona(Compania datosEmpresa) {
 		String nombre1 = null, nombre2 = null, apellido1 = null, apellido2 = null, rut = null, email = null;
 		int fono1 = 0, fono2 = 0;
 				
@@ -237,7 +263,15 @@ public class FrameAgregarAdmin extends JFrame {
 		Administrador adminNuevo = new Administrador(rut, datosEmpresa.getRut(), nombre1, nombre2, apellido1, apellido2,
 				fono1, fono2, email, 0, null, null, 0, null);
 		// Se ingresa Administrador nuevo y se espera un resultado del ingreso
-		datosEmpresa.agregarAdministrador(adminNuevo);
+
+		if (datosEmpresa.validarAdmin(adminNuevo.getRut()) == false){
+			// Si cliente no existe, todo bien
+			datosEmpresa.agregarAdministrador(adminNuevo);
+			return adminNuevo;
+		}
+		else
+			// Entonces el cliente ya existe
+			return null;
 	}
 
 	/**

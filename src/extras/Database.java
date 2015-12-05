@@ -115,7 +115,7 @@ public class Database {
 	 * @param empresa - una referencia a la Compania
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
-	public boolean ingresarEmpresaBD(Compania empresa) throws SQLException {
+	public static boolean ingresarEmpresaBD(Compania empresa) throws SQLException {
 		if (dbConnection != null) {
 			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
@@ -135,7 +135,7 @@ public class Database {
 	 * @param datosCliente - una referencia al Cliente
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
-	public boolean ingresarClienteBD(Cliente datosCliente) throws SQLException {
+	public static boolean ingresarClienteBD(Cliente datosCliente) throws SQLException {
 		if (dbConnection != null) {
 			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
@@ -161,7 +161,7 @@ public class Database {
 	 * @param datosAdmin - una referencia al Administrador
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
-	public boolean ingresarAdminBD(Administrador datosAdmin) throws SQLException {
+	public static boolean ingresarAdminBD(Administrador datosAdmin) throws SQLException {
 		if (dbConnection != null) {
 			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
@@ -185,7 +185,7 @@ public class Database {
 	 * @param contratoCliente - una referencia al Contrato del cliente a agregar
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
-	public boolean ingresarContratoBD(Contrato contratoCliente) throws SQLException {
+	public static boolean ingresarContratoBD(Contrato contratoCliente) throws SQLException {
 		if (dbConnection != null) {
 			// Si se cre� la conexi�n a la BD exitosamente se contin�a
 			// Se crea una nueva sentencia SQL
@@ -209,7 +209,7 @@ public class Database {
 	 * @param p - una referencia al Contrato del cliente a agregar
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
-	public boolean ingresarPlanBD(Plan p) throws SQLException {
+	public static boolean ingresarPlanBD(Plan p) throws SQLException {
 		if (dbConnection != null) {
 			// Si se cre� la conexi�n a la BD exitosamente se contin�a
 			// Se crea una nueva sentencia SQL
@@ -224,7 +224,7 @@ public class Database {
 		return false;
 	}
 
-	public boolean ingresarRegistroBD(RegistroDePagos registro) throws SQLException {
+	public static boolean ingresarRegistroBD(RegistroDePagos registro) throws SQLException {
 		if (dbConnection != null) {
 			// Si se cre� la conexi�n a la BD exitosamente se contin�a
 			// Se crea una nueva sentencia SQL
@@ -246,7 +246,7 @@ public class Database {
 	 * @param rut - el RUT de la persona a eliminar
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
-	public boolean eliminarClienteBD(String rut) throws SQLException {
+	public static boolean eliminarClienteBD(String rut) throws SQLException {
 		String sql;
 		if (dbConnection != null) {
 			// Si se creo la conexion a la BD exitosamente se continua
@@ -273,7 +273,7 @@ public class Database {
 	 * @param rut - el RUT de la persona a la que pertenece el Contrato
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
-	public boolean eliminarContratoBD(String rut) throws SQLException {
+	public static boolean eliminarContratoBD(String rut) throws SQLException {
 		String sql;
 		if (dbConnection != null) {
 			// Se crea una nueva sentencia SQL
@@ -293,7 +293,7 @@ public class Database {
 	 * @param empresa - una referencia a un objeto de tipo Empresa para guardar los datos 
 	 * @return Un objeto de tipo Compania con los datos ya ingresados en el
 	 */
-	public Compania leerEmpresaBD(Compania empresa) throws SQLException {
+	public static Compania leerEmpresaBD(Compania empresa) throws SQLException {
 		if (dbConnection != null) {
 			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
@@ -327,7 +327,7 @@ public class Database {
 	 * @param empresa - una referencia a un objeto de tipo Empresa para guardar los datos 
 	 * @return Un objeto de tipo Compania con los datos ya ingresados en el
 	 */
-	public Compania leerPlanesBD(Compania empresa) throws SQLException {
+	public static Compania leerPlanesBD(Compania empresa) throws SQLException {
 		if (dbConnection != null) {
 			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
@@ -364,7 +364,7 @@ public class Database {
 	 * @param empresa - una referencia a un objeto de tipo Empresa para guardar los datos 
 	 * @return Un objeto de tipo Compania con los datos ya ingresados en el
 	 */
-	public Compania leerEquiposBD(Compania empresa) throws SQLException {
+	public static Compania leerEquiposBD(Compania empresa) throws SQLException {
 		if (dbConnection != null) {
 			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
@@ -402,7 +402,7 @@ public class Database {
 	 * @param empresa - una referencia a un objeto de tipo Empresa para guardar los datos 
 	 * @return Un objeto de tipo Compania con los datos ya ingresados en el
 	 */
-	public Compania leerPersonasBD(Compania empresa) throws SQLException {
+	public static Compania leerPersonasBD(Compania empresa) throws SQLException {
 		if (dbConnection != null) {
 			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL
@@ -456,7 +456,7 @@ public class Database {
 	 * @param empresa - una referencia a un objeto de tipo Empresa para guardar los datos 
 	 * @return Un objeto de tipo Compania con los datos ya ingresados en el
 	 */
-	public Compania leerContratosBD(Compania empresa) throws SQLException {
+	public static Compania leerContratosBD(Compania empresa) throws SQLException {
 		if (dbConnection != null) {
 			// Si se creo la conexion a la BD exitosamente se continua
 			// Se crea una nueva sentencia SQL

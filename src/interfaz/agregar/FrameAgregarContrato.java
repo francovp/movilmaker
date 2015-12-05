@@ -150,6 +150,7 @@ public class FrameAgregarContrato extends JFrame {
 				Equipo equipo;
 				Contrato contratoNuevo = null;
 
+				// Recorre planes de compania
 				for (int i = 0; i < datosEmpresa.getPlanes().getPlanes().size(); i++) // Recorre
 																			// planes
 																			// de

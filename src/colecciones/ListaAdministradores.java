@@ -35,5 +35,14 @@ public class ListaAdministradores implements ListaElementos {
 	public ArrayList <Administrador> obtenerAdministradores (){
 		return administradores;
 	}
+
+	public boolean validarAdmin (String rut){
+		for (int i = 0; i<administradores.size();i++){
+			if (administradores.get(i).getRut().equals(rut)){
+				return true;	//	Admin Existe
+			}
+		}
+		return false;	//	Admin no existe
+	}
 	
 }
