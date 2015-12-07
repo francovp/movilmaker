@@ -51,7 +51,7 @@ public class FrameEliminarCliente extends JFrame {
 	 * Create the frame.
 	 */
 	public FrameEliminarCliente(Compania datosEmpresa) {
-		ArrayList<Cliente> listaClientes = datosEmpresa.mostrarClientes();
+		ArrayList<Cliente> listaClientes = datosEmpresa.obtenerClientes();
 		setResizable(false);
 		setTitle("Eliminar cliente");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,21 +84,21 @@ public class FrameEliminarCliente extends JFrame {
 				String rut;
 				rut = textRut.getText();
 
-				// Llama a metodo en clase Compañia para eliminar Cliente
+				// Llama a metodo en clase Compaï¿½ia para eliminar Cliente
 				if (datosEmpresa.eliminarCliente(rut) == true) {
-					// Si el cliente se elimino exitosamente se eliminará
+					// Si el cliente se elimino exitosamente se eliminarï¿½
 					// cliente en la BD
+					
 					try {
 						// Creacion de conexion a base de datos
-						Database bd = new Database();
-						bd.eliminarClienteBD(rut);
+						Database.eliminarClienteBD(rut);
 						// Cuadro de dialogo, que informa eliminacion exitosa
 						JOptionPane.showMessageDialog(null, "El Cliente ha sido eliminado", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						System.err.println(
-								"Cliente no se pudo eliminar de la Base de Datos.\n" + "\nDetalles de la excepción:");
+								"Cliente no se pudo eliminar de la Base de Datos.\n" + "\nDetalles de la excepciï¿½n:");
 						System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 					}
 				} else
@@ -140,7 +140,7 @@ public class FrameEliminarCliente extends JFrame {
 		btnVolver.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}

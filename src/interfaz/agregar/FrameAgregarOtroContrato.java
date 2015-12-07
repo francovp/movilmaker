@@ -1,6 +1,4 @@
 package interfaz.agregar;
-
-
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -93,7 +91,7 @@ public class FrameAgregarOtroContrato extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// LLAMA AL MENU PRINCIPAL Y CIERRA ESTA VENTANA
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}

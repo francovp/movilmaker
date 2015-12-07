@@ -1,6 +1,4 @@
 package interfaz.agregar;
-
-
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -18,12 +16,9 @@ import javax.swing.border.TitledBorder;
 import colecciones.Cliente;
 import colecciones.Compania;
 import extras.Database;
-import extras.XML;
 import interfaz.FrameInterfaz;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -227,12 +222,12 @@ public class FrameAgregarCliente extends JFrame {
 					// Llama metodo para crear Cliente
 					nuevoCliente = datosNuevaPersona(datosEmpresa);
 					if (nuevoCliente != null) {
-						// Si el cliente se crea exitosamente se escribira
+						// Si el cliente se crea exitosamente 
+						//se escribira
 						// cliente en la BD
 						try {
 							// Creacion de conexion a base de datos
-							Database bd = new Database();
-							bd.ingresarClienteBD(nuevoCliente);
+							Database.ingresarClienteBD(nuevoCliente);
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							System.err.println("Cliente no se pudo escribir en la Base de Datos.\n"
@@ -240,13 +235,13 @@ public class FrameAgregarCliente extends JFrame {
 							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 						}
 	
-						// Para guardar cliente en un XML
-						// Objeto XML
-						XML xml = new XML();
-						if (xml.ingresarClienteXML(datosEmpresa, nuevoCliente))
-							System.out.println("Cliente guardado en XML.");
-						else
-							System.err.println("Cliente no fue guardado en XML.");
+	//						// Para guardar cliente en un XML
+	//						// Objeto XML
+	//						XML xml = new XML();
+	//						if (xml.ingresarClienteXML(datosEmpresa, nuevoCliente))
+	//							System.out.println("Cliente guardado en XML.");
+	//						else
+	//							System.err.println("Cliente no fue guardado en XML.");
 	
 						// Muestra mensaje que cilente fue ingresado
 						// exitosamente!
@@ -282,7 +277,7 @@ public class FrameAgregarCliente extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}
@@ -319,10 +314,12 @@ public class FrameAgregarCliente extends JFrame {
 		Cliente clienteNuevo = new Cliente(rut, datosEmpresa.getRut(), nombre1, nombre2, apellido1, apellido2, fono1,
 				fono2, email, 1, direccion1, direccion2, 0, null);
 		// Se ingresa cliente nuevo y se espera un resultado del ingreso
-		Cliente resultado = datosEmpresa.crearClienteNuevo(clienteNuevo);
-		if (resultado != null)
+		
+		if (datosEmpresa.validarCliente(clienteNuevo.getRut()) == false){
 			// Si cliente no existe, todo bien
+			datosEmpresa.agregarCliente(clienteNuevo);
 			return clienteNuevo;
+		}
 		else
 			// Entonces el cliente ya existe
 			return null;
