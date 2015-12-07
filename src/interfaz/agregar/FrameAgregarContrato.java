@@ -1,6 +1,4 @@
 package interfaz.agregar;
-
-
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -23,8 +21,9 @@ import javax.swing.border.TitledBorder;
 import colecciones.Cliente;
 import colecciones.Compania;
 import colecciones.Contrato;
+import colecciones.Equipo;
+import colecciones.Plan;
 import extras.Database;
-import extras.XML;
 import interfaz.FrameInterfaz;
 
 public class FrameAgregarContrato extends JFrame {
@@ -105,15 +104,16 @@ public class FrameAgregarContrato extends JFrame {
 																	// PARA
 																	// JList
 																	// Moviles
-
 				// RECORRE PLANES DE COMPANIA
-				for (int i = 0; i < datosEmpresa.getPlanes().size(); i++)
+				
+				for (int i = 0; i < datosEmpresa.getPlanes().getPlanes().size() ; i++)
 					// INGRESA EN LA LISTA CADA ELEMENTO
-					model1.addElement("" + (i + 1) + "-" + datosEmpresa.getPlanes().get(i).getNombrePlan());
+					model1.addElement(datosEmpresa.getPlanes().getPlanes().get(i).getNombrePlan());
+				
 				// RECORRE EQUIPOS MOVILES DE COMPANIA
-				for (int i = 0; i < datosEmpresa.getMoviles().size(); i++)
+				for (int i = 0; i < datosEmpresa.getEquipos().getEquipos().size(); i++)
 					// INGRESA EN LA LISTA CADA ELEMENTO
-					model2.addElement("" + (i + 1) + "-" + datosEmpresa.getMoviles().get(i).getCapacidad());
+					model2.addElement(datosEmpresa.getEquipos().getEquipos().get(i).getCapacidad());
 
 				// HACE A LOS ELEMENTOS VISIBLES
 				listEquipos.setModel(model2);
@@ -145,27 +145,32 @@ public class FrameAgregarContrato extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int numPlan, numEquipo, numCuotas;
+				int numCuotas;
+				Plan plan;
+				Equipo equipo;
 				Contrato contratoNuevo = null;
 
-				for (int i = 0; i < datosEmpresa.getPlanes().size(); i++) // Recorre
+				// Recorre planes de compania
+				for (int i = 0; i < datosEmpresa.getPlanes().getPlanes().size(); i++) // Recorre
 																			// planes
 																			// de
 																			// compania
-					for (int j = 0; j < datosEmpresa.getMoviles().size(); j++) // Recorre
+					for (int j = 0; j < datosEmpresa.getEquipos().getEquipos().size(); j++) // Recorre
 																				// equipos
 																				// de
 																				// compania
 						// Si estan Seleccionados en LA LISTA, 1 Plan y 1 Equipo
 						// , se procede
 						if (listPlanes.isSelectedIndex(i) && listEquipos.isSelectedIndex(j)) {
-							numPlan = listPlanes.getSelectedIndex();
-							numEquipo = listEquipos.getSelectedIndex();
+							plan = datosEmpresa.buscarPlan(listPlanes.getSelectedValue().toString());
+							equipo = datosEmpresa.buscarEquipo(listEquipos.getSelectedValue().toString());
 							numCuotas = comboBoxMeses.getSelectedIndex() + 1;
 
 							// Se crea un nuevo contrato en: CLIENTE OBTENIDO A
 							// ESTA CLASE/VENTANA, POR REFERENCIA linea 44
-							contratoNuevo = cliente.crearContrato(numPlan, numEquipo, numCuotas, datosEmpresa);
+							System.out.println(""+plan.getNombrePlan());
+							System.out.println(""+equipo.getNombreEquipo());
+							contratoNuevo = cliente.crearContrato(cliente ,plan, equipo, numCuotas, datosEmpresa);
 
 							// Cuadro de texto informa exito en asignacion de
 							// contrato
@@ -175,8 +180,7 @@ public class FrameAgregarContrato extends JFrame {
 							// Se escribira contrato en la BD
 							try {
 								// Creacion de conexion a base de datos
-								Database bd = new Database();
-								bd.ingresarContratoBD(contratoNuevo);
+								Database.ingresarContratoBD(contratoNuevo);
 							} catch (SQLException e2) {
 								// TODO Auto-generated catch block
 								System.err.println("Contrato no se pudo escribir en la Base de Datos.\n"
@@ -184,15 +188,8 @@ public class FrameAgregarContrato extends JFrame {
 								System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
 							}
 
-							//Guardado en archivo XML
-							XML xml = new XML();
-							if(xml.ingresarContratoXML(datosEmpresa, cliente,
-									contratoNuevo))
-								System.out.println("Contrato guardado en XML.");
-							else System.err.println("Contrato no fue guardado en XML.");
-
 							// CIERRE INTERFAZ FrameContrato
-							FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+							FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 							fInterfaz.setVisible(true);
 							dispose();
 						}
@@ -206,7 +203,7 @@ public class FrameAgregarContrato extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}

@@ -49,7 +49,7 @@ public class FrameVerClientes extends JFrame {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public FrameVerClientes(Compania datosEmpresa) {
-		ArrayList<Cliente> listaClientes = datosEmpresa.mostrarClientes();
+		ArrayList<Cliente> listaClientes = datosEmpresa.obtenerClientes();
 		setTitle("Reporte de clientes");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,7 +74,7 @@ public class FrameVerClientes extends JFrame {
 		scrollPane.setViewportView(listClientes);
 
 		// MUESTRA DATOS DE CLIENTES EN LA Compañia (rut,nombre1,apellido1,apellido2) , se agrego scroll panel
-		JButton btnMostrar = new JButton("Mostrar Clientes");
+		JButton btnMostrar = new JButton("Mostrar");
 		btnMostrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel listModel = new DefaultListModel();	// OBJETO DEL TIPO LISTA
@@ -97,7 +97,7 @@ public class FrameVerClientes extends JFrame {
 		panel.add(btnMostrar);
 		
 		
-		//BOTÓN QUE GENERA UN  ARCHIVO EN PDF DE LOS CLIENTES
+/*		//BOTÓN QUE GENERA UN  ARCHIVO EN PDF DE LOS CLIENTES
 		JButton btnImprimirEnPdf = new JButton("Generar PDF");
 		btnImprimirEnPdf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {;
@@ -116,12 +116,12 @@ public class FrameVerClientes extends JFrame {
 		});
 		btnImprimirEnPdf.setBounds(447, 286, 127, 23);
 		panel.add(btnImprimirEnPdf);
-
+*/
 
 		btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa,-1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}
@@ -132,20 +132,5 @@ public class FrameVerClientes extends JFrame {
 		JLabel lblReporteDetallado = new JLabel("Reporte detallado");
 		lblReporteDetallado.setBounds(447, 261, 127, 14);
 		panel.add(lblReporteDetallado);
-		
-		JButton btnMasPlanes = new JButton("Mostrar");
-		btnMasPlanes.setBounds(447, 227, 127, 23);
-		panel.add(btnMasPlanes);
-		btnMasPlanes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				datosEmpresa.buscarClientesConMasPlanes();
-				JOptionPane.showMessageDialog(null, 
-						"Cliente con más planes mostrado por consola!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-			}
-		});
-		
-		JLabel lblClienteConMs = new JLabel("Cliente con mas planes");
-		lblClienteConMs.setBounds(447, 202, 127, 14);
-		panel.add(lblClienteConMs);
 	}
 }

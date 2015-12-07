@@ -1,6 +1,7 @@
 package interfaz.agregar;
 
 
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -162,8 +163,7 @@ public class FrameAgregarEquipo extends JFrame {
 						// Administrador en la BD
 						try {
 							// Creacion de conexion a base de datos
-							Database bd = new Database();
-							bd.ingresarPlanBD(nuevoPlan);
+							Database.ingresarPlanBD(nuevoPlan);
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							System.err.println("Plan no se pudo escribir en la Base de Datos.\n"
@@ -176,7 +176,8 @@ public class FrameAgregarEquipo extends JFrame {
 						JOptionPane.showMessageDialog(null, "Plan creado con exito!", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
 						// // Se volverá a Interfaz principal
-						FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+						//FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+						FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 						fInterfaz.setVisible(true);
 						dispose();
 					} else {
@@ -205,7 +206,8 @@ public class FrameAgregarEquipo extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				//FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}
@@ -235,7 +237,7 @@ public class FrameAgregarEquipo extends JFrame {
 		if(!textValorMin.getText().isEmpty()) valorMin = Integer.parseInt(textValorMin.getText());
 		
 		// Se crea Plan nuevo y se ingresa, se espera un resultado del ingreso
-		Plan planNuevo = datosEmpresa.crearPlanNuevo(
+		Plan planNuevo = datosEmpresa.crearPlan(
 				new Plan (0, nombre, precio, minutos, gigas, sms, valorMin, datosEmpresa.getRut()));
 		if (planNuevo != null)
 			// Si el plan no existe, todo bien

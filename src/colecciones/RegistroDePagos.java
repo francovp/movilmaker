@@ -1,4 +1,5 @@
 package colecciones;
+
 public class RegistroDePagos{
 	private int idContrato;
 	private int idRegistro;

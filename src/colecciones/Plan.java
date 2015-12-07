@@ -1,5 +1,7 @@
 package colecciones;
-
+/**
+ *
+ */
 
 /**
  * @author FValerio, DMayorga, MSilva, LMondaca
@@ -16,15 +18,12 @@ public class Plan {
 	private int valorMin;
 	private String idCompania; // ID de la compania a la que pertenece el plan;
 
-	
 	/**
 	 * @param idPlan
 	 * @param nombrePlan
 	 * @param precio
 	 * @param minutos
 	 * @param gigas
-	 * @param sms
-	 * @param valorMin
 	 * @param idCompania
 	 */
 	public Plan(int idPlan, String nombrePlan, int precio, int minutos, int gigas, int sms, int valorMin,
@@ -39,7 +38,7 @@ public class Plan {
 		this.valorMin = valorMin;
 		this.idCompania = idCompania;
 	}
-
+	
 	/////////////////////////// * GETTERS & SETTERS *////////////////////////////////////
 
 	public int getIdPlan() {
@@ -89,7 +88,7 @@ public class Plan {
 	public void setIdCompania(String idCompania) {
 		this.idCompania = idCompania;
 	}
-
+	
 	public int getSms() {
 		return sms;
 	}

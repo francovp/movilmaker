@@ -13,16 +13,7 @@ public class Equipo {
 	private String nombreEquipo;
 	private String modelo;
 	private String manufactor;
-	// private int ram;
-	// private String procesador;
-	// private byte tamPantalla;
-	// private int resPantallaX;
-	// private int resPantallaY;
-	// private int densPantalla;
-	// private int cantMemInt;
-	// private int cantMemExt;
-	// private String os;
-	// private String versionOS;
+	
 	private int valorConPlan;
 	private int valorSinPlan;
 	private String capacidad;
@@ -111,85 +102,7 @@ public class Equipo {
 	public void setManufactor(String manufactor) {
 		this.manufactor = manufactor;
 	}
-
-	// public int getRam() {
-	// return ram;
-	// }
-	//
-	// public void setRam(int ram) {
-	// this.ram = ram;
-	// }
-	//
-	// public String getProcesador() {
-	// return procesador;
-	// }
-	//
-	// public void setProcesador(String procesador) {
-	// this.procesador = procesador;
-	// }
-	//
-	// public byte getTamPantalla() {
-	// return tamPantalla;
-	// }
-	//
-	// public void setTamPantalla(byte tamPantalla) {
-	// this.tamPantalla = tamPantalla;
-	// }
-	//
-	// public int getResPantallaX() {
-	// return resPantallaX;
-	// }
-	//
-	// public void setResPantallaX(int resPantallaX) {
-	// this.resPantallaX = resPantallaX;
-	// }
-	//
-	// public int getResPantallaY() {
-	// return resPantallaY;
-	// }
-	//
-	// public void setResPantallaY(int resPantallaY) {
-	// this.resPantallaY = resPantallaY;
-	// }
-	//
-	// public int getDensPantalla() {
-	// return densPantalla;
-	// }
-	//
-	// public void setDensPantalla(int densPantalla) {
-	// this.densPantalla = densPantalla;
-	// }
-	//
-	// public int getCantMemInt() {
-	// return cantMemInt;
-	// }
-	//
-	// public void setCantMemInt(int cantMemInt) {
-	// this.cantMemInt = cantMemInt;
-	// }
-	//
-	// public int getCantMemExt() {
-	// return cantMemExt;
-	// }
-	//
-	// public void setCantMemExt(int cantMemExt) {
-	// this.cantMemExt = cantMemExt;
-	// }
-	//
-	// public String getOs() {
-	// return os;
-	// }
-	//
-	// public void setOs(String os) {
-	// this.os = os;
-	// }
-	//
-	// public String getVersionOS() {
-	// return versionOS;
-	// }
-	//
-	// public void setVersionOS(String versionOS) {
-	// this.versionOS = versionOS;
-	// }
+	
+	
 
 }
