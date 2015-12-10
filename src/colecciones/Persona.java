@@ -1,5 +1,9 @@
 package colecciones;
 
+import java.io.FileNotFoundException;
+
+import com.itextpdf.text.DocumentException;
+
 public abstract class Persona {
 
 	private String rut;
@@ -110,6 +114,6 @@ public abstract class Persona {
 		this.tipo = tipo;
 	}
 
-	public abstract String identificarse();
+	public abstract void reporte (Compania datosEmpresa) throws FileNotFoundException, DocumentException;
 		
 }
