@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import colecciones.Compania;
-import colecciones.FrameAcceso;
+import colecciones.ProxyAcceso;
 import colecciones.IFrameAcceso;
 
 import javax.swing.JButton;
@@ -28,7 +28,7 @@ public class FrameAccesoProxy extends JFrame implements IFrameAcceso {
 	private JLabel lblAviso;
 	private String password="123";
 	private JPasswordField passwordField;
-	FrameAcceso access;
+	ProxyAcceso access;
 
 	/**
 	 * Launch the application.
@@ -92,7 +92,7 @@ public class FrameAccesoProxy extends JFrame implements IFrameAcceso {
 	
 	@Override
 	public void acceder(Compania datosEmpresa) {
-		access = new FrameAcceso();
+		access = new ProxyAcceso();
 		access.acceder(datosEmpresa);
 		
 	}

@@ -2,7 +2,7 @@ package colecciones;
 
 import interfaz.FrameInterfaz;
 
-public class FrameAcceso implements IFrameAcceso {
+public class ProxyAcceso implements IFrameAcceso {
 	
 	@Override
 	public void acceder(Compania datosEmpresa) {
