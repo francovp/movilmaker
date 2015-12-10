@@ -13,13 +13,16 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import colecciones.Compania;
+import colecciones.FrameAcceso;
+import colecciones.IFrameAcceso;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
-public class FrameAccesoProxy extends JFrame implements IFrameAcceso {	//	implementa metodos de interfaz IFrameAcceso
+//implementa metodos de interfaz IFrameAcceso
+public class FrameAccesoProxy extends JFrame implements IFrameAcceso {	
 
 	private JPanel contentPane;
 	private JLabel lblAviso;
