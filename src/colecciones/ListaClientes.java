@@ -24,7 +24,8 @@ public class ListaClientes implements Validador {
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
 	@Override
 	public void validarAgregar(Object o) {
-		agregarCliente((Cliente)o);
+		if(validarCliente(((Cliente)o).getRut()) == false)
+			agregarCliente((Cliente)o);
 	}
 
 	public void agregarCliente(Cliente c) {

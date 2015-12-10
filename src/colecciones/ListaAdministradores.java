@@ -24,7 +24,8 @@ public class ListaAdministradores implements Validador {
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
 	@Override
 	public void validarAgregar(Object o) {
-		agregarAdministrador((Administrador)o);
+		if(validarAdmin(((Administrador)o).getRut()) == false)
+			agregarAdministrador((Administrador)o);
 	}
 
 	public void agregarAdministrador(Administrador admin) {
