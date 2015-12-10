@@ -31,6 +31,14 @@ public class ListaPlanes implements Validador {
 		planes.add(plan);
 	}
 	
+	public boolean validarPlan(int id){
+		for (int i = 0; i<planes.size();i++){
+			if (planes.get(i).getIdPlan() == id){
+				return true;	//	 Existe
+			}
+		}
+		return false;	//	 no existe
+	}
 	
 	/**
 	 * Busca un Plan especificado mediante una ID y lo retorna

@@ -24,13 +24,24 @@ public class ListaEquipos implements Validador {
 	
 	@Override
 	public void validarAgregar(Object o) {
-		agregarEquipo((Equipo)o);
+		if(validarEquipo(((Equipo)o).getIdEquipo()) == false)
+			agregarEquipo((Equipo)o);
 	}
+	
 
 	public void agregarEquipo(Equipo movil) {
 		equipos.add(movil);
 	}
-	
+
+	public boolean validarEquipo (int id){
+		for (int i = 0; i<equipos.size();i++){
+			if (equipos.get(i).getIdEquipo() == id){
+				return true;	//	 Existe
+			}
+		}
+		return false;	//	 no existe
+	}
+		
 	/**
 	 * Busca un Equipo especificado mediante una ID y lo retorna
 	 * @param id - un entero con la ID del Equipo a seleccionar
