@@ -16,6 +16,8 @@ public class Compania {
 		private ListaClientes clientes;
 		private ListaEquipos equipos;
 		private ListaPlanes planes;
+		private ListaRegistroDePagos pagos;
+		
 
 		/**
 		 * @param nombre
@@ -117,7 +119,7 @@ public class Compania {
 		}
 		
 		public void agregarEquipo (Equipo equipo){
-			equipos.agregarElemento(equipo);
+			equipos.validarAgregar(equipo);
 		}
 		
 		public Equipo buscarEquipo (int id){

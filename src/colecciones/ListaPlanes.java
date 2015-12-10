@@ -1,7 +1,7 @@
 package colecciones;
 import java.util.ArrayList;
 
-public class ListaPlanes implements ListaElementos {
+public class ListaPlanes implements Validador {
 	private ArrayList <Plan> planes;
 	
 	// CONSTRUCTOR
@@ -23,7 +23,7 @@ public class ListaPlanes implements ListaElementos {
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
 	
 	@Override
-	public void agregarElemento(Object o) {
+	public void validarAgregar(Object o) {
 		agregarPlan((Plan)o);
 	}
 	

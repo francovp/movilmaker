@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 import extras.Database;
 
-public class ListaContratos implements ListaElementos {
+public class ListaContratos implements Validador {
 	private ArrayList <Contrato> contratos;
 	
 	// CONSTRUCTOR
@@ -33,13 +33,23 @@ public class ListaContratos implements ListaElementos {
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
 	
 	@Override
-	public void agregarElemento(Object o) {
-		agregarContrato ((Contrato)o);
+	public void validarAgregar(Object o) {
+		if(validarContrato(((Contrato)o).getIdContrato()) == false)
+			agregarContrato((Contrato)o);
 	}
 	
 	public void agregarContrato (Contrato cont){
 		contratos.add(cont);
 		
+	}
+	
+	public boolean validarContrato (int id){
+		for (int i = 0; i<contratos.size();i++){
+			if (contratos.get(i).getIdContrato() == id){
+				return true;	//	Contrato Existe
+			}
+		}
+		return false;	//	Contrato no existe
 	}
 	
 	/**

@@ -2,7 +2,7 @@ package colecciones;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ListaClientes implements ListaElementos {
+public class ListaClientes implements Validador {
 
 	private ArrayList <Cliente> clientes;
 
@@ -23,7 +23,7 @@ public class ListaClientes implements ListaElementos {
 
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
 	@Override
-	public void agregarElemento(Object o) {
+	public void validarAgregar(Object o) {
 		agregarCliente((Cliente)o);
 	}
 
@@ -51,25 +51,13 @@ public class ListaClientes implements ListaElementos {
 		return false;	//	Cliente no existe
 	}
 
-	public ArrayList<Cliente> mostrarClientes() {
-		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-		for (int i = 0; i < clientes.size(); i++){
-			if(clientes.get(i) instanceof Cliente){
-				clientes.add((Cliente)clientes.get(i));
-			}
-		}
-		return clientes;
-	}
-
 	public boolean eliminarCliente (String rut){
 		for (int i = 0 ; i<clientes.size();i++){
 			System.out.println(""+clientes.get(1).getApellido1());
 			if ((clientes.get(i).getRut()).equalsIgnoreCase(rut)){
-
 				clientes.remove(i);
 				return true;
 			}
-
 		}
 		return false;
 	}
@@ -77,5 +65,4 @@ public class ListaClientes implements ListaElementos {
 	public ArrayList <Cliente> obtenerClientes(){
 		return clientes;
 	}
-
 }

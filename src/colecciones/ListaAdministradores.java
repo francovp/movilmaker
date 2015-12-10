@@ -2,7 +2,7 @@ package colecciones;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ListaAdministradores implements ListaElementos {
+public class ListaAdministradores implements Validador {
 
 	private ArrayList <Administrador> administradores;
 	
@@ -23,7 +23,7 @@ public class ListaAdministradores implements ListaElementos {
 	
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
 	@Override
-	public void agregarElemento(Object o) {
+	public void validarAgregar(Object o) {
 		agregarAdministrador((Administrador)o);
 	}
 

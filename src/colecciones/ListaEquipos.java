@@ -1,7 +1,7 @@
 package colecciones;
 import java.util.ArrayList;
 
-public class ListaEquipos implements ListaElementos {
+public class ListaEquipos implements Validador {
 	private ArrayList <Equipo> equipos;
 		
 	// CONSTRUCTOR
@@ -23,7 +23,7 @@ public class ListaEquipos implements ListaElementos {
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
 	
 	@Override
-	public void agregarElemento(Object o) {
+	public void validarAgregar(Object o) {
 		agregarEquipo((Equipo)o);
 	}
 
