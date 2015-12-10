@@ -10,8 +10,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="2" language="java" name="colecciones.ListaElementos" project="Proyecto POO" 
-    file="/Proyecto POO/src/colecciones/ListaElementos.java" binary="false" corner="BOTTOM_RIGHT">    
+  <interface id="2" language="java" name="colecciones.Validador" project="Proyecto POO" 
+    file="/Proyecto POO/src/colecciones/Validador.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="81" width="169" x="586" y="1951"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -145,8 +145,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="17" language="java" name="colecciones.FrameAcceso" project="Proyecto POO" 
-    file="/Proyecto POO/src/colecciones/FrameAcceso.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="17" language="java" name="colecciones.ProxyAcceso" project="Proyecto POO" 
+    file="/Proyecto POO/src/colecciones/ProxyAcceso.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="144" x="44" y="-563"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -208,22 +208,21 @@
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="2"/>  
   </realization>  
-  <dependency id="34">    
-    <bendpoint x="190" y="1272"/>    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
-  <association id="35">    
+  <association id="34">    
     <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="36" name="planes"/>      
-      <multiplicity id="37" minimum="0" maximum="1"/>    
+      <attribute id="35" name="planes"/>      
+      <multiplicity id="36" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="38">    
+  <dependency id="37">    
     <end type="SOURCE" refId="17"/>    
     <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="38">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="4"/>  
   </dependency>  
   <generalization id="39">    
     <bendpoint x="717" y="27"/>    
@@ -266,44 +265,43 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <dependency id="50">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <dependency id="51">    
     <bendpoint x="-157" y="611"/>    
     <bendpoint x="-178" y="1272"/>    
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  
-  <realization id="51">    
+  <realization id="52">    
     <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="2"/>  
   </realization>  
-  <realization id="52">    
+  <realization id="53">    
     <bendpoint x="1478" y="382"/>    
     <bendpoint x="1478" y="611"/>    
     <bendpoint x="1478" y="1272"/>    
     <end type="SOURCE" refId="14"/>    
     <end type="TARGET" refId="2"/>  
   </realization>  
-  <generalization id="53">    
+  <generalization id="54">    
     <end type="SOURCE" refId="10"/>    
     <end type="TARGET" refId="15"/>  
   </generalization>  
-  <dependency id="54">    
+  <dependency id="55">    
     <bendpoint x="274" y="1272"/>    
     <end type="SOURCE" refId="12"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  
-  <association id="55">    
+  <association id="56">    
     <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="56" name="contratoAPagar"/>      
-      <multiplicity id="57" minimum="0" maximum="1"/>    
+      <attribute id="57" name="contratoAPagar"/>      
+      <multiplicity id="58" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="58">    
-    <bendpoint x="211" y="1272"/>    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="11"/>  
-  </dependency>  
   <dependency id="59">    
     <bendpoint x="337" y="382"/>    
     <bendpoint x="337" y="611"/>    
@@ -329,72 +327,80 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <dependency id="65">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="66">    
     <bendpoint x="-178" y="382"/>    
     <bendpoint x="-178" y="611"/>    
     <end type="SOURCE" refId="10"/>    
     <end type="TARGET" refId="3"/>  
   </dependency>  
-  <association id="66">    
+  <association id="67">    
     <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="67" name="equipos"/>      
-      <multiplicity id="68" minimum="0" maximum="1"/>    
+      <attribute id="68" name="equipos"/>      
+      <multiplicity id="69" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="69">    
+  <dependency id="70">    
     <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="12"/>  
   </dependency>  
-  <dependency id="70">    
+  <dependency id="71">    
     <bendpoint x="696" y="27"/>    
     <bendpoint x="696" y="382"/>    
     <end type="SOURCE" refId="15"/>    
     <end type="TARGET" refId="12"/>  
   </dependency>  
-  <realization id="71">    
+  <realization id="72">    
     <end type="SOURCE" refId="7"/>    
     <end type="TARGET" refId="2"/>  
   </realization>  
-  <dependency id="72">    
+  <dependency id="73">    
     <bendpoint x="253" y="382"/>    
     <bendpoint x="253" y="611"/>    
     <bendpoint x="253" y="1272"/>    
     <end type="SOURCE" refId="10"/>    
     <end type="TARGET" refId="11"/>  
   </dependency>  
-  <association id="73">    
+  <association id="74">    
     <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="74" name="equipos"/>      
-      <multiplicity id="75" minimum="0" maximum="2147483647"/>    
+      <attribute id="75" name="equipos"/>      
+      <multiplicity id="76" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="76">    
+  <realization id="77">    
     <end type="SOURCE" refId="17"/>    
     <end type="TARGET" refId="16"/>  
   </realization>  
-  <dependency id="77">    
+  <dependency id="78">    
     <bendpoint x="-199" y="382"/>    
     <bendpoint x="-199" y="611"/>    
     <bendpoint x="-199" y="1272"/>    
     <end type="SOURCE" refId="10"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  
-  <association id="78">    
+  <association id="79">    
     <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="79" name="administradores"/>      
-      <multiplicity id="80" minimum="0" maximum="2147483647"/>    
+      <attribute id="80" name="administradores"/>      
+      <multiplicity id="81" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="81">    
+  <dependency id="82">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <association id="83">    
     <bendpoint x="1221" y="382"/>    
     <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="82" name="administradores"/>      
-      <multiplicity id="83" minimum="0" maximum="1"/>    
+      <attribute id="84" name="administradores"/>      
+      <multiplicity id="85" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="14" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
