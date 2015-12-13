@@ -265,9 +265,8 @@ public class FrameAgregarAdmin extends JFrame {
 				fono1, fono2, email, 0, null, null, 0, null);
 		// Se ingresa Administrador nuevo y se espera un resultado del ingreso
 
-		if (datosEmpresa.validarAdmin(adminNuevo.getRut()) == false){
+		if (datosEmpresa.getAdministradores().validarAgregar(adminNuevo) == false){
 			// Si cliente no existe, todo bien
-			datosEmpresa.agregarAdministrador(adminNuevo);
 			return adminNuevo;
 		}
 		else

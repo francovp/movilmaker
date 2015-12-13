@@ -23,6 +23,7 @@ import colecciones.Compania;
 import interfaz.FrameInterfaz;
 
 import javax.swing.JLabel;
+import java.awt.Component;
 
 public class FrameVerClientes extends JFrame {
 
@@ -49,11 +50,11 @@ public class FrameVerClientes extends JFrame {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public FrameVerClientes(Compania datosEmpresa) {
-		ArrayList<Cliente> listaClientes = datosEmpresa.obtenerClientes();
+		ArrayList<Cliente> lista = datosEmpresa.getClientes().getLista();
 		setTitle("Reporte de clientes");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 610, 392);
+		setBounds(100, 100, 472, 474);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "Clientes de la compa\u00F1ia", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		setContentPane(contentPane);
@@ -61,7 +62,7 @@ public class FrameVerClientes extends JFrame {
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel.setBounds(10, 22, 584, 320);
+		panel.setBounds(10, 22, 446, 412);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -78,22 +79,22 @@ public class FrameVerClientes extends JFrame {
 		btnMostrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel listModel = new DefaultListModel();	// OBJETO DEL TIPO LISTA
-				if(listaClientes.size() == 0){		// MENSAJE EN EL JList POR SI NO EXISTEN CLIENTES
+				if(lista.size() == 0){		// MENSAJE EN EL JList POR SI NO EXISTEN CLIENTES
 					listModel.addElement("No existen Clientes");
 					listClientes.setModel(listModel);
 				}
 				// AGREGA 1 A 1 DATOS BASICOS DE CADA CLIENTE
-				for(int i=0; i<listaClientes.size();i++){		
-					listModel.addElement((i+1)+" - Rut: "+listaClientes.get(i).getRut()+" - Nombre: "
-					+listaClientes.get(i).getNombre1()+" "
-					+listaClientes.get(i).getApellido1()+" "
-					+listaClientes.get(i).getApellido2());
+				for(int i=0; i<lista.size();i++){		
+					listModel.addElement((i+1)+" - Nombre: " +lista.get(i).getNombre1()+" "
+							+lista.get(i).getApellido1()+" "
+							+lista.get(i).getApellido2() + " - Rut: " +lista.get(i).getRut());
+					
 					listClientes.setModel(listModel);	// VUELVE VISIBLE LOS ELEMENTOS
 				}
 			}
 		});
 		
-		btnMostrar.setBounds(447, 10, 127, 23);
+		btnMostrar.setBounds(10, 324, 127, 23);
 		panel.add(btnMostrar);
 		
 		
@@ -126,11 +127,11 @@ public class FrameVerClientes extends JFrame {
 				dispose();
 			}
 		});
-		btnVolver.setBounds(447, 44, 127, 23);
+		btnVolver.setBounds(147, 324, 127, 23);
 		panel.add(btnVolver);
 		
 		JLabel lblReporteDetallado = new JLabel("Reporte detallado");
-		lblReporteDetallado.setBounds(447, 261, 127, 14);
+		lblReporteDetallado.setBounds(10, 358, 127, 14);
 		panel.add(lblReporteDetallado);
 	}
 }

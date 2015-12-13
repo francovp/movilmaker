@@ -237,11 +237,10 @@ public class FrameAgregarPlan extends JFrame {
 		if(!textValorMin.getText().isEmpty()) valorMin = Integer.parseInt(textValorMin.getText());
 		
 		// Se crea Plan nuevo y se ingresa, se espera un resultado del ingreso
-		Plan planNuevo = datosEmpresa.crearPlan(
-				new Plan (0, nombre, precio, minutos, gigas, sms, valorMin, datosEmpresa.getRut()));
-		if (planNuevo != null)
+		Plan nuevo = new Plan (0, nombre, precio, minutos, gigas, sms, valorMin, datosEmpresa.getRut());
+		if (datosEmpresa.getPlanes().validarAgregar(nuevo) == false)
 			// Si el plan no existe, todo bien
-			return planNuevo;
+			return nuevo;
 		else
 			// Entonces el plan ya existe
 			return null;

@@ -12,13 +12,12 @@ public class Compania {
 
 		private String nombre;
 		private String rut;
-		private ListaAdministradores administradores;
+		private ListaAdministradores admins;
 		private ListaClientes clientes;
 		private ListaEquipos equipos;
 		private ListaPlanes planes;
 		private ListaRegistroDePagos pagos;
 		
-
 		/**
 		 * @param nombre
 		 * @param rut
@@ -27,7 +26,7 @@ public class Compania {
 			super();
 			this.nombre = nombre;
 			this.rut = rut;
-			this.administradores = new ListaAdministradores();
+			this.admins = new ListaAdministradores();
 			this.clientes = new ListaClientes();
 			this.equipos = new ListaEquipos();
 			this.planes = new ListaPlanes();
@@ -60,11 +59,11 @@ public class Compania {
 		}
 
 		public ListaAdministradores getAdministradores() {
-			return administradores;
+			return admins;
 		}
 
 		public void setAdministradores(ListaAdministradores administradores) {
-			this.administradores = administradores;
+			this.admins = administradores;
 		}
 
 		public ListaEquipos getEquipos() {
@@ -84,83 +83,6 @@ public class Compania {
 		}
 		
 		/////////////////////////// * METODOS * /////////////////////////////////////////////
-		
-		public void agregarCliente (Cliente c) {
-			clientes.agregarCliente(c);
-		}
-		
-		public void agregarAdministrador (Administrador admin) {
-			administradores.agregarAdministrador(admin);
-		}
-		
-		public Cliente buscarCliente (String rut) {
-			return clientes.buscarCliente(rut);
-		}
-		
-		public boolean validarCliente (String rut){
-			return clientes.validarCliente(rut);
-		}
-		
-		public boolean validarAdmin (String rut){
-			return administradores.validarAdmin(rut);
-		}
-		
-		public ArrayList <Cliente> obtenerClientes(){
-			return clientes.obtenerClientes();
-		}
-		
-		public boolean eliminarCliente (String rut){
-			clientes.eliminarCliente(rut);
-			return true;
-		}
-		
-		public ArrayList <Administrador> obtenerAdministradores(){
-			return administradores.obtenerAdministradores(); 
-		}
-		
-		public void agregarEquipo (Equipo equipo){
-			equipos.validarAgregar(equipo);
-		}
-		
-		public Equipo buscarEquipo (int id){
-			return equipos.buscarEquipo(id);
-		}
-		
-		public Equipo buscarEquipo (String nombre){
-			System.out.println("bbb: "+nombre);
-			return equipos.buscarEquipo(nombre);
-		}
-		
-		public void agregarPlan (Plan plan){
-			planes.agregarPlan(plan);
-		}
-		
-		/**
-		 * Crea un nuevo Plan y lo agrega al Arralist listaPlanes de Compania
-		 *
-		 * @param planNuevo
-		 * @return Un objeto de tipo Cliente con el cliente nuevo creado
-		 */
-		public Plan crearPlan (Plan plan) {
-			if (buscarPlan(plan.getIdPlan()) != null)
-				// Si la id ya existe, le informo que ya existe.
-				return null;
-			else {
-				// Si no existe se guarda en el arraylist
-				agregarPlan(plan);
-				return plan;
-			}
-		}
-		
-		public Plan buscarPlan (int id){
-			return planes.buscarPlan(id);
-		}
-	
-		public Plan buscarPlan (String nombre){
-			System.out.println("aaaa: "+nombre);
-			return planes.buscarPlan(nombre);
-		}
-		
 
 		/**
 		 * Imprime un Reporte completo de todos los datos de la empresa.
@@ -169,8 +91,8 @@ public class Compania {
 		 * @throws DocumentException
 		 */
 		public void reporte() throws FileNotFoundException, DocumentException {
-			ArrayList<Cliente> listaClientes = obtenerClientes();
-			ArrayList<Administrador> listaAdmins = obtenerAdministradores();
+			ArrayList<Cliente> listaClientes = clientes.getLista();
+			ArrayList<Administrador> listaAdmins = admins.getLista();
 			String fonoFijo, fonoCel, email, direccion1, direccion2, nombre2, apellido2, deuda;
 			Document documento = new Document();
 			int idPlan, idEquipo; // Compararan ids de cada contrato de x cliente
@@ -179,7 +101,7 @@ public class Compania {
 			documento.open(); // ABRE DOCUMENTO
 
 			documento.add(new Paragraph("Documento emitido por compañia " + getNombre() + ", RUT: " + getRut()));
-			documento.add(new Paragraph("\nLista de administradores:"));
+			documento.add(new Paragraph("\nLista de admins:"));
 
 			// RECORRE CADA ADMINISTRADOR E IMPRIME SUS DATOS PERSONALES
 			for (int i = 0; i < listaAdmins.size(); i++) {
@@ -260,27 +182,27 @@ public class Compania {
 
 				// RECORRE CONTRATOS DE CLIENTE Y OBTIENE VALOR DE idPLAN Y idEQUIPO
 				// DE CADA CONTRATO
-				for (int j = 0; j < c.getContratos().getContratos().size(); j++) {
-					idPlan = c.getContratos().getContratos().get(j).getIdPlan();
-					idEquipo = c.getContratos().getContratos().get(j).getIdEquipo();
+				for (int j = 0; j < c.getContratos().getLista().size(); j++) {
+					idPlan = c.getContratos().getLista().get(j).getIdPlan();
+					idEquipo = c.getContratos().getLista().get(j).getIdEquipo();
 					// imprime en pdf id contrato y valor total a pagar de cada
 					// cliente
 					documento.add(
-							new Paragraph("---- ID Contrato :                 " + c.getContratos().getContratos().get(j).getIdContrato()));
+							new Paragraph("---- ID Contrato :                 " + c.getContratos().getLista().get(j).getIdContrato()));
 					documento.add(
-							new Paragraph("---- Valor total :                   $" + c.getContratos().getContratos().get(j).getValorTotal()));
+							new Paragraph("---- Valor total :                   $" + c.getContratos().getLista().get(j).getValorTotal()));
 
 					// RECORRE PLANES EN COMPANIA E IMPRIME EL PLAN EN PDF
-					for (int k = 0; k < planes.getPlanes().size(); k++)
-						if (planes.getPlanes().get(k).getIdPlan() == idPlan)
+					for (int k = 0; k < planes.getLista().size(); k++)
+						if (planes.getLista().get(k).getIdPlan() == idPlan)
 							documento.add(
-									new Paragraph("----- Plan contratado :          " + planes.getPlanes().get(k).getNombrePlan()));
+									new Paragraph("----- Plan contratado :          " + planes.getLista().get(k).getNombre()));
 
 					// RECORRE EQUIPOS EN COMPANIA E IMPRIME EL EQUIPO EN PDF
-					for (int k = 0; k < equipos.getEquipos().size(); k++)
-						if (equipos.getEquipos().get(k).getIdEquipo() == idEquipo)
+					for (int k = 0; k < equipos.getLista().size(); k++)
+						if (equipos.getLista().get(k).getIdEquipo() == idEquipo)
 							documento.add(
-									new Paragraph("----- Equipo contratado :      " + equipos.getEquipos().get(k).getNombre()));
+									new Paragraph("----- Equipo contratado :      " + equipos.getLista().get(k).getNombre()));
 				}
 			}
 			documento.close(); // SE CIERRA EL DOCUMENTO

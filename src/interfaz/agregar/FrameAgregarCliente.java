@@ -315,9 +315,8 @@ public class FrameAgregarCliente extends JFrame {
 				fono2, email, 1, direccion1, direccion2, 0, null);
 		// Se ingresa cliente nuevo y se espera un resultado del ingreso
 		
-		if (datosEmpresa.validarCliente(clienteNuevo.getRut()) == false){
+		if (datosEmpresa.getClientes().validarAgregar(clienteNuevo) == false){
 			// Si cliente no existe, todo bien
-			datosEmpresa.agregarCliente(clienteNuevo);
 			return clienteNuevo;
 		}
 		else

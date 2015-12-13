@@ -129,7 +129,7 @@ public class Database {
 		// Se crea una nueva sentencia SQL
 		stmt = dbConnection.createStatement();
 		String sql = "INSERT INTO planes(id_plan,nombre_plan,minutos,gigas,precio,sms,valor_min,id_compania)"
-				+ "VALUES('" + p.getIdPlan() + "','" + p.getNombrePlan()+ "'," + p.getMinutos() + "," + p.getGigas() + ","
+				+ "VALUES('" + p.getIdPlan() + "','" + p.getNombre()+ "'," + p.getMinutos() + "," + p.getGigas() + ","
 				+ p.getPrecio() + "," + p.getSms() + "," + p.getValorMin() + "," + p.getIdCompania() + ");";
 		stmt.executeUpdate(sql);
 		cerrarDatabase();
@@ -321,7 +321,7 @@ public class Database {
 								rs.getString("apellido2"), rs.getInt("fono_celular"), rs.getInt("fono_fijo"),
 								rs.getString("email"), rs.getInt("tipo"), rs.getString("direccion1"),
 								rs.getString("direccion2"), rs.getInt("deuda"), rs.getString("password"));
-						empresa.getAdministradores().agregarAdministrador(admin);
+						empresa.getAdministradores().agregarAdmin(admin);
 					}
 					if (tipo == 1) {
 						// Cliente
@@ -361,15 +361,15 @@ public class Database {
 					// Se obtienen datos de la equipos
 					int idPlan = rs.getInt("id_plan");
 					int idEquipo = rs.getInt("id_equipo");
-					Plan p = empresa.buscarPlan(idPlan);
-					Equipo e = empresa.buscarEquipo(idEquipo);
+					Plan p = empresa.getPlanes().buscarPlan(idPlan);
+					Equipo e = empresa.getEquipos().buscarEquipo(idEquipo);
 
 					Contrato c = new Contrato(rs.getInt("id_contrato"), rs.getString("fecha_inicio"),
 							rs.getString("fecha_termino"), idEquipo, idPlan, e, p, rs.getInt("valor_total"),
 							rs.getInt("cuotas"), rs.getInt("valor_cuota"), rs.getString("rut_cliente"));
 
 					// Busco el cliente al cual se le asignara el contrato
-					Cliente cliente = empresa.buscarCliente(c.getRutCliente());
+					Cliente cliente = empresa.getClientes().buscarCliente(c.getRutCliente());
 					// Luego agrego el contrato a ESE cliente
 					cliente.getContratos().agregarContrato(c);
 				}

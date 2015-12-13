@@ -10,7 +10,7 @@ package colecciones;
 public class Plan {
 
 	private int idPlan;
-	private String nombrePlan;
+	private String nombre;
 	private int precio;
 	private int minutos; // minutos para hablar
 	private int gigas; // GB de navegacion
@@ -20,17 +20,17 @@ public class Plan {
 
 	/**
 	 * @param idPlan
-	 * @param nombrePlan
+	 * @param nombre
 	 * @param precio
 	 * @param minutos
 	 * @param gigas
 	 * @param idCompania
 	 */
-	public Plan(int idPlan, String nombrePlan, int precio, int minutos, int gigas, int sms, int valorMin,
+	public Plan(int idPlan, String nombre, int precio, int minutos, int gigas, int sms, int valorMin,
 			String idCompania) {
 		super();
 		this.idPlan = idPlan;
-		this.nombrePlan = nombrePlan;
+		this.nombre = nombre;
 		this.precio = precio;
 		this.minutos = minutos;
 		this.gigas = gigas;
@@ -49,12 +49,12 @@ public class Plan {
 		this.idPlan = idPlan;
 	}
 
-	public String getNombrePlan() {
-		return nombrePlan;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setNombrePlan(String nombrePlan) {
-		this.nombrePlan = nombrePlan;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public int getPrecio() {

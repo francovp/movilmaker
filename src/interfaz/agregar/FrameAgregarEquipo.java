@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import colecciones.Compania;
+import colecciones.Equipo;
 import colecciones.Plan;
 import extras.Database;
 import interfaz.FrameInterfaz;
@@ -162,18 +163,18 @@ public class FrameAgregarEquipo extends JFrame {
 		btnAgregar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Plan nuevoPlan = null;
+				Equipo nuevo = null;
 
 				// Comprobaciones de Datos ingresados
 				if(comprobarIngreso(lblAviso)){					
 					// Llama metodo para crear Administrador
-					nuevoPlan = datosNuevoEquipo(datosEmpresa);
-					if (nuevoPlan != null) {
+					nuevo = datosNuevoEquipo(datosEmpresa);
+					if (nuevo != null) {
 						// Si el Administrador se crea exitosamente se escribira
 						// Administrador en la BD
 						try {
 							// Creacion de conexion a base de datos
-							Database.ingresarPlanBD(nuevoPlan);
+							Database.ingresarEquipoBD(nuevo);
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							System.err.println("Equipo no se pudo escribir en la Base de Datos.\n"
@@ -191,7 +192,7 @@ public class FrameAgregarEquipo extends JFrame {
 						fInterfaz.setVisible(true);
 						dispose();
 					} else {
-						// Sino, se informa que el Administrador ya existe y se
+						// Sino, se informa que el Equipo ya existe y se
 						// vuelve al menu
 						lblAviso.setForeground(Color.RED);
 						lblAviso.setText("Equipo ya existe!");
@@ -235,7 +236,7 @@ public class FrameAgregarEquipo extends JFrame {
 	 * @param datosEmpresa - una referencia a la Compania
 	 * @return un objeto Plan del plan creado
 	 **/
-	public Plan datosNuevoEquipo(Compania datosEmpresa) {
+	public Equipo datosNuevoEquipo(Compania datosEmpresa) {
 		String nombre = null, pantalla = null, camara = null, so= null, procesador = null;
 		int valorPlan = 0, valorPrepago = 0;
 				
@@ -248,9 +249,8 @@ public class FrameAgregarEquipo extends JFrame {
 		if(!textCamara.getText().isEmpty()) valorPrepago = Integer.parseInt(textValorPrepago.getText());
 		
 		// Se crea Plan nuevo y se ingresa, se espera un resultado del ingreso
-		Plan equipoNuevo = datosEmpresa.crearPlan(
-				new Plan (0, nombre, precio, minutos, gigas, sms, valorMin, datosEmpresa.getRut()));
-		if (equipoNuevo != null)
+		Equipo equipoNuevo = new Equipo (0, nombre, pantalla, camara, so, procesador, valorPlan, valorPrepago, datosEmpresa.getRut());
+		if (datosEmpresa.getEquipos().validarAgregar(equipoNuevo) == false)
 			// Si el plan no existe, todo bien
 			return equipoNuevo;
 		else

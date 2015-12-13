@@ -4,48 +4,49 @@ import java.util.ArrayList;
 
 public class ListaClientes implements Validador {
 
-	private ArrayList <Cliente> clientes;
+	private ArrayList <Cliente> lista;
 
 	// CONSTRUCTOR
 	public ListaClientes(){
-		this.clientes = new ArrayList<Cliente>();
+		this.lista = new ArrayList<Cliente>();
 	}
 
 	/////////////////////////// * GETTERS & SETTERS *////////////////////////////////////
 
-	public ArrayList<Cliente> getClientes() {
-		return clientes;
+	public ArrayList<Cliente> getLista() {
+		return lista;
 	}
 
-	public void setClientes(ArrayList<Cliente> clientes) {
-		this.clientes = clientes;
+	public void setLista(ArrayList<Cliente> clientes) {
+		this.lista = clientes;
 	}
 
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
 	@Override
-	public void validarAgregar(Object o) {
-		if(validarCliente(((Cliente)o).getRut()) == false)
+	public boolean validarAgregar(Object o) {
+		if(validarCliente(((Cliente)o).getRut()) == false){
 			agregarCliente((Cliente)o);
+			return true;
+		}
+		else return false;
 	}
 
 	public void agregarCliente(Cliente c) {
-		// Si Cliente no existe, se agrega cliente
-		if ((validarCliente(c.getRut())) == false)	
-			clientes.add(c);								
+		lista.add(c);								
 	}
 
 	public Cliente buscarCliente (String rut){
-		for(int i=0;i<clientes.size();i++){
-			if (clientes.get(i).getRut().equals(rut)){
-				return clientes.get(i);
+		for(int i=0;i<lista.size();i++){
+			if (lista.get(i).getRut().equals(rut)){
+				return lista.get(i);
 			}
 		}
 		return null;
 	}
 
 	public boolean validarCliente (String rut){
-		for (int i = 0; i<clientes.size();i++){
-			if (clientes.get(i).getRut().equals(rut)){
+		for (int i = 0; i<lista.size();i++){
+			if (lista.get(i).getRut().equals(rut)){
 				return true;	//	Cliente Existe
 			}
 		}
@@ -53,16 +54,16 @@ public class ListaClientes implements Validador {
 	}
 
 	public boolean eliminarCliente (String rut){
-		for (int i = 0 ; i<clientes.size();i++){
-			if ((clientes.get(i).getRut()).equalsIgnoreCase(rut)){
-				clientes.remove(i);
+		for (int i = 0 ; i<lista.size();i++){
+			if ((lista.get(i).getRut()).equalsIgnoreCase(rut)){
+				lista.remove(i);
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public ArrayList <Cliente> obtenerClientes(){
-		return clientes;
+	public ArrayList <Cliente> obtenerLista(){
+		return lista;
 	}
 }

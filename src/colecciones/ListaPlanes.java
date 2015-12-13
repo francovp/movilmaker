@@ -2,38 +2,42 @@ package colecciones;
 import java.util.ArrayList;
 
 public class ListaPlanes implements Validador {
-	private ArrayList <Plan> planes;
+	private ArrayList <Plan> lista;
 	
 	// CONSTRUCTOR
 	
 	public ListaPlanes(){
-		this.planes = new ArrayList <Plan>();
+		this.lista = new ArrayList <Plan>();
 	}
 
 	/////////////////////////// * GETTERS & SETTERS *////////////////////////////////////
 	
-	public ArrayList<Plan> getPlanes() {
-		return planes;
+	public ArrayList<Plan> getLista() {
+		return lista;
 	}
 
-	public void setPlanes(ArrayList<Plan> planes) {
-		this.planes = planes;
+	public void setLista(ArrayList<Plan> planes) {
+		this.lista = planes;
 	}
 
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
 	
 	@Override
-	public void validarAgregar(Object o) {
-		agregarPlan((Plan)o);
+	public boolean validarAgregar(Object o) {
+		if(validarPlan(((Plan)o).getIdPlan()) == false){
+			agregarPlan((Plan)o);
+			return true;
+		}
+		else return false;
 	}
 	
 	public void agregarPlan (Plan plan){
-		planes.add(plan);
+		lista.add(plan);
 	}
 	
 	public boolean validarPlan(int id){
-		for (int i = 0; i<planes.size();i++){
-			if (planes.get(i).getIdPlan() == id){
+		for (int i = 0; i<lista.size();i++){
+			if (lista.get(i).getIdPlan() == id){
 				return true;	//	 Existe
 			}
 		}
@@ -46,10 +50,10 @@ public class ListaPlanes implements Validador {
 	 * @return Un objeto Plan con el plan elejido
 	 */
 	public Plan buscarPlan (int id){
-		for (int i = 0; i < planes.size(); i++)
-			if (planes.get(i).getIdPlan() == id)
+		for (int i = 0; i < lista.size(); i++)
+			if (lista.get(i).getIdPlan() == id)
 				// si la id ingresada se encuentra
-				return planes.get(i);
+				return lista.get(i);
 			else {
 				//System.err.println("No se encontro plan");
 			}
@@ -58,10 +62,10 @@ public class ListaPlanes implements Validador {
 	}
 	
 	public Plan buscarPlan (String nom){
-		for (int i=0; i < planes.size(); i++){
-			if ((planes.get(i).getNombrePlan()).equalsIgnoreCase(nom)){
+		for (int i=0; i < lista.size(); i++){
+			if ((lista.get(i).getNombre()).equalsIgnoreCase(nom)){
 				System.out.println("obtuvo Plan!");
-				return planes.get(i);
+				return lista.get(i);
 			}
 		}
 		return null;

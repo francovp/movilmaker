@@ -141,7 +141,7 @@ public class FrameModificarCliente extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				// ASIGNA NUEVOS VALORES AL CLIENTE SELECCIONADO
-				Cliente c = datosEmpresa.buscarCliente(textFieldRut.getText());
+				Cliente c = datosEmpresa.getClientes().buscarCliente(textFieldRut.getText());
 
 				c.setNombre1(textFieldNombre.getText());
 				c.setNombre2(textFieldNombre2.getText());
@@ -171,9 +171,9 @@ public class FrameModificarCliente extends JFrame {
 		btnBuscar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (datosEmpresa.buscarCliente(textFieldRut.getText()) != null) { 
+				if (datosEmpresa.getClientes().buscarCliente(textFieldRut.getText()) != null) { 
 					// SI CLIENTE EXISTE
-					Cliente c = datosEmpresa.buscarCliente(textFieldRut.getText());
+					Cliente c = datosEmpresa.getClientes().buscarCliente(textFieldRut.getText());
 
 					// CONVIERTE EN EDITABLES LOS JTextField Movil, Fono,
 					// Direccion, Email y textFieldRut COMO NO EDITABLE

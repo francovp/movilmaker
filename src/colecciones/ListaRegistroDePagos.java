@@ -11,15 +11,15 @@ import java.util.ArrayList;
  */
 public class ListaRegistroDePagos implements Validador {
 	
-	private ArrayList <RegistroDePagos> pagos;
+	private ArrayList <RegistroDePagos> lista;
 
 	/* (non-Javadoc)
 	 * @see colecciones.Validador#agregarElemento(java.lang.Object)
 	 */
 	@Override
-	public void validarAgregar(Object o) {
+	public boolean validarAgregar(Object o) {
 		// TODO Auto-generated method stub
-
+		return true;
 	}
 	
 //	// METODO PAGAR MENSUALIDAD (SOBREESCRITURA )

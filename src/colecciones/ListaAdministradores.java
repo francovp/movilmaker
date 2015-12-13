@@ -4,46 +4,47 @@ import java.util.ArrayList;
 
 public class ListaAdministradores implements Validador {
 
-	private ArrayList <Administrador> administradores;
+	private ArrayList <Administrador> lista;
 	
 	//	CONSTRUCTOR
 	public ListaAdministradores (){
-		this.administradores = new ArrayList<Administrador>();
+		this.lista = new ArrayList<Administrador>();
 	}
 
 	/////////////////////////// * GETTERS & SETTERS *////////////////////////////////////
 	
-	public ArrayList<Administrador> getAdministradores() {
-		return administradores;
+	public ArrayList<Administrador> getLista() {
+		return lista;
 	}
 
-	public void setAdministradores(ArrayList<Administrador> administradores) {
-		this.administradores = administradores;
+	public void setLista(ArrayList<Administrador> admins) {
+		this.lista = admins;
 	}
 	
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
 	@Override
-	public void validarAgregar(Object o) {
-		if(validarAdmin(((Administrador)o).getRut()) == false)
-			agregarAdministrador((Administrador)o);
+	public boolean validarAgregar(Object o) {
+		if(validarAdmin(((Administrador)o).getRut()) == false){
+			agregarAdmin((Administrador)o);
+			return true;
+		}
+		else return false;
 	}
 
-	public void agregarAdministrador(Administrador admin) {
-		administradores.add(admin);
-		
+	public void agregarAdmin(Administrador admin) {
+		lista.add(admin);
 		}
-	
-	public ArrayList <Administrador> obtenerAdministradores (){
-		return administradores;
-	}
 
 	public boolean validarAdmin (String rut){
-		for (int i = 0; i<administradores.size();i++){
-			if (administradores.get(i).getRut().equals(rut)){
+		for (int i = 0; i<lista.size();i++){
+			if (lista.get(i).getRut().equals(rut)){
 				return true;	//	Admin Existe
 			}
 		}
 		return false;	//	Admin no existe
 	}
 	
+	public ArrayList <Administrador> obtenerLista (){
+		return lista;
+	}
 }

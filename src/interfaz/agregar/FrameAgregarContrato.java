@@ -106,14 +106,14 @@ public class FrameAgregarContrato extends JFrame {
 																	// Moviles
 				// RECORRE PLANES DE COMPANIA
 				
-				for (int i = 0; i < datosEmpresa.getPlanes().getPlanes().size() ; i++)
+				for (int i = 0; i < datosEmpresa.getPlanes().getLista().size() ; i++)
 					// INGRESA EN LA LISTA CADA ELEMENTO
-					model1.addElement(datosEmpresa.getPlanes().getPlanes().get(i).getNombrePlan());
+					model1.addElement(datosEmpresa.getPlanes().getLista().get(i).getNombre());
 				
 				// RECORRE EQUIPOS MOVILES DE COMPANIA
-				for (int i = 0; i < datosEmpresa.getEquipos().getEquipos().size(); i++)
+				for (int i = 0; i < datosEmpresa.getEquipos().getLista().size(); i++)
 					// INGRESA EN LA LISTA CADA ELEMENTO
-					model2.addElement(datosEmpresa.getEquipos().getEquipos().get(i).getNombre());
+					model2.addElement(datosEmpresa.getEquipos().getLista().get(i).getNombre());
 
 				// HACE A LOS ELEMENTOS VISIBLES
 				listEquipos.setModel(model2);
@@ -151,24 +151,24 @@ public class FrameAgregarContrato extends JFrame {
 				Contrato contratoNuevo = null;
 
 				// Recorre planes de compania
-				for (int i = 0; i < datosEmpresa.getPlanes().getPlanes().size(); i++) // Recorre
+				for (int i = 0; i < datosEmpresa.getPlanes().getLista().size(); i++) // Recorre
 																			// planes
 																			// de
 																			// compania
-					for (int j = 0; j < datosEmpresa.getEquipos().getEquipos().size(); j++) // Recorre
+					for (int j = 0; j < datosEmpresa.getEquipos().getLista().size(); j++) // Recorre
 																				// equipos
 																				// de
 																				// compania
 						// Si estan Seleccionados en LA LISTA, 1 Plan y 1 Equipo
 						// , se procede
 						if (listPlanes.isSelectedIndex(i) && listEquipos.isSelectedIndex(j)) {
-							plan = datosEmpresa.buscarPlan(listPlanes.getSelectedValue().toString());
-							equipo = datosEmpresa.buscarEquipo(listEquipos.getSelectedValue().toString());
+							plan = datosEmpresa.getPlanes().buscarPlan(listPlanes.getSelectedValue().toString());
+							equipo = datosEmpresa.getEquipos().buscarEquipo(listEquipos.getSelectedValue().toString());
 							numCuotas = comboBoxMeses.getSelectedIndex() + 1;
 
 							// Se crea un nuevo contrato en: CLIENTE OBTENIDO A
 							// ESTA CLASE/VENTANA, POR REFERENCIA linea 44
-							System.out.println(""+plan.getNombrePlan());
+							System.out.println(""+plan.getNombre());
 							System.out.println(""+equipo.getNombre());
 							contratoNuevo = cliente.crearContrato(cliente ,plan, equipo, numCuotas, datosEmpresa);
 

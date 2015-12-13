@@ -134,12 +134,12 @@ public class Cliente extends Persona {
 		documento.add(new Paragraph("\nContratos : "));
 		// RECORRE CONTRATOS DE CLIENTE Y OBTIENE VALOR DE idPLAN Y idEQUIPO DE
 		// CADA CONTRATO
-		for (int j = 0; j < contratos.getContratos().size(); j++) {
-			idPlan = contratos.getContratos().get(j).getIdPlan();
-			idEquipo = contratos.getContratos().get(j).getIdEquipo();
+		for (int j = 0; j < contratos.getLista().size(); j++) {
+			idPlan = contratos.getLista().get(j).getIdPlan();
+			idEquipo = contratos.getLista().get(j).getIdEquipo();
 			// imprime en pdf id contrato y valor total a pagar de cada cliente
-			documento.add(new Paragraph("- ID Contrato :                 " + contratos.getContratos().get(j).getIdContrato()));
-			documento.add(new Paragraph("- Valor total :                   $" + contratos.getContratos().get(j).getValorTotal()));
+			documento.add(new Paragraph("- ID Contrato :                 " + contratos.getLista().get(j).getIdContrato()));
+			documento.add(new Paragraph("- Valor total :                   $" + contratos.getLista().get(j).getValorTotal()));
 
 //			// RECORRE PLANES EN COMPANIA E IMPRIME EL PLAN EN PDF
 //			for (int k = 0; k < datosEmpresa.getPlanes().getPlanes().size(); k++)

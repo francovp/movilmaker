@@ -102,8 +102,8 @@ public class FrameEliminarContrato extends JFrame {
 				// SI EL ID DEL CONTRATO ESTA SELECCIONADO EN LA LISTA, SE
 				// PROCEDE A ELIMINAR CONTRATO
 				if (list.isSelectedIndex(list.getSelectedIndex())) {
-					Cliente c = datosEmpresa.buscarCliente(textRut.getText());
-					if (c.getContratos().getContratos().remove(list.getSelectedIndex()) != null) {
+					Cliente c = datosEmpresa.getClientes().buscarCliente(textRut.getText());
+					if (c.getContratos().getLista().remove(list.getSelectedIndex()) != null) {
 						// CONTRATO ELIMINADO
 						JOptionPane.showMessageDialog(null, "Contrato eliminado con exito!", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
@@ -144,10 +144,10 @@ public class FrameEliminarContrato extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel listContratos = new DefaultListModel();
 
-				Cliente c = datosEmpresa.buscarCliente(textRut.getText());
+				Cliente c = datosEmpresa.getClientes().buscarCliente(textRut.getText());
 				if (c != null) {
 					textRut.setEnabled(false);
-					if (c.getContratos().getContratos().size() == 0) {
+					if (c.getContratos().getLista().size() == 0) {
 						lblAviso.setForeground(Color.RED);
 						lblAviso.setText("Cliente no tiene contratos");
 						btnCancelar.setText("Volver");
@@ -155,8 +155,8 @@ public class FrameEliminarContrato extends JFrame {
 						lblAviso.setForeground(Color.BLUE);
 						lblAviso.setText("Cliente encontrado!");
 						btnCancelar.setText("Volver");
-						for (int i = 0; i < c.getContratos().getContratos().size(); i++) {
-							listContratos.addElement(c.getContratos().getContratos().get(i).getIdContrato()); // AGREGA
+						for (int i = 0; i < c.getContratos().getLista().size(); i++) {
+							listContratos.addElement(c.getContratos().getLista().get(i).getIdContrato()); // AGREGA
 																								// ELEMENTO
 																								// A
 																								// LA

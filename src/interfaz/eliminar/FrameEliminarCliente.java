@@ -51,7 +51,7 @@ public class FrameEliminarCliente extends JFrame {
 	 * Create the frame.
 	 */
 	public FrameEliminarCliente(Compania datosEmpresa) {
-		ArrayList<Cliente> listaClientes = datosEmpresa.obtenerClientes();
+		ArrayList<Cliente> listaClientes = datosEmpresa.getClientes().getLista();
 		setResizable(false);
 		setTitle("Eliminar cliente");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,7 +85,7 @@ public class FrameEliminarCliente extends JFrame {
 				rut = textRut.getText();
 
 				// Llama a metodo en clase Compa�ia para eliminar Cliente
-				if (datosEmpresa.eliminarCliente(rut) == true) {
+				if (datosEmpresa.getClientes().eliminarCliente(rut) == true) {
 					// Si el cliente se elimino exitosamente se eliminar�
 					// cliente en la BD
 					
@@ -120,6 +120,7 @@ public class FrameEliminarCliente extends JFrame {
 
 		JButton btnMostrar = new JButton("Mostrar");
 		btnMostrar.addActionListener(new ActionListener() {
+			@SuppressWarnings({ "rawtypes", "unchecked" })
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel listmodel = new DefaultListModel();

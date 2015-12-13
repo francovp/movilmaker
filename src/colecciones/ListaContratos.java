@@ -12,40 +12,42 @@ import javax.swing.JOptionPane;
 import extras.Database;
 
 public class ListaContratos implements Validador {
-	private ArrayList <Contrato> contratos;
+	private ArrayList <Contrato> lista;
 	
 	// CONSTRUCTOR
 	
 	public ListaContratos (){
-		contratos = new ArrayList <Contrato> ();
+		lista = new ArrayList <Contrato> ();
 	}
 	
 	/////////////////////////// * GETTERS & SETTERS *////////////////////////////////////
 
-	public ArrayList<Contrato> getContratos() {
-		return contratos;
+	public ArrayList<Contrato> getLista() {
+		return lista;
 	}
 
-	public void setContratos(ArrayList<Contrato> contratos) {
-		this.contratos = contratos;
+	public void setLista(ArrayList<Contrato> contratos) {
+		this.lista = contratos;
 	}
 	
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
 	
 	@Override
-	public void validarAgregar(Object o) {
-		if(validarContrato(((Contrato)o).getIdContrato()) == false)
+	public boolean validarAgregar(Object o) {
+		if(validarContrato(((Contrato)o).getIdContrato()) == false){
 			agregarContrato((Contrato)o);
+			return true;
+		}
+		else return false;
 	}
 	
 	public void agregarContrato (Contrato cont){
-		contratos.add(cont);
-		
+		lista.add(cont);
 	}
 	
 	public boolean validarContrato (int id){
-		for (int i = 0; i<contratos.size();i++){
-			if (contratos.get(i).getIdContrato() == id){
+		for (int i = 0; i<lista.size();i++){
+			if (lista.get(i).getIdContrato() == id){
 				return true;	//	Contrato Existe
 			}
 		}
@@ -105,7 +107,7 @@ public class ListaContratos implements Validador {
 	
 	public boolean eliminarContrato (String rut, int indice){
 		
-		contratos.remove(indice);
+		lista.remove(indice);
 		try {
 			// Creacion de conexion a base de datos
 			Database.eliminarContratoBD(rut);

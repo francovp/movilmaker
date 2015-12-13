@@ -2,40 +2,42 @@ package colecciones;
 import java.util.ArrayList;
 
 public class ListaEquipos implements Validador {
-	private ArrayList <Equipo> equipos;
+	private ArrayList <Equipo> lista;
 		
 	// CONSTRUCTOR
 	
 	public ListaEquipos(){
-		equipos = new ArrayList <Equipo> ();
+		lista = new ArrayList <Equipo> ();
 	}
 	
 	/////////////////////////// * GETTERS & SETTERS *////////////////////////////////////
 	
-	public ArrayList<Equipo> getEquipos() {
-		return equipos;
+	public ArrayList<Equipo> getLista() {
+		return lista;
 	}
 
-	public void setEquipos(ArrayList<Equipo> equipos) {
-		this.equipos = equipos;
+	public void setLista(ArrayList<Equipo> equipos) {
+		this.lista = equipos;
 	}
 	
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
 	
 	@Override
-	public void validarAgregar(Object o) {
-		if(validarEquipo(((Equipo)o).getIdEquipo()) == false)
+	public boolean validarAgregar(Object o) {
+		if(validarEquipo(((Equipo)o).getNombre()) == false){
 			agregarEquipo((Equipo)o);
-	}
-	
-
-	public void agregarEquipo(Equipo movil) {
-		equipos.add(movil);
+			return true;
+		}
+		else return false;
 	}
 
-	public boolean validarEquipo (int id){
-		for (int i = 0; i<equipos.size();i++){
-			if (equipos.get(i).getIdEquipo() == id){
+	public void agregarEquipo(Equipo m) { 
+		lista.add(m);
+	}
+
+	public boolean validarEquipo (String id){
+		for (int i = 0; i<lista.size();i++){
+			if (lista.get(i).getNombre() == id){
 				return true;	//	 Existe
 			}
 		}
@@ -48,10 +50,10 @@ public class ListaEquipos implements Validador {
 	 * @return Un objeto Equipo con el Equipo elejido
 	 */
 	public Equipo buscarEquipo(int id) {
-		for (int i = 0; i < equipos.size(); i++)
-			if (equipos.get(i).getIdEquipo() == id)
+		for (int i = 0; i < lista.size(); i++)
+			if (lista.get(i).getIdEquipo() == id)
 				// si la id ingresada se encuentra
-				return equipos.get(i);
+				return lista.get(i);
 			else {
 				//System.err.println("No se encontro equipo");
 			}
@@ -59,14 +61,20 @@ public class ListaEquipos implements Validador {
 		return null;
 	}
 	
-	public Equipo buscarEquipo (String nombre){
-		for (int i = 0; i < equipos.size(); i++){
-		if ((equipos.get(i).getNombre()).equalsIgnoreCase(nombre)){
-			System.out.println("Obtuvo equipo!");
-			return equipos.get(i);
+	public Equipo buscarEquipo (String id){
+		for (int i = 0; i < lista.size(); i++){
+			if ((lista.get(i).getNombre()).equalsIgnoreCase(id))
+				// si la id ingresada se encuentra
+				return lista.get(i);
+			else{
+			//System.err.println("No se encontro equipo");
 			}
 		}
+		//System.err.println("No existe equipo en el contrato");
 		return null;
 	}
-
+	
+	public ArrayList <Equipo> obtenerLista(){
+		return lista;
+	}
 }

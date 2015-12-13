@@ -68,7 +68,7 @@ public class FrameAgregarOtroContrato extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// BUSCA CLIENTE EN CLASE COMPAÑIA Y LO ASIGNA A c, SI LO
 				// ENCUENTRA LO RETORNA SI NO DEVUELVE NULL
-				Cliente c = datosEmpresa.buscarCliente(textRut.getText());
+				Cliente c = datosEmpresa.getClientes().buscarCliente(textRut.getText());
 
 				// SI EXISTE LLAMA A VENTANA FrameContrato Y LE ENVIA
 				// datosEmpresa y c (Cliente)
