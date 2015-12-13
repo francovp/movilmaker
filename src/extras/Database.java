@@ -135,6 +135,22 @@ public class Database {
 		cerrarDatabase();
 	}
 
+	/**
+	 * Ingresa un Plan en la Tabla PLANES de la BD
+	 * @param c - una referencia al Contrato del cliente a agregar
+	 * @return Un boolean si se ingresaron los datos correctamente o no
+	 */
+	public static void ingresarEquipoBD(Equipo c) throws SQLException {
+		// Si se cre� la conexi�n a la BD exitosamente se contin�a
+		// Se crea una nueva sentencia SQL
+		stmt = dbConnection.createStatement();
+		String sql = "INSERT INTO equipo(id_equipo,nombre,pantalla,camara,so,procesador,valor_plan,valor_prepago,id_compania)"
+				+ "VALUES('" + c.getIdEquipo() + "','" + c.getNombre()+ "'," + c.getPantalla() + "," + c.getCamara() + ","
+				+ c.getSo() + "," + c.getProcesador() + "," + c.getValorPlan() + "," + c.getValorPrepago() + c.getIdCompania() + ");";
+		stmt.executeUpdate(sql);
+		cerrarDatabase();
+	}
+	
 	public void ingresarRegistroBD(RegistroDePagos registro) throws SQLException {
 		// Si se cre� la conexi�n a la BD exitosamente se contin�a
 		// Se crea una nueva sentencia SQL
@@ -262,8 +278,9 @@ public class Database {
 			else {
 				while (rs.next()) {
 					// Se obtienen datos de la equipos
-					Equipo e = new Equipo(rs.getInt("id_equipo"), rs.getString("nombre_equipo"),
-							rs.getInt("valor_con_plan"), rs.getInt("valor_sin_plan"), rs.getString("capacidad"),
+					Equipo e = new Equipo(rs.getInt("id_equipo"), rs.getString("nombre"), rs.getString("pantalla"),
+							rs.getString("camara"), rs.getString("so"), rs.getString("procesador"),
+							rs.getInt("valor_plan"), rs.getInt("valor_prepago"),
 							rs.getString("id_compania"));
 
 					empresa.getEquipos().agregarEquipo(e);

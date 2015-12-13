@@ -10,32 +10,38 @@ package colecciones;
 public class Equipo {
 
 	private int idEquipo;
-	private String nombreEquipo;
-	private String modelo;
-	private String manufactor;
-	
-	private int valorConPlan;
-	private int valorSinPlan;
-	private String capacidad;
+	private String nombre;
+	private String pantalla;
+	private String camara;
+	private String so;
+	private String procesador;
+	private int valorPlan;
+	private int valorPrepago;
 	private String idCompania; // ID de la compania a la que pertenece el Equipo
 
-	// Constructor Simple
+	// Constructor
 	/**
 	 * @param idEquipo
 	 * @param nombreEquipo
-	 * @param valorConPlan
-	 * @param valorSinPlan
-	 * @param capacidad
+	 * @param pantalla
+	 * @param camara
+	 * @param so
+	 * @param procesador
+	 * @param valorPlan
+	 * @param valorPrepago
 	 * @param idCompania
 	 */
-	public Equipo(int idEquipo, String nombreEquipo, int valorConPlan, int valorSinPlan, String capacidad,
-			String idCompania) {
+	public Equipo(int idEquipo, String nombre, String pantalla, String camara, String so, String procesador,
+			int valorConPlan, int valorPrepago, String idCompania) {
 		super();
 		this.idEquipo = idEquipo;
-		this.nombreEquipo = nombreEquipo;
-		this.valorConPlan = valorConPlan;
-		this.valorSinPlan = valorSinPlan;
-		this.capacidad = capacidad;
+		this.nombre = nombre;
+		this.pantalla = pantalla;
+		this.camara = camara;
+		this.so = so;
+		this.procesador = procesador;
+		this.valorPlan = valorConPlan;
+		this.valorPrepago = valorPrepago;
 		this.idCompania = idCompania;
 	}
 
@@ -47,36 +53,60 @@ public class Equipo {
 		this.idEquipo = idEquipo;
 	}
 
-	public String getNombreEquipo() {
-		return nombreEquipo;
+	public String getNombre() {
+		return nombre;
 	}
 
 	public void setNombreEquipo(String nombreEquipo) {
-		this.nombreEquipo = nombreEquipo;
+		this.nombre = nombreEquipo;
 	}
 
-	public int getValorConPlan() {
-		return valorConPlan;
+	public String getPantalla() {
+		return pantalla;
 	}
 
-	public void setValorConPlan(int valorConPlan) {
-		this.valorConPlan = valorConPlan;
+	public void setPantalla(String pantalla) {
+		this.pantalla = pantalla;
 	}
 
-	public int getValorSinPlan() {
-		return valorSinPlan;
+	public String getCamara() {
+		return camara;
 	}
 
-	public void setValorSinPlan(int valorSinPlan) {
-		this.valorSinPlan = valorSinPlan;
+	public void setCamara(String camara) {
+		this.camara = camara;
 	}
 
-	public String getCapacidad() {
-		return capacidad;
+	public String getSo() {
+		return so;
 	}
 
-	public void setCapacidad(String capacidad) {
-		this.capacidad = capacidad;
+	public void setSo(String so) {
+		this.so = so;
+	}
+
+	public String getProcesador() {
+		return procesador;
+	}
+
+	public void setProcesador(String procesador) {
+		this.procesador = procesador;
+	}
+
+	public int getValorPlan() {
+		return valorPlan;
+	}
+
+	public void setValorPlan(int valorConPlan) {
+		this.valorPlan = valorConPlan;
+	}
+
+	public int getValorPrepago() {
+		return valorPrepago;
+	}
+
+	public void setValorPrepago(int valorPrepago) {
+		this.valorPrepago = valorPrepago;
 	}
 
 	public String getIdCompania() {
@@ -86,23 +116,4 @@ public class Equipo {
 	public void setIdCompania(String idCompania) {
 		this.idCompania = idCompania;
 	}
-
-	public String getModelo() {
-		return modelo;
-	}
-
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
-	}
-
-	public String getManufactor() {
-		return manufactor;
-	}
-
-	public void setManufactor(String manufactor) {
-		this.manufactor = manufactor;
-	}
-	
-	
-
 }

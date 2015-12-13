@@ -78,12 +78,12 @@ public class ListaContratos implements Validador {
 		// Genera un numero random entre 0 y 100000 que sera el id con contrato
 		idRandom = rnd.nextInt(100000);
 		// Calcula el monto total de la deuda del contrato
-		monto = movil.getValorConPlan() + plan.getPrecio();
+		monto = movil.getValorPlan() + plan.getPrecio();
 		// Actualiza la deuda del cliente antes de crear el contrato
 		cliente.setDeuda(cliente.getDeuda()+monto);
 
 		// Calcula el valor de cada cuota (sin interes)
-		valorCuota = movil.getValorConPlan() / numCuotas + plan.getPrecio();
+		valorCuota = movil.getValorPlan() / numCuotas + plan.getPrecio();
 
 		// Se crea el obj contrato y se retorna
 		contrato = new Contrato(idRandom, fi, ff, movil.getIdEquipo(), plan.getIdPlan(), movil, plan, monto, valorCuota,

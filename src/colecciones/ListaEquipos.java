@@ -61,7 +61,7 @@ public class ListaEquipos implements Validador {
 	
 	public Equipo buscarEquipo (String nombre){
 		for (int i = 0; i < equipos.size(); i++){
-		if ((equipos.get(i).getCapacidad()).equalsIgnoreCase(nombre)){
+		if ((equipos.get(i).getNombre()).equalsIgnoreCase(nombre)){
 			System.out.println("Obtuvo equipo!");
 			return equipos.get(i);
 			}
