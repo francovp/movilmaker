@@ -114,6 +114,6 @@ public abstract class Persona {
 		this.tipo = tipo;
 	}
 
-	public abstract void reporte (Compania datosEmpresa) throws FileNotFoundException, DocumentException;
+	public abstract void reporte (String rutEmpresa, String nombre) throws FileNotFoundException, DocumentException;
 		
 }

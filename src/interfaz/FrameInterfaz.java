@@ -127,6 +127,10 @@ public class FrameInterfaz extends JFrame {
 		panel.add(btnAgregarPlan);
 		
 		JButton btnAgregarEquipo = new JButton("Agregar Equipo");
+		btnAgregarEquipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		panel.add(btnAgregarEquipo);
 
 		JButton btnAgregarContratocliente = new JButton("Agregar contrato a cliente");

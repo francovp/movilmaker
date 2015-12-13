@@ -31,8 +31,6 @@ public class Administrador extends Persona {
 		this.password = password;
 	}
 
-
-
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
 
 	/**
@@ -43,14 +41,14 @@ public class Administrador extends Persona {
 	 * @throws DocumentException
 	 */
 	@Override
-	public void reporte (Compania datosEmpresa) throws FileNotFoundException, DocumentException{
+	public void reporte (String rutEmpresa, String nombre) throws FileNotFoundException, DocumentException{
 		Document documento = new Document();
 		String fonoFijo, fonoCel, email, nombre2, apellido2;
 		PdfWriter.getInstance(documento, new FileOutputStream("reportes\\Reporte_admin_" + getRut() + ".pdf"));
 		documento.open(); // ABRE DOCUMENTO
 
 		documento.add(new Paragraph(
-				"Documento emitido por compa�ia " + datosEmpresa.getNombre() + ", RUT: " + datosEmpresa.getRut()));
+				"Documento emitido por compa�ia " + nombre + ", RUT: " + rutEmpresa));
 
 		if (getFonoFijo() == 0)
 			fonoFijo = "Sin datos";

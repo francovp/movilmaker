@@ -54,7 +54,6 @@ public class ListaClientes implements Validador {
 
 	public boolean eliminarCliente (String rut){
 		for (int i = 0 ; i<clientes.size();i++){
-			System.out.println(""+clientes.get(1).getApellido1());
 			if ((clientes.get(i).getRut()).equalsIgnoreCase(rut)){
 				clientes.remove(i);
 				return true;

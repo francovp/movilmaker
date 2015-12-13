@@ -280,7 +280,7 @@ public class Compania {
 					for (int k = 0; k < equipos.getEquipos().size(); k++)
 						if (equipos.getEquipos().get(k).getIdEquipo() == idEquipo)
 							documento.add(
-									new Paragraph("----- Equipo contratado :      " + equipos.getEquipos().get(k).getNombreEquipo()));
+									new Paragraph("----- Equipo contratado :      " + equipos.getEquipos().get(k).getNombre()));
 				}
 			}
 			documento.close(); // SE CIERRA EL DOCUMENTO

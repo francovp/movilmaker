@@ -80,7 +80,7 @@ public class Cliente extends Persona {
 	 * @throws DocumentException
 	 */
 	@Override
-	public void reporte (Compania datosEmpresa) throws FileNotFoundException, DocumentException{
+	public void reporte (String rutEmpresa, String nombre) throws FileNotFoundException, DocumentException{
 		Document documento = new Document();
 		String fonoFijo, fonoCel, email, direccion1, direccion2, nombre2, apellido2, deuda;
 		int idPlan, idEquipo; // Compararan ids de cada contrato de x cliente
@@ -89,7 +89,7 @@ public class Cliente extends Persona {
 		documento.open(); // ABRE DOCUMENTO
 
 		documento.add(new Paragraph(
-				"Documento emitido por compa�ia " + datosEmpresa.getNombre() + ", RUT: " + datosEmpresa.getRut()));
+				"Documento emitido por compañia " + nombre+ ", RUT: " + rutEmpresa));
 
 		if (Integer.toString(getFonoCel()) == null || getFonoFijo() == 0)
 			fonoFijo = "Sin datos";
@@ -141,17 +141,17 @@ public class Cliente extends Persona {
 			documento.add(new Paragraph("- ID Contrato :                 " + contratos.getContratos().get(j).getIdContrato()));
 			documento.add(new Paragraph("- Valor total :                   $" + contratos.getContratos().get(j).getValorTotal()));
 
-			// RECORRE PLANES EN COMPANIA E IMPRIME EL PLAN EN PDF
-			for (int k = 0; k < datosEmpresa.getPlanes().getPlanes().size(); k++)
-				if (datosEmpresa.getPlanes().getPlanes().get(k).getIdPlan() == idPlan)
-					documento.add(new Paragraph(
-							"- Plan contratado :          " + datosEmpresa.getPlanes().getPlanes().get(k).getNombrePlan()));
-
-			// RECORRE EQUIPOS EN COMPANIA E IMPRIME EL EQUIPO EN PDF
-			for (int k = 0; k < datosEmpresa.getEquipos().getEquipos().size(); k++)
-				if (datosEmpresa.getEquipos().getEquipos().get(k).getIdEquipo() == idEquipo)
-					documento.add(new Paragraph(
-							"- Equipo contratado :      " + datosEmpresa.getEquipos().getEquipos().get(k).getNombreEquipo()));
+//			// RECORRE PLANES EN COMPANIA E IMPRIME EL PLAN EN PDF
+//			for (int k = 0; k < datosEmpresa.getPlanes().getPlanes().size(); k++)
+//				if (datosEmpresa.getPlanes().getPlanes().get(k).getIdPlan() == idPlan)
+//					documento.add(new Paragraph(
+//							"- Plan contratado :          " + datosEmpresa.getPlanes().getPlanes().get(k).getNombrePlan()));
+//
+//			// RECORRE EQUIPOS EN COMPANIA E IMPRIME EL EQUIPO EN PDF
+//			for (int k = 0; k < datosEmpresa.getEquipos().getEquipos().size(); k++)
+//				if (datosEmpresa.getEquipos().getEquipos().get(k).getIdEquipo() == idEquipo)
+//					documento.add(new Paragraph(
+//							"- Equipo contratado :      " + datosEmpresa.getEquipos().getEquipos().get(k).getNombreEquipo()));
 		}
 		documento.close(); // SE CIERRA EL DOCUMENTO
 	}
