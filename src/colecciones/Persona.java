@@ -15,8 +15,9 @@ public abstract class Persona {
 	private int fonoCel;
 	private int fonoFijo;
 	private String email;
-	private int tipo = 0; // 0 = Admin, 1 = Cliente ... n = Algo más
-
+	private String password;
+	private int tipo = 0; // 0 = Admin, 1 = Cliente ... n = Algo mï¿½s
+	
 	// CONSTRUCTOR
 	public Persona(String rut, String idCompania, String nombre1, String nombre2, String apellido1, String apellido2,
 			int fonoCel, int fonoFijo, String email, int tipo) {
@@ -112,6 +113,14 @@ public abstract class Persona {
 
 	public void setTipo(int tipo) {
 		this.tipo = tipo;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public abstract void reporte (String rutEmpresa, String nombre) throws FileNotFoundException, DocumentException;

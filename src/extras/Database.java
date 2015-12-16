@@ -248,7 +248,7 @@ public class Database {
 				while (rs.next()) {
 					// Se obtienen datos de la plan
 					Plan p = new Plan(rs.getInt("id_plan"), rs.getString("nombre_plan"), rs.getInt("precio"),
-							rs.getInt("minutos"), rs.getInt("gigas"), rs.getInt("sms"), rs.getInt("valor_min"), rs.getString("id_compania"));
+							rs.getInt("minutos"), rs.getString("gigas"), rs.getInt("sms"), rs.getInt("valor_min"), rs.getString("id_compania"));
 
 					empresa.getPlanes().agregarPlan(p);
 				}
@@ -257,7 +257,69 @@ public class Database {
 				return empresa;
 			}
 	}
-
+	
+	public static boolean modificarEquipos(Equipo e) throws SQLException{
+		
+		stmt = dbConnection.createStatement();
+		rs=stmt.executeQuery("UPDATE (id_equipo,nombre,procesador,"
+				+ "valor_plan,id_compania,valor_prepago,pantalla,camara,so) FROM equipos VALUES ("
+				+ e.getIdEquipo()+ ",'" + e.getNombre()+"','" + e.getProcesador()+"'," + e.getValorPlan() + ","
+				+ e.getIdCompania()+"," + e.getValorPrepago() +",'"+ e.getPantalla()+"','"+e.getCamara()+"','"
+				+ e.getSo()+"'");
+		if(rs==null){
+			cerrarDatabase();
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	
+	public static boolean modificarClientes(Cliente c)throws SQLException{
+		stmt=dbConnection.createStatement();
+		rs=stmt.executeQuery("UPDATE (rut,id_compania,nombre1,nombre2,appellido1,apellido2,fono_celular,fono_fijo,"
+				+ "email,direccion1,direccion2,tipo) FROM personas VALUES ("
+				+ c.getRut()+ "," + c.getIdCompania()+",'"+ c.getNombre1()+"','"+ c.getNombre2()+"','"
+				+ c.getApellido1()+"','"+ c.getApellido2()+ "',"+ c.getFonoCel()+","+ c.getFonoFijo()+",'"
+				+ c.getEmail()+"','"+ c.getDireccion1()+"','" + c.getDireccion2()+"',"+c.getTipo()+"),");
+		if(rs==null){
+			cerrarDatabase();
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	
+	public static boolean modificarAdministrador (Administrador a)throws SQLException{
+		stmt = dbConnection.createStatement();
+		rs=stmt.executeQuery("INSERT INTO persona (nombre1,apellido1,id_compania,"
+				+ "nombre2,fono_celular,fono_fijo,email,apellido2,rut,tipo,password) " + "VALUES ('"
+				+ a.getNombre1() + "','" + a.getApellido1() + "','" + a.getIdCompania()
+				+ "','" + a.getNombre2() + "'," + a.getFonoCel() + "," + a.getFonoFijo()
+				+ ",'" + a.getEmail() + "','" + a.getApellido2() + "','" + a.getRut()
+				+ "'," + a.getTipo() + ",'" + a.getPassword() + "');");
+		if(rs==null){
+		cerrarDatabase();
+		return false;
+		}
+		else{
+			return true;
+		}
+	}
+	public static boolean modificarPlanes(Plan p) throws SQLException{
+		stmt=dbConnection.createStatement();
+		rs=stmt.executeQuery("UPDATE (id_plan,nombre_plan,minutos,gigas,precio,id_compania,sms,valor_min)FROM"
+				+ "planes VALUES("+ p.getIdPlan()+",'"+ p.getNombre()+ "',"+p.getMinutos()+","+ p.getPrecio()
+				+ ",'"+p.getGigas()+"',"+p.getPrecio()+"',"+p.getIdCompania()+","+p.getSms()+","+p.getValorMin()+"'");
+		if(rs==null){
+			cerrarDatabase();
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
 	/**
 	 * Lee los datos de los Equipos desde la Tabla EQUIPOS de la BD
 	 * @param empresa - una referencia a un objeto de tipo Empresa para guardar los datos 
