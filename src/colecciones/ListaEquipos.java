@@ -1,6 +1,10 @@
 package colecciones;
 import java.util.ArrayList;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+
 public class ListaEquipos implements Validador {
 	private ArrayList <Equipo> lista;
 		
@@ -73,6 +77,15 @@ public class ListaEquipos implements Validador {
 		//System.err.println("No existe equipo en el contrato");
 		return null;
 	}
+	
+	public void reportarEquipos(int id,Document doc) throws DocumentException
+	{
+		for (int i = 0; i < lista.size(); i++)
+			if (lista.get(i).getIdEquipo() == id)
+				doc.add(
+						new Paragraph("----- Equipo contratado :      " + getLista().get(i).getNombre()));
+	}
+	
 	
 	public ArrayList <Equipo> obtenerLista(){
 		return lista;

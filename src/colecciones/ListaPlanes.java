@@ -1,24 +1,28 @@
 package colecciones;
-import java.util.ArrayList;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
 
 public class ListaPlanes implements Validador {
-	private ArrayList <Plan> lista;
+	private SuperColeccion lista;
 	
 	// CONSTRUCTOR
 	
 	public ListaPlanes(){
-		this.lista = new ArrayList <Plan>();
+		this.lista = new SuperColeccion();
 	}
 
 	/////////////////////////// * GETTERS & SETTERS *////////////////////////////////////
 	
-	public ArrayList<Plan> getLista() {
+	public SuperColeccion getLista() {
 		return lista;
 	}
 
-	public void setLista(ArrayList<Plan> planes) {
-		this.lista = planes;
+	public void setLista(SuperColeccion lista) {
+		this.lista = lista;
 	}
+
 
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
 	
@@ -32,12 +36,13 @@ public class ListaPlanes implements Validador {
 	}
 	
 	public void agregarPlan (Plan plan){
-		lista.add(plan);
+		lista.append(plan);
 	}
 	
 	public boolean validarPlan(int id){
-		for (int i = 0; i<lista.size();i++){
-			if (lista.get(i).getIdPlan() == id){
+		for (int i = 1; i<lista.count();i++){
+			lista.setPos(i);
+			if (((Plan) lista.actualValue()).getIdPlan() == id){
 				return true;	//	 Existe
 			}
 		}
@@ -50,25 +55,38 @@ public class ListaPlanes implements Validador {
 	 * @return Un objeto Plan con el plan elejido
 	 */
 	public Plan buscarPlan (int id){
-		for (int i = 0; i < lista.size(); i++)
-			if (lista.get(i).getIdPlan() == id)
+		for (int i = 1; i < lista.count(); i++){
+			lista.setPos(i);
+			if (((Plan) lista.actualValue()).getIdPlan() == id)
 				// si la id ingresada se encuentra
-				return lista.get(i);
-			else {
-				//System.err.println("No se encontro plan");
-			}
+				return (Plan)lista.actualValue();
+		}
 		//System.err.println("No existe plan en el contrato");
 		return null;	
 	}
 	
 	public Plan buscarPlan (String nom){
-		for (int i=0; i < lista.size(); i++){
-			if ((lista.get(i).getNombre()).equalsIgnoreCase(nom)){
+		for (int i=1; i < lista.count(); i++){
+			if ((((Plan) lista.actualValue()).getNombre().equalsIgnoreCase(nom)))
+			{
 				System.out.println("obtuvo Plan!");
-				return lista.get(i);
+				return (Plan)lista.actualValue();
 			}
 		}
 		return null;
+	}
+	
+	
+	public void reportarPlanes(int id,Document doc) throws DocumentException
+	{
+		for(int i=1 ; i < lista.count() ; i++)
+		{
+			lista.setPos(i);
+			if(((Plan) lista.actualValue()).getIdPlan() == id)
+					doc.add(
+					new Paragraph("----- Plan contratado :          " + ((Plan)lista.actualValue()).getNombre()));
+
+		}
 	}
 	
 }
