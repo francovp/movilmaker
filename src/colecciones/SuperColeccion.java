@@ -6,6 +6,9 @@ public class SuperColeccion {
 	private ArrayList<Object> lista;
 	private int actual;
 	
+	public SuperColeccion(){
+		this.lista= new ArrayList<Object>();
+	}
 	public ArrayList<Object> getLista() {
 		return lista;
 	}

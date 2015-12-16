@@ -95,16 +95,20 @@ public class ListaPlanes implements Validador {
 	}
 	
 	public DefaultListModel<String> listarAInterfazAgregar(DefaultListModel<String> model){
-		for (int i = 0; i < size(); i++)
+		for (int i = 0; i < size(); i++){
+			lista.setPos(i);
 			// INGRESA EN LA LISTA CADA ELEMENTO
-			model.addElement(((Plan)lista.actualValue(i)).getNombre());
+			model.addElement(((Plan)lista.actualValue()).getNombre());
+		}
 		return model;
+		
 	}
 	
 	public DefaultListModel<String> listarAInterfazVer(DefaultListModel<String> model){
-		for(int i=0; i<lista.count();i++){		
-			model.addElement((i+1)+" - Nombre: " +((Plan)lista.actualValue(i)).getNombre()+
-			" - Cuota Navegación: " +((Plan)lista.actualValue(i)).getGigas() + " - Minutos: " +((Plan)lista.actualValue(i)).getMinutos());
+		for(int i=0; i<lista.count();i++){	
+			lista.setPos(i);
+			model.addElement((i+1)+" - Nombre: " +((Plan)lista.actualValue()).getNombre()+
+			" - Cuota Navegación: " +((Plan)lista.actualValue()).getGigas() + " - Minutos: " +((Plan)lista.actualValue()).getMinutos());
 		}
 		return model;
 	}
