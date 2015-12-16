@@ -1,6 +1,7 @@
 package interfaz.agregar;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +20,7 @@ import javax.swing.border.TitledBorder;
 import colecciones.Administrador;
 import colecciones.Compania;
 import colecciones.Principal;
+import excepciones.ExceptionRutInvalido;
 import extras.Database;
 import interfaz.FrameInterfaz;
 
@@ -146,7 +148,7 @@ public class FrameAgregarAdmin extends JFrame {
 		panel_1.add(textFonoFijo);
 		textFonoFijo.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent evt) {
-				String var = "Teléfono fijo";
+				String var = "Telefono fijo";
 				textNumericoValidador(textFonoFijo, lblAviso, var, evt);
 			}
 		});
@@ -235,15 +237,13 @@ public class FrameAgregarAdmin extends JFrame {
 		});
 		btnReset.setBounds(104, 11, 89, 23);
 		panel_2.add(btnReset);
-
-
 	}
 
 	// ========================METODOS====================
 
 	/**
 	 * Ingresa atributos capturados desde los JTextField de la ventana y los
-	 * atribuye a un objeto Administrador que después se asocia a la empresaç
+	 * atribuye a un objeto Administrador que despues se asocia a la empresaç
 	 * @param datosEmpresa - una referencia a la Compania
 	 * @return un objeto Administrador del administrador creado
 	 **/
@@ -295,37 +295,37 @@ public class FrameAgregarAdmin extends JFrame {
 	 * Comprueba si los ingresos en las casillas violan restricciones
 	 * @return un boolean si no se encuentra ninguna restriccion o no
 	 */
-	public boolean comprobarIngreso(JLabel aviso) {
+	public boolean comprobarIngreso(JLabel aviso){
 		if(textNombre1.getText().length()==0){
 			aviso.setForeground(Color.RED);
-			aviso.setText("Nombre no puede estar vacío");
+			aviso.setText("Nombre no puede estar vacio");
 			return false;
 		}
 		if(textApellido1.getText().length() == 0){
 			aviso.setForeground(Color.RED);
-			aviso.setText("Apellido no puede estar vacío");
+			aviso.setText("Apellido no puede estar vacio");
 			return false;
 		}
 		if(textRut.getText().length() == 0){
 			aviso.setForeground(Color.RED);
-			aviso.setText("RUT no puede estar vacío");
+			aviso.setText("RUT no puede estar vacio");
 			return false;
 		}
 		
 		if(!Principal.validarRut(textRut.getText())){
 			aviso.setForeground(Color.RED);
-			aviso.setText("Ingrese un RUT válido");
+			aviso.setText("Ingrese un RUT valido");
 			return false;
 		}
 		return true;
 	}
 	
 	/**
-	 * Comprueba si el ingreso en el cuadro de texto de Teléfono Fijo o Celular son numéricos
+	 * Comprueba si el ingreso en el cuadro de texto de Telefono Fijo o Celular son numericos
 	 * @param tf - una referencia al elemento JTextField con el texto a verificar
 	 * @param aviso - una referencia al cuadro de texto para mensajes de aviso
-	 * @param var - La variable que se está verificando
-	 * @param evt - una referencia a la tecla que se está pulsando actualmente para comprobarla
+	 * @param var - La variable que se esta verificando
+	 * @param evt - una referencia a la tecla que se esta pulsando actualmente para comprobarla
 	 */
 	private void textNumericoValidador (JTextField tf, JLabel aviso, String var, KeyEvent evt) {
 		String str = tf.getText();
@@ -344,11 +344,11 @@ public class FrameAgregarAdmin extends JFrame {
 				Toolkit.getDefaultToolkit().beep();
 			}
 		}
-			if(error){
-		}
+		if(error){
 			tf.setText("");
 			tf.setText(new String(resultado,0,j));
 			aviso.setForeground(Color.RED);
 			aviso.setText(var+" debe ser numerico");
+		}
 	}
 }
