@@ -1,6 +1,7 @@
 package colecciones;
 import java.sql.SQLException;
 
+import excepciones.ExceptionRutInvalido;
 import extras.Database;
 import extras.DatabaseConnection;
 import interfaz.FrameAccesoProxy;
@@ -41,8 +42,6 @@ public class Principal {
 	 * @return un boolean si el RUT es válido o no
 	 **/
 	public static boolean validarRut(String rut) {
-		 
-		boolean validacion = false;
 		try {
 			rut =  rut.toUpperCase();
 			rut = rut.replace(".", "");
@@ -56,14 +55,14 @@ public class Principal {
 				s = (s + rutAux % 10 * (9 - m++ % 6)) % 11;
 			}
 			if (dv == (char) (s != 0 ? s + 47 : 75)) {
-				validacion = true;
+				return true;
 			}
-
-		} catch (java.lang.NumberFormatException e) {
-		} catch (Exception e) {
-		
+			else 
+				throw new ExceptionRutInvalido();
+		} catch (ExceptionRutInvalido e) {
+			e.getMessage();
+			return false; 
 		}
-		return validacion;
 	}
 
 }
