@@ -226,12 +226,12 @@ public class FrameAgregarPlan extends JFrame {
 	 * @return un objeto Plan del plan creado
 	 **/
 	public Plan datosNuevoPlan(Compania datosEmpresa) {
-		String nombre = null;
-		int minutos = 0, gigas = 0, precio = 0, sms = 0, valorMin = 0;
+		String nombre = null, gigas = null;
+		int minutos = 0, precio = 0, sms = 0, valorMin = 0;
 				
 		if(!textNombrePlan.getText().isEmpty()) nombre = textNombrePlan.getText();
 		if(!textMinutos.getText().isEmpty()) minutos = Integer.parseInt(textMinutos.getText());
-		if(!textGigas.getText().isEmpty()) gigas = Integer.parseInt(textGigas.getText());
+		if(!textGigas.getText().isEmpty()) gigas = textGigas.getText();
 		if(!textPrecio.getText().isEmpty()) precio = Integer.parseInt(textPrecio.getText());
 		if(!textSms.getText().isEmpty()) sms = Integer.parseInt(textSms.getText());
 		if(!textValorMin.getText().isEmpty()) valorMin = Integer.parseInt(textValorMin.getText());
