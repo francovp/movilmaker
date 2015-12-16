@@ -20,6 +20,7 @@ import com.itextpdf.text.DocumentException;
 
 import colecciones.Equipo;
 import colecciones.Plan;
+import colecciones.SuperColeccion;
 import colecciones.Compania;
 import interfaz.FrameInterfaz;
 
@@ -49,9 +50,7 @@ public class FrameVerPlanes extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public FrameVerPlanes(Compania datosEmpresa) {
-		ArrayList<Plan> lista = datosEmpresa.getPlanes().getLista();
 		setTitle("Reporte de Planes");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,7 +70,7 @@ public class FrameVerPlanes extends JFrame {
 		scrollPane.setBounds(10, 11, 427, 298);
 		panel.add(scrollPane);
 
-		JList listPlanes = new JList();
+		JList<String> listPlanes = new JList<String>();
 		listPlanes.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		scrollPane.setViewportView(listPlanes);
 		
@@ -119,18 +118,15 @@ public class FrameVerPlanes extends JFrame {
 						});
 				btnMostrar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						DefaultListModel listModel = new DefaultListModel();	// OBJETO DEL TIPO LISTA
-						if(lista.size() == 0){		// MENSAJE EN EL JList POR SI NO EXISTEN Planes
+						DefaultListModel<String> listModel = new DefaultListModel<String>();	// OBJETO DEL TIPO LISTA
+						if(datosEmpresa.getPlanes().getLista().count() == 0){		// MENSAJE EN EL JList POR SI NO EXISTEN Planes
 							listModel.addElement("No existen Planes");
 							listPlanes.setModel(listModel);
 						}
-						// AGREGA 1 A 1 DATOS BASICOS DE CADA Equipo
-						for(int i=0; i<lista.size();i++){		
-							listModel.addElement((i+1)+" - Nombre: " +lista.get(i).getNombre()+
-							" - Cuota Navegación: " +lista.get(i).getGigas() + " - Minutos: " +lista.get(i).getMinutos());
-							
-							listPlanes.setModel(listModel);	// VUELVE VISIBLE LOS ELEMENTOS
-						}
+						
+						listModel = datosEmpresa.getPlanes().listarAInterfazVer(listModel);
+						
+						listPlanes.setModel(listModel);	// VUELVE VISIBLE LOS ELEMENTOS
 					}
 				});
 	}

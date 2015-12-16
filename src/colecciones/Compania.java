@@ -192,11 +192,11 @@ public class Compania {
 					documento.add(
 							new Paragraph("---- Valor total :                   $" + c.getContratos().getLista().get(j).getValorTotal()));
 
-					// RECORRE PLANES EN COMPANIA E IMPRIME EL PLAN EN PDF
-					for (int k = 0; k < planes.getLista().size(); k++)
-						if (planes.getLista().get(k).getIdPlan() == idPlan)
-							documento.add(
-									new Paragraph("----- Plan contratado :          " + planes.getLista().get(k).getNombre()));
+//					// RECORRE PLANES EN COMPANIA E IMPRIME EL PLAN EN PDF
+//					for (int k = 0; k < planes.getLista().size(); k++)
+//						if (planes.getLista().get(k).getIdPlan() == idPlan)
+//							documento.add(
+//									new Paragraph("----- Plan contratado :          " + planes.getLista().get(k).getNombre()));
 
 					// RECORRE EQUIPOS EN COMPANIA E IMPRIME EL EQUIPO EN PDF
 					for (int k = 0; k < equipos.getLista().size(); k++)

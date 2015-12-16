@@ -77,12 +77,12 @@ public class FrameAgregarContrato extends JFrame {
 		lblEquipos.setBounds(185, 6, 46, 14);
 		panel.add(lblEquipos);
 
-		JList listEquipos = new JList();
+		JList<String> listEquipos = new JList<String>();
 		listEquipos.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		listEquipos.setBounds(198, 25, 193, 137);
 		panel.add(listEquipos);
 
-		JList listPlanes = new JList();
+		JList<String> listPlanes = new JList<String>();
 		listPlanes.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		listPlanes.setBounds(20, 25, 150, 137);
 		panel.add(listPlanes);
@@ -96,24 +96,15 @@ public class FrameAgregarContrato extends JFrame {
 		btnMostrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DefaultListModel model1 = new DefaultListModel(); // INSTANCIA
-																	// PARA
-																	// JList
-																	// Planes
-				DefaultListModel model2 = new DefaultListModel(); // INSTANCIA
-																	// PARA
-																	// JList
-																	// Moviles
+				// INSTANCIA PARA JList Planes
+				DefaultListModel<String> model1 = new DefaultListModel<String>();
+				// INSTANCIA PARA JList Moviles
+				DefaultListModel<String> model2 = new DefaultListModel<String>(); 
 				// RECORRE PLANES DE COMPANIA
 				
-				for (int i = 0; i < datosEmpresa.getPlanes().getLista().size() ; i++)
-					// INGRESA EN LA LISTA CADA ELEMENTO
-					model1.addElement(datosEmpresa.getPlanes().getLista().get(i).getNombre());
+				model1 = datosEmpresa.getPlanes().listarAInterfazAgregar(model1);
 				
-				// RECORRE EQUIPOS MOVILES DE COMPANIA
-				for (int i = 0; i < datosEmpresa.getEquipos().getLista().size(); i++)
-					// INGRESA EN LA LISTA CADA ELEMENTO
-					model2.addElement(datosEmpresa.getEquipos().getLista().get(i).getNombre());
+				model2 = datosEmpresa.getEquipos().listarAInterfazAgregar(model1);
 
 				// HACE A LOS ELEMENTOS VISIBLES
 				listEquipos.setModel(model2);
@@ -133,8 +124,8 @@ public class FrameAgregarContrato extends JFrame {
 		lblAviso.setBounds(10, 300, 201, 14);
 		contentPane.add(lblAviso);
 
-		JComboBox comboBoxMeses = new JComboBox();
-		comboBoxMeses.setModel(new DefaultComboBoxModel(
+		JComboBox<Object> comboBoxMeses = new JComboBox<Object>();
+		comboBoxMeses.setModel(new DefaultComboBoxModel<Object>(
 				new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
 		comboBoxMeses.setBounds(20, 264, 88, 20);
 		contentPane.add(comboBoxMeses);
@@ -151,14 +142,9 @@ public class FrameAgregarContrato extends JFrame {
 				Contrato contratoNuevo = null;
 
 				// Recorre planes de compania
-				for (int i = 0; i < datosEmpresa.getPlanes().getLista().size(); i++) // Recorre
-																			// planes
-																			// de
-																			// compania
-					for (int j = 0; j < datosEmpresa.getEquipos().getLista().size(); j++) // Recorre
-																				// equipos
-																				// de
-																				// compania
+				for (int i = 0; i < datosEmpresa.getPlanes().size(); i++) 
+					// Recorre equipos de compania
+					for (int j = 0; j < datosEmpresa.getEquipos().getLista().size(); j++) 
 						// Si estan Seleccionados en LA LISTA, 1 Plan y 1 Equipo
 						// , se procede
 						if (listPlanes.isSelectedIndex(i) && listEquipos.isSelectedIndex(j)) {

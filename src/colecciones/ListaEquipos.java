@@ -1,6 +1,8 @@
 package colecciones;
 import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
@@ -89,5 +91,12 @@ public class ListaEquipos implements Validador {
 	
 	public ArrayList <Equipo> obtenerLista(){
 		return lista;
+	}
+	
+	public DefaultListModel<String> listarAInterfazAgregar(DefaultListModel<String> model){
+		for (int i = 0; i < lista.size(); i++)
+			// INGRESA EN LA LISTA CADA ELEMENTO
+			model.addElement(lista.get(i).getNombre());
+		return model;
 	}
 }
