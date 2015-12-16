@@ -6,7 +6,6 @@ public class SuperColeccion {
 	private ArrayList<Object> lista;
 	private int actual;
 	
-	
 	public ArrayList<Object> getLista() {
 		return lista;
 	}
@@ -32,7 +31,6 @@ public class SuperColeccion {
 			lista.add(o);
 			actual=count();
 		}
-
 	}
 	
 	public int count(){
@@ -48,6 +46,14 @@ public class SuperColeccion {
 		else
 			return null;
 	}
+	
+	public Object actualValue(int index){
+		if(count()!= 0)
+			return lista.get(index);
+		else
+			return null;
+	}
+    
 	public void setPos(int i){
 		if(i<=count())
 			actual=i;
