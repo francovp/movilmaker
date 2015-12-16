@@ -48,6 +48,15 @@ public class ListaAdministradores implements Validador {
 		return false;	//	Admin no existe
 	}
 	
+	public Administrador buscarAdmin (String rut){
+		for(int i=0;i<lista.size();i++){
+			if (lista.get(i).getRut().equals(rut)){
+				return lista.get(i);
+			}
+		}
+		return null;
+	}
+	
 	public ArrayList <Administrador> obtenerLista (){
 		return lista;
 	}
