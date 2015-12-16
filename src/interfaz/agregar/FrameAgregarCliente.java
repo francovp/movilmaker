@@ -1,6 +1,4 @@
 package interfaz.agregar;
-import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -15,6 +13,8 @@ import javax.swing.border.TitledBorder;
 
 import colecciones.Cliente;
 import colecciones.Compania;
+import colecciones.Principal;
+import excepciones.ExceptionRutInvalido;
 import extras.Database;
 import interfaz.FrameInterfaz;
 
@@ -218,45 +218,53 @@ public class FrameAgregarCliente extends JFrame {
 				Cliente nuevoCliente = null;
 				
 				// Comprobaciones de Datos ingresados
-				if(comprobarIngreso(lblAviso)){
-					// Llama metodo para crear Cliente
-					nuevoCliente = datosNuevaPersona(datosEmpresa);
-					if (nuevoCliente != null) {
-						// Si el cliente se crea exitosamente 
-						//se escribira
-						// cliente en la BD
-						try {
-							// Creacion de conexion a base de datos
-							Database.ingresarClienteBD(nuevoCliente);
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							System.err.println("Cliente no se pudo escribir en la Base de Datos.\n"
-									+ "\nDetalles de la excepción:");
-							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
+				try {
+					if(comprobarIngreso(lblAviso)){
+						// Llama metodo para crear Cliente
+						nuevoCliente = datosNuevaPersona(datosEmpresa);
+						if (nuevoCliente != null) {
+							// Si el cliente se crea exitosamente 
+							//se escribira
+							// cliente en la BD
+							try {
+								// Creacion de conexion a base de datos
+								Database.ingresarClienteBD(nuevoCliente);
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								System.err.println("Cliente no se pudo escribir en la Base de Datos.\n"
+										+ "\nDetalles de la excepción:");
+								System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
+							}
+
+//						// Para guardar cliente en un XML
+//						// Objeto XML
+//						XML xml = new XML();
+//						if (xml.ingresarClienteXML(datosEmpresa, nuevoCliente))
+//							System.out.println("Cliente guardado en XML.");
+//						else
+//							System.err.println("Cliente no fue guardado en XML.");
+
+							// Muestra mensaje que cilente fue ingresado
+							// exitosamente!
+							JOptionPane.showMessageDialog(null,
+									"Cliente creado con exito!\nProceda en asignarle un contrato", "Aviso",
+									JOptionPane.INFORMATION_MESSAGE);
+							// Se creara� un contrato
+							FrameAgregarContrato fContrato = new FrameAgregarContrato(datosEmpresa, nuevoCliente);
+							fContrato.setVisible(true);
+							dispose();
+						} else {
+							// Sino, se informa que el cliente ya existe y se vuelve al menu
+							lblAviso.setForeground(Color.RED);
+							lblAviso.setText("Cliente ya existe!");
 						}
-	
-	//						// Para guardar cliente en un XML
-	//						// Objeto XML
-	//						XML xml = new XML();
-	//						if (xml.ingresarClienteXML(datosEmpresa, nuevoCliente))
-	//							System.out.println("Cliente guardado en XML.");
-	//						else
-	//							System.err.println("Cliente no fue guardado en XML.");
-	
-						// Muestra mensaje que cilente fue ingresado
-						// exitosamente!
-						JOptionPane.showMessageDialog(null,
-								"Cliente creado con exito!\nProceda en asignarle un contrato", "Aviso",
-								JOptionPane.INFORMATION_MESSAGE);
-						// Se creara� un contrato
-						FrameAgregarContrato fContrato = new FrameAgregarContrato(datosEmpresa, nuevoCliente);
-						fContrato.setVisible(true);
-						dispose();
-					} else {
-						// Sino, se informa que el cliente ya existe y se vuelve al menu
-						lblAviso.setForeground(Color.RED);
-						lblAviso.setText("Cliente ya existe!");
 					}
+				} catch (HeadlessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ExceptionRutInvalido e1) {
+					// TODO Auto-generated catch block
+					e1.getMessage();
 				}
 			}
 		});
@@ -347,8 +355,9 @@ public class FrameAgregarCliente extends JFrame {
 	/**
 	 * Comprueba si los ingresos en las casillas violan restricciones
 	 * @return un boolean si no se encuentra ninguna restriccion o no
+	 * @throws ExceptionRutInvalido 
 	 */
-	public boolean comprobarIngreso(JLabel aviso) {
+	public boolean comprobarIngreso(JLabel aviso) throws ExceptionRutInvalido {
 		if(textNombre1.getText().length()==0){
 			aviso.setForeground(Color.RED);
 			aviso.setText("Nombre no puede estar vacío");
@@ -365,11 +374,12 @@ public class FrameAgregarCliente extends JFrame {
 			return false;
 		}
 		
-//		if(!Principal.validarRut(textRut.getText())){
-//			aviso.setForeground(Color.RED);
-//			aviso.setText("Ingrese un RUT válido");
-//			return false;
-//		}
+		if(!Principal.validarRut(textRut.getText())){
+			aviso.setForeground(Color.RED);
+			aviso.setText("Ingrese un RUT válido");
+			throw new ExceptionRutInvalido();
+			
+		}
 		return true;
 	}
 	
