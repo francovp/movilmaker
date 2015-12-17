@@ -1,6 +1,7 @@
 package interfaz.agregar;
 
 
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -19,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import colecciones.Compania;
+import colecciones.Equipo;
 import colecciones.Plan;
 import extras.Database;
 import interfaz.FrameInterfaz;
@@ -26,12 +28,13 @@ import interfaz.FrameInterfaz;
 public class FrameAgregarEquipo extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textNombrePlan;
-	private JTextField textMinutos;
-	private JTextField textGigas;
-	private JTextField textPrecio;
-	private JTextField textSms;
-	private JTextField textValorMin;
+	private JTextField textNombre;
+	private JTextField textProcesador;
+	private JTextField textValorPlan;
+	private JTextField textCamara;
+	private JTextField textValorPrepago;
+	private JTextField textPantalla;
+	private JTextField textSo;
 
 	/**
 	 * Launch the application.
@@ -55,93 +58,102 @@ public class FrameAgregarEquipo extends JFrame {
 	 */
 	public FrameAgregarEquipo(Compania datosEmpresa) {
 		setResizable(false);
-		setTitle("Agregar pLAN");
+		setTitle("Agregar equipo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 321, 362);
+		setBounds(100, 100, 321, 383);
 		contentPane = new JPanel();
-		contentPane.setBorder(new TitledBorder(null, "Datos del plN", TitledBorder.LEADING, TitledBorder.TOP,
+		contentPane.setBorder(new TitledBorder(null, "Datos del equipo", TitledBorder.LEADING, TitledBorder.TOP,
 				null, Color.BLUE));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblAviso = new JLabel("");
-		lblAviso.setBounds(20, 302, 284, 14);
+		lblAviso.setBounds(10, 315, 295, 14);
 		contentPane.add(lblAviso);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(10, 25, 420, 213);
+		panel_1.setBounds(10, 25, 295, 237);
 		contentPane.add(panel_1);
-		panel_1.setBorder(new TitledBorder(null, "Contacto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBorder(new TitledBorder(null, "Detalles Equipo", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_1.setLayout(null);
 
-		JLabel lblNombrePlan = new JLabel("Nombre del Plan");
-		lblNombrePlan.setBounds(10, 18, 89, 14);
-		panel_1.add(lblNombrePlan);
+		JLabel lblNombre = new JLabel("Nombre");
+		lblNombre.setBounds(10, 18, 89, 14);
+		panel_1.add(lblNombre);
 
-		textNombrePlan = new JTextField();
-		textNombrePlan.setColumns(10);
-		textNombrePlan.setBounds(121, 13, 164, 20);
-		panel_1.add(textNombrePlan);
+		textNombre = new JTextField();
+		textNombre.setColumns(10);
+		textNombre.setBounds(121, 13, 164, 20);
+		panel_1.add(textNombre);
 
-		JLabel lblMinutos = new JLabel("Minutos");
-		lblMinutos.setBounds(10, 50, 70, 14);
-		panel_1.add(lblMinutos);
+		JLabel lblProcesador = new JLabel("Procesador");
+		lblProcesador.setBounds(10, 142, 70, 14);
+		panel_1.add(lblProcesador);
 
-		textMinutos = new JTextField();
-		textMinutos.setColumns(10);
-		textMinutos.setBounds(121, 46, 164, 20);
-		panel_1.add(textMinutos);
-		textMinutos.addKeyListener(new KeyAdapter() {
+		textProcesador = new JTextField();
+		textProcesador.setColumns(10);
+		textProcesador.setBounds(121, 138, 164, 20);
+		panel_1.add(textProcesador);
+		textProcesador.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent evt) {
-				String var = "Teléfono fijo";
-				textNumericoValidador(textMinutos, lblAviso, var, evt);
+				String var = "Telefono fijo";
+				textNumericoValidador(textProcesador, lblAviso, var, evt);
 			}
 		});
 
-		JLabel lblGigas = new JLabel("Cuota Navegación");
-		lblGigas.setBounds(10, 82, 89, 14);
-		panel_1.add(lblGigas);
+		JLabel lblValorPlan = new JLabel("Valor con Plan");
+		lblValorPlan.setBounds(10, 170, 89, 14);
+		panel_1.add(lblValorPlan);
 
-		textGigas = new JTextField();
-		textGigas.setColumns(10);
-		textGigas.setBounds(121, 79, 164, 20);
-		panel_1.add(textGigas);
+		textValorPlan = new JTextField();
+		textValorPlan.setColumns(10);
+		textValorPlan.setBounds(121, 167, 164, 20);
+		panel_1.add(textValorPlan);
 		
-		JLabel lblPrecio = new JLabel("Precio (Mensual)");
-		lblPrecio.setBounds(10, 178, 89, 14);
+		JLabel lblPrecio = new JLabel("C\u00E1mara");
+		lblPrecio.setBounds(10, 76, 89, 14);
 		panel_1.add(lblPrecio);
 		
-		textPrecio = new JTextField();
-		textPrecio.setColumns(10);
-		textPrecio.setBounds(121, 178, 164, 20);
-		panel_1.add(textPrecio);
+		textCamara = new JTextField();
+		textCamara.setColumns(10);
+		textCamara.setBounds(121, 76, 164, 20);
+		panel_1.add(textCamara);
 		
-		JLabel lblSms = new JLabel("SMS");
-		lblSms.setBounds(10, 114, 89, 14);
-		panel_1.add(lblSms);
+		JLabel lblValorPrepago = new JLabel("Valor Prepago");
+		lblValorPrepago.setBounds(10, 202, 89, 14);
+		panel_1.add(lblValorPrepago);
 		
-		textSms = new JTextField();
-		textSms.setColumns(10);
-		textSms.setBounds(121, 112, 164, 20);
-		panel_1.add(textSms);
+		textValorPrepago = new JTextField();
+		textValorPrepago.setColumns(10);
+		textValorPrepago.setBounds(121, 200, 164, 20);
+		panel_1.add(textValorPrepago);
 		
-		JLabel lblValorMinAdicional = new JLabel("Valor min. adicional");
-		lblValorMinAdicional.setBounds(10, 146, 101, 14);
-		panel_1.add(lblValorMinAdicional);
+		JLabel lblPantalla = new JLabel("Pantalla");
+		lblPantalla.setBounds(10, 44, 101, 14);
+		panel_1.add(lblPantalla);
 		
-		textValorMin = new JTextField();
-		textValorMin.setColumns(10);
-		textValorMin.setBounds(121, 145, 164, 20);
-		panel_1.add(textValorMin);
-		textGigas.addKeyListener(new KeyAdapter() {
+		textPantalla = new JTextField();
+		textPantalla.setColumns(10);
+		textPantalla.setBounds(121, 43, 164, 20);
+		panel_1.add(textPantalla);
+		
+		textSo = new JTextField();
+		textSo.setColumns(10);
+		textSo.setBounds(121, 107, 164, 20);
+		panel_1.add(textSo);
+		
+		JLabel lblSistemaOperativo = new JLabel("Sistema Operativo");
+		lblSistemaOperativo.setBounds(10, 107, 89, 14);
+		panel_1.add(lblSistemaOperativo);
+		textValorPlan.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent evt) {
 				String var = "Celular";
-				textNumericoValidador(textGigas, lblAviso, var, evt);
+				textNumericoValidador(textValorPlan, lblAviso, var, evt);
 			}
 		});
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 249, 294, 42);
+		panel_2.setBounds(10, 273, 294, 42);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 
@@ -151,39 +163,39 @@ public class FrameAgregarEquipo extends JFrame {
 		btnAgregar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Plan nuevoPlan = null;
+				Equipo nuevo = null;
 
 				// Comprobaciones de Datos ingresados
 				if(comprobarIngreso(lblAviso)){					
 					// Llama metodo para crear Administrador
-					nuevoPlan = datosNuevoPlan(datosEmpresa);
-					if (nuevoPlan != null) {
+					nuevo = datosNuevoEquipo(datosEmpresa);
+					if (nuevo != null) {
 						// Si el Administrador se crea exitosamente se escribira
 						// Administrador en la BD
 						try {
 							// Creacion de conexion a base de datos
-							Database bd = new Database();
-							bd.ingresarPlanBD(nuevoPlan);
+							Database.ingresarEquipoBD(nuevo);
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
-							System.err.println("Plan no se pudo escribir en la Base de Datos.\n"
-									+ "\nDetalles de la excepción:");
+							System.err.println("Equipo no se pudo escribir en la Base de Datos.\n"
+									+ "\nDetalles de la excepcion:");
 							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 						}
 
 						// Muestra mensaje que el Administrador fue ingresado
 						// exitosamente!
-						JOptionPane.showMessageDialog(null, "Plan creado con exito!", "Aviso",
+						JOptionPane.showMessageDialog(null, "Equipo creado con exito!", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
 						// // Se volverá a Interfaz principal
-						FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+						//FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+						FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 						fInterfaz.setVisible(true);
 						dispose();
 					} else {
-						// Sino, se informa que el Administrador ya existe y se
+						// Sino, se informa que el Equipo ya existe y se
 						// vuelve al menu
 						lblAviso.setForeground(Color.RED);
-						lblAviso.setText("Plan ya existe!");
+						lblAviso.setText("Equipo ya existe!");
 					}
 				}
 			}
@@ -205,7 +217,8 @@ public class FrameAgregarEquipo extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				//FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}
@@ -223,23 +236,23 @@ public class FrameAgregarEquipo extends JFrame {
 	 * @param datosEmpresa - una referencia a la Compania
 	 * @return un objeto Plan del plan creado
 	 **/
-	public Plan datosNuevoPlan(Compania datosEmpresa) {
-		String nombre = null;
-		int minutos = 0, gigas = 0, precio = 0, sms = 0, valorMin = 0;
+	public Equipo datosNuevoEquipo(Compania datosEmpresa) {
+		String nombre = null, pantalla = null, camara = null, so= null, procesador = null;
+		int valorPlan = 0, valorPrepago = 0;
 				
-		if(!textNombrePlan.getText().isEmpty()) nombre = textNombrePlan.getText();
-		if(!textMinutos.getText().isEmpty()) minutos = Integer.parseInt(textMinutos.getText());
-		if(!textGigas.getText().isEmpty()) gigas = Integer.parseInt(textGigas.getText());
-		if(!textPrecio.getText().isEmpty()) precio = Integer.parseInt(textPrecio.getText());
-		if(!textSms.getText().isEmpty()) sms = Integer.parseInt(textSms.getText());
-		if(!textValorMin.getText().isEmpty()) valorMin = Integer.parseInt(textValorMin.getText());
+		if(!textNombre.getText().isEmpty()) nombre = textNombre.getText();
+		if(!textPantalla.getText().isEmpty()) pantalla = textPantalla.getText();
+		if(!textCamara.getText().isEmpty()) camara = textCamara.getText();
+		if(!textSo.getText().isEmpty()) so = textSo.getText();
+		if(!textProcesador.getText().isEmpty()) procesador = textProcesador.getText();
+		if(!textValorPlan.getText().isEmpty()) valorPlan = Integer.parseInt(textValorPlan.getText());
+		if(!textCamara.getText().isEmpty()) valorPrepago = Integer.parseInt(textValorPrepago.getText());
 		
 		// Se crea Plan nuevo y se ingresa, se espera un resultado del ingreso
-		Plan planNuevo = datosEmpresa.crearPlanNuevo(
-				new Plan (0, nombre, precio, minutos, gigas, sms, valorMin, datosEmpresa.getRut()));
-		if (planNuevo != null)
+		Equipo equipoNuevo = new Equipo (0, nombre, pantalla, camara, so, procesador, valorPlan, valorPrepago, datosEmpresa.getRut());
+		if (datosEmpresa.getEquipos().validarAgregar(equipoNuevo) == false)
 			// Si el plan no existe, todo bien
-			return planNuevo;
+			return equipoNuevo;
 		else
 			// Entonces el plan ya existe
 			return null;
@@ -251,12 +264,12 @@ public class FrameAgregarEquipo extends JFrame {
 	 * @param lblAviso - una referencia al cuadro de texto para mensajes de aviso
 	 **/
 	public void botonReset(JLabel lblAviso) { 
-		textNombrePlan.setText("");
-		textMinutos.setText("");
-		textGigas.setText("");
-		textPrecio.setText("");
-		textSms.setText("");
-		textValorMin.setText("");
+		textNombre.setText("");
+		textProcesador.setText("");
+		textValorPlan.setText("");
+		textCamara.setText("");
+		textValorPrepago.setText("");
+		textPantalla.setText("");
 		lblAviso.setText("");
 	}
 	

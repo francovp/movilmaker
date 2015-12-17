@@ -1,6 +1,4 @@
 package interfaz.agregar;
-
-
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -70,7 +68,7 @@ public class FrameAgregarOtroContrato extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// BUSCA CLIENTE EN CLASE COMPAÑIA Y LO ASIGNA A c, SI LO
 				// ENCUENTRA LO RETORNA SI NO DEVUELVE NULL
-				Cliente c = datosEmpresa.buscarCliente(textRut.getText());
+				Cliente c = datosEmpresa.getClientes().buscarCliente(textRut.getText());
 
 				// SI EXISTE LLAMA A VENTANA FrameContrato Y LE ENVIA
 				// datosEmpresa y c (Cliente)
@@ -93,7 +91,7 @@ public class FrameAgregarOtroContrato extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// LLAMA AL MENU PRINCIPAL Y CIERRA ESTA VENTANA
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}

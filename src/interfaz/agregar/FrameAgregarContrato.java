@@ -1,6 +1,4 @@
 package interfaz.agregar;
-
-
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -23,8 +21,9 @@ import javax.swing.border.TitledBorder;
 import colecciones.Cliente;
 import colecciones.Compania;
 import colecciones.Contrato;
+import colecciones.Equipo;
+import colecciones.Plan;
 import extras.Database;
-import extras.XML;
 import interfaz.FrameInterfaz;
 
 public class FrameAgregarContrato extends JFrame {
@@ -78,12 +77,12 @@ public class FrameAgregarContrato extends JFrame {
 		lblEquipos.setBounds(185, 6, 46, 14);
 		panel.add(lblEquipos);
 
-		JList listEquipos = new JList();
+		JList<String> listEquipos = new JList<String>();
 		listEquipos.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		listEquipos.setBounds(198, 25, 193, 137);
 		panel.add(listEquipos);
 
-		JList listPlanes = new JList();
+		JList<String> listPlanes = new JList<String>();
 		listPlanes.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		listPlanes.setBounds(20, 25, 150, 137);
 		panel.add(listPlanes);
@@ -97,23 +96,15 @@ public class FrameAgregarContrato extends JFrame {
 		btnMostrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DefaultListModel model1 = new DefaultListModel(); // INSTANCIA
-																	// PARA
-																	// JList
-																	// Planes
-				DefaultListModel model2 = new DefaultListModel(); // INSTANCIA
-																	// PARA
-																	// JList
-																	// Moviles
-
+				// INSTANCIA PARA JList Planes
+				DefaultListModel<String> model1 = new DefaultListModel<String>();
+				// INSTANCIA PARA JList Moviles
+				DefaultListModel<String> model2 = new DefaultListModel<String>(); 
 				// RECORRE PLANES DE COMPANIA
-				for (int i = 0; i < datosEmpresa.getPlanes().size(); i++)
-					// INGRESA EN LA LISTA CADA ELEMENTO
-					model1.addElement("" + (i + 1) + "-" + datosEmpresa.getPlanes().get(i).getNombrePlan());
-				// RECORRE EQUIPOS MOVILES DE COMPANIA
-				for (int i = 0; i < datosEmpresa.getMoviles().size(); i++)
-					// INGRESA EN LA LISTA CADA ELEMENTO
-					model2.addElement("" + (i + 1) + "-" + datosEmpresa.getMoviles().get(i).getCapacidad());
+				
+				model1 = datosEmpresa.getPlanes().listarAInterfazAgregar(model1);
+				
+				model2 = datosEmpresa.getEquipos().listarAInterfazAgregar(model1);
 
 				// HACE A LOS ELEMENTOS VISIBLES
 				listEquipos.setModel(model2);
@@ -133,8 +124,8 @@ public class FrameAgregarContrato extends JFrame {
 		lblAviso.setBounds(10, 300, 201, 14);
 		contentPane.add(lblAviso);
 
-		JComboBox comboBoxMeses = new JComboBox();
-		comboBoxMeses.setModel(new DefaultComboBoxModel(
+		JComboBox<Object> comboBoxMeses = new JComboBox<Object>();
+		comboBoxMeses.setModel(new DefaultComboBoxModel<Object>(
 				new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
 		comboBoxMeses.setBounds(20, 264, 88, 20);
 		contentPane.add(comboBoxMeses);
@@ -145,27 +136,27 @@ public class FrameAgregarContrato extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int numPlan, numEquipo, numCuotas;
+				int numCuotas;
+				Plan plan;
+				Equipo equipo;
 				Contrato contratoNuevo = null;
 
-				for (int i = 0; i < datosEmpresa.getPlanes().size(); i++) // Recorre
-																			// planes
-																			// de
-																			// compania
-					for (int j = 0; j < datosEmpresa.getMoviles().size(); j++) // Recorre
-																				// equipos
-																				// de
-																				// compania
+				// Recorre planes de compania
+				for (int i = 0; i < datosEmpresa.getPlanes().size(); i++) 
+					// Recorre equipos de compania
+					for (int j = 0; j < datosEmpresa.getEquipos().getLista().size(); j++) 
 						// Si estan Seleccionados en LA LISTA, 1 Plan y 1 Equipo
 						// , se procede
 						if (listPlanes.isSelectedIndex(i) && listEquipos.isSelectedIndex(j)) {
-							numPlan = listPlanes.getSelectedIndex();
-							numEquipo = listEquipos.getSelectedIndex();
+							plan = datosEmpresa.getPlanes().buscarPlan(listPlanes.getSelectedValue().toString());
+							equipo = datosEmpresa.getEquipos().buscarEquipo(listEquipos.getSelectedValue().toString());
 							numCuotas = comboBoxMeses.getSelectedIndex() + 1;
 
 							// Se crea un nuevo contrato en: CLIENTE OBTENIDO A
 							// ESTA CLASE/VENTANA, POR REFERENCIA linea 44
-							contratoNuevo = cliente.crearContrato(numPlan, numEquipo, numCuotas, datosEmpresa);
+							System.out.println(""+plan.getNombre());
+							System.out.println(""+equipo.getNombre());
+							contratoNuevo = cliente.crearContrato(cliente ,plan, equipo, numCuotas, datosEmpresa);
 
 							// Cuadro de texto informa exito en asignacion de
 							// contrato
@@ -175,8 +166,7 @@ public class FrameAgregarContrato extends JFrame {
 							// Se escribira contrato en la BD
 							try {
 								// Creacion de conexion a base de datos
-								Database bd = new Database();
-								bd.ingresarContratoBD(contratoNuevo);
+								Database.ingresarContratoBD(contratoNuevo);
 							} catch (SQLException e2) {
 								// TODO Auto-generated catch block
 								System.err.println("Contrato no se pudo escribir en la Base de Datos.\n"
@@ -184,15 +174,8 @@ public class FrameAgregarContrato extends JFrame {
 								System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
 							}
 
-							//Guardado en archivo XML
-							XML xml = new XML();
-							if(xml.ingresarContratoXML(datosEmpresa, cliente,
-									contratoNuevo))
-								System.out.println("Contrato guardado en XML.");
-							else System.err.println("Contrato no fue guardado en XML.");
-
 							// CIERRE INTERFAZ FrameContrato
-							FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+							FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 							fInterfaz.setVisible(true);
 							dispose();
 						}
@@ -206,7 +189,7 @@ public class FrameAgregarContrato extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}

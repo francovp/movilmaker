@@ -1,4 +1,6 @@
 package interfaz.modificar;
+
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -13,11 +15,12 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import colecciones.Administrador;
 import colecciones.Cliente;
 import colecciones.Compania;
 import interfaz.FrameInterfaz;
 
-public class FrameModificarCliente extends JFrame {
+public class FrameModificarAdmin extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFieldRut;
@@ -30,6 +33,8 @@ public class FrameModificarCliente extends JFrame {
 	private JTextField textFieldApellido2;
 	private JTextField textFieldCiudad;
 	private JTextField textFieldEmail;
+	private JTextField textFieldPassword;
+	
 
 	/**
 	 * Launch the application.
@@ -39,7 +44,7 @@ public class FrameModificarCliente extends JFrame {
 			@Override
 			public void run() {
 				try {
-					FrameModificarCliente frame = new FrameModificarCliente(datosEmpresa);
+					FrameModificarAdmin frame = new FrameModificarAdmin(datosEmpresa);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +56,7 @@ public class FrameModificarCliente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrameModificarCliente(Compania datosEmpresa) {
+	public FrameModificarAdmin(Compania datosEmpresa) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Actualizar datos cliente");
 		setResizable(false);
@@ -141,18 +146,17 @@ public class FrameModificarCliente extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				// ASIGNA NUEVOS VALORES AL CLIENTE SELECCIONADO
-				Cliente c = datosEmpresa.getClientes().buscarCliente(textFieldRut.getText());
+				Administrador a = datosEmpresa.getAdministradores().buscarAdmin(textFieldRut.getText());
 
-				c.setNombre1(textFieldNombre.getText());
-				c.setNombre2(textFieldNombre2.getText());
-				c.setApellido1(textFieldApellido1.getText());
-				c.setApellido2(textFieldApellido2.getText());
-				c.setFonoCel(Integer.parseInt(textFieldMovil.getText()));
-				c.setFonoFijo(Integer.parseInt(textFieldFono.getText()));
-				c.setDireccion1(textFieldDireccion.getText());
-				c.setDireccion2(textFieldCiudad.getText());
-				c.setEmail(textFieldEmail.getText());
-				JOptionPane.showMessageDialog(null, "Cliente modificado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+				a.setNombre1(textFieldNombre.getText());
+				a.setNombre2(textFieldNombre2.getText());
+				a.setApellido1(textFieldApellido1.getText());
+				a.setApellido2(textFieldApellido2.getText());
+				a.setFonoCel(Integer.parseInt(textFieldMovil.getText()));
+				a.setFonoFijo(Integer.parseInt(textFieldFono.getText()));
+				a.setEmail(textFieldEmail.getText());
+				a.setPassword(textFieldPassword.getText());
+				JOptionPane.showMessageDialog(null, "Administrador modificado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
@@ -171,9 +175,9 @@ public class FrameModificarCliente extends JFrame {
 		btnBuscar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (datosEmpresa.getClientes().buscarCliente(textFieldRut.getText()) != null) { 
+				if (datosEmpresa.getAdministradores().buscarAdmin(textFieldRut.getText()) != null) { 
 					// SI CLIENTE EXISTE
-					Cliente c = datosEmpresa.getClientes().buscarCliente(textFieldRut.getText());
+					Administrador a = datosEmpresa.getAdministradores().buscarAdmin(textFieldRut.getText());
 
 					// CONVIERTE EN EDITABLES LOS JTextField Movil, Fono,
 					// Direccion, Email y textFieldRut COMO NO EDITABLE
@@ -191,15 +195,13 @@ public class FrameModificarCliente extends JFrame {
 
 					// CARGA A SUS RESPECTIVOS JTextField información previa
 
-					textFieldNombre.setText(c.getNombre1());
-					textFieldNombre2.setText(c.getNombre2());
-					textFieldApellido1.setText(c.getApellido1());
-					textFieldApellido2.setText(c.getApellido2());
-					textFieldMovil.setText(Integer.toString(c.getFonoCel())); 
-					textFieldFono.setText(Integer.toString(c.getFonoFijo())); 
-					textFieldDireccion.setText(c.getDireccion1());
-					textFieldEmail.setText(c.getEmail());
-					textFieldCiudad.setText(c.getDireccion2());
+					textFieldNombre.setText(a.getNombre1());
+					textFieldNombre2.setText(a.getNombre2());
+					textFieldApellido1.setText(a.getApellido1());
+					textFieldApellido2.setText(a.getApellido2());
+					textFieldMovil.setText(Integer.toString(a.getFonoCel())); 
+					textFieldFono.setText(Integer.toString(a.getFonoFijo())); 
+					textFieldEmail.setText(a.getEmail());
 				} else { // SI CLIENTE NO EXISTE
 					lblInfoCliente.setForeground(Color.RED);
 					lblInfoCliente.setText("Cliente no existe");
@@ -266,6 +268,16 @@ public class FrameModificarCliente extends JFrame {
 		textFieldApellido2.setColumns(10);
 		textFieldApellido2.setBounds(117, 105, 153, 20);
 		panel_2.add(textFieldApellido2);
+		
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setBounds(10, 133, 46, 14);
+		panel_2.add(lblPassword);
+		
+		textFieldPassword = new JTextField();
+		textFieldPassword.setEditable(false);
+		textFieldPassword.setColumns(10);
+		textFieldPassword.setBounds(117, 136, 153, 20);
+		panel_2.add(textFieldPassword);
 
 	}
 }
