@@ -45,7 +45,7 @@ public class FrameEliminarPlan extends JFrame {
 	 */
 	public FrameEliminarPlan(Compania datosEmpresa) {
 		setTitle("Eliminar Plan");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 465, 138);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "Buscar Plan", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));

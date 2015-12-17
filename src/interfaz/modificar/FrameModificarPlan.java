@@ -52,7 +52,7 @@ public class FrameModificarPlan extends JFrame {
 	public FrameModificarPlan(Compania datosEmpresa) {
 		setTitle("Modificar plan");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 315);
+		setBounds(100, 100, 468, 315);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Modificar plan", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		setContentPane(contentPane);
@@ -60,7 +60,7 @@ public class FrameModificarPlan extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Atributos asociados", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(10, 98, 414, 153);
+		panel.setBounds(10, 87, 415, 153);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -85,7 +85,7 @@ public class FrameModificarPlan extends JFrame {
 		panel.add(textFieldPrecio);
 		
 		JLabel lblMinutos = new JLabel("Minutos");
-		lblMinutos.setBounds(206, 57, 97, 14);
+		lblMinutos.setBounds(260, 57, 43, 14);
 		panel.add(lblMinutos);
 		
 		textFieldMinuto = new JTextField();
@@ -104,8 +104,8 @@ public class FrameModificarPlan extends JFrame {
 		textFieldGigas.setBounds(117, 79, 79, 20);
 		panel.add(textFieldGigas);
 		
-		JLabel lblSms = new JLabel("sms");
-		lblSms.setBounds(206, 85, 97, 14);
+		JLabel lblSms = new JLabel("SMS");
+		lblSms.setBounds(260, 85, 43, 14);
 		panel.add(lblSms);
 		
 		textFieldSms = new JTextField();
@@ -125,11 +125,11 @@ public class FrameModificarPlan extends JFrame {
 		panel.add(textFieldVerMinuto);
 		
 		JButton btnModificar = new JButton("Modificar");
-		btnModificar.setBounds(298, 130, 89, 23);
+		btnModificar.setBounds(303, 119, 89, 23);
 		panel.add(btnModificar);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(10, 11, 414, 76);
+		panel_1.setBounds(10, 11, 440, 65);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -139,15 +139,19 @@ public class FrameModificarPlan extends JFrame {
 		
 		textFieldPlan = new JTextField();
 		textFieldPlan.setColumns(10);
-		textFieldPlan.setBounds(127, 11, 131, 20);
+		textFieldPlan.setBounds(97, 11, 131, 20);
 		panel_1.add(textFieldPlan);
+		
+		JLabel lblInfo = new JLabel("");
+		lblInfo.setBounds(10, 39, 256, 14);
+		panel_1.add(lblInfo);
+		lblInfo.setForeground(Color.BLUE);
 		
 		JButton btnNewButton = new JButton("Buscar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (datosEmpresa.getPlanes().buscar(textFieldPlan.getText())!=null){
 					//SI PLAN EXISTE
-					
 					Plan p = datosEmpresa.getPlanes().buscar(textFieldPlan.getText());
 					
 					// CONVIERTE EN EDITABLES LOS JTextField Movil, Fono,
@@ -172,22 +176,21 @@ public class FrameModificarPlan extends JFrame {
 					textFieldSms.setText(Integer.toString(p.getSms()));
 					textFieldMinuto.setText(Integer.toString(p.getMinutos()));
 				} else {
-					
+					lblInfo.setForeground(Color.RED);
+					lblInfo.setText("Plan no existe");
 				}
-				
-				
 			}
 		});
-		btnNewButton.setBounds(315, 10, 89, 23);
+		btnNewButton.setBounds(238, 10, 89, 23);
 		panel_1.add(btnNewButton);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(315, 44, 89, 23);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		btnCancelar.setBounds(337, 10, 89, 23);
 		panel_1.add(btnCancelar);
-		
-		JLabel lblInfoPlan = new JLabel("");
-		lblInfoPlan.setForeground(Color.BLUE);
-		lblInfoPlan.setBounds(10, 252, 256, 14);
-		contentPane.add(lblInfoPlan);
 	}
 }
