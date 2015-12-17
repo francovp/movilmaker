@@ -35,6 +35,7 @@ public class FrameAgregarAdmin extends JFrame {
 	private JTextField textEmail;
 	private JTextField textFonoFijo;
 	private JTextField textFonoCel;
+	private JTextField textPass;
 
 	/**
 	 * Launch the application.
@@ -124,7 +125,7 @@ public class FrameAgregarAdmin extends JFrame {
 		panel.add(textRut);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(290, 25, 294, 113);
+		panel_1.setBounds(290, 25, 294, 142);
 		contentPane.add(panel_1);
 		panel_1.setBorder(new TitledBorder(null, "Contacto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_1.setLayout(null);
@@ -161,15 +162,18 @@ public class FrameAgregarAdmin extends JFrame {
 		textFonoCel.setColumns(10);
 		textFonoCel.setBounds(107, 76, 177, 20);
 		panel_1.add(textFonoCel);
-		textFonoCel.addKeyListener(new KeyAdapter() {
-			public void keyReleased(KeyEvent evt) {
-				String var = "Celular";
-				textNumericoValidador(textFonoCel, lblAviso, var, evt);
-			}
-		});
+		
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setBounds(10, 107, 70, 14);
+		panel_1.add(lblPassword);
+		
+		textPass = new JTextField();
+		textPass.setColumns(10);
+		textPass.setBounds(107, 104, 177, 20);
+		panel_1.add(textPass);
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(290, 149, 294, 42);
+		panel_2.setBounds(290, 178, 294, 42);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 
@@ -233,6 +237,16 @@ public class FrameAgregarAdmin extends JFrame {
 		});
 		btnReset.setBounds(104, 11, 89, 23);
 		panel_2.add(btnReset);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnCancelar.setBounds(195, 11, 89, 23);
+		panel_2.add(btnCancelar);
 	}
 
 	// ========================METODOS====================
@@ -244,7 +258,7 @@ public class FrameAgregarAdmin extends JFrame {
 	 * @return un objeto Administrador del administrador creado
 	 **/
 	public Administrador datosNuevaPersona(Compania datosEmpresa) {
-		String nombre1 = null, nombre2 = null, apellido1 = null, apellido2 = null, rut = null, email = null;
+		String nombre1 = null, nombre2 = null, apellido1 = null, apellido2 = null, rut = null, email = null, pass = null;
 		int fono1 = 0, fono2 = 0;
 		//Tipo = 0 indica que es Ejecutivo
 		int tipo = 0; 
@@ -255,12 +269,13 @@ public class FrameAgregarAdmin extends JFrame {
 		if(!textApellido2.getText().isEmpty()) apellido2 = textApellido2.getText();
 		if(!textRut.getText().isEmpty()) rut = textRut.getText();
 		if(!textEmail.getText().isEmpty()) email = textEmail.getText();
+		if(!textPass.getText().isEmpty()) pass = textPass.getText();
 		if(!textFonoCel.getText().isEmpty()) fono1 = Integer.parseInt(textFonoCel.getText());
 		if(!textFonoCel.getText().isEmpty()) fono1 = Integer.parseInt(textFonoCel.getText());
 		
 		// Se crea Administrador nuevo
 		Administrador adminNuevo = new Administrador(rut, datosEmpresa.getRut(), nombre1, nombre2, apellido1, apellido2,
-				fono1, fono2, email, tipo, null, null, 0, null);
+				fono1, fono2, email, tipo, null, null, 0, pass);
 		// Se ingresa Administrador nuevo y se espera un resultado del ingreso
 
 		if (datosEmpresa.getAdministradores().validarAgregar(adminNuevo) == true){
@@ -307,6 +322,11 @@ public class FrameAgregarAdmin extends JFrame {
 		if(textRut.getText().length() == 0){
 			aviso.setForeground(Color.RED);
 			aviso.setText("RUT no puede estar vacio");
+			return false;
+		}
+		if(textPass.getText().length() == 0){
+			aviso.setForeground(Color.RED);
+			aviso.setText("Password no puede estar vacio");
 			return false;
 		}
 		
