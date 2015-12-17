@@ -141,8 +141,6 @@ public class FrameModificarEquipo extends JFrame {
 				eq.setValorPrepago(Integer.parseInt(textFieldValorPrepago.getText()));
 				eq.setProcesador(textFieldProcesador.getText());
 				JOptionPane.showMessageDialog(null, "Equipo modificado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
-				fInterfaz.setVisible(true);
 				dispose();	
 				
 			}

@@ -157,8 +157,6 @@ public class FrameModificarAdmin extends JFrame {
 				a.setEmail(textFieldEmail.getText());
 				a.setPassword(textFieldPassword.getText());
 				JOptionPane.showMessageDialog(null, "Administrador modificado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
-				fInterfaz.setVisible(true);
 				dispose();
 			}
 		});
@@ -215,8 +213,6 @@ public class FrameModificarAdmin extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
-				fInterfaz.setVisible(true);
 				dispose();
 			}
 		});

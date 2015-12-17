@@ -26,7 +26,7 @@ import interfaz.FrameInterfaz;
 import javax.swing.UIManager;
 
 @SuppressWarnings("serial")
-public class FrameEliminarAdministrador extends JFrame {
+public class FrameEliminarAdmin extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textRut;
@@ -39,7 +39,7 @@ public class FrameEliminarAdministrador extends JFrame {
 			@Override
 			public void run() {
 				try {
-					FrameEliminarAdministrador frame = new FrameEliminarAdministrador(datosEmpresa);
+					FrameEliminarAdmin frame = new FrameEliminarAdmin(datosEmpresa);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +51,7 @@ public class FrameEliminarAdministrador extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrameEliminarAdministrador(Compania datosEmpresa) {
+	public FrameEliminarAdmin(Compania datosEmpresa) {
 		ArrayList<Administrador> listaAdministradores = datosEmpresa.getAdministradores().getLista();
 		setResizable(false);
 		setTitle("Eliminar administrador");
@@ -141,8 +141,6 @@ public class FrameEliminarAdministrador extends JFrame {
 		btnVolver.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
-				fInterfaz.setVisible(true);
 				dispose();
 			}
 		});

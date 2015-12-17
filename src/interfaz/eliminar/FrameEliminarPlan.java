@@ -72,9 +72,6 @@ public class FrameEliminarPlan extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				datosEmpresa.getPlanes().eliminar(textFieldPlan.getText());
 				JOptionPane.showMessageDialog(null, "Plan Eliminado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-				
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
-				fInterfaz.setVisible(true);
 				dispose();
 			}
 		});
@@ -112,8 +109,6 @@ public class FrameEliminarPlan extends JFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
-				fInterfaz.setVisible(true);
 				dispose();
 			}
 		});

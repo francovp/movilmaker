@@ -211,9 +211,6 @@ public class FrameAgregarAdmin extends JFrame {
 						// exitosamente!
 						JOptionPane.showMessageDialog(null, "Administrador creado con exito!", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
-						// // Se volver� a Interfaz principal
-						//FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
-						//fInterfaz.setVisible(true);
 						dispose();
 					} else {
 						// Sino, se informa que el Administrador ya existe y se
@@ -249,6 +246,8 @@ public class FrameAgregarAdmin extends JFrame {
 	public Administrador datosNuevaPersona(Compania datosEmpresa) {
 		String nombre1 = null, nombre2 = null, apellido1 = null, apellido2 = null, rut = null, email = null;
 		int fono1 = 0, fono2 = 0;
+		//Tipo = 0 indica que es Ejecutivo
+		int tipo = 0; 
 				
 		if(!textNombre1.getText().isEmpty()) nombre1 = textNombre1.getText();
 		if(!textNombre2.getText().isEmpty()) nombre2 = textNombre2.getText();
@@ -261,7 +260,7 @@ public class FrameAgregarAdmin extends JFrame {
 		
 		// Se crea Administrador nuevo
 		Administrador adminNuevo = new Administrador(rut, datosEmpresa.getRut(), nombre1, nombre2, apellido1, apellido2,
-				fono1, fono2, email, 0, null, null, 0, null);
+				fono1, fono2, email, tipo, null, null, 0, null);
 		// Se ingresa Administrador nuevo y se espera un resultado del ingreso
 
 		if (datosEmpresa.getAdministradores().validarAgregar(adminNuevo) == true){

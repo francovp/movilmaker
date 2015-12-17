@@ -90,9 +90,6 @@ public class FrameAgregarOtroContrato extends JFrame {
 		btnVolver.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// LLAMA AL MENU PRINCIPAL Y CIERRA ESTA VENTANA
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
-				fInterfaz.setVisible(true);
 				dispose();
 			}
 		});

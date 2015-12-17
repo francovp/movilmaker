@@ -24,17 +24,22 @@ import colecciones.Compania;
 import extras.DatabaseConnection;
 import interfaz.agregar.FrameAgregarAdmin;
 import interfaz.agregar.FrameAgregarCliente;
+import interfaz.agregar.FrameAgregarEjecutivo;
 import interfaz.agregar.FrameAgregarOtroContrato;
 import interfaz.agregar.FrameAgregarPlan;
+import interfaz.eliminar.FrameEliminarAdmin;
 import interfaz.eliminar.FrameEliminarCliente;
 import interfaz.eliminar.FrameEliminarContrato;
+import interfaz.eliminar.FrameEliminarEquipo;
 import interfaz.eliminar.FrameEliminarPlan;
 import interfaz.modificar.FrameModificarAdmin;
 import interfaz.modificar.FrameModificarCliente;
+import interfaz.modificar.FrameModificarEjecutivo;
 import interfaz.modificar.FrameModificarEquipo;
 import interfaz.modificar.FrameModificarPlan;
 import interfaz.reportar.FrameVerAdmins;
 import interfaz.reportar.FrameVerClientes;
+import interfaz.reportar.FrameVerEjecutivo;
 import interfaz.reportar.FrameVerEquipos;
 import interfaz.reportar.FrameVerPlanes;
 import javax.swing.JTabbedPane;
@@ -46,12 +51,12 @@ public class FrameInterfaz extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args, Compania datosEmpresa) {
+	public static void main(String[] args, Compania datos, int tipo) {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				try {
-					FrameInterfaz frame = new FrameInterfaz(datosEmpresa);
+					FrameInterfaz frame = new FrameInterfaz(datos, tipo);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,7 +68,7 @@ public class FrameInterfaz extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrameInterfaz(Compania datos) {
+	public FrameInterfaz(Compania datos, int tipo) {
 		/* Use an appropriate Look and Feel */
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -102,14 +107,31 @@ public class FrameInterfaz extends JFrame {
 				// dispose();
 			}
 		});
+		// Si no hay admin no se puede activar este botón
+		if (tipo != 0)
+			btnAgregarAdmin.setEnabled(false);
 
 		panelAgregar.setLayout(new GridLayout(0, 1, 0, 0));
 		panelAgregar.add(btnAgregarAdmin);
+		
+		JButton btnAgregarEjecutivo = new JButton("Agregar Ejecutivo");
+		btnAgregarEjecutivo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FrameAgregarEjecutivo frame = new FrameAgregarEjecutivo(datos);
+				frame.setVisible(true);
+				// dispose();
+			}
+		});
+		panelAgregar.add(btnAgregarEjecutivo);
+
+		// Si no hay admin no se puede activar este botón
+		if (tipo != 0)
+			btnAgregarEjecutivo.setEnabled(false);
 
 		// Boton Agregar Clientes
 		JButton btnAgregarClientes = new JButton("Agregar Clientes");
 		panelAgregar.add(btnAgregarClientes);
-
 		btnAgregarClientes.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -118,6 +140,11 @@ public class FrameInterfaz extends JFrame {
 				// dispose();
 			}
 		});
+		// Si no hay admin no se puede activar este botón
+		// if (falta == 0 || falta == 1)
+		// btnAgregarClientes.setEnabled(false);
+//		if (tipo != 0)
+//			btnAgregarEquipo.setEnabled(false);
 
 		JButton btnAgregarPlan = new JButton("Agregar Plan");
 		btnAgregarPlan.addActionListener(new ActionListener() {
@@ -128,10 +155,12 @@ public class FrameInterfaz extends JFrame {
 				// dispose();
 			}
 		});
-		// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
+		panelAgregar.add(btnAgregarPlan);
+		// Si no hay admin no se puede activar este botón
 		// if (falta == 0 || falta == 1)
 		// btnAgregarPlan.setEnabled(false);
-		panelAgregar.add(btnAgregarPlan);
+		if (tipo != 0)
+			btnAgregarPlan.setEnabled(false);
 
 		JButton btnAgregarEquipo = new JButton("Agregar Equipo");
 		btnAgregarEquipo.addActionListener(new ActionListener() {
@@ -140,12 +169,20 @@ public class FrameInterfaz extends JFrame {
 			}
 		});
 		panelAgregar.add(btnAgregarEquipo);
+		// Si no hay admin no se puede activar este botón
+		// if (falta == 0 || falta == 1)
+		// btnAgregarPlan.setEnabled(false);
+		if (tipo != 0)
+			btnAgregarEquipo.setEnabled(false);
 
 		JButton btnAgregarContratocliente = new JButton("Agregar contrato a cliente");
 		panelAgregar.add(btnAgregarContratocliente);
-		// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
+		// Si no hay admin no se puede activar este botón
 		// if (falta == 0 || falta == 1)
 		// btnAgregarContratocliente.setEnabled(false);
+//		if (tipo != 0)
+//			btnAgregarEquipo.setEnabled(false);
+		
 		btnAgregarContratocliente.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -154,9 +191,6 @@ public class FrameInterfaz extends JFrame {
 				// dispose();
 			}
 		});
-		// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
-		// if (falta == 0 || falta == 1)
-		// btnAgregarClientes.setEnabled(false);
 
 		JPanel panelVer = new JPanel();
 		panelVer.setBounds(209, 89, 189, 326);
@@ -164,9 +198,6 @@ public class FrameInterfaz extends JFrame {
 		panelVer.setLayout(new GridLayout(0, 1, 0, 0));
 		
 				JButton btnVerAdministradores = new JButton("Ver Administradores");
-				// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
-				// if (falta == 0 || falta == 1)
-				// btnVerClientesActuales.setEnabled(false);
 				btnVerAdministradores.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
@@ -176,12 +207,25 @@ public class FrameInterfaz extends JFrame {
 					}
 				});
 				panelVer.add(btnVerAdministradores);
+		
+		JButton btnVerEjecutivos = new JButton("Ver Ejecutivos");
+		panelVer.add(btnVerEjecutivos);
+		btnVerAdministradores.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				FrameVerEjecutivo frame = new FrameVerEjecutivo(datos);
+				frame.setVisible(true);
+				// dispose();
+			}
+		});
+				// Si no hay admin no se puede activar este botón
+				// if (falta == 0 || falta == 1)
+				// btnVerClientesActuales.setEnabled(false);
+//				if (tipo != 0)
+//				btnAgregarEquipo.setEnabled(false);
 
 		JButton btnVerClientesActuales = new JButton("Ver Clientes Actuales");
 		panelVer.add(btnVerClientesActuales);
-		// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
-		// if (falta == 0 || falta == 1)
-		// btnVerClientesActuales.setEnabled(false);
 		btnVerClientesActuales.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -190,11 +234,13 @@ public class FrameInterfaz extends JFrame {
 				// dispose();
 			}
 		});
-
-		JButton btnVerEquipos = new JButton("Ver Equipos");
-		// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
+		// Si no hay admin no se puede activar este botón
 		// if (falta == 0 || falta == 1)
 		// btnVerClientesActuales.setEnabled(false);
+//		if (tipo != 0)
+//		btnAgregarEquipo.setEnabled(false);
+
+		JButton btnVerEquipos = new JButton("Ver Equipos");
 		btnVerEquipos.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -204,11 +250,13 @@ public class FrameInterfaz extends JFrame {
 			}
 		});
 		panelVer.add(btnVerEquipos);
-
-		JButton btnVerPlanes = new JButton("Ver Planes");
-		// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
+		// Si no hay admin no se puede activar este botón
 		// if (falta == 0 || falta == 1)
 		// btnVerClientesActuales.setEnabled(false);
+//		if (tipo != 0)
+//		btnAgregarEquipo.setEnabled(false);
+
+		JButton btnVerPlanes = new JButton("Ver Planes");
 		btnVerPlanes.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -218,6 +266,11 @@ public class FrameInterfaz extends JFrame {
 			}
 		});
 		panelVer.add(btnVerPlanes);
+		// Si no hay admin no se puede activar este botón
+		// if (falta == 0 || falta == 1)
+		// btnVerClientesActuales.setEnabled(false);
+//		if (tipo != 0)
+//		btnAgregarEquipo.setEnabled(false);
 
 		JButton btnSalir = new JButton("Salir del Programa");
 		btnSalir.setBounds(408, 439, 189, 54);
@@ -229,6 +282,7 @@ public class FrameInterfaz extends JFrame {
 		panelModificar.setLayout(new GridLayout(0, 1, 0, 0));
 
 		JButton btnModificarCliente = new JButton("Modificar datos de un cliente");
+		panelModificar.add(btnModificarCliente);
 		btnModificarCliente.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -237,6 +291,11 @@ public class FrameInterfaz extends JFrame {
 				// dispose();
 			}
 		});
+		// Si no hay admin no se puede activar este botón
+		// if (falta == 0 || falta == 1)
+		// btnVerClientesActuales.setEnabled(false);
+//		if (tipo != 0)
+//		btnAgregarEquipo.setEnabled(false);
 		
 				JButton btnModificarAdmin = new JButton("Modificar datos de un Admin");
 				btnModificarAdmin.addActionListener(new ActionListener() {
@@ -248,7 +307,26 @@ public class FrameInterfaz extends JFrame {
 					}
 				});
 				panelModificar.add(btnModificarAdmin);
-		panelModificar.add(btnModificarCliente);
+				// Si no hay admin no se puede activar este botón
+				// if (falta == 0 || falta == 1)
+				// btnVerClientesActuales.setEnabled(false);
+				if (tipo != 0)
+					btnModificarAdmin.setEnabled(false);
+		
+		JButton btnModificarEjecutivo = new JButton("Modificar datos de un Ejecutivo");
+		panelModificar.add(btnModificarEjecutivo);
+		btnModificarEjecutivo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FrameModificarEjecutivo frame= new FrameModificarEjecutivo(datos);
+				frame.setVisible(true);
+				// dispose();
+			}
+		});
+		// Si no hay admin no se puede activar este botón
+		// if (falta == 0 || falta == 1)
+		// btnVerClientesActuales.setEnabled(false);
+		if (tipo != 0)
+			btnModificarAdmin.setEnabled(false);
 		
 		JButton btnModificarUnPlan = new JButton("Modificar un Plan");
 		btnModificarUnPlan.addActionListener(new ActionListener() {
@@ -259,6 +337,11 @@ public class FrameInterfaz extends JFrame {
 			}
 		});
 		panelModificar.add(btnModificarUnPlan);
+		// Si no hay admin no se puede activar este botón
+		// if (falta == 0 || falta == 1)
+		// btnVerClientesActuales.setEnabled(false);
+		if (tipo != 0)
+			btnModificarUnPlan.setEnabled(false);
 		
 		JButton btnModificarUnEquipo = new JButton("Modificar un Equipo");
 		btnModificarUnEquipo.addActionListener(new ActionListener() {
@@ -269,6 +352,11 @@ public class FrameInterfaz extends JFrame {
 			}
 		});
 		panelModificar.add(btnModificarUnEquipo);
+		// Si no hay admin no se puede activar este botón
+		// if (falta == 0 || falta == 1)
+		// btnVerClientesActuales.setEnabled(false);
+		if (tipo != 0)
+			btnModificarUnEquipo.setEnabled(false);
 
 		JPanel panelEliminar = new JPanel();
 		panelEliminar.setBounds(607, 89, 189, 326);
@@ -276,13 +364,20 @@ public class FrameInterfaz extends JFrame {
 		panelEliminar.setLayout(new GridLayout(0, 1, 0, 0));
 				
 				JButton btnEliminarAdmin = new JButton("Eliminar un Administrador");
+				btnEliminarAdmin.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						FrameEliminarAdmin frame= new FrameEliminarAdmin(datos);
+						frame.setVisible(true);
+						// dispose();
+					}
+				});
 				panelEliminar.add(btnEliminarAdmin);
+				
+				JButton btnEliminarEjecutivo = new JButton("Eliminar un Ejecutivo");
+				panelEliminar.add(btnEliminarEjecutivo);
 		
 				JButton btnEliminarCliente = new JButton("Eliminar un cliente");
 				panelEliminar.add(btnEliminarCliente);
-				// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
-				// if (falta == 0 || falta == 1)
-				// btnVerClientesActuales.setEnabled(false);
 				btnEliminarCliente.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -291,6 +386,11 @@ public class FrameInterfaz extends JFrame {
 						// dispose();
 					}
 				});
+				// Si no hay admin no se puede activar este botón
+				// if (falta == 0 || falta == 1)
+				// btnVerClientesActuales.setEnabled(false);
+				//if (tipo != 0)
+				//	btnAgregarEquipo.setEnabled(false);
 				
 				JButton btnEliminarPlan = new JButton("Eliminar un Plan");
 				btnEliminarPlan.addActionListener(new ActionListener() {
@@ -301,15 +401,25 @@ public class FrameInterfaz extends JFrame {
 					}
 				});
 				panelEliminar.add(btnEliminarPlan);
+				// Si no hay admin no se puede activar este botón
+				// if (falta == 0 || falta == 1)
+				// btnVerClientesActuales.setEnabled(false);
+				if (tipo != 0)
+					btnEliminarPlan.setEnabled(false);
 				
 				JButton btnEliminarEquipo = new JButton("Eliminar un Equipo");
 				panelEliminar.add(btnEliminarEquipo);
+				btnEliminarEquipo.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						FrameEliminarEquipo frame = new FrameEliminarEquipo(datos);
+						frame.setVisible(true);
+						// dispose();
+					}
+				});
 		
 				JButton btnEliminarContrato = new JButton("Terminar contrato");
 				panelEliminar.add(btnEliminarContrato);
-				// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
-				// if (falta == 0 || falta == 1)
-				// btnTerminarContrato.setEnabled(false);
 				btnEliminarContrato.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -318,15 +428,17 @@ public class FrameInterfaz extends JFrame {
 						// dispose();
 					}
 				});
-		// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
-		// if (falta == 0 || falta == 1)
-		// btnNewButton.setEnabled(false);
+				// Si no hay admin no se puede activar este botón
+				// if (falta == 0 || falta == 1)
+				// btnVerClientesActuales.setEnabled(false);
+				//				if (tipo != 0)
+				//				btnAgregarEquipo.setEnabled(false);
 
 		// BOT�N QUE GENERA UN ARCHIVO EN PDF DE LOS CLIENTES
 		JButton btnGenerarReporte = new JButton("Generar Reporte de la Empresa");
 		btnGenerarReporte.setBounds(209, 439, 189, 54);
 		contentPane.add(btnGenerarReporte);
-		// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
+		// Si no hay admin no se puede activar este botón
 		// if (falta == 0 || falta == 1)
 		// btnGenerarReporte.setEnabled(false);
 		btnGenerarReporte.addActionListener(new ActionListener() {
@@ -343,10 +455,6 @@ public class FrameInterfaz extends JFrame {
 				}
 			}
 		});
-		
-		// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
-		// if (falta == 0 || falta == 1)
-		// btnActualizarDatosDe.setEnabled(false);
 
 		btnSalir.addActionListener(new ActionListener() {
 			@Override

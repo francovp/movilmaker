@@ -173,10 +173,6 @@ public class FrameAgregarContrato extends JFrame {
 										+ "\nDetalles de la excepción:");
 								System.err.println(e2.getClass().getName() + ": " + e2.getMessage());
 							}
-
-							// CIERRE INTERFAZ FrameContrato
-							FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
-							fInterfaz.setVisible(true);
 							dispose();
 						}
 			}
@@ -189,8 +185,6 @@ public class FrameAgregarContrato extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
-				fInterfaz.setVisible(true);
 				dispose();
 			}
 		});

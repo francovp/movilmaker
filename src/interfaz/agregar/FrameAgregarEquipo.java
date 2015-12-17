@@ -186,10 +186,6 @@ public class FrameAgregarEquipo extends JFrame {
 						// exitosamente!
 						JOptionPane.showMessageDialog(null, "Equipo creado con exito!", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
-						// // Se volverá a Interfaz principal
-						//FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
-						FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
-						fInterfaz.setVisible(true);
 						dispose();
 					} else {
 						// Sino, se informa que el Equipo ya existe y se
@@ -217,9 +213,6 @@ public class FrameAgregarEquipo extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
-				fInterfaz.setVisible(true);
 				dispose();
 			}
 		});

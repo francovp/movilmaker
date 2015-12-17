@@ -109,8 +109,6 @@ public class FrameVerAdmins extends JFrame {
 						contentPane.add(lblReporteDetallado);
 						btnVolver.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
-								FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
-								fInterfaz.setVisible(true);
 								dispose();
 							}
 						});
