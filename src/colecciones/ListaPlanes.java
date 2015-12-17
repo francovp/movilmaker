@@ -56,7 +56,7 @@ public class ListaPlanes implements Validador {
 	 * @param id - un entero con la ID del plan a seleccionar
 	 * @return Un objeto Plan con el plan elejido
 	 */
-	public Plan buscarPlan (int id){
+	public Plan buscar (int id){
 		for (int i = 1; i < lista.count(); i++){
 			lista.setPos(i);
 			if (((Plan) lista.actualValue()).getIdPlan() == id)
@@ -67,16 +67,26 @@ public class ListaPlanes implements Validador {
 		return null;	
 	}
 	
-	public Plan buscarPlan (String nom){
+	public Plan buscar (String nom){
 		for (int i=1; i < lista.count(); i++){
-			lista.setPos(i);;
+			lista.setPos(i);
 			if ((((Plan) lista.actualValue()).getNombre().equalsIgnoreCase(nom)))
 			{
-				System.out.println("obtuvo Plan!");
 				return (Plan)lista.actualValue();
 			}
 		}
 		return null;
+	}
+	
+	public boolean eliminar (String id){
+		for (int i = 0 ; i<lista.count();i++){
+			lista.setPos(i);
+			if (((Plan)lista.actualValue()).getNombre().equalsIgnoreCase(id)){
+				lista.removeValue();
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void reportarPlanesCompania(Document doc) throws DocumentException

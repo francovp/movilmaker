@@ -145,10 +145,10 @@ public class FrameModificarPlan extends JFrame {
 		JButton btnNewButton = new JButton("Buscar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (datosEmpresa.getPlanes().buscarPlan(textFieldPlan.getText())!=null){
+				if (datosEmpresa.getPlanes().buscar(textFieldPlan.getText())!=null){
 					//SI PLAN EXISTE
 					
-					Plan p = datosEmpresa.getPlanes().buscarPlan(textFieldPlan.getText());
+					Plan p = datosEmpresa.getPlanes().buscar(textFieldPlan.getText());
 					
 					// CONVIERTE EN EDITABLES LOS JTextField Movil, Fono,
 					// Direccion, Email y textFieldRut COMO NO EDITABLE

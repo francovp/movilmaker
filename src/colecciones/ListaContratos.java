@@ -115,18 +115,12 @@ public class ListaContratos implements Validador {
 		return contrato;
 	}
 	
-	public boolean eliminarContrato (String rut, int indice){
-		
-		lista.remove(indice);
-		try {
-			// Creacion de conexion a base de datos
-			Database.eliminarContratoBD(rut);
-			return true;
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			System.err.println("Contrato no se pudo eliminar de la Base de Datos.\n"
-					+ "\nDetalles de la excepción:");
-			System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
+	public boolean eliminar (int id){
+		for (int i = 0 ; i<lista.size();i++){
+			if (lista.get(i).getIdContrato() == id){
+				lista.remove(i);
+				return true;
+			}
 		}
 		return false;
 	}

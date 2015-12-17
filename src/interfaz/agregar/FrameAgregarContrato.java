@@ -148,7 +148,7 @@ public class FrameAgregarContrato extends JFrame {
 						// Si estan Seleccionados en LA LISTA, 1 Plan y 1 Equipo
 						// , se procede
 						if (listPlanes.isSelectedIndex(i) && listEquipos.isSelectedIndex(j)) {
-							plan = datosEmpresa.getPlanes().buscarPlan(listPlanes.getSelectedValue().toString());
+							plan = datosEmpresa.getPlanes().buscar(listPlanes.getSelectedValue().toString());
 							equipo = datosEmpresa.getEquipos().buscarEquipo(listEquipos.getSelectedValue().toString());
 							numCuotas = comboBoxMeses.getSelectedIndex() + 1;
 

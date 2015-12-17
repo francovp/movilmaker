@@ -449,7 +449,7 @@ public class Database {
 					// Se obtienen datos de la equipos
 					int idPlan = rs.getInt("id_plan");
 					int idEquipo = rs.getInt("id_equipo");
-					Plan p = empresa.getPlanes().buscarPlan(idPlan);
+					Plan p = empresa.getPlanes().buscar(idPlan);
 					Equipo e = empresa.getEquipos().buscarEquipo(idEquipo);
 
 					Contrato c = new Contrato(rs.getInt("id_contrato"), rs.getString("fecha_inicio"),
