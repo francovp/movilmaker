@@ -363,6 +363,24 @@ public class Database {
 			return true;
 		}
 	}
+	
+	public static boolean modificarEjecutivo (Ejecutivo e)throws SQLException{
+		stmt = dbConnection.createStatement();
+		rs=stmt.executeQuery("INSERT INTO persona (nombre1,apellido1,id_compania,"
+				+ "nombre2,fono_celular,fono_fijo,email,apellido2,rut,tipo,password) " + "VALUES ('"
+				+ e.getNombre1() + "','" + e.getApellido1() + "','" + e.getIdCompania()
+				+ "','" + e.getNombre2() + "'," + e.getFonoCel() + "," + e.getFonoFijo()
+				+ ",'" + e.getEmail() + "','" + e.getApellido2() + "','" + e.getRut()
+				+ "'," + e.getTipo() + ",'" + e.getPassword() + "');");
+		if(rs==null){
+			cerrarDatabase();
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	
 	public static boolean modificarPlanes(Plan p) throws SQLException{
 		stmt=dbConnection.createStatement();
 		rs=stmt.executeQuery("UPDATE (id_plan,nombre_plan,minutos,gigas,precio,id_compania,sms,valor_min)FROM"
@@ -449,6 +467,15 @@ public class Database {
 								rs.getString("email"), rs.getInt("tipo"), rs.getString("direccion1"),
 								rs.getString("direccion2"), rs.getInt("deuda"), rs.getString("password"));
 						empresa.getClientes().agregarCliente(cli);
+					}
+					if (tipo == 2) {
+						// ejecutivo
+						Ejecutivo ejec = new Ejecutivo(rs.getString("rut"), rs.getString("id_compania"),
+								rs.getString("nombre1"), rs.getString("nombre2"), rs.getString("apellido1"),
+								rs.getString("apellido2"), rs.getInt("fono_celular"), rs.getInt("fono_fijo"),
+								rs.getString("email"), rs.getInt("tipo"), rs.getString("direccion1"),
+								rs.getString("direccion2"), rs.getInt("deuda"), rs.getString("password"));
+						empresa.getEjecutivos().agregarEjecutivo(ejec);
 					}
 				}
 				cerrarDatabase();

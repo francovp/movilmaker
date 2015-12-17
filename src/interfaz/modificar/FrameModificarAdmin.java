@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +19,7 @@ import javax.swing.border.TitledBorder;
 import colecciones.Administrador;
 import colecciones.Cliente;
 import colecciones.Compania;
+import extras.Database;
 import interfaz.FrameInterfaz;
 
 public class FrameModificarAdmin extends JFrame {
@@ -156,6 +158,18 @@ public class FrameModificarAdmin extends JFrame {
 				a.setFonoFijo(Integer.parseInt(textFieldFono.getText()));
 				a.setEmail(textFieldEmail.getText());
 				a.setPassword(textFieldPassword.getText());
+				
+				// Se actualizará Administrador en la BD
+				try {
+					// Creacion de conexion a base de datos
+					Database.modificarAdministrador(a);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					System.err.println("Administrador no se pudo actualizar en la Base de Datos.\n"
+							+ "\nDetalles de la excepciï¿½n:");
+					System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
+				}
+				
 				JOptionPane.showMessageDialog(null, "Administrador modificado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 				dispose();
 			}

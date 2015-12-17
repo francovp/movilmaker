@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,6 +16,7 @@ import javax.swing.border.TitledBorder;
 
 import colecciones.Cliente;
 import colecciones.Compania;
+import extras.Database;
 import interfaz.FrameInterfaz;
 
 public class FrameModificarCliente extends JFrame {
@@ -152,6 +154,18 @@ public class FrameModificarCliente extends JFrame {
 				c.setDireccion1(textFieldDireccion.getText());
 				c.setDireccion2(textFieldCiudad.getText());
 				c.setEmail(textFieldEmail.getText());
+				
+				// Se actualizará Cliente en la BD
+				try {
+					// Creacion de conexion a base de datos
+					Database.modificarClientes(c);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					System.err.println("Cliente no se pudo actualizar en la Base de Datos.\n"
+							+ "\nDetalles de la excepciï¿½n:");
+					System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
+				}
+				
 				JOptionPane.showMessageDialog(null, "Cliente modificado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 				dispose();
 			}

@@ -9,14 +9,18 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import colecciones.Compania;
+import colecciones.Equipo;
 import colecciones.Plan;
+import extras.Database;
 
 import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class FrameModificarPlan extends JFrame {
@@ -28,16 +32,16 @@ public class FrameModificarPlan extends JFrame {
 	private JTextField textFieldMinuto;
 	private JTextField textFieldGigas;
 	private JTextField textFieldSms;
-	private JTextField textFieldVerMinuto;
+	private JTextField textFieldValorMinuto;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args, Compania datosEmpresa) {
+	public static void main(String[] args, Compania datos) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrameModificarPlan frame = new FrameModificarPlan(datosEmpresa);
+					FrameModificarPlan frame = new FrameModificarPlan(datos);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -118,13 +122,39 @@ public class FrameModificarPlan extends JFrame {
 		lblValorMinuto.setBounds(10, 110, 97, 14);
 		panel.add(lblValorMinuto);
 		
-		textFieldVerMinuto = new JTextField();
-		textFieldVerMinuto.setEditable(false);
-		textFieldVerMinuto.setColumns(10);
-		textFieldVerMinuto.setBounds(117, 107, 79, 20);
-		panel.add(textFieldVerMinuto);
+		textFieldValorMinuto = new JTextField();
+		textFieldValorMinuto.setEditable(false);
+		textFieldValorMinuto.setColumns(10);
+		textFieldValorMinuto.setBounds(117, 107, 79, 20);
+		panel.add(textFieldValorMinuto);
 		
 		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// ASIGNA NUEVOS VALORES AL PLAN SELECCIONADO
+				Plan p = datosEmpresa.getPlanes().buscar(textFieldPlan.getText());
+				p.setNombre(textFieldNombre.getText());
+				p.setPrecio(Integer.parseInt(textFieldPrecio.getText()));
+				p.setMinutos(Integer.parseInt(textFieldMinuto.getText()));
+				p.setGigas(textFieldGigas.getText());
+				p.setSms(Integer.parseInt(textFieldSms.getText()));
+				p.setValorMin(Integer.parseInt(textFieldValorMinuto.getText()));
+				
+				// Se actualizará Equipo en la BD
+				try {
+					// Creacion de conexion a base de datos
+					Database.modificarPlanes(p);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					System.err.println("Equipo no se pudo actualizar en la Base de Datos.\n"
+							+ "\nDetalles de la excepciï¿½n:");
+					System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
+				}
+				
+				JOptionPane.showMessageDialog(null, "Equipo modificado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+				dispose();	
+			}
+		});
 		btnModificar.setBounds(303, 119, 89, 23);
 		panel.add(btnModificar);
 		
@@ -162,7 +192,7 @@ public class FrameModificarPlan extends JFrame {
 					textFieldMinuto.setEditable(true);
 					textFieldGigas.setEditable(true);
 					textFieldSms.setEditable(true);
-					textFieldVerMinuto.setEditable(true);
+					textFieldValorMinuto.setEditable(true);
 					btnModificar.setEnabled(true);
 					textFieldPlan.setEditable(false);
 					

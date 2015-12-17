@@ -11,6 +11,7 @@ import javax.swing.border.TitledBorder;
 import colecciones.Compania;
 import colecciones.Equipo;
 import colecciones.Plan;
+import extras.Database;
 import interfaz.FrameInterfaz;
 
 import javax.swing.UIManager;
@@ -20,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class FrameModificarEquipo extends JFrame {
@@ -140,6 +142,18 @@ public class FrameModificarEquipo extends JFrame {
 				eq.setCamara(textFieldCamara.getText());
 				eq.setValorPrepago(Integer.parseInt(textFieldValorPrepago.getText()));
 				eq.setProcesador(textFieldProcesador.getText());
+				
+				// Se actualizará Equipo en la BD
+				try {
+					// Creacion de conexion a base de datos
+					Database.modificarEquipos(eq);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					System.err.println("Equipo no se pudo actualizar en la Base de Datos.\n"
+							+ "\nDetalles de la excepciï¿½n:");
+					System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
+				}
+				
 				JOptionPane.showMessageDialog(null, "Equipo modificado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 				dispose();	
 				
