@@ -105,7 +105,7 @@ public class Database {
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
 	public static void ingresarContratoBD(Contrato contratoCliente) throws SQLException {
-		// Si se cre� la conexi�n a la BD exitosamente se contin�a
+		// Si se creï¿½ la conexiï¿½n a la BD exitosamente se continï¿½a
 		// Se crea una nueva sentencia SQL
 		stmt = dbConnection.createStatement();
 		String sql = "INSERT INTO contratos(id_contrato,id_equipo,id_plan,fecha_inicio,fecha_termino,"
@@ -125,7 +125,7 @@ public class Database {
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
 	public static void ingresarPlanBD(Plan p) throws SQLException {
-		// Si se cre� la conexi�n a la BD exitosamente se contin�a
+		// Si se creï¿½ la conexiï¿½n a la BD exitosamente se continï¿½a
 		// Se crea una nueva sentencia SQL
 		stmt = dbConnection.createStatement();
 		String sql = "INSERT INTO planes(id_plan,nombre_plan,minutos,gigas,precio,sms,valor_min,id_compania)"
@@ -141,7 +141,7 @@ public class Database {
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
 	public static void ingresarEquipoBD(Equipo c) throws SQLException {
-		// Si se cre� la conexi�n a la BD exitosamente se contin�a
+		// Si se creï¿½ la conexiï¿½n a la BD exitosamente se continï¿½a
 		// Se crea una nueva sentencia SQL
 		stmt = dbConnection.createStatement();
 		String sql = "INSERT INTO equipo(id_equipo,nombre,pantalla,camara,so,procesador,valor_plan,valor_prepago,id_compania)"
@@ -152,7 +152,7 @@ public class Database {
 	}
 	
 	public void ingresarRegistroBD(RegistroDePagos registro) throws SQLException {
-		// Si se cre� la conexi�n a la BD exitosamente se contin�a
+		// Si se creï¿½ la conexiï¿½n a la BD exitosamente se continï¿½a
 		// Se crea una nueva sentencia SQL
 		stmt = dbConnection.createStatement();
 		String sql = "INSERT INTO boletas(id_contrato, rut_cliente,cuotas_rest,id_boleta,monto_pagadop)"
@@ -169,6 +169,32 @@ public class Database {
 	 * @param rut - el RUT de la persona a eliminar
 	 * @return Un boolean si se ingresaron los datos correctamente o no
 	 */
+	public static void eliminarEquipoBD(int id ) throws SQLException{
+		String sql;
+		stmt = dbConnection.createStatement();
+		sql="DELETE FROM equipos WHERE ( id_equipo = "+ id + ");";
+		stmt.executeUpdate(sql);
+		stmt.close();
+		cerrarDatabase();
+	}
+	
+	public static void eliminarPlanBD(int id) throws SQLException{
+		String sql;
+		stmt = dbConnection.createStatement();
+		sql= "DELETE FROM planes WHERE (id_plan= "+ id + ")";
+		stmt.executeUpdate(sql);
+		stmt.close();
+		cerrarDatabase();
+	}
+	
+	public static void eliminarAdminBD( String rut) throws SQLException{
+		String sql;
+		stmt = dbConnection.createStatement();
+		sql = "DELETE FROM persona WHERE (rut = '" + rut + "');";
+		stmt.executeUpdate(sql);
+		stmt.close();
+		cerrarDatabase();
+	}
 	public static void eliminarClienteBD(String rut) throws SQLException {
 		String sql;
 		// Si se creo la conexion a la BD exitosamente se continua
