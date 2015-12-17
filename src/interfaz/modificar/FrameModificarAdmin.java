@@ -58,7 +58,7 @@ public class FrameModificarAdmin extends JFrame {
 	 */
 	public FrameModificarAdmin(Compania datosEmpresa) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setTitle("Actualizar datos cliente");
+		setTitle("Actualizar datos de un Administrador");
 		setResizable(false);
 		setBounds(100, 100, 621, 330);
 		contentPane = new JPanel();
