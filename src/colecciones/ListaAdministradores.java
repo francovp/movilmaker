@@ -48,6 +48,16 @@ public class ListaAdministradores implements Validador {
 		return false;	//	Admin no existe
 	}
 	
+	public boolean eliminarAdmin (String rut){
+		for (int i = 0 ; i<lista.size();i++){
+			if ((lista.get(i).getRut()).equalsIgnoreCase(rut)){
+				lista.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public Administrador buscarAdmin (String rut){
 		for(int i=0;i<lista.size();i++){
 			if (lista.get(i).getRut().equals(rut)){
