@@ -50,12 +50,6 @@ public class SuperColeccion {
 			return null;
 	}
 	
-	public Object actualValue(int index){
-		if(count()!= 0)
-			return lista.get(index);
-		else
-			return null;
-	}
     
 	public void setPos(int i){
 		if(i<=count())
