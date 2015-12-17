@@ -69,6 +69,7 @@ public class ListaPlanes implements Validador {
 	
 	public Plan buscarPlan (String nom){
 		for (int i=1; i < lista.count(); i++){
+			lista.setPos(i);;
 			if ((((Plan) lista.actualValue()).getNombre().equalsIgnoreCase(nom)))
 			{
 				System.out.println("obtuvo Plan!");

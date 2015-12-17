@@ -49,7 +49,7 @@ public class SuperColeccion {
 		else
 			return null;
 	}
-	
+
     
 	public void setPos(int i){
 		if(i<=count())

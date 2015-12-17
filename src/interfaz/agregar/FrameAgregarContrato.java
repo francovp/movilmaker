@@ -104,7 +104,7 @@ public class FrameAgregarContrato extends JFrame {
 				
 				model1 = datosEmpresa.getPlanes().listarAInterfazAgregar(model1);
 				
-				model2 = datosEmpresa.getEquipos().listarAInterfazAgregar(model1);
+				model2 = datosEmpresa.getEquipos().listarAInterfazAgregar(model2);
 
 				// HACE A LOS ELEMENTOS VISIBLES
 				listEquipos.setModel(model2);
@@ -154,8 +154,8 @@ public class FrameAgregarContrato extends JFrame {
 
 							// Se crea un nuevo contrato en: CLIENTE OBTENIDO A
 							// ESTA CLASE/VENTANA, POR REFERENCIA linea 44
-							System.out.println(""+plan.getNombre());
-							System.out.println(""+equipo.getNombre());
+							/*System.out.println(""+plan.getNombre());
+							System.out.println(""+equipo.getNombre());*/
 							contratoNuevo = cliente.crearContrato(cliente ,plan, equipo, numCuotas, datosEmpresa);
 
 							// Cuadro de texto informa exito en asignacion de

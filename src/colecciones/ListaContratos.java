@@ -83,6 +83,9 @@ public class ListaContratos implements Validador {
 		String ff = dff.format(d);
 		// Genera un numero random entre 0 y 100000 que sera el id con contrato
 		idRandom = rnd.nextInt(100000);
+		
+
+		
 		// Calcula el monto total de la deuda del contrato
 		monto = movil.getValorPlan() + plan.getPrecio();
 		// Actualiza la deuda del cliente antes de crear el contrato
@@ -95,7 +98,10 @@ public class ListaContratos implements Validador {
 		contrato = new Contrato(idRandom, fi, ff, movil.getIdEquipo(), plan.getIdPlan(), movil, plan, monto, valorCuota,
 				numCuotas, cliente.getRut());
 		// SE LE OTORGA NUEVO CONTRATO AL CLIENTE
-		agregarContrato(contrato);
+		if(contrato!= null)
+			agregarContrato(contrato);
+		else
+			System.out.println("Puntero null de contrato");
 		
 		System.out.println("\nINFORMACION DEL CONTRATO\n" + "Fecha de inicio del contrato: " + fi
 				+ ". El dia de esta fecha se estipulara como fecha de pago. ");
