@@ -80,16 +80,6 @@ public class ListaEquipos implements Validador {
 		return null;
 	}
 	
-	public boolean eliminar (String id){
-		for (int i = 0 ; i<lista.size();i++){
-			if (((Equipo)lista.get(i)).getNombre().equalsIgnoreCase(id)){
-				lista.remove(i);
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	public void reportarEquiposCompania(Document doc) throws DocumentException
 	{
 		doc.add(

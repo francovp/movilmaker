@@ -9,19 +9,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import colecciones.Compania;
-import colecciones.Equipo;
 import interfaz.FrameInterfaz;
 
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
-import javax.swing.JList;
 
 public class FrameEliminarEquipo extends JFrame {
 
@@ -50,7 +47,7 @@ public class FrameEliminarEquipo extends JFrame {
 	public FrameEliminarEquipo(Compania datosEmpresa) {
 		setTitle("Eliminar Equipo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 465, 289);
+		setBounds(100, 100, 465, 138);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Buscar equipo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
 		setContentPane(contentPane);
@@ -66,7 +63,7 @@ public class FrameEliminarEquipo extends JFrame {
 		textFieldEquipo.setColumns(10);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 71, 429, 168);
+		panel.setBounds(10, 56, 429, 43);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -74,7 +71,7 @@ public class FrameEliminarEquipo extends JFrame {
 		btnEliminar.setEnabled(false);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				datosEmpresa.getEquipos().eliminar(textFieldEquipo.getText());
+				datosEmpresa.getPlanes().eliminar(textFieldEquipo.getText());
 				JOptionPane.showMessageDialog(null, "Equipo Eliminado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 				
 				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
@@ -82,48 +79,27 @@ public class FrameEliminarEquipo extends JFrame {
 				dispose();
 			}
 		});
-		btnEliminar.setBounds(330, 132, 89, 23);
+		btnEliminar.setBounds(330, 11, 89, 23);
 		panel.add(btnEliminar);
 		
-		JList listInfoEquipo = new JList();
-		listInfoEquipo.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Informaci\u00F3n del Equipo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		listInfoEquipo.setBounds(10, 11, 192, 146);
-		panel.add(listInfoEquipo);
-		
 		JLabel lblDatosDelEquipo = new JLabel("");
-		lblDatosDelEquipo.setBounds(10, 48, 200, 14);
-		contentPane.add(lblDatosDelEquipo);
+		lblDatosDelEquipo.setBounds(10, 11, 200, 14);
+		panel.add(lblDatosDelEquipo);
 		
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
-			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent arg0) {
 			
 			if (datosEmpresa.getEquipos().buscarEquipo(textFieldEquipo.getText())!=null){
 			// PLAN EXISTE
-				
-				textFieldEquipo.setEnabled(false);
-				btnBuscar.setEnabled(false);
-				btnEliminar.setEnabled(true);
-				lblDatosDelEquipo.setForeground(Color.blue);
-				lblDatosDelEquipo.setText("Se ha encontrado el equipo");
-				
-				// LISTA INFORMACIÓN DEL PLAN A ELIMINAR
-				DefaultListModel listmodel = new DefaultListModel();
-				Equipo eq = datosEmpresa.getEquipos().buscarEquipo(textFieldEquipo.getText());
-					
-					listmodel.addElement("-ID  "+eq.getIdEquipo());
-					listmodel.addElement("-Nombre  "+eq.getNombre());
-					listmodel.addElement("-Procesador  "+eq.getProcesador());
-					listmodel.addElement("-Pantalla  "+eq.getPantalla());
-					listmodel.addElement("-Camara  "+eq.getCamara());
-					listmodel.addElement("-s.o  "+eq.getSo());
-					listmodel.addElement("-Prepago  "+eq.getValorPrepago());
-					
-					listInfoEquipo.setModel(listmodel);
+			
+			textFieldEquipo.setEnabled(false);
+			btnEliminar.setEnabled(true);
+			lblDatosDelEquipo.setBackground(Color.blue);
+			lblDatosDelEquipo.setText("Se ha encontrado el equipo");
 			
 				}else {
-					lblDatosDelEquipo.setForeground(Color.RED);
+					lblDatosDelEquipo.setBackground(Color.RED);
 					lblDatosDelEquipo.setText("El equipo no existe");
 					}
 			
@@ -144,8 +120,6 @@ public class FrameEliminarEquipo extends JFrame {
 		});
 		btnCancelar.setBounds(350, 19, 89, 23);
 		contentPane.add(btnCancelar);
-		
-	
 	
 	}
 }
