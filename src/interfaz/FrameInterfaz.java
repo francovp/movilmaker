@@ -26,8 +26,10 @@ import interfaz.agregar.FrameAgregarAdmin;
 import interfaz.agregar.FrameAgregarCliente;
 import interfaz.agregar.FrameAgregarOtroContrato;
 import interfaz.agregar.FrameAgregarPlan;
+import interfaz.eliminar.FrameEliminarAdministrador;
 import interfaz.eliminar.FrameEliminarCliente;
 import interfaz.eliminar.FrameEliminarContrato;
+import interfaz.eliminar.FrameEliminarEquipo;
 import interfaz.eliminar.FrameEliminarPlan;
 import interfaz.modificar.FrameModificarAdmin;
 import interfaz.modificar.FrameModificarCliente;
@@ -276,6 +278,12 @@ public class FrameInterfaz extends JFrame {
 		panelEliminar.setLayout(new GridLayout(0, 1, 0, 0));
 				
 				JButton btnEliminarAdmin = new JButton("Eliminar un Administrador");
+				btnEliminarAdmin.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						FrameEliminarAdministrador fEliminarAdministrador = new FrameEliminarAdministrador(datos);
+						fEliminarAdministrador.setVisible(true);
+					}
+				});
 				panelEliminar.add(btnEliminarAdmin);
 		
 				JButton btnEliminarCliente = new JButton("Eliminar un cliente");
@@ -303,6 +311,13 @@ public class FrameInterfaz extends JFrame {
 				panelEliminar.add(btnEliminarPlan);
 				
 				JButton btnEliminarEquipo = new JButton("Eliminar un Equipo");
+				btnEliminarEquipo.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						FrameEliminarEquipo frame = new FrameEliminarEquipo(datos);
+						frame.setVisible(true);
+						// dispose();
+					}
+				});
 				panelEliminar.add(btnEliminarEquipo);
 		
 				JButton btnEliminarContrato = new JButton("Terminar contrato");

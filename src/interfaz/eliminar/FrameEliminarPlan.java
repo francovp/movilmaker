@@ -9,15 +9,22 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import colecciones.Compania;
+import colecciones.Plan;
 import interfaz.FrameInterfaz;
 
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
+import javax.swing.UIManager;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.MatteBorder;
 
 public class FrameEliminarPlan extends JFrame {
 
@@ -46,7 +53,7 @@ public class FrameEliminarPlan extends JFrame {
 	public FrameEliminarPlan(Compania datosEmpresa) {
 		setTitle("Eliminar Plan");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 465, 138);
+		setBounds(100, 100, 465, 265);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "Buscar Plan", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		setContentPane(contentPane);
@@ -62,7 +69,8 @@ public class FrameEliminarPlan extends JFrame {
 		textFieldPlan.setColumns(10);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 56, 429, 142);
+		panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel.setBounds(10, 64, 429, 151);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -78,12 +86,17 @@ public class FrameEliminarPlan extends JFrame {
 				dispose();
 			}
 		});
-		btnEliminar.setBounds(330, 11, 89, 23);
+		btnEliminar.setBounds(330, 117, 89, 23);
 		panel.add(btnEliminar);
 		
+		JList listPlanInfo = new JList();
+		listPlanInfo.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Informaci\u00F3n del Plan", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+		listPlanInfo.setBounds(20, 11, 190, 129);
+		panel.add(listPlanInfo);
+		
 		JLabel lblDatosDelPlan = new JLabel("");
-		lblDatosDelPlan.setBounds(10, 11, 200, 14);
-		panel.add(lblDatosDelPlan);
+		lblDatosDelPlan.setBounds(10, 48, 200, 14);
+		contentPane.add(lblDatosDelPlan);
 		
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
@@ -93,17 +106,30 @@ public class FrameEliminarPlan extends JFrame {
 			// PLAN EXISTE
 			
 			textFieldPlan.setEnabled(false);
+			btnBuscar.setEnabled(false);
 			btnEliminar.setEnabled(true);
-			lblDatosDelPlan.setBackground(Color.blue);
+			lblDatosDelPlan.setForeground(Color.BLUE);
 			lblDatosDelPlan.setText("Se ha encontrado el plan");
 			
+			// LISTA INFORMACIÓN DEL PLAN A ELIMINAR
+			DefaultListModel listmodel = new DefaultListModel();
+			Plan p = datosEmpresa.getPlanes().buscar(textFieldPlan.getText());
+				
+				listmodel.addElement("-ID  "+p.getIdPlan());
+				listmodel.addElement("-Nombre  "+p.getNombre());
+				listmodel.addElement("-Gb  "+p.getGigas());
+				listmodel.addElement("-Minutos  "+p.getMinutos());
+				listmodel.addElement("-Precio  "+p.getPrecio());
+				listmodel.addElement("-Sms  "+p.getSms());
+				listmodel.addElement("-ValorMin  "+p.getValorMin());
+				
+				listPlanInfo.setModel(listmodel);
+			
 				}else {
-					lblDatosDelPlan.setBackground(Color.RED);
+					lblDatosDelPlan.setForeground(Color.RED);
 					lblDatosDelPlan.setText("El plan no existe");
 					}
-			
 			}
-			
 			
 		});
 		btnBuscar.setBounds(250, 19, 89, 23);
@@ -119,6 +145,8 @@ public class FrameEliminarPlan extends JFrame {
 		});
 		btnCancelar.setBounds(350, 19, 89, 23);
 		contentPane.add(btnCancelar);
+		
+		
 	
 	}
 }
