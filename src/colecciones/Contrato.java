@@ -1,4 +1,9 @@
 package colecciones;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+
 /**
  * @author FValerio, DMayorga, MSilva, LMondaca
  *
@@ -122,4 +127,20 @@ public class Contrato {
 		this.planContratado = planContratado;
 	}
 
+	
+	/// metodos para manejar reportar plan y equipo del contrato
+	
+	public void reportarPlanContratado(Document doc) throws DocumentException
+	{
+			doc.add(
+					new Paragraph("----- Plan contratado :          " + planContratado.getNombre()));
+
+	}
+	
+	public void reportarEquipoContratado(Document doc) throws DocumentException
+	{
+			doc.add(
+					new Paragraph("----- Equipo contratado :          " + equipoContratado.getNombre()));
+
+	}
 }

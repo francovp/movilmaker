@@ -78,14 +78,15 @@ public class ListaPlanes implements Validador {
 		return null;
 	}
 	
-	public void reportarPlanes(int id,Document doc) throws DocumentException
+	public void reportarPlanesCompania(Document doc) throws DocumentException
 	{
+		doc.add(
+				new Paragraph("***** PLANES DISPONIBLES ****** :          "));
 		for(int i=1 ; i < lista.count() ; i++)
 		{
 			lista.setPos(i);
-			if(((Plan) lista.actualValue()).getIdPlan() == id)
 					doc.add(
-					new Paragraph("----- Plan contratado :          " + ((Plan)lista.actualValue()).getNombre()));
+					new Paragraph("----- Plan :          " + ((Plan)lista.actualValue()).getNombre()));
 
 		}
 	}

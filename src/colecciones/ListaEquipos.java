@@ -80,12 +80,14 @@ public class ListaEquipos implements Validador {
 		return null;
 	}
 	
-	public void reportarEquipos(int id,Document doc) throws DocumentException
+	public void reportarEquiposCompania(Document doc) throws DocumentException
 	{
+		doc.add(
+				new Paragraph("***** EQUIPOS MOVILES DISPONIBLES ****** :          "));
+		
 		for (int i = 0; i < lista.size(); i++)
-			if (lista.get(i).getIdEquipo() == id)
 				doc.add(
-						new Paragraph("----- Equipo contratado :      " + getLista().get(i).getNombre()));
+						new Paragraph("----- Equipo  :      " + lista.get(i).getNombre()));
 	}
 	
 	

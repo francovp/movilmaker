@@ -9,6 +9,10 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+
 import extras.Database;
 
 public class ListaContratos implements Validador {
@@ -121,4 +125,21 @@ public class ListaContratos implements Validador {
 		return false;
 	}
 	
+	public void reportarContratos(Document documento) throws DocumentException
+	{
+
+		// RECORRE CONTRATOS DE CLIENTE 
+		// por CADA CONTRATO IMPRIME SUS DETALLES DE VALOR , EQUIPO Y PLAN
+		for (int j = 0; j < lista.size(); j++) {
+			// imprime en pdf id contrato y valor total a pagar de cada
+			// cliente
+			documento.add(
+					new Paragraph("---- ID Contrato :                 " + lista.get(j).getIdContrato()));
+			documento.add(
+					new Paragraph("---- Valor total :                   $" + lista.get(j).getValorTotal()));
+			lista.get(j).reportarPlanContratado(documento);
+			lista.get(j).reportarEquipoContratado(documento);
+				
+		}
+	}
 }
