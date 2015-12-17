@@ -22,6 +22,7 @@ import javax.swing.border.TitledBorder;
 import com.itextpdf.text.DocumentException;
 
 import colecciones.Compania;
+import extras.DatabaseConnection;
 import interfaz.agregar.FrameAgregarAdmin;
 import interfaz.agregar.FrameAgregarCliente;
 import interfaz.agregar.FrameAgregarOtroContrato;
@@ -67,7 +68,6 @@ public class FrameInterfaz extends JFrame {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-
 		setResizable(false);
 		setTitle("MovilMaker");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,7 +95,7 @@ public class FrameInterfaz extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				FrameAgregarAdmin fAdmin = new FrameAgregarAdmin(datosEmpresa);
 				fAdmin.setVisible(true);
-				dispose();
+				//dispose();
 			}
 		});
 
@@ -111,7 +111,7 @@ public class FrameInterfaz extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				FrameAgregarCliente fAgregaCliente = new FrameAgregarCliente(datosEmpresa);
 				fAgregaCliente.setVisible(true);
-				dispose();
+				//dispose();
 			}
 		});
 		
@@ -121,7 +121,7 @@ public class FrameInterfaz extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				FrameAgregarPlan fAgregarPlan = new FrameAgregarPlan(datosEmpresa);
 				fAgregarPlan.setVisible(true);
-				dispose();
+				//dispose();
 			}
 		});
 		// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
@@ -146,7 +146,7 @@ public class FrameInterfaz extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				FrameAgregarOtroContrato fOtroContrato = new FrameAgregarOtroContrato(datosEmpresa);
 				fOtroContrato.setVisible(true);
-				dispose();
+				//dispose();
 			}
 		});
 		// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
@@ -168,7 +168,7 @@ public class FrameInterfaz extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				FrameVerClientes verClientes = new FrameVerClientes(datosEmpresa);
 				verClientes.setVisible(true);
-				dispose();
+				//dispose();
 			}
 		});
 		
@@ -180,7 +180,7 @@ public class FrameInterfaz extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				FrameVerAdmins verAdmins = new FrameVerAdmins(datosEmpresa);
 				verAdmins.setVisible(true);
-				dispose();
+				//dispose();
 			}
 		});
 		panel_1.add(btnVerAdministradores);
@@ -193,7 +193,7 @@ public class FrameInterfaz extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				FrameVerEquipos verEquipos = new FrameVerEquipos(datosEmpresa);
 				verEquipos.setVisible(true);
-				dispose();
+				//dispose();
 			}
 		});
 		panel_1.add(btnVerEquipos);
@@ -206,7 +206,7 @@ public class FrameInterfaz extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				FrameVerPlanes frame = new FrameVerPlanes(datosEmpresa);
 				frame.setVisible(true);
-				dispose();
+				//dispose();
 			}
 		});
 		panel_1.add(btnVerPlanes);
@@ -240,7 +240,7 @@ public class FrameInterfaz extends JFrame {
 									public void actionPerformed(ActionEvent e) {
 										FrameEliminarContrato fEliminarContrato = new FrameEliminarContrato(datosEmpresa);
 										fEliminarContrato.setVisible(true);
-										dispose();
+										//dispose();
 									}
 								});
 				
@@ -254,7 +254,7 @@ public class FrameInterfaz extends JFrame {
 							public void actionPerformed(ActionEvent e) {
 								FrameEliminarCliente fEliminarCliente = new FrameEliminarCliente(datosEmpresa);
 								fEliminarCliente.setVisible(true);
-								dispose();
+								//dispose();
 							}
 						});
 				// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
@@ -277,7 +277,7 @@ public class FrameInterfaz extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						FrameModificarCliente fActualizarCliente = new FrameModificarCliente(datosEmpresa);
 						fActualizarCliente.setVisible(true);
-						dispose();
+						//dispose();
 					}
 				});
 				// Si no hay admin (Falta = 0 o 1) no se puede activar este bot�n
@@ -287,10 +287,14 @@ public class FrameInterfaz extends JFrame {
 		btnSalir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				System.exit(0);
+				cerrarTodo();
 			}
 		});
-
+	}
+	
+	private void cerrarTodo(){
+		dispose();
+		DatabaseConnection.cerrarConnection();
+		System.exit(0);
 	}
 }

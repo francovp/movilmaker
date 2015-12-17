@@ -53,7 +53,7 @@ public class FrameVerClientes extends JFrame {
 		ArrayList<Cliente> lista = datosEmpresa.getClientes().getLista();
 		setTitle("Reporte de clientes");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 472, 474);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "Clientes de la compa\u00F1ia", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));

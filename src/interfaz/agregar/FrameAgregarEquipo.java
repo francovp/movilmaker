@@ -59,7 +59,7 @@ public class FrameAgregarEquipo extends JFrame {
 	public FrameAgregarEquipo(Compania datosEmpresa) {
 		setResizable(false);
 		setTitle("Agregar equipo");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 321, 383);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "Datos del equipo", TitledBorder.LEADING, TitledBorder.TOP,
@@ -250,7 +250,7 @@ public class FrameAgregarEquipo extends JFrame {
 		
 		// Se crea Plan nuevo y se ingresa, se espera un resultado del ingreso
 		Equipo equipoNuevo = new Equipo (0, nombre, pantalla, camara, so, procesador, valorPlan, valorPrepago, datosEmpresa.getRut());
-		if (datosEmpresa.getEquipos().validarAgregar(equipoNuevo) == false)
+		if (datosEmpresa.getEquipos().validarAgregar(equipoNuevo) == true)
 			// Si el plan no existe, todo bien
 			return equipoNuevo;
 		else

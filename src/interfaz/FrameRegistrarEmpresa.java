@@ -59,7 +59,7 @@ public class FrameRegistrarEmpresa extends JFrame {
 	    
 		setResizable(false);
 		setTitle("MovilMaker");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 353, 153);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Registre su empresa",

@@ -59,7 +59,7 @@ public class FrameAgregarCliente extends JFrame {
     private static void crearYMostrarUI(Compania datosEmpresa) {
         //Creaa y configura la ventana
     	FrameAgregarCliente frame = new FrameAgregarCliente(datosEmpresa);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
          
         //Muestra la ventana
         frame.setVisible(true);
@@ -72,7 +72,7 @@ public class FrameAgregarCliente extends JFrame {
 	public FrameAgregarCliente(Compania datosEmpresa) {
 		setResizable(false);
 		setTitle("Agregar Cliente");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 600, 321);
 		contentPane = new JPanel();
 		contentPane.setBorder(
@@ -323,7 +323,7 @@ public class FrameAgregarCliente extends JFrame {
 				fono2, email, 1, direccion1, direccion2, 0, null);
 		// Se ingresa cliente nuevo y se espera un resultado del ingreso
 		
-		if (datosEmpresa.getClientes().validarAgregar(clienteNuevo) == false){
+		if (datosEmpresa.getClientes().validarAgregar(clienteNuevo) == true){
 			// Si cliente no existe, todo bien
 			return clienteNuevo;
 		}

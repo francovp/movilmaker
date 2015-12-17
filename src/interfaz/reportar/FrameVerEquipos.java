@@ -53,7 +53,7 @@ public class FrameVerEquipos extends JFrame {
 		ArrayList<Equipo> lista = datosEmpresa.getEquipos().getLista();
 		setTitle("Reporte de Equipos");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 469, 490);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "Equipos de la compa\u00F1ia", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));

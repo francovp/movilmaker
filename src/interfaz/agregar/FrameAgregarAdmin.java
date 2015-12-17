@@ -59,7 +59,7 @@ public class FrameAgregarAdmin extends JFrame {
 	public FrameAgregarAdmin(Compania datosEmpresa) {
 		setResizable(false);
 		setTitle("Agregar Admin");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 600, 268);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "Datos de administrador", TitledBorder.LEADING, TitledBorder.TOP,
@@ -190,7 +190,6 @@ public class FrameAgregarAdmin extends JFrame {
 						// Administrador en la BD
 						try {
 							// Creacion de conexion a base de datos
-						
 							Database.ingresarAdminBD(nuevoAdmin);
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
@@ -213,8 +212,8 @@ public class FrameAgregarAdmin extends JFrame {
 						JOptionPane.showMessageDialog(null, "Administrador creado con exito!", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
 						// // Se volver� a Interfaz principal
-						FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
-						fInterfaz.setVisible(true);
+						//FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
+						//fInterfaz.setVisible(true);
 						dispose();
 					} else {
 						// Sino, se informa que el Administrador ya existe y se
@@ -265,7 +264,7 @@ public class FrameAgregarAdmin extends JFrame {
 				fono1, fono2, email, 0, null, null, 0, null);
 		// Se ingresa Administrador nuevo y se espera un resultado del ingreso
 
-		if (datosEmpresa.getAdministradores().validarAgregar(adminNuevo) == false){
+		if (datosEmpresa.getAdministradores().validarAgregar(adminNuevo) == true){
 			// Si cliente no existe, todo bien
 			return adminNuevo;
 		}

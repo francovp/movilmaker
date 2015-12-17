@@ -50,7 +50,7 @@ public class FrameEliminarContrato extends JFrame {
 	public FrameEliminarContrato(Compania datosEmpresa) {
 		setResizable(false);
 		setTitle("Eliminar Contrato");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 372, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, null, TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));

@@ -51,7 +51,7 @@ public class FrameModificarPlan extends JFrame {
 	 */
 	public FrameModificarPlan(Compania datosEmpresa) {
 		setTitle("Modificar plan");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 315);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Modificar plan", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));

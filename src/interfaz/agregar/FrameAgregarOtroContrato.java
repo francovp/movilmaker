@@ -45,7 +45,7 @@ public class FrameAgregarOtroContrato extends JFrame {
 	public FrameAgregarOtroContrato(Compania datosEmpresa) {
 		setTitle("Contrato adicional");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 343, 151);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "Ingrese rut de cliente", TitledBorder.LEADING, TitledBorder.TOP,

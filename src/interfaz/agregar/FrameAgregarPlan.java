@@ -1,7 +1,5 @@
 package interfaz.agregar;
 
-
-
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -57,7 +55,7 @@ public class FrameAgregarPlan extends JFrame {
 	public FrameAgregarPlan(Compania datosEmpresa) {
 		setResizable(false);
 		setTitle("Agregar pLAN");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 321, 362);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "Datos del plN", TitledBorder.LEADING, TitledBorder.TOP,
@@ -238,7 +236,7 @@ public class FrameAgregarPlan extends JFrame {
 		
 		// Se crea Plan nuevo y se ingresa, se espera un resultado del ingreso
 		Plan nuevo = new Plan (0, nombre, precio, minutos, gigas, sms, valorMin, datosEmpresa.getRut());
-		if (datosEmpresa.getPlanes().validarAgregar(nuevo) == false)
+		if (datosEmpresa.getPlanes().validarAgregar(nuevo) == true)
 			// Si el plan no existe, todo bien
 			return nuevo;
 		else

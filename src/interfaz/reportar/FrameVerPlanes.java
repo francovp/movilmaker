@@ -53,7 +53,7 @@ public class FrameVerPlanes extends JFrame {
 	public FrameVerPlanes(Compania datosEmpresa) {
 		setTitle("Reporte de Planes");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 469, 490);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "Planes de la compa\u00F1ia", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
