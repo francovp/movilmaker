@@ -210,7 +210,7 @@ public class FrameInterfaz extends JFrame {
 		
 		JButton btnVerEjecutivos = new JButton("Ver Ejecutivos");
 		panelVer.add(btnVerEjecutivos);
-		btnVerAdministradores.addActionListener(new ActionListener() {
+		btnVerEjecutivos.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				FrameVerEjecutivo frame = new FrameVerEjecutivo(datos);
@@ -326,7 +326,7 @@ public class FrameInterfaz extends JFrame {
 		// if (falta == 0 || falta == 1)
 		// btnVerClientesActuales.setEnabled(false);
 		if (tipo != 0)
-			btnModificarAdmin.setEnabled(false);
+			btnModificarEjecutivo.setEnabled(false);
 		
 		JButton btnModificarUnPlan = new JButton("Modificar un Plan");
 		btnModificarUnPlan.addActionListener(new ActionListener() {
