@@ -1,6 +1,7 @@
 package interfaz.agregar;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +20,7 @@ import javax.swing.border.TitledBorder;
 import colecciones.Administrador;
 import colecciones.Compania;
 import colecciones.Principal;
+import excepciones.ExceptionRutInvalido;
 import extras.Database;
 import interfaz.FrameInterfaz;
 
@@ -37,12 +39,12 @@ public class FrameAgregarAdmin extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args, Compania datosEmpresa, int falta) {
+	public static void main(String[] args, Compania datosEmpresa) {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				try {
-					FrameAgregarAdmin frame = new FrameAgregarAdmin(datosEmpresa, falta);
+					FrameAgregarAdmin frame = new FrameAgregarAdmin(datosEmpresa);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +56,7 @@ public class FrameAgregarAdmin extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrameAgregarAdmin(Compania datosEmpresa, int falta) {
+	public FrameAgregarAdmin(Compania datosEmpresa) {
 		setResizable(false);
 		setTitle("Agregar Admin");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -146,7 +148,7 @@ public class FrameAgregarAdmin extends JFrame {
 		panel_1.add(textFonoFijo);
 		textFonoFijo.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent evt) {
-				String var = "Teléfono fijo";
+				String var = "Telefono fijo";
 				textNumericoValidador(textFonoFijo, lblAviso, var, evt);
 			}
 		});
@@ -188,12 +190,12 @@ public class FrameAgregarAdmin extends JFrame {
 						// Administrador en la BD
 						try {
 							// Creacion de conexion a base de datos
-							Database bd = new Database();
-							bd.ingresarAdminBD(nuevoAdmin);
+						
+							Database.ingresarAdminBD(nuevoAdmin);
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							System.err.println("Administrador no se pudo escribir en la Base de Datos.\n"
-									+ "\nDetalles de la excepción:");
+									+ "\nDetalles de la excepci�n:");
 							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 						}
 
@@ -210,8 +212,8 @@ public class FrameAgregarAdmin extends JFrame {
 						// exitosamente!
 						JOptionPane.showMessageDialog(null, "Administrador creado con exito!", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
-						// // Se volverá a Interfaz principal
-						FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+						// // Se volver� a Interfaz principal
+						FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 						fInterfaz.setVisible(true);
 						dispose();
 					} else {
@@ -235,32 +237,13 @@ public class FrameAgregarAdmin extends JFrame {
 		});
 		btnReset.setBounds(104, 11, 89, 23);
 		panel_2.add(btnReset);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (falta == 0 || falta == 1) {
-					FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, falta);
-					fInterfaz.setVisible(true);
-					dispose();
-				} else {
-					FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
-					fInterfaz.setVisible(true);
-					dispose();
-				}
-			}
-		});
-		btnCancelar.setBounds(195, 11, 89, 23);
-		panel_2.add(btnCancelar);
-
 	}
 
 	// ========================METODOS====================
 
 	/**
 	 * Ingresa atributos capturados desde los JTextField de la ventana y los
-	 * atribuye a un objeto Administrador que después se asocia a la empresaç
+	 * atribuye a un objeto Administrador que despues se asocia a la empresaç
 	 * @param datosEmpresa - una referencia a la Compania
 	 * @return un objeto Administrador del administrador creado
 	 **/
@@ -281,12 +264,13 @@ public class FrameAgregarAdmin extends JFrame {
 		Administrador adminNuevo = new Administrador(rut, datosEmpresa.getRut(), nombre1, nombre2, apellido1, apellido2,
 				fono1, fono2, email, 0, null, null, 0, null);
 		// Se ingresa Administrador nuevo y se espera un resultado del ingreso
-		Administrador resultado = datosEmpresa.crearAdminNuevo(adminNuevo);
-		if (resultado != null)
-			// Si la persona no existe, todo bien
+
+		if (datosEmpresa.getAdministradores().validarAgregar(adminNuevo) == false){
+			// Si cliente no existe, todo bien
 			return adminNuevo;
+		}
 		else
-			// Entonces la persona ya existe
+			// Entonces el cliente ya existe
 			return null;
 	}
 
@@ -311,37 +295,37 @@ public class FrameAgregarAdmin extends JFrame {
 	 * Comprueba si los ingresos en las casillas violan restricciones
 	 * @return un boolean si no se encuentra ninguna restriccion o no
 	 */
-	public boolean comprobarIngreso(JLabel aviso) {
+	public boolean comprobarIngreso(JLabel aviso){
 		if(textNombre1.getText().length()==0){
 			aviso.setForeground(Color.RED);
-			aviso.setText("Nombre no puede estar vacío");
+			aviso.setText("Nombre no puede estar vacio");
 			return false;
 		}
 		if(textApellido1.getText().length() == 0){
 			aviso.setForeground(Color.RED);
-			aviso.setText("Apellido no puede estar vacío");
+			aviso.setText("Apellido no puede estar vacio");
 			return false;
 		}
 		if(textRut.getText().length() == 0){
 			aviso.setForeground(Color.RED);
-			aviso.setText("RUT no puede estar vacío");
+			aviso.setText("RUT no puede estar vacio");
 			return false;
 		}
 		
 		if(!Principal.validarRut(textRut.getText())){
 			aviso.setForeground(Color.RED);
-			aviso.setText("Ingrese un RUT válido");
+			aviso.setText("Ingrese un RUT valido");
 			return false;
 		}
 		return true;
 	}
 	
 	/**
-	 * Comprueba si el ingreso en el cuadro de texto de Teléfono Fijo o Celular son numéricos
+	 * Comprueba si el ingreso en el cuadro de texto de Telefono Fijo o Celular son numericos
 	 * @param tf - una referencia al elemento JTextField con el texto a verificar
 	 * @param aviso - una referencia al cuadro de texto para mensajes de aviso
-	 * @param var - La variable que se está verificando
-	 * @param evt - una referencia a la tecla que se está pulsando actualmente para comprobarla
+	 * @param var - La variable que se esta verificando
+	 * @param evt - una referencia a la tecla que se esta pulsando actualmente para comprobarla
 	 */
 	private void textNumericoValidador (JTextField tf, JLabel aviso, String var, KeyEvent evt) {
 		String str = tf.getText();
@@ -349,6 +333,7 @@ public class FrameAgregarAdmin extends JFrame {
 		char[] resultado = new char[fuente.length];
 		int j=0;
 		boolean error=false;
+		
 		for(int i=0; i<fuente.length;i++){
 			if(fuente[i]>='0' && fuente[i]<='9'){
 				resultado[j++] = fuente[i];
@@ -366,5 +351,4 @@ public class FrameAgregarAdmin extends JFrame {
 			aviso.setText(var+" debe ser numerico");
 		}
 	}
-
 }

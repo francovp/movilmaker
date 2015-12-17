@@ -1,8 +1,4 @@
 package interfaz.agregar;
-
-
-import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -17,13 +13,12 @@ import javax.swing.border.TitledBorder;
 
 import colecciones.Cliente;
 import colecciones.Compania;
+import colecciones.Principal;
+import excepciones.ExceptionRutInvalido;
 import extras.Database;
-import extras.XML;
 import interfaz.FrameInterfaz;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -223,45 +218,53 @@ public class FrameAgregarCliente extends JFrame {
 				Cliente nuevoCliente = null;
 				
 				// Comprobaciones de Datos ingresados
-				if(comprobarIngreso(lblAviso)){
-					// Llama metodo para crear Cliente
-					nuevoCliente = datosNuevaPersona(datosEmpresa);
-					if (nuevoCliente != null) {
-						// Si el cliente se crea exitosamente se escribira
-						// cliente en la BD
-						try {
-							// Creacion de conexion a base de datos
-							Database bd = new Database();
-							bd.ingresarClienteBD(nuevoCliente);
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							System.err.println("Cliente no se pudo escribir en la Base de Datos.\n"
-									+ "\nDetalles de la excepción:");
-							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
+				try {
+					if(comprobarIngreso(lblAviso)){
+						// Llama metodo para crear Cliente
+						nuevoCliente = datosNuevaPersona(datosEmpresa);
+						if (nuevoCliente != null) {
+							// Si el cliente se crea exitosamente 
+							//se escribira
+							// cliente en la BD
+							try {
+								// Creacion de conexion a base de datos
+								Database.ingresarClienteBD(nuevoCliente);
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								System.err.println("Cliente no se pudo escribir en la Base de Datos.\n"
+										+ "\nDetalles de la excepción:");
+								System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
+							}
+
+//						// Para guardar cliente en un XML
+//						// Objeto XML
+//						XML xml = new XML();
+//						if (xml.ingresarClienteXML(datosEmpresa, nuevoCliente))
+//							System.out.println("Cliente guardado en XML.");
+//						else
+//							System.err.println("Cliente no fue guardado en XML.");
+
+							// Muestra mensaje que cilente fue ingresado
+							// exitosamente!
+							JOptionPane.showMessageDialog(null,
+									"Cliente creado con exito!\nProceda en asignarle un contrato", "Aviso",
+									JOptionPane.INFORMATION_MESSAGE);
+							// Se creara� un contrato
+							FrameAgregarContrato fContrato = new FrameAgregarContrato(datosEmpresa, nuevoCliente);
+							fContrato.setVisible(true);
+							dispose();
+						} else {
+							// Sino, se informa que el cliente ya existe y se vuelve al menu
+							lblAviso.setForeground(Color.RED);
+							lblAviso.setText("Cliente ya existe!");
 						}
-	
-						// Para guardar cliente en un XML
-						// Objeto XML
-						XML xml = new XML();
-						if (xml.ingresarClienteXML(datosEmpresa, nuevoCliente))
-							System.out.println("Cliente guardado en XML.");
-						else
-							System.err.println("Cliente no fue guardado en XML.");
-	
-						// Muestra mensaje que cilente fue ingresado
-						// exitosamente!
-						JOptionPane.showMessageDialog(null,
-								"Cliente creado con exito!\nProceda en asignarle un contrato", "Aviso",
-								JOptionPane.INFORMATION_MESSAGE);
-						// Se creara� un contrato
-						FrameAgregarContrato fContrato = new FrameAgregarContrato(datosEmpresa, nuevoCliente);
-						fContrato.setVisible(true);
-						dispose();
-					} else {
-						// Sino, se informa que el cliente ya existe y se vuelve al menu
-						lblAviso.setForeground(Color.RED);
-						lblAviso.setText("Cliente ya existe!");
 					}
+				} catch (HeadlessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ExceptionRutInvalido e1) {
+					// TODO Auto-generated catch block
+					e1.getMessage();
 				}
 			}
 		});
@@ -282,7 +285,7 @@ public class FrameAgregarCliente extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa, -1);
+				FrameInterfaz fInterfaz = new FrameInterfaz(datosEmpresa);
 				fInterfaz.setVisible(true);
 				dispose();
 			}
@@ -319,10 +322,11 @@ public class FrameAgregarCliente extends JFrame {
 		Cliente clienteNuevo = new Cliente(rut, datosEmpresa.getRut(), nombre1, nombre2, apellido1, apellido2, fono1,
 				fono2, email, 1, direccion1, direccion2, 0, null);
 		// Se ingresa cliente nuevo y se espera un resultado del ingreso
-		Cliente resultado = datosEmpresa.crearClienteNuevo(clienteNuevo);
-		if (resultado != null)
+		
+		if (datosEmpresa.getClientes().validarAgregar(clienteNuevo) == false){
 			// Si cliente no existe, todo bien
 			return clienteNuevo;
+		}
 		else
 			// Entonces el cliente ya existe
 			return null;
@@ -351,8 +355,9 @@ public class FrameAgregarCliente extends JFrame {
 	/**
 	 * Comprueba si los ingresos en las casillas violan restricciones
 	 * @return un boolean si no se encuentra ninguna restriccion o no
+	 * @throws ExceptionRutInvalido 
 	 */
-	public boolean comprobarIngreso(JLabel aviso) {
+	public boolean comprobarIngreso(JLabel aviso) throws ExceptionRutInvalido {
 		if(textNombre1.getText().length()==0){
 			aviso.setForeground(Color.RED);
 			aviso.setText("Nombre no puede estar vacío");
@@ -369,11 +374,12 @@ public class FrameAgregarCliente extends JFrame {
 			return false;
 		}
 		
-//		if(!Principal.validarRut(textRut.getText())){
-//			aviso.setForeground(Color.RED);
-//			aviso.setText("Ingrese un RUT válido");
-//			return false;
-//		}
+		if(!Principal.validarRut(textRut.getText())){
+			aviso.setForeground(Color.RED);
+			aviso.setText("Ingrese un RUT válido");
+			throw new ExceptionRutInvalido();
+			
+		}
 		return true;
 	}
 	

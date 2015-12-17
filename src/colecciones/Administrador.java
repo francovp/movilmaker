@@ -32,7 +32,7 @@ public class Administrador extends Persona {
 	}
 
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
-	
+
 	/**
 	 * Imprime un Reporte en pdf del Administrador (Sobreescritura de Persona
 	 * 
@@ -41,14 +41,14 @@ public class Administrador extends Persona {
 	 * @throws DocumentException
 	 */
 	@Override
-	public void reporte(Compania datosEmpresa) throws FileNotFoundException, DocumentException {
+	public void reporte (String rutEmpresa, String nombre) throws FileNotFoundException, DocumentException{
 		Document documento = new Document();
 		String fonoFijo, fonoCel, email, nombre2, apellido2;
 		PdfWriter.getInstance(documento, new FileOutputStream("reportes\\Reporte_admin_" + getRut() + ".pdf"));
 		documento.open(); // ABRE DOCUMENTO
 
 		documento.add(new Paragraph(
-				"Documento emitido por compañia " + datosEmpresa.getNombre() + ", RUT: " + datosEmpresa.getRut()));
+				"Documento emitido por compaï¿½ia " + nombre + ", RUT: " + rutEmpresa));
 
 		if (getFonoFijo() == 0)
 			fonoFijo = "Sin datos";
@@ -70,12 +70,12 @@ public class Administrador extends Persona {
 			apellido2 = "Sin datos";
 		else
 			apellido2 = getApellido2();
+	/////////////////////////// * METODOS * /////////////////////////////////////////////
 
 		documento.add(new Paragraph("\nDatos del administrador:                        " + getNombre1() + " " + nombre2
 				+ " " + getApellido1() + " " + apellido2));
 		documento.add(new Paragraph("\nRut: " + getRut() + ", Email: " + email));
-		documento.add(new Paragraph("\nTeléfono: " + fonoFijo + ", Celular: " + fonoCel));
+		documento.add(new Paragraph("\nTelï¿½fono: " + fonoFijo + ", Celular: " + fonoCel));
 		documento.close(); // SE CIERRA EL DOCUMENTO
 	}
-
 }

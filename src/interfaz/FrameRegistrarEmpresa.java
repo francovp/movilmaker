@@ -1,4 +1,6 @@
 package interfaz;
+
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -96,21 +98,20 @@ public class FrameRegistrarEmpresa extends JFrame {
 				// Se escribira empresa en la BD
 				try {
 					// Creacion de conexion a base de datos
-					Database bd = new Database();
-					bd.ingresarEmpresaBD(empresaNueva);
+					Database.ingresarEmpresaBD(empresaNueva);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					System.err.println(
-							"Empresa no se pudo escribir en la Base de Datos.\n" + "\nDetalles de la excepción:");
+							"Empresa no se pudo escribir en la Base de Datos.\n" + "\nDetalles de la excepciï¿½n:");
 					System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 				}
 
 				// Muestra mensaje que cilente fue ingresado exitosamente!
 				JOptionPane.showMessageDialog(null, "Empresa creada!\nProceda a crear un Administrador...", "Aviso",
 						JOptionPane.INFORMATION_MESSAGE);
-				// Se llamará a una Interfaz AgregarAdmin para registrar al
+				// Se llamarï¿½ a una Interfaz AgregarAdmin para registrar al
 				// primer administrador
-				FrameAgregarAdmin fAdmin = new FrameAgregarAdmin(datosEmpresa, 0);
+				FrameAgregarAdmin fAdmin = new FrameAgregarAdmin(datosEmpresa);
 				fAdmin.setVisible(true);
 				dispose();
 			}

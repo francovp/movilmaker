@@ -216,3 +216,7 @@ pip-log.txt
 .mr.developer.cfg
 
 reportes/*.pdf
+resources/diagramaUML2.png
+resources/diagramaUML2.ucls
+src/diagramaUML.png
+src/diagramaUML.ucls
