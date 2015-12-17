@@ -13,6 +13,7 @@ public class Compania {
 		private String nombre;
 		private String rut;
 		private ListaAdministradores admins;
+		private ListaEjecutivos ejecutivos;
 		private ListaClientes clientes;
 		private ListaEquipos equipos;
 		private ListaPlanes planes;
@@ -27,6 +28,7 @@ public class Compania {
 			this.nombre = nombre;
 			this.rut = rut;
 			this.admins = new ListaAdministradores();
+			this.ejecutivos = new ListaEjecutivos();
 			this.clientes = new ListaClientes();
 			this.equipos = new ListaEquipos();
 			this.planes = new ListaPlanes();
@@ -66,6 +68,22 @@ public class Compania {
 			this.admins = administradores;
 		}
 
+		public ListaEjecutivos getEjecutivos() {
+			return ejecutivos;
+		}
+
+		public void setEjecutivos(ListaEjecutivos ejecutivos) {
+			this.ejecutivos = ejecutivos;
+		}
+
+		public ListaRegistroDePagos getPagos() {
+			return pagos;
+		}
+
+		public void setPagos(ListaRegistroDePagos pagos) {
+			this.pagos = pagos;
+		}
+
 		public ListaEquipos getEquipos() {
 			return equipos;
 		}
@@ -99,8 +117,11 @@ public class Compania {
 			documento.add(new Paragraph("Documento emitido por compañia " + getNombre() + ", RUT: " + getRut()));
 			documento.add(new Paragraph("\n**Lista de administradores:"));
 			// RECORRE CADA ADMINISTRADOR E IMPRIME SUS DATOS PERSONALES
-						admins.reportarAdmin(documento);
+			admins.reportarAdmin(documento);
 
+			// RECORRE CADA ADMINISTRADOR E IMPRIME SUS DATOS PERSONALES
+			ejecutivos.reportarEjecutivo(documento);
+			
 			//IMPRIME TODOS LOS PLANES DE LA EMPRESA 
 			planes.reportarPlanesCompania(documento);
 			

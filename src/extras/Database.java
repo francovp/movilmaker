@@ -9,6 +9,7 @@ import colecciones.Administrador;
 import colecciones.Cliente;
 import colecciones.Compania;
 import colecciones.Contrato;
+import colecciones.Ejecutivo;
 import colecciones.Equipo;
 import colecciones.Plan;
 import colecciones.RegistroDePagos;
@@ -95,6 +96,25 @@ public class Database {
 				+ "','" + datosAdmin.getNombre2() + "'," + datosAdmin.getFonoCel() + "," + datosAdmin.getFonoFijo()
 				+ ",'" + datosAdmin.getEmail() + "','" + datosAdmin.getApellido2() + "','" + datosAdmin.getRut()
 				+ "'," + datosAdmin.getTipo() + ",'" + datosAdmin.getPassword() + "');";
+		stmt.executeUpdate(sql);
+		cerrarDatabase();
+	}
+	
+	/**
+	 * Ingresa los datos de un Administrador en la Tabla PERSONA de la BD
+	 * @param datos - una referencia al Administrador
+	 * @return Un boolean si se ingresaron los datos correctamente o no
+	 */
+	public static void ingresarEjecutivoBD(Ejecutivo datos) throws SQLException {
+		// Si se creo la conexion a la BD exitosamente se continua
+		// Se crea una nueva sentencia SQL
+		stmt = dbConnection.createStatement();
+		String sql = "INSERT INTO persona (nombre1,apellido1,id_compania,"
+				+ "nombre2,fono_celular,fono_fijo,email,apellido2,rut,tipo,password) " + "VALUES ('"
+				+ datos.getNombre1() + "','" + datos.getApellido1() + "','" + datos.getIdCompania()
+				+ "','" + datos.getNombre2() + "'," + datos.getFonoCel() + "," + datos.getFonoFijo()
+				+ ",'" + datos.getEmail() + "','" + datos.getApellido2() + "','" + datos.getRut()
+				+ "'," + datos.getTipo() + ",'" + datos.getPassword() + "');";
 		stmt.executeUpdate(sql);
 		cerrarDatabase();
 	}
@@ -195,6 +215,16 @@ public class Database {
 		stmt.close();
 		cerrarDatabase();
 	}
+	
+	public static void eliminarEjecutivoBD( String rut) throws SQLException{
+		String sql;
+		stmt = dbConnection.createStatement();
+		sql = "DELETE FROM persona WHERE (rut = '" + rut + "');";
+		stmt.executeUpdate(sql);
+		stmt.close();
+		cerrarDatabase();
+	}
+	
 	public static void eliminarClienteBD(String rut) throws SQLException {
 		String sql;
 		// Si se creo la conexion a la BD exitosamente se continua
