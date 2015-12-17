@@ -16,8 +16,8 @@ public class Principal {
 		// TODO Auto-generated method stub
 		Compania datos = null;
 		datos = obtenerDatos(datos);
-		FrameAccesoProxy accessproxy = new FrameAccesoProxy(datos);
-		accessproxy.setVisible(true);
+		FrameAccesoProxy frameProxy = new FrameAccesoProxy(datos);
+		frameProxy.setVisible(true);
 	}
 	
 	/**
@@ -32,7 +32,6 @@ public class Principal {
 		datos = Database.leerPlanesBD(datos);
 		datos = Database.leerEquiposBD(datos);
 		datos = Database.leerContratosBD(datos);
-		DatabaseConnection.cerrarConnection();
 		return datos;
 	}
 	
@@ -60,7 +59,7 @@ public class Principal {
 			else 
 				throw new ExceptionRutInvalido();
 		} catch (ExceptionRutInvalido e) {
-			e.getMessage();
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			return false; 
 		}
 	}
