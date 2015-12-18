@@ -49,6 +49,16 @@ public class ListaEquipos implements Validador {
 		}
 		return false;	//	 no existe
 	}
+	
+	public boolean eliminar (String id){
+		for (int i = 0 ; i<lista.size();i++){
+			if (((Equipo)lista.get(i)).getNombre().equalsIgnoreCase(id)){
+				lista.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
 		
 	/**
 	 * Busca un Equipo especificado mediante una ID y lo retorna
