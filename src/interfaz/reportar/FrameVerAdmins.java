@@ -99,7 +99,7 @@ public class FrameVerAdmins extends JFrame {
 				JButton btnMostrar = new JButton("Mostrar");
 				btnMostrar.setBounds(10, 352, 127, 23);
 				contentPane.add(btnMostrar);
-				
+						//boton volver al menu
 						btnVolver = new JButton("Volver");
 						btnVolver.setBounds(147, 352, 127, 23);
 						contentPane.add(btnVolver);
