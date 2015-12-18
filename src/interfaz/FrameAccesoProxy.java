@@ -178,6 +178,9 @@ public class FrameAccesoProxy extends JFrame implements IFrameAcceso {
 		return true;
 	}
 
+	/**
+	 * Cierra el programa
+	 */
 	private void cerrarTodo() {
 		dispose();
 		DatabaseConnection.cerrarConnection();

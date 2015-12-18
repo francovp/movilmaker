@@ -140,7 +140,7 @@ public class FrameEliminarContrato extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel listContratos = new DefaultListModel();
-
+				
 				Cliente c = datosEmpresa.getClientes().buscarCliente(textRut.getText());
 				if (c != null) {
 					textRut.setEnabled(false);

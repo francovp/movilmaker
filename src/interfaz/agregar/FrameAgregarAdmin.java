@@ -202,17 +202,6 @@ public class FrameAgregarAdmin extends JFrame {
 							System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 						}
 
-						// // Para guardar Administrador en un XML
-						// // Objeto XML
-						// XML xml = new XML();
-						// if(xml.ingresarAdministradorXML(datosEmpresa,
-						// nuevoAdmin))
-						// System.out.println("Administrador guardado en XML.");
-						// else System.err.println("Administrador no fue
-						// guardado en XML.");
-						//
-						// Muestra mensaje que el Administrador fue ingresado
-						// exitosamente!
 						JOptionPane.showMessageDialog(null, "Administrador creado con exito!", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
 						dispose();

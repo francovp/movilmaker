@@ -84,10 +84,10 @@ public class FrameEliminarAdmin extends JFrame {
 				String rut;
 				rut = textRut.getText();
 
-				// Llama a metodo en clase Compa�ia para eliminar Cliente
+				// Llama a metodo en clase Compa�ia para eliminar Administrador
 				if (datosEmpresa.getAdministradores().eliminarAdmin(rut) == true) {
-					// Si el cliente se elimino exitosamente se eliminar�
-					// cliente en la BD
+					// Si el administrador se elimino exitosamente se eliminar�
+					// Administrador en la BD
 					
 					try {
 						// Creacion de conexion a base de datos
@@ -102,7 +102,7 @@ public class FrameEliminarAdmin extends JFrame {
 						System.err.println(e1.getClass().getName() + ": " + e1.getMessage());
 					}
 				} else
-					// Sino, se informa que el cliente no existe
+					// Sino, se informa que el administrador no existe
 					System.err.println("Administrador no existe...");
 			}
 		});
@@ -133,9 +133,9 @@ public class FrameEliminarAdmin extends JFrame {
 		btnMostrar.setBounds(260, 126, 97, 23);
 		contentPane.add(btnMostrar);
 
-		JLabel lblListaClientes = new JLabel("Lista admin en DB");
-		lblListaClientes.setBounds(260, 107, 136, 14);
-		contentPane.add(lblListaClientes);
+		JLabel lblListaAdmins = new JLabel("Lista admin en DB");
+		lblListaAdmins.setBounds(260, 107, 136, 14);
+		contentPane.add(lblListaAdmins);
 
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {

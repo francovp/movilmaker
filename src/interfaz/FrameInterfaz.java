@@ -88,7 +88,7 @@ public class FrameInterfaz extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		// Creaci�n del logo
+		// Creacion del logo
 		JLabel label = new JLabel("");
 		label.setBounds(296, 21, 217, 54);
 		contentPane.add(label);
@@ -141,7 +141,7 @@ public class FrameInterfaz extends JFrame {
 				// dispose();
 			}
 		});
-		// Si no hay admin no se puede activar este botón
+		// Si no hay admin no se puede activar este boton
 		// if (falta == 0 || falta == 1)
 		// btnAgregarClientes.setEnabled(false);
 //		if (tipo != 0)
@@ -157,7 +157,7 @@ public class FrameInterfaz extends JFrame {
 			}
 		});
 		panelAgregar.add(btnAgregarPlan);
-		// Si no hay admin no se puede activar este botón
+		// Si no hay admin no se puede activar este boton
 		// if (falta == 0 || falta == 1)
 		// btnAgregarPlan.setEnabled(false);
 		if (tipo != 0)
@@ -172,7 +172,7 @@ public class FrameInterfaz extends JFrame {
 			}
 		});
 		panelAgregar.add(btnAgregarEquipo);
-		// Si no hay admin no se puede activar este botón
+		// Si no hay admin no se puede activar este boton
 		// if (falta == 0 || falta == 1)
 		// btnAgregarPlan.setEnabled(false);
 		if (tipo != 0)
@@ -180,7 +180,7 @@ public class FrameInterfaz extends JFrame {
 
 		JButton btnAgregarContratocliente = new JButton("Agregar contrato a cliente");
 		panelAgregar.add(btnAgregarContratocliente);
-		// Si no hay admin no se puede activar este botón
+		// Si no hay admin no se puede activar este boton
 		// if (falta == 0 || falta == 1)
 		// btnAgregarContratocliente.setEnabled(false);
 //		if (tipo != 0)
@@ -467,6 +467,9 @@ public class FrameInterfaz extends JFrame {
 		});
 	}
 
+	/**
+	 * Cierra el programa
+	 */
 	private void cerrarTodo() {
 		dispose();
 		DatabaseConnection.cerrarConnection();

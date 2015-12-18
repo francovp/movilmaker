@@ -114,6 +114,7 @@ public class FrameEliminarCliente extends JFrame {
 		scrollPane.setBounds(20, 107, 224, 143);
 		contentPane.add(scrollPane);
 
+		@SuppressWarnings("rawtypes")
 		JList list = new JList();
 		scrollPane.setViewportView(list);
 		list.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
