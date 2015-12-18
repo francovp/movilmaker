@@ -2,9 +2,6 @@ package excepciones;
 
 public class ExceptionNumeroInvalido extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 700L;
 
 	public ExceptionNumeroInvalido (){

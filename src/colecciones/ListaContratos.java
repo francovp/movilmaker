@@ -45,10 +45,19 @@ public class ListaContratos implements Validador {
 		else return false;
 	}
 	
+	/**
+	 * Agrega contrato en la lista
+	 * @param cont Contrato para agregar a la lista
+	 */
 	public void agregarContrato (Contrato cont){
 		lista.add(cont);
 	}
 	
+	/**
+	 * Verifica si un mismo contrato existe
+	 * @param id La id unica del contrato
+	 * @return boolean
+	 */
 	public boolean validarContrato (int id){
 		for (int i = 0; i<lista.size();i++){
 			if (lista.get(i).getIdContrato() == id){
@@ -115,6 +124,11 @@ public class ListaContratos implements Validador {
 		return contrato;
 	}
 	
+	/**
+	 * Elimina el contrato del interior de la lista
+	 * @param id id unico del contrato a eliminar
+	 * @return boolean
+	 */
 	public boolean eliminar (int id){
 		for (int i = 0 ; i<lista.size();i++){
 			if (lista.get(i).getIdContrato() == id){
@@ -125,9 +139,13 @@ public class ListaContratos implements Validador {
 		return false;
 	}
 	
+	/**
+	 * imprime un reporte de los contratos, con su respectiva id y valor total
+	 * @param documento
+	 * @throws DocumentException
+	 */
 	public void reportarContratos(Document documento) throws DocumentException
 	{
-
 		// RECORRE CONTRATOS DE CLIENTE 
 		// por CADA CONTRATO IMPRIME SUS DETALLES DE VALOR , EQUIPO Y PLAN
 		for (int j = 0; j < lista.size(); j++) {

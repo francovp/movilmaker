@@ -25,6 +25,7 @@ import extras.DatabaseConnection;
 import interfaz.agregar.FrameAgregarAdmin;
 import interfaz.agregar.FrameAgregarCliente;
 import interfaz.agregar.FrameAgregarEjecutivo;
+import interfaz.agregar.FrameAgregarEquipo;
 import interfaz.agregar.FrameAgregarOtroContrato;
 import interfaz.agregar.FrameAgregarPlan;
 import interfaz.eliminar.FrameEliminarAdmin;
@@ -166,6 +167,8 @@ public class FrameInterfaz extends JFrame {
 		btnAgregarEquipo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				FrameAgregarEquipo fAgregarEquipo = new FrameAgregarEquipo(datos);
+				fAgregarEquipo.setVisible(true);
 			}
 		});
 		panelAgregar.add(btnAgregarEquipo);

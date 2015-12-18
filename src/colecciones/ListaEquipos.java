@@ -37,10 +37,19 @@ public class ListaEquipos implements Validador {
 		else return false;
 	}
 
+	/**
+	 * Agrega un equipo a la lista
+	 * @param m objeto de tipo Equipo que se insertara en la lista
+	 */
 	public void agregarEquipo(Equipo m) { 
 		lista.add(m);
 	}
 
+	/**
+	 * Verifica si el equipo se encuentra en la lista
+	 * @param id un entero con la ID del Equipo a seleccionar
+	 * @return boolean
+	 */
 	public boolean validarEquipo (String id){
 		for (int i = 0; i<lista.size();i++){
 			if (lista.get(i).getNombre() == id){
@@ -50,11 +59,16 @@ public class ListaEquipos implements Validador {
 		return false;	//	 no existe
 	}
 	
+	/**
+	 * Elimina de la lista el equipo seleccionado por medio de su id
+	 * @param id un entero con la ID del Equipo a seleccionar
+	 * @return boolean
+	 */
 	public boolean eliminar (String id){
 		for (int i = 0 ; i<lista.size();i++){
 			if (((Equipo)lista.get(i)).getNombre().equalsIgnoreCase(id)){
 				lista.remove(i);
-				return true;
+				return true;	//	Se elimino
 			}
 		}
 		return false;
@@ -71,25 +85,35 @@ public class ListaEquipos implements Validador {
 				// si la id ingresada se encuentra
 				return lista.get(i);
 			else {
-				//System.err.println("No se encontro equipo");
+				//"No se encontro equipo"
 			}
-		//System.err.println("No existe equipo en el contrato");
+		//"No existe equipo en el contrato
 		return null;
 	}
 	
+	/**
+	 * Busca y retorna un objeto de tipo Equipo por medio de su nombre
+	 * @param id String con nombre del Equipo
+	 * @return Un objeto de tipo Equipo
+	 */
 	public Equipo buscarEquipo (String id){
 		for (int i = 0; i < lista.size(); i++){
 			if ((lista.get(i).getNombre()).equalsIgnoreCase(id))
 				// si la id ingresada se encuentra
 				return lista.get(i);
 			else{
-			//System.err.println("No se encontro equipo");
+			//No se encontro equipo
 			}
 		}
-		//System.err.println("No existe equipo en el contrato");
+		//No existe equipo en el contrato
 		return null;
 	}
 	
+	/**
+	 * Imprime un reporte en pdf de los equipos en la lista y su disponibilidad
+	 * @param doc
+	 * @throws DocumentException
+	 */
 	public void reportarEquiposCompania(Document doc) throws DocumentException
 	{
 		doc.add(
@@ -101,10 +125,19 @@ public class ListaEquipos implements Validador {
 	}
 	
 	
+	/**
+	 * Retorna un ArrayList con los Equipos en su interior
+	 * @return ArrayList de equipos
+	 */
 	public ArrayList <Equipo> obtenerLista(){
 		return lista;
 	}
 	
+	/**
+	 * Retorna un DefaultListModel para insertar los datos en las respectivas JList
+	 * @param model contiene elementos con el nombre de cada Equipo en su interior
+	 * @return model un DefaultListModel con los nombres de equipos
+	 */
 	public DefaultListModel<String> listarAInterfazAgregar(DefaultListModel<String> model){
 		for (int i = 0; i < lista.size(); i++)
 			// INGRESA EN LA LISTA CADA ELEMENTO
