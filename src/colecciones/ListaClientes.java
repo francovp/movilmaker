@@ -26,6 +26,7 @@ public class ListaClientes implements Validador {
 	}
 
 	/////////////////////////// * METODOS * /////////////////////////////////////////////
+	
 	@Override
 	public boolean validarAgregar(Object o) {
 		if(validarCliente(((Cliente)o).getRut()) == false){
@@ -35,10 +36,19 @@ public class ListaClientes implements Validador {
 		else return false;
 	}
 
+	/**
+	 * Agrega un cliente a la lista
+	 * @param c
+	 */
 	public void agregarCliente(Cliente c) {
 		lista.add(c);								
 	}
 
+	/**
+	 * Busca cliente en lista y lo retorna
+	 * @param rut
+	 * @return Cliente
+	 */
 	public Cliente buscarCliente (String rut){
 		for(int i=0;i<lista.size();i++){
 			if (lista.get(i).getRut().equals(rut)){
@@ -48,6 +58,11 @@ public class ListaClientes implements Validador {
 		return null;
 	}
 
+	/**
+	 * Verifica si cliente existe
+	 * @param rut
+	 * @return boolean
+	 */
 	public boolean validarCliente (String rut){
 		for (int i = 0; i<lista.size();i++){
 			if (lista.get(i).getRut().equals(rut)){
@@ -57,6 +72,11 @@ public class ListaClientes implements Validador {
 		return false;	//	Cliente no existe
 	}
 
+	/**
+	 * Elimina al cliente de la lista
+	 * @param rut
+	 * @return boolean
+	 */
 	public boolean eliminarCliente (String rut){
 		for (int i = 0 ; i<lista.size();i++){
 			if ((lista.get(i).getRut()).equalsIgnoreCase(rut)){
@@ -67,10 +87,19 @@ public class ListaClientes implements Validador {
 		return false;
 	}
 
+	/**
+	 * Obtiene la lista completa de clientes
+	 * @return
+	 */
 	public ArrayList <Cliente> obtenerLista(){
 		return lista;
 	}
 	
+	/**
+	 * Genera un reporte de todos los clientes de la compania
+	 * @param documento
+	 * @throws DocumentException
+	 */
 	public void reportarClientes(Document documento) throws DocumentException
 	{
 		String fonoFijo, fonoCel, email, direccion1, direccion2, nombre2, apellido2, deuda;

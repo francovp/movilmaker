@@ -17,7 +17,6 @@ public class Compania {
 		private ListaClientes clientes;
 		private ListaEquipos equipos;
 		private ListaPlanes planes;
-		private ListaRegistroDePagos pagos;
 		
 		/**
 		 * @param nombre
@@ -74,14 +73,6 @@ public class Compania {
 
 		public void setEjecutivos(ListaEjecutivos ejecutivos) {
 			this.ejecutivos = ejecutivos;
-		}
-
-		public ListaRegistroDePagos getPagos() {
-			return pagos;
-		}
-
-		public void setPagos(ListaRegistroDePagos pagos) {
-			this.pagos = pagos;
 		}
 
 		public ListaEquipos getEquipos() {

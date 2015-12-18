@@ -19,6 +19,18 @@ public abstract class Persona {
 	private int tipo = 0; // 0 = Admin, 1 = Cliente ... n = Algo m�s
 	
 	// CONSTRUCTOR
+	/**
+	 * @param rut
+	 * @param idCompania
+	 * @param nombre1
+	 * @param nombre2
+	 * @param apellido1
+	 * @param apellido2
+	 * @param fonoCel
+	 * @param fonoFijo
+	 * @param email
+	 * @param tipo
+	 */
 	public Persona(String rut, String idCompania, String nombre1, String nombre2, String apellido1, String apellido2,
 			int fonoCel, int fonoFijo, String email, int tipo) {
 		this.rut = rut;
@@ -123,6 +135,13 @@ public abstract class Persona {
 		this.password = password;
 	}
 
+	/**
+	 * Funcion de tipo abstract que genera un reporte utilizando la sobrescritura de metodos
+	 * @param rutEmpresa Identificador de tipo INT de la empresa
+	 * @param nombre Nombre de la empresa de tipo String
+	 * @throws FileNotFoundException
+	 * @throws DocumentException
+	 */
 	public abstract void reporte (String rutEmpresa, String nombre) throws FileNotFoundException, DocumentException;
 		
 }

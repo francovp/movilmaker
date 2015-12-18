@@ -127,20 +127,25 @@ public class Contrato {
 		this.planContratado = planContratado;
 	}
 
-	
 	/// metodos para manejar reportar plan y equipo del contrato
-	
-	public void reportarPlanContratado(Document doc) throws DocumentException
-	{
-			doc.add(
-					new Paragraph("----- Plan contratado :          " + planContratado.getNombre()));
+
+	/**
+	 * Imprime un reporte del plan asociado al contrato
+	 * @param doc
+	 * @throws DocumentException
+	 */
+	public void reportarPlanContratado(Document doc) throws DocumentException {
+		doc.add(new Paragraph("----- Plan contratado :          " + planContratado.getNombre()));
 
 	}
-	
-	public void reportarEquipoContratado(Document doc) throws DocumentException
-	{
-			doc.add(
-					new Paragraph("----- Equipo contratado :          " + equipoContratado.getNombre()));
+
+	/**
+	 * Imprime un reporte del equipo asociado al contrato
+	 * @param doc
+	 * @throws DocumentException
+	 */
+	public void reportarEquipoContratado(Document doc) throws DocumentException {
+		doc.add(new Paragraph("----- Equipo contratado :          " + equipoContratado.getNombre()));
 
 	}
 }

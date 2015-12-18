@@ -12,7 +12,6 @@ import colecciones.Contrato;
 import colecciones.Ejecutivo;
 import colecciones.Equipo;
 import colecciones.Plan;
-import colecciones.RegistroDePagos;
 
 /**
  * @author Franco
@@ -171,18 +170,18 @@ public class Database {
 		cerrarDatabase();
 	}
 	
-	public void ingresarRegistroBD(RegistroDePagos registro) throws SQLException {
-		// Si se creï¿½ la conexiï¿½n a la BD exitosamente se continï¿½a
-		// Se crea una nueva sentencia SQL
-		stmt = dbConnection.createStatement();
-		String sql = "INSERT INTO boletas(id_contrato, rut_cliente,cuotas_rest,id_boleta,monto_pagadop)"
-				+ "VALUES('" + registro.getIdContrato() + "'," + registro.getContratoAPagar().getRutCliente() + "',"
-				+ registro.getCuotasRestantes() + "," + registro.getIdRegistro() + "," + registro.getMontoPagado()
-				+ ");";
-		stmt.executeUpdate(sql);
-		stmt.close();
-		cerrarDatabase();
-	}
+//	public void ingresarRegistroBD(RegistroDePagos registro) throws SQLException {
+//		// Si se creï¿½ la conexiï¿½n a la BD exitosamente se continï¿½a
+//		// Se crea una nueva sentencia SQL
+//		stmt = dbConnection.createStatement();
+//		String sql = "INSERT INTO boletas(id_contrato, rut_cliente,cuotas_rest,id_boleta,monto_pagadop)"
+//				+ "VALUES('" + registro.getIdContrato() + "'," + registro.getContratoAPagar().getRutCliente() + "',"
+//				+ registro.getCuotasRestantes() + "," + registro.getIdRegistro() + "," + registro.getMontoPagado()
+//				+ ");";
+//		stmt.executeUpdate(sql);
+//		stmt.close();
+//		cerrarDatabase();
+//	}
 
 	/**
 	 * Elimina un Cliente desde la Tabla PERSONA de la BD
@@ -198,6 +197,11 @@ public class Database {
 		cerrarDatabase();
 	}
 	
+	/**
+	 * Elimina un Plan desde la Tabla PLAN de la BD
+	 * @param id - el Identificador del Plan a eliminar
+	 * @throws SQLException
+	 */
 	public static void eliminarPlanBD(int id) throws SQLException{
 		String sql;
 		stmt = dbConnection.createStatement();
@@ -207,6 +211,11 @@ public class Database {
 		cerrarDatabase();
 	}
 	
+	/**
+	 * Elmina un Administrador desde la Tabla Persona de la BD
+	 * @param rut - identificador de la persona a eliminar
+	 * @throws SQLException
+	 */
 	public static void eliminarAdminBD( String rut) throws SQLException{
 		String sql;
 		stmt = dbConnection.createStatement();
@@ -216,6 +225,11 @@ public class Database {
 		cerrarDatabase();
 	}
 	
+	/**
+	 * Elimina un Ejecutivo desde la Tabla Persona de la BD
+	 * @param rut - identificador de la persona a eliminar
+	 * @throws SQLException
+	 */
 	public static void eliminarEjecutivoBD( String rut) throws SQLException{
 		String sql;
 		stmt = dbConnection.createStatement();
@@ -225,6 +239,11 @@ public class Database {
 		cerrarDatabase();
 	}
 	
+	/**
+	 * Elimina a un Cliente desde la Tabla Persona de la BD
+	 * @param rut - identificador de la persona a eliminar
+	 * @throws SQLException
+	 */
 	public static void eliminarClienteBD(String rut) throws SQLException {
 		String sql;
 		// Si se creo la conexion a la BD exitosamente se continua
@@ -314,6 +333,12 @@ public class Database {
 			}
 	}
 	
+	/**
+	 * Modifica los datos de un Equipo en la Tabla Equipos de DB
+	 * @param e Equipo que sera modificado
+	 * @return boolean
+	 * @throws SQLException
+	 */
 	public static boolean modificarEquipos(Equipo e) throws SQLException{
 		
 		stmt = dbConnection.createStatement();
@@ -331,6 +356,12 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * Modifica los datos de un Cliente en la Tabla Personas de la DB
+	 * @param c Cliente que sera modificado
+	 * @return boolean
+	 * @throws SQLException
+	 */
 	public static boolean modificarClientes(Cliente c)throws SQLException{
 		stmt=dbConnection.createStatement();
 		rs=stmt.executeQuery("UPDATE (rut,id_compania,nombre1,nombre2,appellido1,apellido2,fono_celular,fono_fijo,"
@@ -347,6 +378,12 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * Modifica los datos de un Administrador de la Tabla Personas de la DB
+	 * @param a Administrador que sera modificado
+	 * @return boolean
+	 * @throws SQLException
+	 */
 	public static boolean modificarAdministrador (Administrador a)throws SQLException{
 		stmt = dbConnection.createStatement();
 		rs=stmt.executeQuery("INSERT INTO persona (nombre1,apellido1,id_compania,"
@@ -364,6 +401,12 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * Modifica los datos de un Ejecutivo de la Tabla personas de la DB
+	 * @param e Ejecutivo que sera modificado
+	 * @return boolean
+	 * @throws SQLException
+	 */
 	public static boolean modificarEjecutivo (Ejecutivo e)throws SQLException{
 		stmt = dbConnection.createStatement();
 		rs=stmt.executeQuery("INSERT INTO persona (nombre1,apellido1,id_compania,"
@@ -381,6 +424,12 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * Modifica los datos de un Plan de la Tabla Planes de la DB
+	 * @param p Plan que sera modificado
+	 * @return boolean
+	 * @throws SQLException
+	 */
 	public static boolean modificarPlanes(Plan p) throws SQLException{
 		stmt=dbConnection.createStatement();
 		rs=stmt.executeQuery("UPDATE (id_plan,nombre_plan,minutos,gigas,precio,id_compania,sms,valor_min)FROM"
@@ -523,54 +572,5 @@ public class Database {
 				return empresa;
 			}
 	}
-
-	// public Compania leerBoletasBD(Compania empresa) throws SQLException {
-	// if (c != null){
-	// // Si se creo la conexion a la BD exitosamente se continua
-	// // Se crea una nueva sentencia SQL
-	// stmt = c.createStatement();
-	// // Se leen datos de boletas desde la BD
-	// int idContratoBoleta;
-	// String rutClienteBoleta;
-	// Contrato contratoBoleta = null;
-	// Cliente clienteBoleta = null;
-	// // Se ejecuta la sentencia SQL y se guarda
-	// rs = stmt.executeQuery("SELECT * FROM boletas;");
-	// if(rs == null){
-	// // Si no hay ninguna Persona creada retorna null
-	// return null;
-	// }else{
-	// while (rs.next()) {
-	// idContratoBoleta = rs.getInt("id_contrato");
-	// rutClienteBoleta = rs.getString("rut_cliente");
-	// contratoBoleta =
-	// empresa.buscarCliente(rutClienteBoleta).buscarContrato(idContratoBoleta);
-	// // Se obtienen datos de la equipos
-	//
-	// RegistroDePagos c = new RegistroDePagos (idContratoBoleta,
-	// contratoBoleta.getIdEquipo(),
-	// contratoBoleta.getIdPlan(), contratoBoleta.getEquipoContratado(),
-	// contratoBoleta.getPlanContratado(),
-	// contratoBoleta.getFechaInicio(), contratoBoleta.getFechaTermino(),
-	// contratoBoleta.getRutCliente(),contratoBoleta.getValorTotal(),contratoBoleta.getValorCuota(),
-	// contratoBoleta.getCuotas()
-	// , rs.getInt("id_boleta"), rs.getInt("monto_pagado"),
-	// rs.getInt("montoAdeudado"), rs.getInt("cuotas_rest"));
-	//
-	// empresa.buscarCliente(rutClienteBoleta).getContratos().add(c);
-	// }
-	// rs.close();
-	// stmt.close();
-	// // Se cierra conexion a la BD
-	// c.close();
-	// // Se retorna toda la coleccion empresa
-	// return empresa;
-	// }
-	// }else{
-	// // Si no se pudo establecer la conexion a la BD se retorna null;
-	// // Si hubo cualquier especie de error al conectar a la BD o al crear los
-	// datos.
-	// return null;
-	// }
-	// }
+	
 }

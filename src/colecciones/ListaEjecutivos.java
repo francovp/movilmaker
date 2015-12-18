@@ -35,10 +35,19 @@ public class ListaEjecutivos implements Validador {
 		else return false;
 	}
 
+	/**
+	 * Agrega un ejecutivo a la lista
+	 * @param ejecutivo
+	 */
 	public void agregarEjecutivo(Ejecutivo ejecutivo) {
 		lista.add(ejecutivo);
 		}
 
+	/**
+	 * Verifica si el ejecutivo ya se encuentra en la lista
+	 * @param rut Identificador de la persona
+	 * @return boolean
+	 */
 	public boolean validarEjecutivo (String rut){
 		for (int i = 0; i<lista.size();i++){
 			if (lista.get(i).getRut().equals(rut)){
@@ -48,6 +57,11 @@ public class ListaEjecutivos implements Validador {
 		return false;	//	Ejecutivo no existe
 	}
 	
+	/**
+	 * Elimina de la lista al ejecutivo
+	 * @param rut identificador de la persona
+	 * @return boolean
+	 */
 	public boolean eliminarEjecutivo (String rut){
 		for (int i = 0 ; i<lista.size();i++){
 			if ((lista.get(i).getRut()).equalsIgnoreCase(rut)){
@@ -58,6 +72,11 @@ public class ListaEjecutivos implements Validador {
 		return false;
 	}
 	
+	/**
+	 * Busca al ejecutivo en la lista y lo retorna
+	 * @param rut Identificador de la persona
+	 * @return Ejecutivo
+	 */
 	public Ejecutivo buscarEjecutivo (String rut){
 		for(int i=0;i<lista.size();i++){
 			if (lista.get(i).getRut().equals(rut)){
@@ -67,10 +86,19 @@ public class ListaEjecutivos implements Validador {
 		return null;
 	}
 	
+	/**
+	 * Retorna Lista completa de ejecutivos
+	 * @return
+	 */
 	public ArrayList <Ejecutivo> obtenerLista (){
 		return lista;
 	}
 	
+	/**
+	 * Imprime reporte con datos del Ejecutivo
+	 * @param doc
+	 * @throws DocumentException
+	 */
 	public void reportarEjecutivo(Document doc) throws DocumentException
 	{
 		String fonoFijo, fonoCel, email, nombre2, apellido2;

@@ -11,7 +11,6 @@ import colecciones.Compania;
 import colecciones.Contrato;
 import colecciones.Equipo;
 import colecciones.Plan;
-import colecciones.RegistroDePagos;
 
 /**
  * @author Franco
@@ -28,6 +27,10 @@ public class DatabaseConnection {
 	private DatabaseConnection() {
 	}
 
+	/**
+	 * Retorna dbConnection de tipo Connection despues de verificar los procesos de conexion
+	 * @return Connection si logra la conexion o null en caso contrario
+	 */
 	public static Connection conectarDB() {
 		if (databaseEstaDisponible) {
 			//if (db == null) {

@@ -36,7 +36,7 @@ public class Ejecutivo extends Persona {
 	/**
 	 * Imprime un Reporte en pdf del Ejecutivo (Sobreescritura de Persona
 	 * 
-	 * @param datosEmpresa
+	 * @param datosEmpresa Posee los datos de la compania
 	 * @throws FileNotFoundException
 	 * @throws DocumentException
 	 */
